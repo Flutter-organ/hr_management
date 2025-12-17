@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/core/constants/app_text_styles.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +15,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
 
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
+      theme: ThemeData(
+        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        fontFamily: "Inter",
+      ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -36,9 +40,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(mainAxisAlignment: .center, children: [
-           
-          ],
+        child: Column(
+          mainAxisAlignment: .center,
+          children: [Text("Test Font", style: AppTextStyles.displayLargeFont)],
         ),
       ),
     );
