@@ -37,14 +37,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: .center,
-        children: [
-          ExpenseHistoryCard(
-            type: 'Business Trip',
-            totalExpense: 200,
-            status: "ok",
-          ),
+      body: Column(mainAxisAlignment: .center, children: [
+          
         ],
       ),
     );
