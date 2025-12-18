@@ -8,5 +8,6 @@ class AppConstantText {
       fontSize14 = 14,
       fontSize12 = 12,
       fontSize11 = 11,
+      fontSize10 = 10,
       fontSize16 = 16;
 }

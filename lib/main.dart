@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/core/components/empty_state_card.dart';
 import 'package:hr_management/core/constants/app_text_styles.dart';
 
 void main() {
@@ -34,16 +35,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: .center,
-          children: [Text("Test Font", style: AppTextStyles.displayLargeFont)],
-        ),
+      body: Column(mainAxisAlignment: .center, children: [
+          
+        ],
       ),
     );
   }
