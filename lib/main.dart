@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/components/empty_state_card.dart';
-import 'package:hr_management/core/constants/app_text_styles.dart';
+import 'package:hr_management/core/components/expense_history_card.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,8 +37,14 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(mainAxisAlignment: .center, children: [
-          
+      body: Column(
+        mainAxisAlignment: .center,
+        children: [
+          ExpenseHistoryCard(
+            type: 'Business Trip',
+            totalExpense: 200,
+            status: "ok",
+          ),
         ],
       ),
     );

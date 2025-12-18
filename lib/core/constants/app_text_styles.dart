@@ -36,6 +36,21 @@ class AppTextStyles {
         fontWeight: FontWeight.w500,
         color: AppColors.kGrey,
       ),
+      titleMediumFontGrey = TextStyle(
+        fontSize: AppConstantText.fontSize12,
+        fontWeight: FontWeight.w500,
+        color: AppColors.kPrimary,
+      ),
+       titleMediumFontGreen = TextStyle(
+        fontSize: AppConstantText.fontSize12,
+        fontWeight: FontWeight.w500,
+        color: AppColors.kSuccess500,
+      ),
+       titleMediumFontRed = TextStyle(
+        fontSize: AppConstantText.fontSize12,
+        fontWeight: FontWeight.w500,
+        color: AppColors.kError500,
+      ),
       titleSmallFont = TextStyle(
         fontSize: AppConstantText.fontSize10,
         fontWeight: FontWeight.w500,
@@ -43,7 +58,8 @@ class AppTextStyles {
       ),
       bodyLargeFont = TextStyle(
         fontSize: AppConstantText.fontSize16,
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
+        color: AppColors.kPrimary,
       ),
       bodyMediumFont = TextStyle(
         fontSize: AppConstantText.fontSize14,

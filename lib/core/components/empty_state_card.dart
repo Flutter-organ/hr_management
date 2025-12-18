@@ -1,17 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/constants/app_colors.dart';
 
 import 'package:hr_management/core/constants/app_text_styles.dart';
 
-// ignore: must_be_immutable
 class EmptyStateCard extends StatelessWidget {
-  String titleText;
-  String subTitleText;
-  String imgPath;
-  String imgtitle;
-  String imgDescription;
-  EmptyStateCard({
+  final String titleText;
+  final String subTitleText;
+  final String imgPath;
+  final String imgtitle;
+  final String imgDescription;
+  const EmptyStateCard({
+    super.key,
     required this.titleText,
     required this.subTitleText,
     required this.imgPath,
