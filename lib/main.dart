@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/components/empty_state_card.dart';
-import 'package:hr_management/core/constants/app_text_styles.dart';
+import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,18 +8,15 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-
-      theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-        fontFamily: "Inter",
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      title: 'HR Management',
+      theme: HrManagementTheme.light(),
+      darkTheme: HrManagementTheme.dark(),
+      themeMode: ThemeMode.system,
+      home: const MyHomePage(title: 'HR Management Home Page'),
     );
   }
 }
