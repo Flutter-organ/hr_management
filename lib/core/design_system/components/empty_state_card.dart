@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
-import 'package:hr_management/core/constants/app_text_styles.dart';
+import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 
 class EmptyStateCard extends StatelessWidget {
   final String titleText;
@@ -30,8 +29,8 @@ class EmptyStateCard extends StatelessWidget {
         crossAxisAlignment: .start,
         mainAxisAlignment: .center,
         children: [
-          Text(titleText, style: AppTextStyles.titleLargeFontSemiBold),
-          Text(subTitleText, style: AppTextStyles.titleMediumFont),
+          Text(titleText, style: context.textTheme.titleLargeFontSemiBold),
+          Text(subTitleText, style: context.textTheme.titleMediumFont),
           SizedBox(height: 24),
           Center(
             child: Column(
@@ -44,10 +43,10 @@ class EmptyStateCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 12),
-                Text(imgtitle, style: AppTextStyles.titleLargeFontSemiBold),
+                Text(imgtitle, style: context.textTheme.titleLargeFontSemiBold),
                 Text(
                   imgDescription,
-                  style: AppTextStyles.titleSmallFont,
+                  style: context.textTheme.titleSmallFont,
                   textAlign: TextAlign.center,
                 ),
               ],

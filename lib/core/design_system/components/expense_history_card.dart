@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/constants/app_colors.dart';
 import 'package:hr_management/core/constants/app_text_styles.dart';
+import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'widgets/expense_card_info.dart';
 import 'widgets/expense_status.dart';
 
 class ExpenseHistoryCard extends StatelessWidget {
- final String status;
- final String type;
- final double totalExpense;
+  final String status;
+  final String type;
+  final double totalExpense;
 
   const ExpenseHistoryCard({
     super.key,
@@ -20,6 +21,7 @@ class ExpenseHistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = context.colors;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
