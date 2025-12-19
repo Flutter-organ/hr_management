@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/constants/app_colors.dart';
-import 'package:hr_management/core/constants/app_text_styles.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -22,6 +20,7 @@ class ExpenseHistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = context.colors;
+    final textTheme = context.textTheme;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -33,10 +32,10 @@ class ExpenseHistoryCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Iconsax.receipt_2, color: AppColors.kPurple500),
+              Icon(Iconsax.receipt_2, color: color.iconDefault),
               Text(
                 "27 September 2024",
-                style: AppTextStyles.titleLargeFontSemiBold,
+                style: textTheme.titleLargeFontSemiBold,
               ),
             ],
           ),

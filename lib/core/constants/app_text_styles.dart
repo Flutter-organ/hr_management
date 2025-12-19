@@ -1,7 +1,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:hr_management/core/constants/app_colors.dart';
 // import 'package:hr_management/core/design_system/theme/typography/app_constant_text.dart';
-//
+
 // class AppTextStyles {
 //   static const TextStyle displayLargeFont = TextStyle(
 //         fontSize: AppConstantText.fontSize57,

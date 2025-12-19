@@ -6,7 +6,7 @@ class AppConstantColors {
   // ============== Gray Palette ==============
   static const gray25 = Color(0xFFFCFCFD);
   static const gray50 = Color(0xFFEBECEE);
-  static const gray100 = Color(0xFFC0C4CA);
+  static const gray100 = Color(0xFFF9FAFB);
   static const gray200 = Color(0xFFA2A7B0);
   static const gray300 = Color(0xFF777F8C);
   static const gray400 = Color(0xFF5D6676);

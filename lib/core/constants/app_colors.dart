@@ -1,10 +1,10 @@
 // import 'package:flutter/material.dart';
-//
+
 // class AppColors {
 //   //! Gray Colors
 //   static const kGray25 = Color(0xfffcfcfd);
 //   static const kGray50 = Color(0xffebecee);
-//   static const kGray100 = Color(0xffc0c4ca);
+//   static const kGray100 = Color(0xffF9FAFB);
 //   static const kGray200 = Color(0xffa2a7b0);
 //   static const kGray300 = Color(0xff777f8c);
 //   static const kGray400 = Color(0xff5d6676);

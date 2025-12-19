@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../constants/app_colors.dart';
-import '../../constants/app_text_styles.dart';
 
 class ExpenseStatus extends StatelessWidget {
   final String status;
@@ -10,11 +9,13 @@ class ExpenseStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final txtTheme = context.textTheme;
+    final color = context.colors;
     return Row(
       children: [
         Icon(
           Iconsax.tick_circle5,
-          color: status == "ok" ? AppColors.kSuccess500 : AppColors.kError500,
+          color: status == "ok" ? color.success : color.error,
           size: 16,
         ),
         SizedBox(width: 12),
@@ -23,16 +24,16 @@ class ExpenseStatus extends StatelessWidget {
               ? "Approved at 28 sept 2024"
               : "Rejected at 28 sept 2024",
           style: status == "ok"
-              ? AppTextStyles.titleMediumFontGreen
-              : AppTextStyles.titleMediumFontRed,
+              ? txtTheme.titleMediumFont.copyWith(color: color.success)
+              : txtTheme.titleMediumFont.copyWith(color: color.error),
         ),
         Spacer(),
-        Text(" By ", style: AppTextStyles.titleMediumFontGrey),
+        Text(" By ", style: txtTheme.titleMediumFont),
         CircleAvatar(
           backgroundImage: AssetImage("assets/images/profile.png"),
           radius: 12,
         ),
-        Text(" Elaine ", style: AppTextStyles.titleMediumFontGrey),
+        Text(" Elaine ", style: txtTheme.titleMediumFont),
       ],
     );
   }
