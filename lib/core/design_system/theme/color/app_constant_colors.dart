@@ -73,4 +73,9 @@ class AppConstantColors {
   static const white = Color(0xFFFFFFFF);
   static const pureWhite = Color(0xFFFFFFFF);
   static const offWhite = Color(0xFFFFF7EC);
+  // ============== State Colors ==============
+  static const good = Color(0xFF47C28B);
+  static const okay = Color(0xFFFFC02E);
+  static const poor = Color(0xFFFD824C);
+  static const pad = Color(0xFFF95555);
 }

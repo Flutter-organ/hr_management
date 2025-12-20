@@ -41,6 +41,12 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
   final Color warningVariant;
   final Color onWarning;
 
+  // ============== Semantic: state ============== //
+  final Color good;
+  final Color okay;
+  final Color poor;
+  final Color pad;
+
   const HrManagementColorScheme({
     required this.primary,
     required this.primaryVariant,
@@ -63,7 +69,11 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     required this.onSuccess,
     required this.warning,
     required this.warningVariant,
-    required this.onWarning,});
+    required this.onWarning,
+    required this.good,
+    required this.okay,
+    required this.poor,
+    required this.pad,});
 
   static const light = HrManagementColorScheme(
     primary: AppConstantColors.purple600,
@@ -88,6 +98,10 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     warning: AppConstantColors.warning500,
     warningVariant: AppConstantColors.warning50,
     onWarning: AppConstantColors.gray900,
+    good: AppConstantColors.good,
+    okay: AppConstantColors.okay,
+    poor: AppConstantColors.poor,
+    pad: AppConstantColors.pad,
   );
 
   static const dark = HrManagementColorScheme(
@@ -120,6 +134,11 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     warning: AppConstantColors.warning400,
     warningVariant: AppConstantColors.warning900,
     onWarning: AppConstantColors.gray900,
+
+    good: AppConstantColors.good,
+    okay: AppConstantColors.okay,
+    poor: AppConstantColors.poor,
+    pad: AppConstantColors.pad,
   );
 
 
@@ -147,6 +166,10 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     Color? warning,
     Color? warningVariant,
     Color? onWarning,
+    Color? good,
+    Color? okay,
+    Color? poor,
+    Color? pad,
 }) {
     return HrManagementColorScheme(
         primary: primary ?? this.primary,
@@ -170,7 +193,11 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
         onSuccess: onSuccess ?? this.onSuccess,
         warning: warning ?? this.warning,
         warningVariant: warningVariant ?? this.warningVariant,
-        onWarning: onWarning ?? this.onWarning);
+        onWarning: onWarning ?? this.onWarning,
+        good: good ?? this.good,
+        okay: okay ?? this.okay,
+        poor: poor ?? this.poor,
+        pad: pad ?? this.pad,);
   }
 
   @override
@@ -199,6 +226,10 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
       warning: Color.lerp(warning, other.warning, t)!,
       warningVariant: Color.lerp(warningVariant, other.warningVariant, t)!,
       onWarning: Color.lerp(onWarning, other.onWarning, t)!,
+      good: Color.lerp(good, other.good, t)!,
+      okay: Color.lerp(okay, other.okay, t)!,
+      poor: Color.lerp(poor, other.poor, t)!,
+      pad: Color.lerp(pad, other.pad, t)!,
     );
   }
 
