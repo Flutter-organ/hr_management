@@ -1,8 +1,18 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('ar')],
+      path: 'assets/translations',
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -11,11 +21,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       debugShowCheckedModeBanner: false,
       title: 'HR Management',
       theme: HrManagementTheme.light(),
       darkTheme: HrManagementTheme.dark(),
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       home: const MyHomePage(title: 'HR Management Home Page'),
     );
   }
@@ -34,8 +47,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(mainAxisAlignment: .center, children: [
-          
+      body: Column(
+        mainAxisAlignment: .center,
+        children: [
+          ElevatedButton(onPressed: () {}, child: Text("language".tr())),
         ],
       ),
     );
