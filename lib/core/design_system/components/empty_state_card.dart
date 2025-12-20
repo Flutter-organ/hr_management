@@ -9,7 +9,7 @@ class EmptyStateCard extends StatelessWidget {
   String imgPath;
   String imgtitle;
   String imgDescription;
-  EmptyStateCard({
+  EmptyStateCard({super.key, 
     required this.titleText,
     required this.subTitleText,
     required this.imgPath,
