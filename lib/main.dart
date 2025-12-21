@@ -1,7 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:hr_management/core/design_system/components/app_bar.dart' show CustomAppBar;
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
 
 void main() async {
@@ -49,16 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        // title: 'title',
-        // showBackButton: true,
-    profileName: 'Tonald Drump',
-    profileJobTitle: 'Junior Full Stack Developer',
-    profileAvatarUrl: 'https://example.com/avatar.jpg', // Optional
-    showBackButton: false, // No back button in profile
-    onChatPressed: () { /* handle chat */ },
-    onBellPressed: () { /* handle notifications */ },
-  ),
       body: Column(
         mainAxisAlignment: .center,
         children: [
