@@ -3,21 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../theme/helper/extention_colors.dart';
+
 class ExpenseHistoryCard extends StatelessWidget {
   final String status;
   final String type;
   final double totalExpense;
+  final DateTime date;
 
   const ExpenseHistoryCard({
     super.key,
     this.status = "r",
     required this.type,
     required this.totalExpense,
+    required this.date,
   });
 
   @override
   Widget build(BuildContext context) {
-    final color = context.colors;
     final textTheme = context.textTheme;
     return Container(
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
@@ -27,9 +30,12 @@ class ExpenseHistoryCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Iconsax.receipt_2, color: color.iconDefault),
+              Icon(Iconsax.receipt_2, color: ExtentionColors.iconDefault),
               Text(
-                "27 September 2024",
+                DateFormat(
+                  'd MMMM y',
+                  context.locale.languageCode,
+                ).format(date),
                 style: textTheme.titleLargeFontSemiBold,
               ),
             ],
@@ -43,13 +49,14 @@ class ExpenseHistoryCard extends StatelessWidget {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Widget ExpenseCardInfo(BuildContext context) {
-    final color = context.colors;
     final textTheme = context.textTheme;
     return Container(
       decoration: BoxDecoration(
-        color: color.stroke,
+        color: ExtentionColors.backgroundContainer,
         borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: ExtentionColors.borderContainer),
       ),
       padding: EdgeInsets.all(12),
       child: Row(
@@ -74,9 +81,14 @@ class ExpenseHistoryCard extends StatelessWidget {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Widget ExpenseStatus(BuildContext context) {
     final txtTheme = context.textTheme;
     final color = context.colors;
+    String formattedDate = DateFormat(
+      'd MMM y',
+      context.locale.languageCode,
+    ).format(date);
     return Row(
       children: [
         Icon(
@@ -86,7 +98,9 @@ class ExpenseHistoryCard extends StatelessWidget {
         ),
         SizedBox(width: 12),
         Text(
-          status == "ok" ? "approved".tr() : "rejected".tr(),
+          status == "ok"
+              ? "approved".tr(args: [formattedDate])
+              : "rejected".tr(args: [formattedDate]),
           style: status == "ok"
               ? txtTheme.titleMediumFont.copyWith(color: color.success500)
               : txtTheme.titleMediumFont.copyWith(color: color.error),

@@ -21,7 +21,6 @@ class HrManagementTextStyle extends ThemeExtension<HrManagementTextStyle> {
   final TextStyle bodyLargeFont;
   final TextStyle bodyMediumFont;
   final TextStyle bodySmallFont;
-  
 
   final TextStyle labelLargeFont;
   final TextStyle labelMediumFont;

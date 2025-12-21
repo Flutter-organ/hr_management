@@ -1,8 +1,7 @@
 {
-    "language": "English",
     "type": "Type",
     "total_expense": "Total Expense",
-    "approved": "Approved at 28 Sept 2024",
-    "rejected": "Rejected at 28 Sept 2024",
+    "approved": "Approved at {}",
+    "rejected": "Rejected at {}",
     "by": "By "
 }
