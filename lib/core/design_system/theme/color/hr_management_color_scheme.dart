@@ -114,8 +114,7 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
   // final Color warningVariant;
   // final Color onWarning;
 
-
-    // ============== Icons ============== //
+  // ============== Icons ============== //
   final Color iconDefault;
 
   const HrManagementColorScheme({
@@ -194,7 +193,7 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     required this.white,
     required this.pureWhite,
     required this.offWhite,
-    this.iconDefault = AppConstantColors.gray500,
+    required this.iconDefault,
   });
 
   static const light = HrManagementColorScheme(
@@ -273,6 +272,7 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     white: AppConstantColors.white,
     pureWhite: AppConstantColors.pureWhite,
     offWhite: AppConstantColors.offWhite,
+    iconDefault: AppConstantColors.purple500,
 
     // errorVariant: AppConstantColors.error50,
     // success: AppConstantColors.success500,
@@ -359,6 +359,7 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     white: AppConstantColors.white,
     pureWhite: AppConstantColors.pureWhite,
     offWhite: AppConstantColors.offWhite,
+    iconDefault: AppConstantColors.purple500,
     // errorVariant: AppConstantColors.error900,
     // success: AppConstantColors.success400,
     // successVariant: AppConstantColors.success900,
@@ -444,6 +445,7 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     Color? white,
     Color? pureWhite,
     Color? offWhite,
+    Color? iconDefault,
   }) {
     return HrManagementColorScheme(
       primary: primary ?? this.primary,
@@ -520,6 +522,7 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
       white: white ?? this.white,
       pureWhite: pureWhite ?? this.pureWhite,
       offWhite: offWhite ?? this.offWhite,
+      iconDefault: iconDefault ?? this.iconDefault,
     );
   }
 
@@ -534,7 +537,11 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
       primaryVariant: Color.lerp(primaryVariant, other.primaryVariant, t)!,
       onPrimary: Color.lerp(onPrimary, other.onPrimary, t)!,
       secondary: Color.lerp(secondary, other.secondary, t)!,
-      secondaryVariant: Color.lerp(secondaryVariant, other.secondaryVariant, t)!,
+      secondaryVariant: Color.lerp(
+        secondaryVariant,
+        other.secondaryVariant,
+        t,
+      )!,
       surfaceLow: Color.lerp(surfaceLow, other.surfaceLow, t)!,
       surface: Color.lerp(surface, other.surface, t)!,
       surfaceHigh: Color.lerp(surfaceHigh, other.surfaceHigh, t)!,
@@ -604,6 +611,7 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
       white: Color.lerp(white, other.white, t)!,
       pureWhite: Color.lerp(pureWhite, other.pureWhite, t)!,
       offWhite: Color.lerp(offWhite, other.offWhite, t)!,
+      iconDefault: Color.lerp(iconDefault, other.iconDefault, t)!,
     );
   }
 }

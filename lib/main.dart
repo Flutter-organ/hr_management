@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       title: 'HR Management',
       theme: HrManagementTheme.light(),
       darkTheme: HrManagementTheme.dark(),
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       home: const MyHomePage(title: 'HR Management Home Page'),
     );
   }
