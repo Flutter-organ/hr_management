@@ -47,11 +47,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: .center,
-        children: [
-          ElevatedButton(onPressed: () {}, child: Text("language".tr())),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(onPressed: () {}, child: Text("language".tr())),
+          ],
+        ),
       ),
     );
   }

@@ -1,28 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hr_management/core/design_system/theme/helper/app_assets.dart';
-import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 
 class CustomBtnLowHighMedium extends StatelessWidget {
   final Color? color;
+  final String? image;
   final String title;
-  const CustomBtnLowHighMedium({super.key, this.color, required this.title});
+  final TextStyle? style;
+  final BoxBorder? border;
+  final Gradient? gradient;
+  final BorderRadiusGeometry? borderRadius;
+  final EdgeInsetsGeometry? padding, margin;
+  const CustomBtnLowHighMedium({
+    super.key,
+    this.color,
+    required this.title,
+    this.image,
+    this.padding,
+    this.margin,
+    this.borderRadius,
+    this.style,
+    this.border,
+    this.gradient,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final textstyle = context.textTheme;
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      padding: padding,
+      margin: margin,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100),
+        gradient: gradient,
+        border: border,
+        borderRadius: borderRadius,
         color: color,
       ),
       child: Row(
-        spacing: 4,
+        spacing: 5,
         mainAxisSize: MainAxisSize.min,
         children: [
-          SvgPicture.asset(AppAssets.kProperty),
-          Text(title, style: textstyle.titleMediumFont),
+          if (image != null && image!.isNotEmpty) SvgPicture.asset(image!),
+          Text(title, style: style),
         ],
       ),
     );
