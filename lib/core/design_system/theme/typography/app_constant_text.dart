@@ -1,13 +1,20 @@
 class AppConstantText {
-  static const double fontSize57 = 57,
-      fontSize45 = 45,
-      fontSize36 = 36,
-      fontSize32 = 32,
-      fontSize28 = 28,
-      fontSize24 = 24,
-      fontSize14 = 14,
-      fontSize12 = 12,
-      fontSize11 = 11,
-      fontSize10 = 10,
-      fontSize16 = 16;
+  AppConstantText._();
+
+  static const double fontSize57 = 57;
+  static const double fontSize45 = 45;
+  static const double fontSize36 = 36;
+
+  static const double fontSize32 = 32;
+  static const double fontSize28 = 28;
+  static const double fontSize24 = 24;
+
+  static const double fontSize14 = 14;
+  static const double fontSize12 = 12;
+  static const double fontSize11 = 11;
+
+  static const double fontSize10 = 10;
+  static const double fontSize16 = 16;
+  static const double fontSize18 = 18;
+  static const double fontSize20 = 20;
 }
