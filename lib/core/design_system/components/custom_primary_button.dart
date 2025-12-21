@@ -30,7 +30,7 @@ class CustomPrimaryButton extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: isLoading ? null : onTap,
       child: Container(
         margin: margin,
