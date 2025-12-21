@@ -1,3 +1,6 @@
 {
-    "language": "English"
+"language": "English",
+"low":"Low",
+"medium":"Medium",
+"high":"High"
 }
