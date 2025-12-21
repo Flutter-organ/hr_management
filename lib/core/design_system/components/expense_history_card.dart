@@ -1,9 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:iconsax/iconsax.dart';
-
-import 'widgets/expense_card_info.dart';
-import 'widgets/expense_status.dart';
 
 class ExpenseHistoryCard extends StatelessWidget {
   final String status;
@@ -22,10 +20,7 @@ class ExpenseHistoryCard extends StatelessWidget {
     final color = context.colors;
     final textTheme = context.textTheme;
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
       child: Column(
         crossAxisAlignment: .start,
@@ -40,11 +35,70 @@ class ExpenseHistoryCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 12),
-          ExpenseCardInfo(type: type, totalExpense: totalExpense),
+          ExpenseCardInfo(context),
           SizedBox(height: 8),
-          if (status != "r") ...[ExpenseStatus(status: status)],
+          if (status != "r") ...[ExpenseStatus(context)],
         ],
       ),
+    );
+  }
+
+  Widget ExpenseCardInfo(BuildContext context) {
+    final color = context.colors;
+    final textTheme = context.textTheme;
+    return Container(
+      decoration: BoxDecoration(
+        color: color.stroke,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      padding: EdgeInsets.all(12),
+      child: Row(
+        mainAxisAlignment: .spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: .start,
+            children: [
+              Text("type".tr(), style: textTheme.titleMediumFont),
+              Text(type, style: textTheme.bodyLargeFont),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: .start,
+            children: [
+              Text("total_expense".tr(), style: textTheme.titleMediumFont),
+              Text("\$$totalExpense", style: textTheme.bodyLargeFont),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget ExpenseStatus(BuildContext context) {
+    final txtTheme = context.textTheme;
+    final color = context.colors;
+    return Row(
+      children: [
+        Icon(
+          Iconsax.tick_circle5,
+          color: status == "ok" ? color.success : color.error,
+          size: 16,
+        ),
+        SizedBox(width: 12),
+        Text(
+          status == "ok" ? "approved".tr() : "rejected".tr(),
+          style: status == "ok"
+              ? txtTheme.titleMediumFont.copyWith(color: color.success)
+              : txtTheme.titleMediumFont.copyWith(color: color.error),
+        ),
+        Spacer(),
+        Text("by".tr(), style: txtTheme.titleMediumFont),
+        CircleAvatar(
+          backgroundImage: AssetImage("assets/images/profile.png"),
+          radius: 12,
+        ),
+        Text(" Elaine ", style: txtTheme.titleMediumFont),
+      ],
     );
   }
 }
