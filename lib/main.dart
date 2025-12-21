@@ -1,9 +1,20 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/components/expense_history_card.dart';
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('ar')],
+      path: 'assets/translations',
+      startLocale: const Locale('ar'),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,6 +23,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       debugShowCheckedModeBanner: false,
       title: 'HR Management',
       theme: HrManagementTheme.light(),
@@ -37,7 +51,13 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: Column(
         mainAxisAlignment: .center,
-        children: [ExpenseHistoryCard(type: "E-Learning", totalExpense: 55)],
+        children: [
+          ExpenseHistoryCard(
+            type: "E-Learning",
+            totalExpense: 55,
+            status: "ok",
+          ),
+        ],
       ),
     );
   }
