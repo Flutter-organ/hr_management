@@ -77,5 +77,5 @@ class AppConstantColors {
   static const good = Color(0xFF47C28B);
   static const okay = Color(0xFFFFC02E);
   static const poor = Color(0xFFFD824C);
-  static const pad = Color(0xFFF95555);
+  static const bad = Color(0xFFF95555);
 }

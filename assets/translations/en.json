@@ -1,3 +1,11 @@
 {
-    "language": "English"
+    "language": "English",
+    "property_label":"Burnout Stats",
+    "property_good":"Good",
+    "property_poor":"Poor",
+    "property_okay":"Okay",
+    "property_bad":"Bad",
+    "property_des1":"You've Completed ",
+    "property_des2":"2x more tasks than usual,",
+    "property_des3":"maintain your task with your supervisor"
 }

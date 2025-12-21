@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 
@@ -5,27 +6,27 @@ enum BurnoutStatus {
   good,
   okay,
   poor,
-  pad;
+  bad;
 
   String get label => switch (this) {
-    good => "Good",
-    okay => "Okay",
-    poor => "Poor",
-    pad => "Pad",
+    good => "property_good".tr(),
+    okay => "property_okay".tr(),
+    poor => "property_poor".tr(),
+    bad => "property_bad".tr(),
   };
 
   String get emojiPath => switch (this) {
     good => "assets/images/good.png",
     okay => "assets/images/okay.png",
     poor => "assets/images/poor.png",
-    pad => "assets/images/pad.png",
+    bad => "assets/images/bad.png",
   };
 
   double get value => switch (this) {
     good => 0.25,
     okay => 0.45,
     poor => 0.85,
-    pad => 1.0,
+    bad => 1.0,
   };
 }
 
@@ -39,7 +40,7 @@ class PropertyGoodPoor extends StatelessWidget {
     final textStyle = context.textTheme;
 
     final statusColor = switch (status) {
-      BurnoutStatus.pad => color.pad,
+      BurnoutStatus.bad => color.bad,
       BurnoutStatus.poor => color.poor,
       BurnoutStatus.okay => color.okay,
       BurnoutStatus.good => color.good,
@@ -56,7 +57,7 @@ class PropertyGoodPoor extends StatelessWidget {
           Row(
             children: [
               Text(
-                "Sprint 20 - Burnout Stats",
+                "property_label".tr(),
                 style: textStyle.titleLargeFontSemiBold,
               ),
               SizedBox(width: 4),
@@ -81,57 +82,63 @@ class PropertyGoodPoor extends StatelessWidget {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: "You've completed ",
+                    text: "property_des1".tr(),
                     style: textStyle.bodySmallFont,
                   ),
                   TextSpan(
-                    text: "2x more tasks than usual, ",
+                    text: "property_des2".tr(),
                     style: textStyle.bodySmallFont.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   TextSpan(
-                    text: "maintain your\ntask with your supervisor ",
+                    text: "property_des3".tr(),
                     style: textStyle.bodySmallFont,
                   ),
                 ],
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: color.primaryVariant,
-              border: Border.all(color: color.stroke),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(right: 10),
-                  height: 32,
-                  width: 32,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(status.emojiPath),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: SliderTheme(
-                    data: SliderThemeData(
-                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 0),
-                      activeTrackColor: statusColor,
-                      inactiveTrackColor: color.stroke,
+          buildProgressBar(context, statusColor),
+        ],
+      ),
+    );
+  }
 
-                      overlayShape: SliderComponentShape.noThumb,
-                      trackHeight: 2,
-                    ),
-                    child: Slider(value: status.value, onChanged: (value) {}),
-                  ),
-                ),
-              ],
+  Widget buildProgressBar(BuildContext context, Color statusColor) {
+    final color = context.colors;
+
+    return Container(
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: color.primaryVariant,
+        border: Border.all(color: color.stroke),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          Container(
+            margin: EdgeInsets.only(right: 10),
+            height: 32,
+            width: 32,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(status.emojiPath),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Expanded(
+            child: SliderTheme(
+              data: SliderThemeData(
+                thumbShape: RoundSliderThumbShape(enabledThumbRadius: 0),
+                activeTrackColor: statusColor,
+                inactiveTrackColor: color.stroke,
+
+                overlayShape: SliderComponentShape.noThumb,
+                trackHeight: 2,
+              ),
+              child: Slider(value: status.value, onChanged: (value) {}),
             ),
           ),
         ],
