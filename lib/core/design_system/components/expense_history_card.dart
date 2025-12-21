@@ -81,14 +81,14 @@ class ExpenseHistoryCard extends StatelessWidget {
       children: [
         Icon(
           Iconsax.tick_circle5,
-          color: status == "ok" ? color.success : color.error,
+          color: status == "ok" ? color.success500 : color.error,
           size: 16,
         ),
         SizedBox(width: 12),
         Text(
           status == "ok" ? "approved".tr() : "rejected".tr(),
           style: status == "ok"
-              ? txtTheme.titleMediumFont.copyWith(color: color.success)
+              ? txtTheme.titleMediumFont.copyWith(color: color.success500)
               : txtTheme.titleMediumFont.copyWith(color: color.error),
         ),
         Spacer(),
