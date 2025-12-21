@@ -1,3 +1,10 @@
 {
-    "language": "English"
+"language": "English",
+"username": "Employee Name",
+"attendancedate": "29 September 2024",
+"locationlabel": "Lat 45.43534 Long 97897.576",
+"totalhours": "Total Hours",
+"clockinout": "Clock in & Out",
+"defaulttimerange": "09:00 AM — 05:00 PM",
+"defaulttotalhours": "08:00:00 hrs"
 }
