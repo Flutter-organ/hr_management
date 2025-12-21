@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
+import 'package:hr_management/core/design_system/theme/helper/app_assets.dart';
+
+import '../theme/helper/extention_colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   // For standard mode
   final String? title;
   final bool showBackButton;
+  final  VoidCallback? onBackPressed;
+
 
   // For profile mode
   final String? profileName;
@@ -14,22 +19,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onBellPressed;
 
   const CustomAppBar({
-    Key? key,
+    super.key,
     this.title,
     this.showBackButton = true,
+    this.onBackPressed,
     this.profileName,
     this.profileJobTitle,
     this.profileAvatarUrl,
     this.onChatPressed,
     this.onBellPressed,
-  }) : super(key: key);
+  });
 
   bool get isProfileMode => profileName != null;
   @override
   Widget build(BuildContext context) {
       final colors = context.colors;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: EdgeInsets.symmetric(horizontal:isProfileMode? 12 : 24),
       child: AppBar(
         backgroundColor:colors.surface,
         automaticallyImplyLeading: false,
@@ -39,48 +45,42 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               icon: Icon(
                 Icons.arrow_back_ios,
                 size: 18,
-                color: colors.primary, 
+                color: colors.purple500,
               ),
-              onPressed: () => (){},
+              onPressed: () => onBackPressed,
               style: IconButton.styleFrom(
-                backgroundColor: colors.primaryVariant, 
+                backgroundColor: colors.purple50,
                 shape: const CircleBorder(),
                 fixedSize: const Size(32, 32), 
               ),
-            ),
-          
+            )
       )
       : null,
         title: isProfileMode
             ? Row(
                 children: [
                   CircleAvatar(
-                    radius: 24,
-                    backgroundImage: profileAvatarUrl != null
-                        ? NetworkImage(profileAvatarUrl!)
-                        : null,
-                    child: profileAvatarUrl == null
-                        ? const Icon(Icons.person, size: 30, color: Colors.purple)
-                        : null,
+                    backgroundImage: NetworkImage(profileAvatarUrl ?? AppAssets.placeHolderProfile),
                   ),
                   const SizedBox(width: 9),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Row(
                         children: [
                           Text(
-                            profileName!,
-                            style: context.textTheme.titleMediumFont
+                            profileName ?? 'username',
+                            style: context.textTheme.titleMediumFont.copyWith(color:  ExtentionColors.blackTitleProfile)
                           ),
                           const SizedBox(width: 8),
-                          const Icon(Icons.verified, color:Colors.black12, size: 18),
+                          const Icon(Icons.verified, color:ExtentionColors.prupleProfile, size: 20),
                         ],
                       ),
                       Text(
-                        profileJobTitle ?? '',
-                        style: context.textTheme.titleSmallFont,
+                        profileJobTitle ?? 'job_title',
+                        style: context.textTheme.titleSmallFont.copyWith(
+                          color: ExtentionColors.prupleProfile,
+                        ),
                       ),
                     ],
                   ),
@@ -89,7 +89,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             : title != null
                 ? Text(
                     title!,
-                    style: context.textTheme.headLineLargeFont,
+                    style: context.textTheme.titleLargeFontSemiBold
+                        .copyWith(color: ExtentionColors.blackTitleProfile,fontSize: 18)
                   )
                 : null,
         centerTitle: !isProfileMode,
@@ -99,24 +100,25 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               icon: Icon(
                 Icons.chat_bubble_outline,
                 size: 18,
-                color: colors.primary, 
+                color: colors.purple500,
               ),
-              onPressed: () => (){},
+              onPressed: () => onChatPressed,
               style: IconButton.styleFrom(
-                backgroundColor: colors.primaryVariant, 
+                backgroundColor: colors.purple50,
                 shape: const CircleBorder(),
                 fixedSize: const Size(32, 32), 
               ),
             ),
+             const SizedBox(width: 8),
                 IconButton(
               icon: Icon(
-                Icons.notifications_off_outlined,
+                Icons.notifications,
                 size: 18,
-                color: colors.primary, 
+                color: colors.purple500,
               ),
-              onPressed: () => (){},
+              onPressed: () => onBellPressed,
               style: IconButton.styleFrom(
-                backgroundColor: colors.primaryVariant, 
+                backgroundColor: colors.purple50,
                 shape: const CircleBorder(),
                 fixedSize: const Size(32, 32), 
               ),
