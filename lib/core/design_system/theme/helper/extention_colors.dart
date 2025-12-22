@@ -8,4 +8,8 @@ class ExtentionColors{
   static const Color iconDefault = AppConstantColors.purple500;
   static const Color backgroundContainer = Color(0xFFF9FAFB);
   static const Color borderContainer = Color(0xFFEAECF0);
+  static const Color good = Color(0xFF47C28B);
+  static const Color okay = Color(0xFFFFC02E);
+  static const Color poor = Color(0xFFFD824C);
+  static const Color bad = Color(0xFFF95555);
 }
