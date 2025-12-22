@@ -1,6 +1,12 @@
 class AppAssets {
   //example
   // general
-  static const String kProperty = 'assets/svgs/Property.svg';
+  static const  kProperty = 'assets/svgs/Property.svg';
 
+  // static const String emptyState = 'assets/images/empty_state.png';
+  static const  profilePlaceholder = 'assets/images/profile.png';
+  static const  goodEmoji = 'assets/images/good.png';
+  static const okayEmoji = 'assets/images/okay.png';
+  static const poorEmoji = 'assets/images/poor.png';
+  static const badEmoji = 'assets/images/bad.png';
 }
