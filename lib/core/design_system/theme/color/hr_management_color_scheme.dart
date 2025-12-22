@@ -529,7 +529,11 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
       primaryVariant: Color.lerp(primaryVariant, other.primaryVariant, t)!,
       onPrimary: Color.lerp(onPrimary, other.onPrimary, t)!,
       secondary: Color.lerp(secondary, other.secondary, t)!,
-      secondaryVariant: Color.lerp(secondaryVariant, other.secondaryVariant, t)!,
+      secondaryVariant: Color.lerp(
+        secondaryVariant,
+        other.secondaryVariant,
+        t,
+      )!,
       surfaceLow: Color.lerp(surfaceLow, other.surfaceLow, t)!,
       surface: Color.lerp(surface, other.surface, t)!,
       surfaceHigh: Color.lerp(surfaceHigh, other.surfaceHigh, t)!,

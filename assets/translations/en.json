@@ -1,3 +1,7 @@
 {
-    "language": "English"
+    "type": "Type",
+    "total_expense": "Total Expense",
+    "approved": "Approved at {}",
+    "rejected": "Rejected at {}",
+    "by": "By "
 }
