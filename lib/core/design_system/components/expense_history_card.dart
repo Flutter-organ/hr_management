@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/theme/helper/app_assets.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../theme/helper/extention_colors.dart';
 
 class ExpenseHistoryCard extends StatelessWidget {
@@ -111,7 +110,9 @@ class ExpenseHistoryCard extends StatelessWidget {
         Spacer(),
         Text("by".tr(), style: txtTheme.titleMediumFont),
         CircleAvatar(
-          backgroundImage: AssetImage(profileImage ?? AppAssets.profilePlaceholder),
+          backgroundImage: AssetImage(
+            profileImage ?? AppAssets.profilePlaceholder,
+          ),
           radius: 12,
         ),
         Text(" $userName ", style: txtTheme.titleMediumFont),

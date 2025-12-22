@@ -114,12 +114,6 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
   // final Color warningVariant;
   // final Color onWarning;
 
-  // ============== Semantic: state ============== //
-  final Color good;
-  final Color okay;
-  final Color poor;
-  final Color bad;
-
   const HrManagementColorScheme({
     required this.primary,
     required this.primaryVariant,
@@ -136,10 +130,6 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     required this.disabled,
     required this.error,
     required this.onError,
-    required this.good,
-    required this.okay,
-    required this.poor,
-    required this.bad,
     required this.gray25,
     required this.gray50,
     required this.gray100,
@@ -217,11 +207,6 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     disabled: AppConstantColors.gray200,
     error: AppConstantColors.error500,
     onError: AppConstantColors.pureWhite,
-    good: AppConstantColors.good,
-    okay: AppConstantColors.okay,
-    poor: AppConstantColors.poor,
-    bad: AppConstantColors.bad,
-
     gray25: AppConstantColors.gray25,
     gray50: AppConstantColors.gray50,
     gray100: AppConstantColors.gray100,
@@ -308,10 +293,6 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     error: AppConstantColors.error400,
     onError: AppConstantColors.pureWhite,
 
-    good: AppConstantColors.good,
-    okay: AppConstantColors.okay,
-    poor: AppConstantColors.poor,
-    bad: AppConstantColors.bad,
     gray25: AppConstantColors.gray25,
     gray50: AppConstantColors.gray50,
     gray100: AppConstantColors.gray100,
@@ -403,10 +384,6 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     Color? warning,
     Color? warningVariant,
     Color? onWarning,
-    Color? good,
-    Color? okay,
-    Color? poor,
-    Color? bad,
     Color? gray25,
     Color? gray50,
     Color? gray100,
@@ -542,10 +519,6 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
       white: white ?? this.white,
       pureWhite: pureWhite ?? this.pureWhite,
       offWhite: offWhite ?? this.offWhite,
-      good: good ?? this.good,
-      okay: okay ?? this.okay,
-      poor: poor ?? this.poor,
-      bad: bad ?? this.bad,
     );
   }
 
@@ -576,10 +549,6 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
       error: Color.lerp(error, other.error, t)!,
       onError: Color.lerp(onError, other.onError, t)!,
 
-      good: Color.lerp(good, other.good, t)!,
-      okay: Color.lerp(okay, other.okay, t)!,
-      poor: Color.lerp(poor, other.poor, t)!,
-      bad: Color.lerp(bad, other.bad, t)!,
       gray25: Color.lerp(gray25, other.gray25, t)!,
       gray50: Color.lerp(gray50, other.gray50, t)!,
       gray100: Color.lerp(gray100, other.gray100, t)!,

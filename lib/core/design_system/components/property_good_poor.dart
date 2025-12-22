@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_management/core/design_system/theme/helper/app_assets.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
+import '../theme/helper/extention_colors.dart';
 
 enum BurnoutStatus {
   good,
@@ -16,10 +18,10 @@ enum BurnoutStatus {
   };
 
   String get emojiPath => switch (this) {
-    good => "assets/images/good.png",
-    okay => "assets/images/okay.png",
-    poor => "assets/images/poor.png",
-    bad => "assets/images/bad.png",
+    good => AppAssets.goodEmoji,
+    okay => AppAssets.okayEmoji,
+    poor => AppAssets.poorEmoji,
+    bad => AppAssets.badEmoji,
   };
 
   double get value => switch (this) {
@@ -40,10 +42,10 @@ class PropertyGoodPoor extends StatelessWidget {
     final textStyle = context.textTheme;
 
     final statusColor = switch (status) {
-      BurnoutStatus.bad => color.bad,
-      BurnoutStatus.poor => color.poor,
-      BurnoutStatus.okay => color.okay,
-      BurnoutStatus.good => color.good,
+      BurnoutStatus.bad => ExtentionColors.bad,
+      BurnoutStatus.poor => ExtentionColors.poor,
+      BurnoutStatus.okay => ExtentionColors.okay,
+      BurnoutStatus.good => ExtentionColors.good,
     };
     return Container(
       padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
