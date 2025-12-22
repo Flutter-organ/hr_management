@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/design_system/components/expense_history_card.dart';
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
 
 void main() async {
@@ -11,7 +10,6 @@ void main() async {
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],
       path: 'assets/translations',
-      startLocale: const Locale('en'),
       child: MyApp(),
     ),
   );
@@ -30,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'HR Management',
       theme: HrManagementTheme.light(),
       darkTheme: HrManagementTheme.dark(),
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.system,
       home: const MyHomePage(title: 'HR Management Home Page'),
     );
   }
@@ -52,11 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         mainAxisAlignment: .center,
         children: [
-          ExpenseHistoryCard(
-            type: "E-Learning",
-            totalExpense: 55,
-            status: "ok",
-          ),
+          ElevatedButton(onPressed: () {}, child: Text("language".tr())),
         ],
       ),
     );
