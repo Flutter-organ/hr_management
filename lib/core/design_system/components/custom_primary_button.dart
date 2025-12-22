@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 class CustomPrimaryButton extends StatelessWidget {
   final String title;
   final BoxBorder? border;
-  final double? spaceBetween;
+  final double? spaceBetween, width;
   final TextAlign? textAlign;
-  final Color? backGroundColor, circularColor;
+  final Color backGroundColor;
+  final Color? circularColor;
   final EdgeInsetsGeometry? margin, padding;
   final BorderRadiusGeometry? borderRadius;
   final Gradient? gradient;
@@ -15,7 +16,7 @@ class CustomPrimaryButton extends StatelessWidget {
   const CustomPrimaryButton({
     super.key,
     required this.title,
-    this.backGroundColor,
+    required this.backGroundColor,
     this.margin,
     this.gradient,
     this.style,
@@ -27,12 +28,14 @@ class CustomPrimaryButton extends StatelessWidget {
     this.textAlign = TextAlign.center,
     this.circularColor,
     this.spaceBetween,
+    this.width,
   });
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: isLoading ? null : onTap,
       child: Container(
+        width: width,
         margin: margin,
         padding: padding,
         decoration: BoxDecoration(
@@ -42,6 +45,7 @@ class CustomPrimaryButton extends StatelessWidget {
           gradient: gradient,
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
             isLoading
