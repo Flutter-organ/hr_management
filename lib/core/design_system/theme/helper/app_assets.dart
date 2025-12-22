@@ -6,4 +6,6 @@ class AppAssets {
   static const kVerifiedRounded = 'assets/svgs/verified-rounded.svg';
   static const kPropertyOutline = 'assets/svgs/property_outline.svg';
   static const kPropertyLocation = 'assets/svgs/propety_location.svg';
+
+  static const String profilePlaceholder = 'assets/images/profile.png';
 }

@@ -6,5 +6,10 @@
 "totalhours": "إجمالي الساعات",
 "clockinout": "وقت الحضور والانصراف",
 "defaulttimerange": "٩:٠٠ ص — ٥:٠٠ م",
-"defaulttotalhours": "٨:٠٠:٠٠ ساعة"
+"defaulttotalhours": "٨:٠٠:٠٠ ساعة",
+    "type": "النوع",
+    "total_expense": "إجمالي المصاريف",
+    "approved":"تمت الموافقة في {}",
+    "rejected":"تم الرفض في {}",
+    "by":"بواسطة"
 }

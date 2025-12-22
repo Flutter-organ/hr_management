@@ -6,5 +6,10 @@
 "totalhours": "Total Hours",
 "clockinout": "Clock in & Out",
 "defaulttimerange": "09:00 AM — 05:00 PM",
-"defaulttotalhours": "08:00:00 hrs"
+"defaulttotalhours": "08:00:00 hrs",
+    "type": "Type",
+    "total_expense": "Total Expense",
+    "approved": "Approved at {}",
+    "rejected": "Rejected at {}",
+    "by": "By "
 }
