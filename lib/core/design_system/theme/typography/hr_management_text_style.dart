@@ -223,7 +223,11 @@ class HrManagementTextStyle extends ThemeExtension<HrManagementTextStyle> {
       bodyMediumFont: TextStyle.lerp(bodyMediumFont, other.bodyMediumFont, t)!,
       bodySmallFont: TextStyle.lerp(bodySmallFont, other.bodySmallFont, t)!,
       labelLargeFont: TextStyle.lerp(labelLargeFont, other.labelLargeFont, t)!,
-      labelMediumFont: TextStyle.lerp(labelMediumFont, other.labelMediumFont, t)!,
+      labelMediumFont: TextStyle.lerp(
+        labelMediumFont,
+        other.labelMediumFont,
+        t,
+      )!,
       labelSmallFont: TextStyle.lerp(labelSmallFont, other.labelSmallFont, t)!,
     );
   }

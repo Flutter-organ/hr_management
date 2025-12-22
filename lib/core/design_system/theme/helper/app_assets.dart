@@ -6,11 +6,9 @@ class AppAssets {
   static const kVerifiedRounded = 'assets/svgs/verified-rounded.svg';
   static const kPropertyOutline = 'assets/svgs/property_outline.svg';
   static const kPropertyLocation = 'assets/svgs/propety_location.svg';
-
-  static const String profilePlaceholder = 'assets/images/profile.png';
-
-  static const String goodEmoji = 'assets/images/good.png';
-  static const String okayEmoji = 'assets/images/okay.png';
-  static const String poorEmoji = 'assets/images/poor.png';
-  static const String badEmoji = 'assets/images/bad.png';
+  static const profilePlaceholder = 'assets/images/profile.png';
+  static const goodEmoji = 'assets/images/good.png';
+  static const okayEmoji = 'assets/images/okay.png';
+  static const poorEmoji = 'assets/images/poor.png';
+  static const badEmoji = 'assets/images/bad.png';
 }
