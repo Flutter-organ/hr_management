@@ -1,5 +1,10 @@
 {
     "language": "English",
     "username": "Username",
-    "job_title": "job title"
+    "job_title": "job title",
+    "type": "Type",
+    "total_expense": "Total Expense",
+    "approved": "Approved at {}",
+    "rejected": "Rejected at {}",
+    "by": "By "
 }
