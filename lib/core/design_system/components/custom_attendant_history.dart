@@ -16,7 +16,7 @@ class CustomAttendantHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Column(
         children: [
           Row(
@@ -33,15 +33,13 @@ class CustomAttendantHistory extends StatelessWidget {
           ),
           SizedBox(height: 12),
           Container(
-            width: double.infinity,
-            height: 70,
             padding: EdgeInsets.all(12),
             decoration: BoxDecoration(
               border: Border.all(color: context.colors.gray200),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
