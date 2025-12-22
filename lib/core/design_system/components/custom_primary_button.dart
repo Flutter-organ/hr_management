@@ -41,23 +41,22 @@ class CustomPrimaryButton extends StatelessWidget {
           borderRadius: borderRadius,
           gradient: gradient,
         ),
-        child: Center(
-          child: Row(
-            children: [
-              isLoading
-                  ? SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        color: circularColor,
-                        strokeWidth: 1.5,
-                      ),
-                    )
-                  : SizedBox(),
-              SizedBox(width: isLoading ? spaceBetween : 0),
-              Text(title, textAlign: textAlign, style: style),
-            ],
-          ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            isLoading
+                ? SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      color: circularColor,
+                      strokeWidth: 1.5,
+                    ),
+                  )
+                : SizedBox(),
+            SizedBox(width: isLoading ? spaceBetween : 0),
+            Text(title, textAlign: textAlign, style: style),
+          ],
         ),
       ),
     );

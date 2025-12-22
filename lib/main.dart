@@ -50,7 +50,6 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // T
           ElevatedButton(onPressed: () {}, child: Text("language".tr())),
         ],
       ),
