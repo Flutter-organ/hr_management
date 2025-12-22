@@ -140,27 +140,21 @@ class SummaryCard extends StatelessWidget {
 
   Widget _buildStatsRow(BuildContext context) {
     return Row(
-      children: items.asMap().entries.map((entry) {
-        final index = entry.key;
-        final item = entry.value;
-        final isLast = index == items.length - 1;
-
-        final statWidget = _buildStatItem(item, context);
-
-        if (expandItems) {
-          return Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(right: isLast ? 0 : itemSpacing),
-              child: statWidget,
+      children: [
+        for (int i = 0; i < items.length; i++)
+          if (expandItems)
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(right: i == items.length - 1 ? 0 : itemSpacing),
+                child: _buildStatItem(items[i], context),
+              ),
+            )
+          else
+            Padding(
+              padding: EdgeInsets.only(right: i == items.length - 1 ? 0 : itemSpacing),
+              child: _buildStatItem(items[i], context),
             ),
-          );
-        } else {
-          return Padding(
-            padding: EdgeInsets.only(right: isLast ? 0 : itemSpacing),
-            child: statWidget,
-          );
-        }
-      }).toList(),
+      ],
     );
   }
 

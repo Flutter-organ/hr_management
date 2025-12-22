@@ -34,7 +34,9 @@ migrate_working_dir/
 /coverage/
 /devtools_options.yaml
 /analysis_options.yaml
-/pubspec.lock
+pubspec.lock
+macos/Flutter/GeneratedPluginRegistrant.swift
+
 
 # Symbolication related
 app.*.symbols
