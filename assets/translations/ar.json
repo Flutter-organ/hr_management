@@ -4,6 +4,8 @@
 "medium": "متوسط",
 "high": "مرتفع"
     "language": "العربية",
+    "username": "اسم المستخدم",
+    "job_title": "المسمي الوظيفي ",
     "property_label": "الإحصائيات الخاصة بالإرهاق ",
     "property_good": "جيد",
     "property_poor": "ضعيف",
