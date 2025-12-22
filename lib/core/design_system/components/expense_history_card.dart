@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_management/core/design_system/theme/helper/app_assets.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -10,6 +11,8 @@ class ExpenseHistoryCard extends StatelessWidget {
   final String type;
   final double totalExpense;
   final DateTime date;
+  final String userName;
+  final String? profileImage;
 
   const ExpenseHistoryCard({
     super.key,
@@ -17,6 +20,8 @@ class ExpenseHistoryCard extends StatelessWidget {
     required this.type,
     required this.totalExpense,
     required this.date,
+    required this.userName,
+    this.profileImage,
   });
 
   @override
@@ -41,16 +46,15 @@ class ExpenseHistoryCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 12),
-          ExpenseCardInfo(context),
+          expenseCardInfo(context),
           SizedBox(height: 8),
-          if (status != "r") ...[ExpenseStatus(context)],
+          if (status != "r") ...[expenseStatus(context)],
         ],
       ),
     );
   }
 
-  // ignore: non_constant_identifier_names
-  Widget ExpenseCardInfo(BuildContext context) {
+  Widget expenseCardInfo(BuildContext context) {
     final textTheme = context.textTheme;
     return Container(
       decoration: BoxDecoration(
@@ -81,8 +85,7 @@ class ExpenseHistoryCard extends StatelessWidget {
     );
   }
 
-  // ignore: non_constant_identifier_names
-  Widget ExpenseStatus(BuildContext context) {
+  Widget expenseStatus(BuildContext context) {
     final txtTheme = context.textTheme;
     final color = context.colors;
     String formattedDate = DateFormat(
@@ -108,10 +111,10 @@ class ExpenseHistoryCard extends StatelessWidget {
         Spacer(),
         Text("by".tr(), style: txtTheme.titleMediumFont),
         CircleAvatar(
-          backgroundImage: AssetImage("assets/images/profile.png"),
+          backgroundImage: AssetImage(profileImage ?? AppAssets.profilePlaceholder),
           radius: 12,
         ),
-        Text(" Elaine ", style: txtTheme.titleMediumFont),
+        Text(" $userName ", style: txtTheme.titleMediumFont),
       ],
     );
   }

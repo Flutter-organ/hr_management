@@ -114,8 +114,6 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
   // final Color warningVariant;
   // final Color onWarning;
 
-  // ============== Icons ============== //
-
   const HrManagementColorScheme({
     required this.primary,
     required this.primaryVariant,
@@ -441,7 +439,6 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     Color? white,
     Color? pureWhite,
     Color? offWhite,
-    Color? iconDefault,
   }) {
     return HrManagementColorScheme(
       primary: primary ?? this.primary,

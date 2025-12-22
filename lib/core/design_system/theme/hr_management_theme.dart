@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/design_system/theme/color/hr_management_color_scheme.dart';
 import 'package:hr_management/core/design_system/theme/typography/hr_management_text_style.dart';
+import 'color/hr_management_color_scheme.dart';
 
 class HrManagementTheme {
   HrManagementTheme._();
