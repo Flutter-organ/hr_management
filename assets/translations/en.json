@@ -1,4 +1,8 @@
 {
+"language": "English",
+"low":"Low",
+"medium":"Medium",
+"high":"High"
     "language": "English",
     "username": "Username",
     "job_title": "job title",
