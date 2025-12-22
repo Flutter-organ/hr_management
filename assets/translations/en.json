@@ -7,6 +7,7 @@
 "clockinout": "Clock in & Out",
 "defaulttimerange": "09:00 AM — 05:00 PM",
 "defaulttotalhours": "08:00:00 hrs",
+ "job_title": "job title",
     "property_label":"Burnout Stats",
     "property_good":"Good",
     "property_poor":"Poor",
