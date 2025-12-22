@@ -1,6 +1,7 @@
 class AppAssets {
   //example
   // general
+  static const  kProperty = 'assets/svgs/Property.svg';
   // static const String emptyState = 'assets/images/empty_state.png';
 
   static const kDefaultImageProfile = 'assets/images/default_image_profile.png';
