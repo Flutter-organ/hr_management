@@ -130,7 +130,6 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     required this.disabled,
     required this.error,
     required this.onError,
-
     required this.gray25,
     required this.gray50,
     required this.gray100,
@@ -208,7 +207,6 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     disabled: AppConstantColors.gray200,
     error: AppConstantColors.error500,
     onError: AppConstantColors.pureWhite,
-
     gray25: AppConstantColors.gray25,
     gray50: AppConstantColors.gray50,
     gray100: AppConstantColors.gray100,
@@ -380,6 +378,12 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     Color? disabled,
     Color? error,
     Color? onError,
+    Color? success,
+    Color? successVariant,
+    Color? onSuccess,
+    Color? warning,
+    Color? warningVariant,
+    Color? onWarning,
     Color? gray25,
     Color? gray50,
     Color? gray100,
@@ -544,6 +548,7 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
       disabled: Color.lerp(disabled, other.disabled, t)!,
       error: Color.lerp(error, other.error, t)!,
       onError: Color.lerp(onError, other.onError, t)!,
+
       gray25: Color.lerp(gray25, other.gray25, t)!,
       gray50: Color.lerp(gray50, other.gray50, t)!,
       gray100: Color.lerp(gray100, other.gray100, t)!,
