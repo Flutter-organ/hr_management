@@ -1,8 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:hr_management/core/design_system/theme/helper/app_assets.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 import '../theme/helper/extention_colors.dart';
 
@@ -49,7 +49,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 size: 18,
                 color: colors.purple500,
               ),
-              onPressed: () => onBackPressed,
+              onPressed: onBackPressed,
               style: IconButton.styleFrom(
                 backgroundColor: colors.purple50,
                 shape: const CircleBorder(),
@@ -62,7 +62,22 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ? Row(
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(profileAvatarUrl ?? AppAssets.placeHolderProfile),
+                    child: ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl: profileAvatarUrl ?? '',
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity,
+                        placeholder: (context, url) => Image.asset(
+                          AppAssets.placeHolderProfile,
+                          fit: BoxFit.cover,
+                        ),
+                        errorWidget: (context, url, error) => Image.asset(
+                          AppAssets.placeHolderProfile,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
                   ),
                   const SizedBox(width: 9),
                   Column(
@@ -104,11 +119,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 size: 18,
                 color: colors.purple500,
               ),
-              onPressed: () => onChatPressed,
+              onPressed: onChatPressed,
               style: IconButton.styleFrom(
                 backgroundColor: colors.purple50,
                 shape: const CircleBorder(),
-                fixedSize: const Size(32, 32), 
+                fixedSize: const Size(44, 44),
               ),
             ),
              const SizedBox(width: 8),
@@ -118,11 +133,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 size: 18,
                 color: colors.purple500,
               ),
-              onPressed: () => onBellPressed,
+              onPressed: onBellPressed,
               style: IconButton.styleFrom(
                 backgroundColor: colors.purple50,
                 shape: const CircleBorder(),
-                fixedSize: const Size(32, 32), 
+                fixedSize: const Size(44, 44),
               ),
             ),
               ]
