@@ -7,5 +7,10 @@
     "property_bad":"Bad",
     "property_des1":"You've Completed ",
     "property_des2":"2x more tasks than usual,",
-    "property_des3":"maintain your task with your supervisor"
+    "property_des3":"maintain your task with your supervisor",
+    "type": "Type",
+    "total_expense": "Total Expense",
+    "approved": "Approved at {}",
+    "rejected": "Rejected at {}",
+    "by": "By "
 }
