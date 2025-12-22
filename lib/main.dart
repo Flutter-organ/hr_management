@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
 
+import 'core/design_system/components/summary_card.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -50,7 +52,32 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         mainAxisAlignment: .center,
         children: [
-          ElevatedButton(onPressed: () {}, child: Text("language".tr())),
+          SummaryCard(
+            title: 'Total Expense',
+            subtitle: 'Period 1 Jan 2024 - 30 Dec 2024',
+            items: [
+              StatItemModel(
+                label: 'Total',
+                value: '\$1010',
+                icon: const Icon(
+                  Icons.account_balance_wallet,
+                  size: 10,
+                  color: Color(0xFF5B6EF5),
+                ),
+              ),
+              StatItemModel(
+                label: 'Review',
+                value: '\$455',
+                indicatorColor: const Color(0xFFFFAA00),
+              ),
+              StatItemModel(
+                label: 'Approved',
+                value: '\$555',
+                indicatorColor: const Color(0xFF4CAF50),
+              ),
+
+            ],
+          )
         ],
       ),
     );
