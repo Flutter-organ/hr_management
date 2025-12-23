@@ -2,69 +2,19 @@ import 'dart:ffi';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_management/core/design_system/components/task_status.dart';
+import 'package:hr_management/core/design_system/components/taskpriority.dart';
 
 import '../theme/helper/app_assets.dart';
 import '../theme/helper/extention_colors.dart';
 import '../theme/helper/theme_extention.dart';
 import 'custom_btn_low_high_medium.dart';
-enum TaskPriority {
-  high,
-  medium,
-  low;
-
-  Color get colorTaskPriority => switch (this) {
-    TaskPriority.high => ExtentionColors.red500,
-    TaskPriority.medium =>ExtentionColors.yellow500,
-    TaskPriority.low => ExtentionColors.green500,
-    _ => ExtentionColors.green500,
-  };
-  String get name => switch (this) {
-    TaskPriority.high => "High",
-    TaskPriority.medium => "Medium",
-    TaskPriority.low => "Low",
-    _ => "Low",
-  };
-}
-
-enum TaskStatus {
-  inProgress,
-  review,
-  done;
-
-  Color get colorStatus => switch (this) {
-    TaskStatus.inProgress => ExtentionColors.gray200,
-    TaskStatus.review => ExtentionColors.yellow50,
-    TaskStatus.done => ExtentionColors.green50,
-    _ => ExtentionColors.gray200,
-  };
-  String get name => switch (this) {
-    TaskStatus.inProgress => "In Progress",
-    TaskStatus.review => "Review",
-    TaskStatus.done => "Done",
-    _ => "In Progress",
-  };
-  String get iconStatus =>switch (this) {
-    TaskStatus.inProgress => AppAssets.taskStutasInProgrss,
-    TaskStatus.review => AppAssets.taskStutasReview,
-    TaskStatus.done => AppAssets.taskStutasDone,
-
-  };
-
-  double get status => switch (this) {
-    TaskStatus.inProgress => 0.35,
-    TaskStatus.review => 0.60,
-    TaskStatus.done => 1.0,
-    _ =>  0.35,
-  };
-}
 
 class TaskState extends StatelessWidget{
   final String title;
   final TaskPriority priority;
   final TaskStatus status;
   final String date;
-
-
 
   const TaskState(
       {
