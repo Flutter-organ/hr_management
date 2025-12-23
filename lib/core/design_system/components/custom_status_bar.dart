@@ -27,21 +27,21 @@ class _CustomStatusBarState extends State<CustomStatusBar> {
         children: [
           Expanded(
             child: _statusBarFunc(
-              title: "review".tr(),
+              title: "reviewbtn".tr(),
               num: 3,
               type: StatusBarEnum.review,
             ),
           ),
           Expanded(
             child: _statusBarFunc(
-              title: "approved".tr(),
+              title: "approvedbtn".tr(),
               num: 2,
               type: StatusBarEnum.approved,
             ),
           ),
           Expanded(
             child: _statusBarFunc(
-              title: "rejected".tr(),
+              title: "rejectedbtn".tr(),
               num: 2,
               type: StatusBarEnum.rejected,
             ),

@@ -2,10 +2,10 @@
 "language": "English",
 "reviewbtn": "Review",
 "approvedbtn": "Approved",
-"rejectedbtn": "Rejected"
+"rejectedbtn": "Rejected",
 "low":"Low",
 "medium":"Medium",
-"high":"High"
+"high":"High",
     "username": "Username",
     "job_title": "job title",
     "property_label":"Burnout Stats",
