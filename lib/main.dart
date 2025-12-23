@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/design_system/components/custom_status_bar.dart';
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
 
 void main() async {
@@ -51,7 +50,6 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CustomStatusBar(),
           ElevatedButton(onPressed: () {}, child: Text("language".tr())),
         ],
       ),
