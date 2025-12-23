@@ -3,5 +3,7 @@
     "total_expense": "Total Expense",
     "approved": "Approved at {}",
     "rejected": "Rejected at {}",
-    "by": "By "
+    "by": "By ",
+    "upload_claim_document": "Upload Claim Document",
+    "format":"Format should be in .pdf .jpeg .png less than 5MB"
 }
