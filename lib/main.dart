@@ -1,8 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/design_system/components/property_good_poor.dart';
+import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
 
+import 'core/design_system/components/custom_primary_button.dart';
 import 'core/design_system/components/summary_card.dart';
 
 void main() async {
@@ -76,8 +77,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 value: '\$555',
                 indicatorColor: const Color(0xFF4CAF50),
               ),
-
             ],
+            buttons: [
+              CustomPrimaryButton(
+                title: 'Clock In Now',
+                backGroundColor: context.colors.primary,
+                onTap: () {},
+              ),
+            ]
           )
         ],
       ),

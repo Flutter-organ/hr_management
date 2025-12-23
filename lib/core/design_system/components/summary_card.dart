@@ -43,17 +43,19 @@ class SummaryCard extends StatelessWidget {
   final BorderRadiusGeometry itemBorderRadius;
   final Color? itemBackgroundColor;
 
-  // Spacing between title and items
   final double headerSpacing;
 
   // Whether items should expand equally
   final bool expandItems;
+
+  final List<Widget>? buttons;
 
 
   const SummaryCard({
     super.key,
     required this.title,
     required this.items,
+    this.buttons,
     this.subtitle,
     this.backgroundColor,
     this.borderRadius = const BorderRadius.all(Radius.circular(8)),
@@ -74,6 +76,8 @@ class SummaryCard extends StatelessWidget {
     this.border,
     this.shadowColor,
   });
+
+  bool get _hasActions => buttons != null && buttons!.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -104,9 +108,36 @@ class SummaryCard extends StatelessWidget {
             _buildHeader(context),
             SizedBox(height: headerSpacing),
             _buildStatsRow(context),
+            if (_hasActions) ...[
+              SizedBox(height: headerSpacing),
+              _buildActions()
+            ]
           ],
         ),
       ),
+    );
+  }
+  Widget _buildActions() {
+    return Row(
+      children: [
+        for (int i = 0; i < buttons!.length; i++)
+          if (expandItems)
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  right: i == buttons!.length - 1 ? 0 : itemSpacing,
+                ),
+                child: buttons![i],
+              ),
+            )
+          else
+            Padding(
+              padding: EdgeInsets.only(
+                right: i == buttons!.length - 1 ? 0 : itemSpacing,
+              ),
+              child: buttons![i],
+            ),
+      ],
     );
   }
 
