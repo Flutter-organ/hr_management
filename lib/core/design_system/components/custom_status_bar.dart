@@ -12,13 +12,7 @@ class CustomStatusBar extends StatefulWidget {
 }
 
 class _CustomStatusBarState extends State<CustomStatusBar> {
-  late StatusBarEnum statusBarEnum;
-
-  @override
-  void initState() {
-    statusBarEnum = StatusBarEnum.review;
-    super.initState();
-  }
+  StatusBarEnum statusBarEnum = StatusBarEnum.review;
 
   @override
   Widget build(BuildContext context) {
