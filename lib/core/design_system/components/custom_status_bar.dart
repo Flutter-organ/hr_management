@@ -59,7 +59,7 @@ class _CustomStatusBarState extends State<CustomStatusBar> {
 
   Widget _statusBarFunc({
     required String title,
-    required int num,
+    required num num,
     required StatusBarEnum type,
   }) {
     bool isSelected = statusBarEnum == type;
@@ -89,23 +89,24 @@ class _CustomStatusBarState extends State<CustomStatusBar> {
                 color: isSelected ? context.colors.white : context.colors.black,
               ),
             ),
-            ClipOval(
-              child: Container(
-                padding: EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: isSelected
-                      ? context.colors.error500
-                      : context.colors.gray300,
-                ),
-                child: Text(
-                  num.toString(),
-                  style: context.textTheme.titleSmallFont.copyWith(
-                    color: context.colors.white,
+            if (num < 0 || num != 0)
+              ClipOval(
+                child: Container(
+                  padding: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: isSelected
+                        ? context.colors.error500
+                        : context.colors.gray300,
+                  ),
+                  child: Text(
+                    num.toString(),
+                    style: context.textTheme.titleSmallFont.copyWith(
+                      color: context.colors.white,
+                    ),
                   ),
                 ),
               ),
-            ),
           ],
         ),
       ),
