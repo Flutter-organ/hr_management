@@ -2,14 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 
-// ignore: must_be_immutable
 class EmptyStateCard extends StatelessWidget {
-  String titleText;
-  String subTitleText;
-  String imgPath;
-  String imgtitle;
-  String imgDescription;
-  EmptyStateCard({
+  final String titleText;
+  final String subTitleText;
+  final String imgPath;
+  final String imgtitle;
+  final String imgDescription;
+  const EmptyStateCard({
     super.key,
     required this.titleText,
     required this.subTitleText,
