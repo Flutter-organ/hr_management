@@ -61,7 +61,6 @@ class _CustomStatusBarState extends State<CustomStatusBar> {
       borderRadius: BorderRadius.circular(100),
       onTap: () {
         if (statusBarEnum != type) {
-          //! تحسين: لا تعد بناء الواجهة إذا كان الزر مختاراً بالفعل
           setState(() {
             statusBarEnum = type;
           });
@@ -83,7 +82,7 @@ class _CustomStatusBarState extends State<CustomStatusBar> {
                 color: isSelected ? context.colors.white : context.colors.black,
               ),
             ),
-            if (num < 0 || num != 0)
+            if (num > 0)
               ClipOval(
                 child: Container(
                   padding: EdgeInsets.all(4),
