@@ -35,7 +35,7 @@ class ExpenseHistoryCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Iconsax.receipt_2, color: ExtentionColors.iconDefault),
+              Icon(Iconsax.receipt_2, color: ExtensionColors.iconDefault),
               Text(
                 DateFormat(
                   'd MMMM y',
@@ -58,9 +58,9 @@ class ExpenseHistoryCard extends StatelessWidget {
     final textTheme = context.textTheme;
     return Container(
       decoration: BoxDecoration(
-        color: ExtentionColors.backgroundContainer,
+        color: ExtensionColors.backgroundContainer,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: ExtentionColors.borderContainer),
+        border: Border.all(color: ExtensionColors.borderContainer),
       ),
       padding: EdgeInsets.all(12),
       child: Row(
