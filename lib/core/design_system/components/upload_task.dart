@@ -96,7 +96,9 @@ class _UploadTaskState extends State<UploadTask> {
                       children: [
                         Text(
                           pickedFile[index]!.path.split('/').last,
-                          style: txtTheme.bodySmallFont,
+                          style: txtTheme.labelMediumFont.copyWith(
+                            color: color.gray700,
+                          ),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                         ),
@@ -124,7 +126,7 @@ class _UploadTaskState extends State<UploadTask> {
       });
       for (int i = 1; i <= 100; i++) {
         if (!mounted) return;
-        await Future.delayed(const Duration(milliseconds: 20));
+        await Future.delayed(const Duration(milliseconds: 10));
         setState(() {
           uploadProgress[index] = i / 100;
         });
@@ -167,13 +169,20 @@ class _UploadTaskState extends State<UploadTask> {
                     Expanded(
                       child: Text(
                         fileName,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+                        style: context.textTheme.labelLargeFont.copyWith(
+                          color: context.colors.purple500,
+                        ),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     IconButton(
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints(),
                       onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.close),
+                      icon: Icon(
+                        Iconsax.close_square5,
+                        color: context.colors.error,
+                      ),
                     ),
                   ],
                 ),
