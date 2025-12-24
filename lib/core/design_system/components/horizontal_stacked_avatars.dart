@@ -1,50 +1,46 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../theme/helper/app_assets.dart';
 class HorizontalStackedAvatars extends StatelessWidget {
-  const HorizontalStackedAvatars({super.key});
+  final List<String> commenterImage;
+
+  const HorizontalStackedAvatars({
+    super.key,
+    required this.commenterImage
+  });
 
   @override
   Widget build(BuildContext context) {
     const double avatarRadius = 12.0;
     const double overlap = 6.0;
-
+    final double step = avatarRadius * 2 - overlap;
     return SizedBox(
       width: (avatarRadius * 2 * 3) - (overlap * 2),
       height: avatarRadius * 2,
       child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Positioned(
-            left: 0,
-            child: FunCircleAvatar(
-              image: const AssetImage(AppAssets.profilePlaceholder),
-            ),
+      clipBehavior: Clip.none,
+      children: List.generate(3, (index) {
+        return Positioned(
+          left: step * index,
+          child:  FunCircleAvatar(
+            imageUrl: commenterImage[index],
+            radius: avatarRadius,
+            borderWidth: 1.0,
           ),
-          Positioned(
-            left: avatarRadius * 2 - overlap,
-            child: FunCircleAvatar(
-              image: const AssetImage(AppAssets.profilePlaceholder),
-            ),
-          ),
-          Positioned(
-            left: (avatarRadius * 2 - overlap) * 2,
-            child: FunCircleAvatar(
-              image: const AssetImage(AppAssets.profilePlaceholder),
-            ),
-          ),
-        ],
-      ),
+        );
+      }),
+      )
     );
   }
 }
 class FunCircleAvatar extends StatelessWidget {
-  final ImageProvider image;
+  final String imageUrl;
   final double radius;
   final double borderWidth;
 
   const FunCircleAvatar({
     super.key,
-    required this.image,
+    required this.imageUrl,
     this.radius = 12.0,
     this.borderWidth = 1.0,
   });
@@ -52,6 +48,8 @@ class FunCircleAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: radius * 2,
+      height: radius * 2,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
@@ -59,9 +57,19 @@ class FunCircleAvatar extends StatelessWidget {
           width: borderWidth,
         ),
       ),
-      child: CircleAvatar(
-        radius: radius,
-        backgroundImage: image,
+      child: CachedNetworkImage(
+        imageUrl: imageUrl,
+        fit: BoxFit.cover,
+        width: double.infinity,
+        height: double.infinity,
+        placeholder: (context, url) => Image.asset(
+          AppAssets.placeHolderProfile,
+          fit: BoxFit.cover,
+        ),
+        errorWidget: (context, url, error) => Image.asset(
+          AppAssets.placeHolderProfile,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

@@ -10,14 +10,12 @@ enum TaskStatus {
   Color get colorStatus => switch (this) {
     TaskStatus.inProgress => ExtentionColors.gray200,
     TaskStatus.review => ExtentionColors.yellow50,
-    TaskStatus.done => ExtentionColors.green50,
-    _ => ExtentionColors.gray200,
+    TaskStatus.done => ExtentionColors.green50
   };
   String get name => switch (this) {
     TaskStatus.inProgress => "In Progress",
     TaskStatus.review => "Review",
-    TaskStatus.done => "Done",
-    _ => "In Progress",
+    TaskStatus.done => "Done"
   };
   String get iconStatus =>switch (this) {
     TaskStatus.inProgress => AppAssets.taskStutasInProgrss,
@@ -29,7 +27,6 @@ enum TaskStatus {
   double get status => switch (this) {
     TaskStatus.inProgress => 0.35,
     TaskStatus.review => 0.60,
-    TaskStatus.done => 1.0,
-    _ =>  0.35,
+    TaskStatus.done => 1.0
   };
 }

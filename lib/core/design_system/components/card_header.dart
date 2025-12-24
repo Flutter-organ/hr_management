@@ -1,49 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/design_system/components/task_card.dart';
 
 import '../theme/helper/extention_colors.dart';
 import '../theme/helper/theme_extention.dart';
 
-
-class TaskCard extends StatelessWidget {
+class CardHeader extends StatelessWidget {
   final String title;
   final String subtitle;
   final String count;
-  final TaskState taskState;
-  const TaskCard({
+
+  const CardHeader({
     super.key,
-    required this.title,
-    required this.subtitle,
-    required this.count,
-    required this.taskState,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 12,
-        children: [
-          _TaskCardHeader(
-            title: title,
-            subtitle: subtitle,
-            count: count,
-          ),
-          TaskCardItem(taskState: taskState),
-        ],
-      ),
-    );
-  }
-}
-
-class _TaskCardHeader extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final String count;
-
-  const _TaskCardHeader({
     required this.title,
     required this.subtitle,
     required this.count,
@@ -84,4 +50,3 @@ class _TaskCardHeader extends StatelessWidget {
     );
   }
 }
-

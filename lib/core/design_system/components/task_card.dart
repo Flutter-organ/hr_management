@@ -1,38 +1,12 @@
-import 'dart:ffi';
-
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/design_system/components/task_status.dart';
-import 'package:hr_management/core/design_system/components/taskpriority.dart';
-
 import '../theme/helper/app_assets.dart';
-import '../theme/helper/extention_colors.dart';
 import '../theme/helper/theme_extention.dart';
+import '../model/task_model.dart';
 import 'custom_btn_low_high_medium.dart';
 import 'horizontal_stacked_avatars.dart';
 
-class TaskState extends StatelessWidget{
-  final String title;
-  final TaskPriority priority;
-  final TaskStatus status;
-  final String date;
-
-  const TaskState(
-      {
-        super.key,
-        required this.title,
-        required this.priority,
-        required this.status,
-        required this.date,
-      });
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
 class TaskCardItem extends StatelessWidget {
-  final TaskState taskState;
+  final TaskModel taskState;
 
   const TaskCardItem({
     super.key,
@@ -110,11 +84,13 @@ class TaskCardItem extends StatelessWidget {
               Row(
                 spacing: 4,
                 children: [
-                  HorizontalStackedAvatars(),
+                  HorizontalStackedAvatars(commenterImage: taskState.comments.map((commenterImage) => commenterImage.commenterImage).toList()),
                   Text(
-                    "+3",
+                    taskState.comments.length > 3
+                        ? "${taskState.comments.length - 3}+"
+                        : "${taskState.comments.length}",
                     style: context.textTheme.bodySmallFont
-                        ?.copyWith(color: context.colors.black),
+                        .copyWith(color: context.colors.black),
                   ),
                 ],
               ),
@@ -151,7 +127,6 @@ class TaskCardItem extends StatelessWidget {
 class ProgressBar extends StatelessWidget {
   final Color statusColor;
   final double taskStatus;
-
 
   const ProgressBar({
     super.key,
