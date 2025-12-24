@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/design_system/components/upload_claim_document.dart';
 import 'package:hr_management/core/design_system/components/upload_task.dart';
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
 
@@ -10,7 +9,7 @@ void main() async {
 
   runApp(
     EasyLocalization(
-      supportedLocales: const [Locale('en'), Locale('ar')],
+      supportedLocales: const [Locale('ar'), Locale('en')],
       path: 'assets/translations',
       child: MyApp(),
     ),
