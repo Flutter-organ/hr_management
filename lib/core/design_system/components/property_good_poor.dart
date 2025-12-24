@@ -42,10 +42,10 @@ class PropertyGoodPoor extends StatelessWidget {
     final textStyle = context.textTheme;
 
     final statusColor = switch (status) {
-      BurnoutStatus.bad => ExtentionColors.bad,
-      BurnoutStatus.poor => ExtentionColors.poor,
-      BurnoutStatus.okay => ExtentionColors.okay,
-      BurnoutStatus.good => ExtentionColors.good,
+      BurnoutStatus.bad => ExtensionColors.bad,
+      BurnoutStatus.poor => ExtensionColors.poor,
+      BurnoutStatus.okay => ExtensionColors.okay,
+      BurnoutStatus.good => ExtensionColors.good,
     };
     return Container(
       padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
