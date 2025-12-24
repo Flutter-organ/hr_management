@@ -88,16 +88,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         children: [
                           Text(
                             profileName ?? "Username".tr(),
-                            style: context.textTheme.titleMediumFont.copyWith(color:  ExtentionColors.blackTitleProfile)
+                            style: context.textTheme.titleMediumFont.copyWith(color:  ExtensionColors.blackTitleProfile)
                           ),
                           const SizedBox(width: 8),
-                          const Icon(Icons.verified, color:ExtentionColors.prupleProfile, size: 20),
+                          const Icon(Icons.verified, color:ExtensionColors.prupleProfile, size: 20),
                         ],
                       ),
                       Text(
                         profileJobTitle ?? "job_title".tr(),
                         style: context.textTheme.titleSmallFont.copyWith(
-                          color: ExtentionColors.prupleProfile,
+                          color: ExtensionColors.prupleProfile,
                         ),
                       ),
                     ],
@@ -108,7 +108,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ? Text(
                     title!,
                     style: context.textTheme.titleLargeFontSemiBold
-                        .copyWith(color: ExtentionColors.blackTitleProfile,fontSize: 18)
+                        .copyWith(color: ExtensionColors.blackTitleProfile,fontSize: 18)
                   )
                 : null,
         centerTitle: !isProfileMode,
