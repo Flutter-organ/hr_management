@@ -32,7 +32,7 @@ class BottomNavBar extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       width: double.infinity,
       constraints: const BoxConstraints(maxHeight: 75),
-      decoration: BoxDecoration(color: ExtentionColors.bottomNavBarBgColor),
+      decoration: BoxDecoration(color: ExtensionColors.bottomNavBarBgColor),
       child: Row(
         mainAxisAlignment: .spaceBetween,
         children: List.generate(selectedIcons.length, (idx) {
