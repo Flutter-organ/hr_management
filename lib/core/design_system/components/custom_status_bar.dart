@@ -5,7 +5,13 @@ import 'package:hr_management/core/design_system/theme/helper/theme_extention.da
 enum StatusBarEnum { review, approved, rejected }
 
 class CustomStatusBar extends StatefulWidget {
-  const CustomStatusBar({super.key});
+  final num reviewCount, approveCount, rejectedCount;
+  const CustomStatusBar({
+    super.key,
+    required this.reviewCount,
+    required this.approveCount,
+    required this.rejectedCount,
+  });
 
   @override
   State<CustomStatusBar> createState() => _CustomStatusBarState();
@@ -28,21 +34,21 @@ class _CustomStatusBarState extends State<CustomStatusBar> {
           Expanded(
             child: _statusBarFunc(
               title: "reviewbtn".tr(),
-              num: 3,
+              num: widget.reviewCount,
               type: StatusBarEnum.review,
             ),
           ),
           Expanded(
             child: _statusBarFunc(
               title: "approvedbtn".tr(),
-              num: 2,
+              num: widget.approveCount,
               type: StatusBarEnum.approved,
             ),
           ),
           Expanded(
             child: _statusBarFunc(
               title: "rejectedbtn".tr(),
-              num: 2,
+              num: widget.rejectedCount,
               type: StatusBarEnum.rejected,
             ),
           ),
