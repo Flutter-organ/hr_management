@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:hr_management/core/design_system/components/custom_primary_button.dart';
 import 'package:hr_management/core/design_system/theme/helper/dashed_border_painter.dart';
 import 'package:hr_management/core/design_system/theme/helper/extention_colors.dart';
 import 'package:hr_management/core/design_system/theme/helper/running_border_painter.dart';
@@ -26,7 +27,7 @@ class _UploadTaskState extends State<UploadTask> {
   Widget build(BuildContext context) {
     final txtTheme = context.textTheme;
     final color = context.colors;
-    final item = List.generate(2, (index) => index);
+    final item = List.generate(3, (index) => index);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
@@ -205,23 +206,41 @@ class _UploadTaskState extends State<UploadTask> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    OutlinedButton.icon(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        setState(() => pickedFile[index] = null);
-                      },
-                      icon: Icon(
-                        Icons.delete_outline,
+                    CustomPrimaryButton(
+                      title: "delete".tr(),
+                      style: context.textTheme.bodyMediumFont.copyWith(
                         color: context.colors.error,
                       ),
-                      label: Text(
-                        "Delete",
-                        style: TextStyle(color: context.colors.error),
+                      border: Border.all(width: 2, color: context.colors.error),
+                      borderRadius: BorderRadius.circular(20),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 16,
                       ),
+                      backGroundColor: context.colors.pureWhite,
+                      onTap: () {
+                        setState(() {
+                          pickedFile[index] = null;
+                          Navigator.pop(context);
+                        });
+                      },
                     ),
-                    ElevatedButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text("Keep File"),
+                    CustomPrimaryButton(
+                      onTap: () => Navigator.pop(context),
+                      title: "keep_file".tr(),
+                      style: context.textTheme.bodyMediumFont.copyWith(
+                        color: context.colors.purple500,
+                      ),
+                      border: Border.all(
+                        width: 2,
+                        color: context.colors.purple500,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 16,
+                      ),
+                      backGroundColor: context.colors.pureWhite,
                     ),
                   ],
                 ),
