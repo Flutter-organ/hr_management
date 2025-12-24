@@ -1,8 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hr_management/core/design_system/theme/helper/app_assets.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
+import 'package:iconsax/iconsax.dart';
 
 class CustomAttendantHistory extends StatelessWidget {
   final String? attendanceDate, clockInOut, totalHours;
@@ -22,7 +21,11 @@ class CustomAttendantHistory extends StatelessWidget {
           Row(
             spacing: 4,
             children: [
-              SvgPicture.asset(AppAssets.kPropertyOutline),
+              Icon(
+                Iconsax.calendar_2,
+                size: 16,
+                color: context.colors.purple500,
+              ),
               Text(
                 attendanceDate ?? "attendancedate".tr(),
                 style: context.textTheme.bodyLargeFont.copyWith(

@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hr_management/core/design_system/theme/helper/app_assets.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
+import 'package:iconsax/iconsax.dart';
 
 class CustomAttendantClockin extends StatelessWidget {
   final String imageUrl;
@@ -48,7 +48,11 @@ class CustomAttendantClockin extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SvgPicture.asset(AppAssets.kVerifiedRounded),
+                    Icon(
+                      Iconsax.verify5,
+                      size: 16,
+                      color: context.colors.purple500,
+                    ),
                   ],
                 ),
                 Text(
@@ -63,7 +67,11 @@ class CustomAttendantClockin extends StatelessWidget {
             subtitle: Row(
               spacing: 4,
               children: [
-                SvgPicture.asset(AppAssets.kPropertyLocation),
+                Icon(
+                  Iconsax.location_tick5,
+                  size: 12,
+                  color: context.colors.purple500,
+                ),
                 Text(
                   locationTitle ?? "locationlabel".tr(),
                   style: context.textTheme.bodySmallFont.copyWith(
