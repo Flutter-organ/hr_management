@@ -2,8 +2,7 @@
 "language": "English",
 "low":"Low",
 "medium":"Medium",
-"high":"High"
-    "language": "English",
+"high":"High",
     "username": "Username",
     "job_title": "job title",
     "property_label":"Burnout Stats",
@@ -18,5 +17,6 @@
     "total_expense": "Total Expense",
     "approved": "Approved at {}",
     "rejected": "Rejected at {}",
-    "by": "By "
+    "by": "By ",
+    "type_a_message...": "Type a message..."
 }
