@@ -16,4 +16,7 @@ class ExtensionColors {
   static const Color poor = Color(0xFFFD824C);
   static const Color bad = Color(0xFFF95555);
   static const Color bottomNavBarBgColor = Color(0xff1C2020);
+  static const  grayCheckBox = Color(0xFF98A2B3);
+  static const grayText = Color(0xFF2D2D2D);
+
 }
