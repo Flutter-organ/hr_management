@@ -87,8 +87,8 @@ class TaskCardItem extends StatelessWidget {
                   HorizontalStackedAvatars(commenterImage: taskState.comments.map((commenterImage) => commenterImage.commenterImage).toList()),
                   Text(
                     taskState.comments.length > 3
-                        ? "${taskState.comments.length - 3}+"
-                        : "${taskState.comments.length}",
+                        ? "+${taskState.comments.length - 3}"
+                        :'',
                     style: context.textTheme.bodySmallFont
                         .copyWith(color: context.colors.black),
                   ),
@@ -107,7 +107,7 @@ class TaskCardItem extends StatelessWidget {
                   ),
                   const SizedBox(width: 6),
                   CustomBtnLowHighMedium(
-                    title: "2",
+                    title: taskState.comments.length.toString(),
                     color: context.colors.white,
                     style: context.textTheme.bodySmallFont
                         .copyWith(color: context.colors.black),
