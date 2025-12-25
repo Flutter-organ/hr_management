@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/design_system/components/property_good_poor.dart';
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
 
 void main() async {
@@ -55,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(onPressed: () {}, child: Text("language".tr())),
           ],
         ),
+      ),
     );
   }
 }
