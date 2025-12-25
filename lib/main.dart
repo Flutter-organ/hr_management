@@ -1,9 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-=======
 import 'package:hr_management/core/design_system/components/property_good_poor.dart';
->>>>>>> system_design
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
 
 void main() async {
@@ -51,14 +48,16 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
-      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-=======
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [],
+        ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(onPressed: () {}, child: Text("language".tr())),
->>>>>>> system_design
         ],
       ),
     );
