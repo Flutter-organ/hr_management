@@ -6,11 +6,13 @@ import 'package:hr_management/core/design_system/theme/helper/theme_extention.da
 
 class CustomClockinAreaMapUser extends StatelessWidget {
   final String imageUrl;
+  final Color? color;
   final void Function()? onTap;
   const CustomClockinAreaMapUser({
     super.key,
     required this.imageUrl,
     this.onTap,
+    this.color,
   });
 
   @override
@@ -19,7 +21,7 @@ class CustomClockinAreaMapUser extends StatelessWidget {
       padding: EdgeInsets.all(83),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: context.colors.purple100,
+        color: color,
         border: Border.all(color: ExtensionColors.kTwo),
       ),
       child: InkWell(
