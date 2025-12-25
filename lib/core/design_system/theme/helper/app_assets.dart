@@ -15,3 +15,4 @@ class AppAssets {
   static const calendar = 'assets/svgs/calendar.svg';
   static const message = 'assets/svgs/message.svg';
 }
+

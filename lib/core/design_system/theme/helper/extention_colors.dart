@@ -10,6 +10,7 @@ class ExtensionColors {
   static const Color textPrimary = Color(0xFF101828);
   static const Color textSecondary = Color(0xFF475467);
   static const Color cardBackground = Color(0xFFF9F9F9);
+
   static const Color good = Color(0xFF47C28B);
   static const Color okay = Color(0xFFFFC02E);
   static const Color poor = Color(0xFFFD824C);
@@ -19,6 +20,7 @@ class ExtensionColors {
   static const grayCheckBox = Color(0xFF98A2B3);
   static const grayText = Color(0xFF2D2D2D);
   static const transparentColor = Colors.transparent;
+
   static const Color backgroundCard = Color(0xFFFEFEFE);
   static const Color red500 = Color(0xFFF95555);
   static const Color yellow500 = Color(0xFFFFC02E);
@@ -28,4 +30,12 @@ class ExtensionColors {
   static const Color gray600 = Color(0xFF71717A);
   static const Color gray200 = Color(0xFFE2E2E5);
   static const Color grayStatusBar = Color(0xFFE7E7E7);
+
+
+
+
+
+
+
+>>>>>>> system_design
 }
