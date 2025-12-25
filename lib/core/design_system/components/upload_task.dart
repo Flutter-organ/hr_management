@@ -67,7 +67,7 @@ class _UploadTaskState extends State<UploadTask> {
           child: Container(
             constraints: BoxConstraints(minHeight: 100, minWidth: 106),
             decoration: BoxDecoration(
-              color: ExtentionColors.transparentColor,
+              color: ExtensionColors.transparentColor,
               borderRadius: BorderRadius.circular(8),
             ),
             alignment: Alignment.center,

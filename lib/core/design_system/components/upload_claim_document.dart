@@ -275,7 +275,7 @@ class _UploadClaimDocumentState extends State<UploadClaimDocument> {
       context: context,
       builder: (context) {
         return Dialog(
-          backgroundColor: ExtentionColors.transparentColor,
+          backgroundColor: ExtensionColors.transparentColor,
           insetPadding: const EdgeInsets.all(10),
           child: Stack(
             alignment: Alignment.topRight,
