@@ -7,6 +7,6 @@ class AppAssets {
   static const okayEmoji = 'assets/images/okay.png';
   static const poorEmoji = 'assets/images/poor.png';
   static const badEmoji = 'assets/images/bad.png';
-  static const placeHolderProfile = 'assets/images/placeholder_profile.png';
-  static const profilePlaceholder = 'assets/images/profile.png';
+  static const  placeHolderProfile = 'assets/images/placeholder_profile.png';
+  static const  profilePlaceholder = 'assets/images/profile.png';
 }

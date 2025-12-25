@@ -15,5 +15,4 @@ class ExtensionColors {
   static const Color okay = Color(0xFFFFC02E);
   static const Color poor = Color(0xFFFD824C);
   static const Color bad = Color(0xFFF95555);
-  static const Color kOne = Color(0xFFF54975);
 }
