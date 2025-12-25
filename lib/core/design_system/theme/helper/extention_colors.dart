@@ -15,4 +15,7 @@ class ExtensionColors {
   static const Color okay = Color(0xFFFFC02E);
   static const Color poor = Color(0xFFFD824C);
   static const Color bad = Color(0xFFF95555);
+  static const  grayCheckBox = Color(0xFF98A2B3);
+  static const grayText = Color(0xFF2D2D2D);
+
 }
