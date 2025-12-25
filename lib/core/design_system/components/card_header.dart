@@ -44,7 +44,7 @@ class CardHeader extends StatelessWidget {
         Text(
           subtitle,
           style: context.textTheme.bodySmallFont
-              .copyWith(color: ExtentionColors.textSecondary),
+              .copyWith(color: ExtensionColors.textSecondary),
         ),
       ],
     );

@@ -8,9 +8,9 @@ enum TaskStatus {
   done;
 
   Color get colorStatus => switch (this) {
-    TaskStatus.inProgress => ExtentionColors.gray200,
-    TaskStatus.review => ExtentionColors.yellow50,
-    TaskStatus.done => ExtentionColors.green50
+    TaskStatus.inProgress => ExtensionColors.gray200,
+    TaskStatus.review => ExtensionColors.yellow50,
+    TaskStatus.done => ExtensionColors.green50
   };
   String get name => switch (this) {
     TaskStatus.inProgress => "In Progress",
