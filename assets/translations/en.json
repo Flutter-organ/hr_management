@@ -17,5 +17,9 @@
   "total_expense": "Total Expense",
   "approved": "Approved at {}",
   "rejected": "Rejected at {}",
-  "by": "By "
+  "by": "By ",
+  "today_task":"Today Task",
+  "sub_title":"The tasks assigned to you for today",
+  "count_task": "1",
+  "wiring_dashboard_analytics": "Wiring Dashboard Analytics"
 }
