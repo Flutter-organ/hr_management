@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/theme/color/app_constant_colors.dart';
 
 class ExtensionColors {
-  static const prupleProfile= Color(0xff675aff);
-  static const blackTitleProfile=Color(0xff2D2D2D);
+  static const prupleProfile = Color(0xff675aff);
+  static const blackTitleProfile = Color(0xff2D2D2D);
   static const Color iconDefault = AppConstantColors.purple500;
   static const Color backgroundContainer = Color(0xFFF9FAFB);
   static const Color borderContainer = Color(0xFFEAECF0);
@@ -15,8 +15,10 @@ class ExtensionColors {
   static const Color okay = Color(0xFFFFC02E);
   static const Color poor = Color(0xFFFD824C);
   static const Color bad = Color(0xFFF95555);
-  static const  grayCheckBox = Color(0xFF98A2B3);
+  static const Color bottomNavBarBgColor = Color(0xff1C2020);
+  static const grayCheckBox = Color(0xFF98A2B3);
   static const grayText = Color(0xFF2D2D2D);
+  static const transparentColor = Colors.transparent;
 
   static const Color backgroundCard = Color(0xFFFEFEFE);
   static const Color red500 = Color(0xFFF95555);
