@@ -8,6 +8,7 @@ import 'package:hr_management/core/design_system/theme/helper/theme_extention.da
 class CustomChatBarMessage extends StatelessWidget {
   final TextEditingController messageController;
   final VoidCallback? onSend;
+  final VoidCallback? onRecord;
   final VoidCallback? onAttachTap;
   final VoidCallback? onCameraTap;
 
@@ -15,6 +16,7 @@ class CustomChatBarMessage extends StatelessWidget {
     super.key,
     required this.messageController,
     this.onSend,
+    this.onRecord,
     this.onAttachTap,
     this.onCameraTap,
   });
@@ -34,7 +36,6 @@ class CustomChatBarMessage extends StatelessWidget {
 
       child: Row(
         children: [
-          /// Text Field + Attach + Camera
           Expanded(
             child: Container(
               padding: const EdgeInsets.all(10),
@@ -44,77 +45,80 @@ class CustomChatBarMessage extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  /// Text Field
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: TextFormField(
-                        controller: messageController,
-                        style: TextStyle(
-                          color: ExtentionColors.blackTitleProfile,
-                        ),
-                        decoration: InputDecoration(
-                          hintText: "type_a_message...".tr(),
-                          hintStyle: TextStyle(
-                            color: ExtentionColors.blackTitleProfile,
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 12,
-                          ),
-                          border: InputBorder.none,
-                        ),
-                        onChanged: (_) {
-                          // to rebuild the widget to update the send/mic button state
-                          (context as Element).markNeedsBuild();
-                        },
-                      ),
-                    ),
-                  ),
+                  messageTextField(context),
                   const SizedBox(width: 16),
-
-                  /// Attach
-                  InkWell(
-                    onTap: onAttachTap,
-                    child: SvgPicture.asset(
-                      AppAssets.kAttach,
-                      color: ExtentionColors.blackTitleProfile,
-                    ),
-                  ),
+                  attachButton(),
                   const SizedBox(width: 16),
-
-                  /// Camera
-                  InkWell(
-                    onTap: onCameraTap,
-                    child: SvgPicture.asset(
-                      AppAssets.kCamera,
-                      color: ExtentionColors.blackTitleProfile,
-                    ),
-                  ),
+                  cameraButton(),
                 ],
               ),
             ),
           ),
           const SizedBox(width: 16),
-
-          /// Send / Mic Button
-          SizedBox(
-            width: 56,
-            height: 56,
-            child: GestureDetector(
-              onTap: _hasText() ? onSend : null,
-              child: CircleAvatar(
-                backgroundColor: ExtentionColors.iconDefault,
-                child: SvgPicture.asset(
-                  _hasText() ? AppAssets.kSend : AppAssets.kMic,
-                  color: context.colors.white,
-                ),
-              ),
-            ),
-          ),
+          sendOrMicButton(context),
         ],
+      ),
+    );
+  }
+
+  Widget messageTextField(BuildContext context) {
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
+        child: TextFormField(
+          controller: messageController,
+          style: TextStyle(color: ExtentionColors.blackTitleProfile),
+          decoration: InputDecoration(
+            hintText: "type_a_message...".tr(),
+            hintStyle: TextStyle(color: ExtentionColors.blackTitleProfile),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
+            ),
+            border: InputBorder.none,
+          ),
+          onChanged: (_) {
+            // to rebuild the widget to update the send/mic button state
+            (context as Element).markNeedsBuild();
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget attachButton() {
+    return InkWell(
+      onTap: onAttachTap,
+      child: SvgPicture.asset(
+        AppAssets.kAttach,
+        color: ExtentionColors.blackTitleProfile,
+      ),
+    );
+  }
+
+  Widget cameraButton() {
+    return InkWell(
+      onTap: onCameraTap,
+      child: SvgPicture.asset(
+        AppAssets.kCamera,
+        color: ExtentionColors.blackTitleProfile,
+      ),
+    );
+  }
+
+  Widget sendOrMicButton(BuildContext context) {
+    return SizedBox(
+      width: 56,
+      height: 56,
+      child: InkWell(
+        onTap: _hasText() ? onRecord : null,
+        child: CircleAvatar(
+          backgroundColor: ExtentionColors.iconDefault,
+          child: SvgPicture.asset(
+            _hasText() ? AppAssets.kSend : AppAssets.kMic,
+            color: context.colors.white,
+          ),
+        ),
       ),
     );
   }
