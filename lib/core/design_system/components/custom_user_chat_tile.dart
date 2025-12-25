@@ -69,7 +69,7 @@ class CustomUserChatTile extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: ExtensionColors.kOne,
+                  color: ExtensionColors.okay,
                 ),
                 child: Text(
                   textAlign: TextAlign.center,
