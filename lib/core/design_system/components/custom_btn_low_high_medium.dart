@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomBtnLowHighMedium extends StatelessWidget {
-  final Color? color;
+  final Color? color, iconColor;
   final IconData? icon;
   final String title;
   final TextStyle? style;
@@ -20,6 +20,7 @@ class CustomBtnLowHighMedium extends StatelessWidget {
     this.border,
     this.gradient,
     this.icon,
+    this.iconColor,
   });
 
   @override
@@ -37,7 +38,7 @@ class CustomBtnLowHighMedium extends StatelessWidget {
         spacing: 5,
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (icon != null) Icon(icon, size: 10),
+          if (icon != null) Icon(icon, size: 10, color: iconColor),
           Text(title, style: style),
         ],
       ),
