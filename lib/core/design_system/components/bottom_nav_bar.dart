@@ -18,7 +18,6 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = context.colors;
-    final items = List.generate(5, (index) => (index));
     return Theme(
       data: Theme.of(context).copyWith(
         splashColor: ExtensionColors.transparentColor,
@@ -36,8 +35,8 @@ class BottomNavBar extends StatelessWidget {
         elevation: 0,
         selectedFontSize: 0,
         unselectedFontSize: 0,
-        items: items.map((item) {
-          return _buildBottomNavBarItem(icons[item], color, "");
+        items: icons.map((iconModel) {
+          return _buildBottomNavBarItem(iconModel, color, "");
         }).toList(),
       ),
     );
