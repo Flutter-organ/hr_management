@@ -16,41 +16,45 @@ class EmptyStateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: .start,
-      mainAxisAlignment: .center,
-      children: [
-        SizedBox(height: 24),
-        Center(
-          child: Column(
-            children: [
-              Container(
-                height: 126,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  image: DecorationImage(image: AssetImage(imgPath)),
-                ),
-              ),
-              SizedBox(height: 12),
-              Text(
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 24),
+        child: Column(
+          mainAxisSize: .min,
+          children: [
+            Image.asset(
+              imgPath,
+              height: 126,
+              width: double.infinity,
+              fit: BoxFit.contain,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: Text(
                 imgtitle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: context.textTheme.titleLargeFontSemiBold.copyWith(
                   color: ExtensionColors.textPrimary,
                 ),
               ),
-              Text(
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(
                 imgDescription,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
                 style: context.textTheme.titleSmallFont.copyWith(
                   fontWeight: FontWeight.w400,
-                  letterSpacing: 0,
                   color: context.colors.gray300,
                 ),
                 textAlign: TextAlign.center,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

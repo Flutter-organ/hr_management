@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import '../theme/helper/app_assets.dart';
 
 class HorizontalStackedAvatars extends StatelessWidget {
@@ -55,7 +56,7 @@ class FunCircleAvatar extends StatelessWidget {
       height: radius * 2,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: Colors.white, width: borderWidth),
+        border: Border.all(color: context.colors.white, width: borderWidth),
       ),
       child: CachedNetworkImage(
         imageUrl: imageUrl,
