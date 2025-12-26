@@ -91,13 +91,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                             style: context.textTheme.titleMediumFont.copyWith(color:  ExtensionColors.blackTitleProfile)
                           ),
                           const SizedBox(width: 8),
-                          const Icon(Icons.verified, color:ExtensionColors.prupleProfile, size: 20),
+                          const Icon(Icons.verified, color:ExtensionColors.purpleProfile, size: 20),
                         ],
                       ),
                       Text(
                         profileJobTitle ?? "job_title".tr(),
                         style: context.textTheme.titleSmallFont.copyWith(
-                          color: ExtensionColors.prupleProfile,
+                          color: ExtensionColors.purpleProfile,
                         ),
                       ),
                     ],

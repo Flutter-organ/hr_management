@@ -18,9 +18,9 @@ enum TaskStatus {
     TaskStatus.done => "Done"
   };
   String get iconStatus =>switch (this) {
-    TaskStatus.inProgress => AppAssets.taskStutasInProgrss,
-    TaskStatus.review => AppAssets.taskStutasReview,
-    TaskStatus.done => AppAssets.taskStutasDone,
+    TaskStatus.inProgress => AppAssets.taskStatusInProgress,
+    TaskStatus.review => AppAssets.taskStatusReview,
+    TaskStatus.done => AppAssets.taskStatusDone,
 
   };
 
