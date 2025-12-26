@@ -1,9 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
-
-import 'core/design_system/components/check_box.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,51 +44,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool _isChecked = true;
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CustomCheckbox(
-              isChecked: _isChecked,
-              isEnabled: false,
-              label: 'This is a check box',
-              size: 24,
-              onChanged: (value) => setState(() => _isChecked = value),
-            ),
-            SizedBox(height: 20),
-            CustomCheckbox(
-              isChecked: _isChecked,
-              isEnabled: true,
-              label: 'This is a check box',
-              size: 24,
-              onChanged: (value) => setState(() => _isChecked = value),
-            ),
-            SizedBox(height: 20),
-            CustomCheckbox(
-              isChecked: _isChecked,
-              isEnabled: true,
-              size: 24,
-              onChanged: (value) => setState(() => _isChecked = value),
-            ),
-            SizedBox(height: 20),
-            CustomCheckbox(
-              isChecked: _isChecked,
-              isEnabled: true,
-              size: 24,
-              shadowColor: context.colors.primary,
-              onChanged: (value) => setState(() => _isChecked = value),
-            ),
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [],
       ),
     );
   }
