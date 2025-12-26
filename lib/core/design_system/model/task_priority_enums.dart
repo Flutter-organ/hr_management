@@ -7,9 +7,9 @@ enum TaskPriority {
   low;
 
   Color get colorTaskPriority => switch (this) {
-    TaskPriority.high => ExtentionColors.red500,
-    TaskPriority.medium =>ExtentionColors.yellow500,
-    TaskPriority.low => ExtentionColors.green500
+    TaskPriority.high => ExtensionColors.red500,
+    TaskPriority.medium =>ExtensionColors.yellow500,
+    TaskPriority.low => ExtensionColors.green500
   };
   String get name => switch (this) {
     TaskPriority.high => "High",
