@@ -29,7 +29,7 @@ class ExtensionColors {
   static const Color gray600 = Color(0xFF71717A);
   static const Color gray200 = Color(0xFFE2E2E5);
   static const Color grayStatusBar = Color(0xFFE7E7E7);
-
-
+  static const Color borderColor = Color(0xffEAECF0);
+    static const Color whiteContainer = Color(0xffFEFEFE);
 
 }
