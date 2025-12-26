@@ -1,17 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:hr_management/core/design_system/theme/helper/extention_colors.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 
 class EmptyStateCard extends StatelessWidget {
-  final String titleText;
-  final String subTitleText;
   final String imgPath;
   final String imgtitle;
   final String imgDescription;
   const EmptyStateCard({
     super.key,
-    required this.titleText,
-    required this.subTitleText,
     required this.imgPath,
     required this.imgtitle,
     required this.imgDescription,
@@ -19,41 +16,41 @@ class EmptyStateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-      ),
-      child: Column(
-        crossAxisAlignment: .start,
-        mainAxisAlignment: .center,
-        children: [
-          Text(titleText, style: context.textTheme.titleLargeFontSemiBold),
-          Text(subTitleText, style: context.textTheme.titleMediumFont),
-          SizedBox(height: 24),
-          Center(
-            child: Column(
-              children: [
-                Container(
-                  height: 126,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage(imgPath)),
-                  ),
+    return Column(
+      crossAxisAlignment: .start,
+      mainAxisAlignment: .center,
+      children: [
+        SizedBox(height: 24),
+        Center(
+          child: Column(
+            children: [
+              Container(
+                height: 126,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: AssetImage(imgPath)),
                 ),
-                SizedBox(height: 12),
-                Text(imgtitle, style: context.textTheme.titleLargeFontSemiBold),
-                Text(
-                  imgDescription,
-                  style: context.textTheme.titleSmallFont,
-                  textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 12),
+              Text(
+                imgtitle,
+                style: context.textTheme.titleLargeFontSemiBold.copyWith(
+                  color: ExtensionColors.textPrimary,
                 ),
-              ],
-            ),
+              ),
+              Text(
+                imgDescription,
+                style: context.textTheme.titleSmallFont.copyWith(
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0,
+                  color: context.colors.gray300,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

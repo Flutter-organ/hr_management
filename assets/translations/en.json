@@ -21,5 +21,10 @@
   "today_task":"Today Task",
   "sub_title":"The tasks assigned to you for today",
   "count_task": "1",
-  "wiring_dashboard_analytics": "Wiring Dashboard Analytics"
+  "wiring_dashboard_analytics": "Wiring Dashboard Analytics",
+  "join_meet":"Join Meet",
+  "today_meeting":"Toady Meeting",
+  "meet_subtitle":"Your Schedule for the day",
+  "no_meetings":"No Meeting Available",
+  "no_meet_des":"It looks like you don’t have any meetings scheduled at the moment.\nThis space will be updated as new meetings are added!"
 }
