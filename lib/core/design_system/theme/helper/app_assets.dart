@@ -12,4 +12,6 @@ class AppAssets {
   static const taskStatusDone ='assets/svgs/task_status_done.svg';
   static const  calendar = 'assets/svgs/calendar.svg';
   static const  message = 'assets/svgs/message.svg';
+  static const  checkMark = 'assets/svgs/check_mark.svg';
+
 }
