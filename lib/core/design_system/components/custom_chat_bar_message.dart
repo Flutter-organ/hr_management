@@ -7,6 +7,7 @@ import 'package:hr_management/core/design_system/theme/helper/theme_extention.da
 
 class CustomChatBarMessage extends StatelessWidget {
   final TextEditingController messageController;
+  final String? hintText;
   final VoidCallback? onSend;
   final VoidCallback? onRecord;
   final VoidCallback? onAttachTap;
@@ -19,6 +20,7 @@ class CustomChatBarMessage extends StatelessWidget {
     this.onRecord,
     this.onAttachTap,
     this.onCameraTap,
+    this.hintText,
   });
 
   bool _hasText() {
@@ -33,7 +35,6 @@ class CustomChatBarMessage extends StatelessWidget {
         color: context.colors.white,
         borderRadius: BorderRadius.circular(8),
       ),
-
       child: Row(
         children: [
           Expanded(
@@ -69,7 +70,7 @@ class CustomChatBarMessage extends StatelessWidget {
           controller: messageController,
           style: TextStyle(color: ExtentionColors.blackTitleProfile),
           decoration: InputDecoration(
-            hintText: "type_a_message...".tr(),
+            hintText: hintText ?? "type_a_message...".tr(),
             hintStyle: TextStyle(color: ExtentionColors.blackTitleProfile),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
@@ -111,7 +112,7 @@ class CustomChatBarMessage extends StatelessWidget {
       width: 56,
       height: 56,
       child: InkWell(
-        onTap: _hasText() ? onRecord : null,
+        onTap: _hasText() ? onRecord : onSend,
         child: CircleAvatar(
           backgroundColor: ExtentionColors.iconDefault,
           child: SvgPicture.asset(
