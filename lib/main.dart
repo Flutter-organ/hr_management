@@ -1,7 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
-
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
 
 void main() async {
@@ -30,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'HR Management',
       theme: HrManagementTheme.light(),
       darkTheme: HrManagementTheme.dark(),
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       home: const MyHomePage(title: 'HR Management Home Page'),
     );
   }
@@ -49,11 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(mainAxisAlignment: MainAxisAlignment.center, 
-        children: [
-          ElevatedButton(onPressed: () {}, child: Text("language".tr())),
-        ],
-      ),
-     );
+      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: []),
+    );
   }
 }
