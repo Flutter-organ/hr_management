@@ -8,7 +8,7 @@ class CustomPrimaryButton extends StatelessWidget {
   final Color backGroundColor;
   final Color? circularColor;
   final EdgeInsetsGeometry? margin, padding;
-  final BorderRadiusGeometry? borderRadius;
+  final BorderRadius? borderRadius;
   final Gradient? gradient;
   final TextStyle? style;
   final bool isLoading;
@@ -33,6 +33,7 @@ class CustomPrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      borderRadius: borderRadius,
       onTap: isLoading ? null : onTap,
       child: Container(
         width: width,

@@ -1,6 +1,5 @@
 class AppAssets {
-  //example
-  // general
+
   static const kProperty = 'assets/svgs/Property.svg';
   static const kAttach = 'assets/svgs/Attach.svg';
   static const kSend = 'assets/svgs/send.svg';
@@ -13,4 +12,14 @@ class AppAssets {
   static const badEmoji = 'assets/images/bad.png';
   static const placeHolderProfile = 'assets/images/placeholder_profile.png';
   static const profilePlaceholder = 'assets/images/profile.png';
+  static const taskStatusInProgress = 'assets/svgs/task_status_in_progress.svg';
+  static const taskStatusReview = 'assets/svgs/task_status_review.svg';
+  static const taskStatusDone = 'assets/svgs/task_status_done.svg';
+  static const calendar = 'assets/svgs/calendar.svg';
+  static const message = 'assets/svgs/message.svg';
+  static const noMeetings = "assets/images/noMeeting.png";
+  static const noLeaveSupmitted = "assets/images/noLeaveSupmitted.png";
+  static const noTasksAssigned = "assets/images/noTasksAssigned.png";
+  static const  checkMark = 'assets/svgs/check_mark.svg';
+
 }

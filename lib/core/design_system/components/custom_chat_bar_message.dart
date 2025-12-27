@@ -63,10 +63,10 @@ class CustomChatBarMessage extends StatelessWidget {
     return Expanded(
       child: TextFormField(
         controller: messageController,
-        style: TextStyle(color: ExtentionColors.blackTitleProfile),
+        style: TextStyle(color: ExtensionColors.blackTitleProfile),
         decoration: InputDecoration(
           hintText: hintText ?? "type_a_message...".tr(),
-          hintStyle: TextStyle(color: ExtentionColors.blackTitleProfile),
+          hintStyle: TextStyle(color: ExtensionColors.blackTitleProfile),
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 12,
@@ -82,7 +82,7 @@ class CustomChatBarMessage extends StatelessWidget {
       onTap: onAttachTap,
       child: SvgPicture.asset(
         AppAssets.kAttach,
-        color: ExtentionColors.blackTitleProfile,
+        color: ExtensionColors.blackTitleProfile,
       ),
     );
   }
@@ -92,7 +92,7 @@ class CustomChatBarMessage extends StatelessWidget {
       onTap: onCameraTap,
       child: SvgPicture.asset(
         AppAssets.kCamera,
-        color: ExtentionColors.blackTitleProfile,
+        color: ExtensionColors.blackTitleProfile,
       ),
     );
   }
@@ -112,7 +112,7 @@ class CustomChatBarMessage extends StatelessWidget {
               borderRadius: BorderRadius.circular(28),
               onTap: hasText ? () => onSend?.call(value.text.trim()) : onRecord,
               child: CircleAvatar(
-                backgroundColor: ExtentionColors.iconDefault,
+                backgroundColor: ExtensionColors.iconDefault,
                 child: SvgPicture.asset(
                   hasText ? AppAssets.kSend : AppAssets.kMic,
                   color: context.colors.white,
