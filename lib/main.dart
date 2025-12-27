@@ -2,6 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
 
+import 'core/design_system/components/custom_primary_button.dart';
+import 'core/design_system/components/summary_card.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -28,7 +31,7 @@ class MyApp extends StatelessWidget {
       title: 'HR Management',
       theme: HrManagementTheme.light(),
       darkTheme: HrManagementTheme.dark(),
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       home: const MyHomePage(title: 'HR Management Home Page'),
     );
   }
