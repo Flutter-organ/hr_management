@@ -1,0 +1,119 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
+
+enum StatusBarEnum { review, approved, rejected }
+
+class CustomStatusBar extends StatefulWidget {
+  final num reviewCount, approveCount, rejectedCount;
+  const CustomStatusBar({
+    super.key,
+    required this.reviewCount,
+    required this.approveCount,
+    required this.rejectedCount,
+  });
+
+  @override
+  State<CustomStatusBar> createState() => _CustomStatusBarState();
+}
+
+class _CustomStatusBarState extends State<CustomStatusBar> {
+  StatusBarEnum statusBarEnum = StatusBarEnum.review;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        border: Border.all(color: context.colors.gray50),
+        borderRadius: BorderRadius.circular(100),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: _statusBarFunc(
+              title: "reviewbtn".tr(),
+              num: widget.reviewCount,
+              type: StatusBarEnum.review,
+            ),
+          ),
+          Expanded(
+            child: _statusBarFunc(
+              title: "approvedbtn".tr(),
+              num: widget.approveCount,
+              type: StatusBarEnum.approved,
+            ),
+          ),
+          Expanded(
+            child: _statusBarFunc(
+              title: "rejectedbtn".tr(),
+              num: widget.rejectedCount,
+              type: StatusBarEnum.rejected,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _statusBarFunc({
+    required String title,
+    required num num,
+    required StatusBarEnum type,
+  }) {
+    bool isSelected = statusBarEnum == type;
+    return InkWell(
+      borderRadius: BorderRadius.circular(100),
+      onTap: () {
+        if (statusBarEnum != type) {
+          setState(() {
+            statusBarEnum = type;
+          });
+        }
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 21),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          color: isSelected ? context.colors.purple500 : context.colors.white,
+        ),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 8,
+            children: [
+              Text(
+                title,
+                style: context.textTheme.titleMediumFont.copyWith(
+                  color: isSelected
+                      ? context.colors.white
+                      : context.colors.black,
+                ),
+              ),
+              if (num > 0)
+                ClipOval(
+                  child: Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: isSelected
+                          ? context.colors.error500
+                          : context.colors.gray300,
+                    ),
+                    child: Text(
+                      num.toString(),
+                      style: context.textTheme.titleSmallFont.copyWith(
+                        color: context.colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
