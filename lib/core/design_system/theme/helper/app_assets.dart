@@ -16,4 +16,5 @@ class AppAssets {
   static const noLeaveSupmitted = "assets/images/noLeaveSupmitted.png";
   static const noTasksAssigned = "assets/images/noTasksAssigned.png";
   static const  checkMark = 'assets/svgs/check_mark.svg';
+
 }
