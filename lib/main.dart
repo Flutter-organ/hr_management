@@ -55,10 +55,6 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [],
-      body: Column(mainAxisAlignment: MainAxisAlignment.center, 
-        children: [
-          ElevatedButton(onPressed: () {}, child: Text("language".tr())),
-        ],
       ),
      );
   }
