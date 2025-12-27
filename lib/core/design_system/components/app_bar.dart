@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
+
 import 'package:hr_management/core/design_system/theme/helper/app_assets.dart';
+import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
+
 import '../theme/helper/extention_colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
