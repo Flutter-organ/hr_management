@@ -17,7 +17,8 @@ migrate_working_dir/
 *.ipr
 *.iws
 .idea/
-
+macos/Flutter/GeneratedPluginRegistrant.swift
+pubspec.lock
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
@@ -34,8 +35,8 @@ migrate_working_dir/
 /coverage/
 /devtools_options.yaml
 /analysis_options.yaml
-pubspec.lock
-macos/Flutter/GeneratedPluginRegistrant.swift
+/pubspec.lock
+/macos/Flutter/GeneratedPluginRegistrant.swift
 
 
 # Symbolication related
