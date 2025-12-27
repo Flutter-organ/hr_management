@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/core/design_system/components/custom_chips.dart';
 
 import '../model/task_model.dart';
 import '../theme/helper/app_assets.dart';
 import '../theme/helper/theme_extention.dart';
-import 'custom_btn_low_high_medium.dart';
 import 'horizontal_stacked_avatars.dart';
 
 class TaskCardItem extends StatelessWidget {
@@ -52,7 +52,7 @@ class TaskCardItem extends StatelessWidget {
           ),
           Row(
             children: [
-              CustomBtnLowHighMedium(
+              CustomChips(
                 title: taskState.status.name,
                 color: taskState.status.colorStatus,
                 style: context.textTheme.bodySmallFont.copyWith(
@@ -64,7 +64,7 @@ class TaskCardItem extends StatelessWidget {
                 image: taskState.status.iconStatus,
               ),
               const SizedBox(width: 8),
-              CustomBtnLowHighMedium(
+              CustomChips(
                 title: taskState.priority.name,
                 color: taskState.priority.colorTaskPriority,
                 style: context.textTheme.bodySmallFont.copyWith(
@@ -103,7 +103,7 @@ class TaskCardItem extends StatelessWidget {
               ),
               Row(
                 children: [
-                  CustomBtnLowHighMedium(
+                  CustomChips(
                     title: taskState.date,
                     color: context.colors.white,
                     style: context.textTheme.bodySmallFont.copyWith(
@@ -117,7 +117,7 @@ class TaskCardItem extends StatelessWidget {
                     image: AppAssets.calendar,
                   ),
                   const SizedBox(width: 6),
-                  CustomBtnLowHighMedium(
+                  CustomChips(
                     title: taskState.comments.length.toString(),
                     color: context.colors.white,
                     style: context.textTheme.bodySmallFont.copyWith(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class CustomBtnLowHighMedium extends StatelessWidget {
+class CustomChips extends StatelessWidget {
   final Color? color, iconColor;
   final IconData? icon;
   final String title;
@@ -12,7 +12,7 @@ class CustomBtnLowHighMedium extends StatelessWidget {
   final Gradient? gradient;
   final BorderRadiusGeometry? borderRadius;
   final EdgeInsetsGeometry? padding, margin;
-  const CustomBtnLowHighMedium({
+  const CustomChips({
     super.key,
     this.color,
     required this.title,

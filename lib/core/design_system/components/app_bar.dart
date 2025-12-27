@@ -1,16 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import '../theme/helper/theme_extention.dart';
+
 import '../theme/helper/app_assets.dart';
 import '../theme/helper/extention_colors.dart';
+import '../theme/helper/theme_extention.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   // For standard mode
   final String? title;
   final bool showBackButton;
-  final  VoidCallback? onBackPressed;
-
+  final VoidCallback? onBackPressed;
 
   // For profile mode
   final String? profileName;
@@ -34,29 +34,29 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   bool get isProfileMode => profileName != null;
   @override
   Widget build(BuildContext context) {
-      final colors = context.colors;
+    final colors = context.colors;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal:isProfileMode? 12 : 24),
+      padding: EdgeInsets.symmetric(horizontal: isProfileMode ? 12 : 24),
       child: AppBar(
-        backgroundColor:colors.surface,
+        backgroundColor: colors.surface,
         automaticallyImplyLeading: false,
-      leading: showBackButton && !isProfileMode
-      ? SizedBox(    
-            child: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                size: 18,
-                color: colors.purple500,
-              ),
-              onPressed: onBackPressed,
-              style: IconButton.styleFrom(
-                backgroundColor: colors.purple50,
-                shape: const CircleBorder(),
-                fixedSize: const Size(32, 32), 
-              ),
-            )
-      )
-      : null,
+        leading: showBackButton && !isProfileMode
+            ? SizedBox(
+                child: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    size: 18,
+                    color: colors.purple500,
+                  ),
+                  onPressed: onBackPressed,
+                  style: IconButton.styleFrom(
+                    backgroundColor: colors.purple50,
+                    shape: const CircleBorder(),
+                    fixedSize: const Size(32, 32),
+                  ),
+                ),
+              )
+            : null,
         title: isProfileMode
             ? Row(
                 children: [
@@ -86,10 +86,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         children: [
                           Text(
                             profileName ?? "Username".tr(),
-                            style: context.textTheme.titleMediumFont.copyWith(color:  ExtensionColors.blackTitleProfile)
+                            style: context.textTheme.titleMediumFont.copyWith(
+                              color: ExtensionColors.blackTitleProfile,
+                            ),
                           ),
                           const SizedBox(width: 8),
-                          const Icon(Icons.verified, color:ExtensionColors.purpleProfile, size: 20),
+                          const Icon(
+                            Icons.verified,
+                            color: ExtensionColors.purpleProfile,
+                            size: 20,
+                          ),
                         ],
                       ),
                       Text(
@@ -103,44 +109,46 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ],
               )
             : title != null
-                ? Text(
-                    title!,
-                    style: context.textTheme.titleLargeFontSemiBold
-                        .copyWith(color: ExtensionColors.blackTitleProfile,fontSize: 18)
-                  )
-                : null,
+            ? Text(
+                title!,
+                style: context.textTheme.titleLargeFontSemiBold.copyWith(
+                  color: ExtensionColors.blackTitleProfile,
+                  fontSize: 18,
+                ),
+              )
+            : null,
         centerTitle: !isProfileMode,
         actions: isProfileMode
             ? [
                 IconButton(
-              icon: Icon(
-                Icons.chat_bubble_outline,
-                size: 18,
-                color: colors.purple500,
-              ),
-              onPressed: onChatPressed,
-              style: IconButton.styleFrom(
-                backgroundColor: colors.purple50,
-                shape: const CircleBorder(),
-                fixedSize: const Size(44, 44),
-              ),
-            ),
-             const SizedBox(width: 8),
+                  icon: Icon(
+                    Icons.chat_bubble_outline,
+                    size: 18,
+                    color: colors.purple500,
+                  ),
+                  onPressed: onChatPressed,
+                  style: IconButton.styleFrom(
+                    backgroundColor: colors.purple50,
+                    shape: const CircleBorder(),
+                    fixedSize: const Size(44, 44),
+                  ),
+                ),
+                const SizedBox(width: 8),
                 IconButton(
-              icon: Icon(
-                Icons.notifications,
-                size: 18,
-                color: colors.purple500,
-              ),
-              onPressed: onBellPressed,
-              style: IconButton.styleFrom(
-                backgroundColor: colors.purple50,
-                shape: const CircleBorder(),
-                fixedSize: const Size(44, 44),
-              ),
-            ),
+                  icon: Icon(
+                    Icons.notifications,
+                    size: 18,
+                    color: colors.purple500,
+                  ),
+                  onPressed: onBellPressed,
+                  style: IconButton.styleFrom(
+                    backgroundColor: colors.purple50,
+                    shape: const CircleBorder(),
+                    fixedSize: const Size(44, 44),
+                  ),
+                ),
               ]
-            : null, 
+            : null,
       ),
     );
   }
@@ -148,4 +156,3 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
-
