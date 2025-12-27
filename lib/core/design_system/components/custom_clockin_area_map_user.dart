@@ -6,22 +6,24 @@ import 'package:hr_management/core/design_system/theme/helper/theme_extention.da
 
 class CustomClockinAreaMapUser extends StatelessWidget {
   final String imageUrl;
-  final Color? color;
+  final Color? circularColor;
+  final EdgeInsets? padding;
   final void Function()? onTap;
   const CustomClockinAreaMapUser({
     super.key,
     required this.imageUrl,
     this.onTap,
-    this.color,
+    this.circularColor,
+    this.padding = const EdgeInsets.all(83),
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(83),
+      padding: padding,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: color,
+        color: circularColor ?? ExtensionColors.kOne,
         border: Border.all(color: ExtensionColors.kTwo),
       ),
       child: InkWell(
