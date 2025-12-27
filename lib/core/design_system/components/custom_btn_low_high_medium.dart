@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class CustomBtnLowHighMedium extends StatelessWidget {
   final Color? color, iconColor;
   final IconData? icon;
   final String title;
+  final String? image;
+  final double? iconSize;
   final TextStyle? style;
   final BoxBorder? border;
   final Gradient? gradient;
@@ -21,6 +24,8 @@ class CustomBtnLowHighMedium extends StatelessWidget {
     this.gradient,
     this.icon,
     this.iconColor,
+    this.iconSize,
+    this.image,
   });
 
   @override
@@ -38,7 +43,17 @@ class CustomBtnLowHighMedium extends StatelessWidget {
         spacing: 5,
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (icon != null) Icon(icon, size: 10, color: iconColor),
+          if (image != null && image!.isNotEmpty)
+            SvgPicture.asset(
+              image!,
+              width: iconSize,
+              height: iconSize,
+              colorFilter: iconColor != null
+                  ? ColorFilter.mode(iconColor!, BlendMode.srcIn)
+                  : null,
+            )
+          else if (icon != null)
+            Icon(icon, size: iconSize, color: iconColor),
           Text(title, style: style),
         ],
       ),

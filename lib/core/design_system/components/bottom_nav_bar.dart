@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/design_system/theme/helper/extention_colors.dart';
-import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
+import '../theme/helper/extention_colors.dart';
+import '../theme/helper/theme_extention.dart';
 import 'package:iconsax/iconsax.dart';
 
 class BottomNavBar extends StatelessWidget {

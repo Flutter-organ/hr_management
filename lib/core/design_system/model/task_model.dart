@@ -1,5 +1,5 @@
-import 'package:hr_management/core/design_system/model/task_status_enums.dart';
-import 'package:hr_management/core/design_system/model/task_priority_enums.dart';
+import 'task_status_enums.dart';
+import 'task_priority_enums.dart';
 
 import 'comment_model.dart';
 
