@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hr_management/core/design_system/theme/helper/app_assets.dart';
+import 'package:hr_management/core/design_system/components/custom_input_field.dart';
 import 'package:hr_management/core/design_system/theme/helper/extention_colors.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:iconsax/iconsax.dart';
@@ -62,18 +61,15 @@ class CustomChatBarMessage extends StatelessWidget {
 
   Widget _messageTextField(BuildContext context) {
     return Expanded(
-      child: TextFormField(
+      child: CustomInputField(
+        hintKey: hintText ?? "type_a_message...".tr(),
         controller: messageController,
-        style: TextStyle(color: ExtensionColors.blackTitleProfile),
-        decoration: InputDecoration(
-          hintText: hintText ?? "type_a_message...".tr(),
-          hintStyle: TextStyle(color: ExtensionColors.blackTitleProfile),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 12,
-          ),
-          border: InputBorder.none,
-        ),
+        filledColor: context.colors.gray50,
+        contentPaddingHorizontal: 16,
+        contentPaddingVertical: 12,
+        focuseAndErrorColor: Colors.transparent,
+        borderColor: Colors.transparent,
+        evaluation: false,
       ),
     );
   }
