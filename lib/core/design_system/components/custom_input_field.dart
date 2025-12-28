@@ -34,7 +34,7 @@ class CustomInputField extends StatelessWidget {
   final Offset? shadowOffset;
   final double? contentPaddingHorizontal;
   final double? contentPaddingVertical;
-  final double hintFontSize;
+  final double? hintFontSize;
   final Color? focuseAndErrorColor;
 
   const CustomInputField({
@@ -70,7 +70,8 @@ class CustomInputField extends StatelessWidget {
     this.shadowOffset,
     this.contentPaddingHorizontal,
     this.contentPaddingVertical,
-    this.focuseAndErrorColor, required this.hintFontSize,
+    this.focuseAndErrorColor,
+    this.hintFontSize,
   });
   @override
   Widget build(BuildContext context) {
@@ -78,47 +79,46 @@ class CustomInputField extends StatelessWidget {
       controller: controller,
       keyboardType: keyboardType,
       style: context.textTheme.bodyMediumFont.copyWith(
-          color: textInputColor ?? context.colors.black
+        color: textInputColor ?? context.colors.black,
       ),
       onTap: onTap,
       enabled: enabled,
       readOnly: isReadOnly ?? false,
       decoration: InputDecoration(
-          hintText: hintKey,
-          hintStyle: context.textTheme.bodyMediumFont
-              .apply(
-            color: labelHintStyle,
+        hintText: hintKey,
+        hintStyle: context.textTheme.bodyMediumFont.apply(
+          color: labelHintStyle,
+        ),
+        suffixIcon: suffixIcon,
+        prefixIcon: prefixIcon,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: contentPaddingHorizontal ?? 0.0,
+          vertical: contentPaddingVertical ?? 0.0,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(radius ?? 0),
+          borderSide: BorderSide(
+            color: focuseAndErrorColor ?? Color(0xFF000000),
           ),
-          suffixIcon: suffixIcon,
-          prefixIcon: prefixIcon,
-          contentPadding: EdgeInsets.symmetric(
-            horizontal: contentPaddingHorizontal!,
-            vertical: contentPaddingVertical!,
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(radius ?? 4.00),
+          borderSide: BorderSide(
+            color: focuseAndErrorColor ?? Color(0xFF000000),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(radius!),
-            borderSide: BorderSide(
-              color: focuseAndErrorColor!,
-            ),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(radius!),
-            borderSide: BorderSide(
-              color: focuseAndErrorColor!,
-            ),
-          ),
-          errorStyle: context.textTheme.bodySmallFont.copyWith(
-            color: labelErrorStyle,
-          ),
-          errorMaxLines: 2,
-          fillColor: filledColor,
-          filled: true,
-          isDense: true,
-          prefix: prefixIcon,
-          suffix: suffixIcon,
-          labelStyle: context.textTheme.bodyMediumFont.copyWith(
-            color: labelHintStyle,
-          )
+        ),
+        errorStyle: context.textTheme.bodySmallFont.copyWith(
+          color: labelErrorStyle,
+        ),
+        errorMaxLines: 2,
+        fillColor: filledColor,
+        filled: true,
+        isDense: true,
+        prefix: prefixIcon,
+        suffix: suffixIcon,
+        labelStyle: context.textTheme.bodyMediumFont.copyWith(
+          color: labelHintStyle,
+        ),
       ),
     );
   }
