@@ -36,6 +36,7 @@ class CustomInputField extends StatelessWidget {
   final double? contentPaddingVertical;
   final double? hintFontSize;
   final Color? focuseAndErrorColor;
+  final InputBorder? border;
 
   const CustomInputField({
     Key? key,
@@ -72,6 +73,7 @@ class CustomInputField extends StatelessWidget {
     this.contentPaddingVertical,
     this.focuseAndErrorColor,
     this.hintFontSize,
+    this.border,
   });
   @override
   Widget build(BuildContext context) {
@@ -119,6 +121,7 @@ class CustomInputField extends StatelessWidget {
         labelStyle: context.textTheme.bodyMediumFont.copyWith(
           color: labelHintStyle,
         ),
+        border: border ?? InputBorder.none,
       ),
     );
   }
