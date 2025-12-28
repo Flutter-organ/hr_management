@@ -1,10 +1,5 @@
 class AppAssets {
-
   static const kProperty = 'assets/svgs/Property.svg';
-  static const kAttach = 'assets/svgs/Attach.svg';
-  static const kSend = 'assets/svgs/send.svg';
-  static const kMic = 'assets/svgs/mic.svg';
-  static const kCamera = 'assets/svgs/camera.svg';
   // static const String emptyState = 'assets/images/empty_state.png';
   static const goodEmoji = 'assets/images/good.png';
   static const okayEmoji = 'assets/images/okay.png';
@@ -20,6 +15,5 @@ class AppAssets {
   static const noMeetings = "assets/images/noMeeting.png";
   static const noLeaveSupmitted = "assets/images/noLeaveSupmitted.png";
   static const noTasksAssigned = "assets/images/noTasksAssigned.png";
-  static const  checkMark = 'assets/svgs/check_mark.svg';
-
+  static const checkMark = 'assets/svgs/check_mark.svg';
 }
