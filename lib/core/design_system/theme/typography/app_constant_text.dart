@@ -8,8 +8,10 @@ class AppConstantText {
   static const double fontSize32 = 32;
   static const double fontSize28 = 28;
   static const double fontSize24 = 24;
+  static const double fontSize22 = 22;
 
   static const double fontSize14 = 14;
+  static const double fontSize13 = 13;
   static const double fontSize12 = 12;
   static const double fontSize11 = 11;
 

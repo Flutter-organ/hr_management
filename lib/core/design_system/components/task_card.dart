@@ -58,7 +58,7 @@ class TaskCardItem extends StatelessWidget {
             children: [
               CustomBtnLowHighMedium(
                 title:taskState.status.name,
-                color: taskState.status.colorStatus,
+                color: taskState.status.colorStatus(context),
                 style: context.textTheme.bodySmallFont
                     .copyWith(color: context.colors.gray600),
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -68,7 +68,7 @@ class TaskCardItem extends StatelessWidget {
               const SizedBox(width: 8),
               CustomBtnLowHighMedium(
                 title: taskState.priority.name,
-                color: taskState.priority.colorTaskPriority,
+                color: taskState.priority.colorTaskPriority(context),
                 style: context.textTheme.bodySmallFont
                     .copyWith(color: context.colors.white),
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

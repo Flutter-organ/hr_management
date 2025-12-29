@@ -5,16 +5,16 @@ class AppConstantColors {
 
   // ============== Gray Palette ==============
   static const gray25 = Color(0xFFFCFCFD);
-  static const gray50 = Color(0xFFEBECEE);
-  static const gray100 = Color(0xFFC0C4CA);
-  static const gray200 = Color(0xFFA2A7B0);
-  static const gray300 = Color(0xFF777F8C);
-  static const gray400 = Color(0xFF5D6676);
-  static const gray500 = Color(0xFF344054);
-  static const gray600 = Color(0xFF2F3A4C);
-  static const gray700 = Color(0xFF252D3C);
-  static const gray800 = Color(0xFF1D232E);
-  static const gray900 = Color(0xFF161B23);
+  static const gray50 = Color(0xFFF9FAFB);
+  static const gray100 = Color(0xFFF9FAFB);
+  static const gray200 = Color(0xFFEAECF0);
+  static const gray300 = Color(0xFFD0D5DD);
+  static const gray400 = Color(0xFF98A2B3);
+  static const gray500 = Color(0xFF667085);
+  static const gray600 = Color(0xFF475467);
+  static const gray700 = Color(0xFF344054);
+  static const gray800 = Color(0xFF1D2939);
+  static const gray900 = Color(0xFF101828);
 
   // ============== Purple Palette (Primary) ==============
   static const purple25 = Color(0xFFFAFAFF);
@@ -43,7 +43,7 @@ class AppConstantColors {
   static const success900 = Color(0xFF0B4B2E);
 
   // ============== Error Palette ==============
-  static const error25 = Color(0xFFFFFBFA);
+  static const error25 = Color(0xFFFFFAFA);
   static const error50 = Color(0xFFFEEEEE);
   static const error100 = Color(0xFFFDCACA);
   static const error200 = Color(0xFFFCB1B1);
@@ -54,6 +54,19 @@ class AppConstantColors {
   static const error700 = Color(0xFFB13C3C);
   static const error800 = Color(0xFF892F2F);
   static const error900 = Color(0xFF692424);
+
+  // ============== Yellow Palette ==============
+  static const yellow25 = Color(0xFFFFFCF5);
+  static const yellow50 = Color(0xFFFFFAEB);
+  static const yellow100 = Color(0xFFFEEFC7);
+  static const yellow200 = Color(0xFFFEDF89);
+  static const yellow300 = Color(0xFFFEC84B);
+  static const yellow400 = Color(0xFFFDB022);
+  static const yellow500 = Color(0xFFF79009);
+  static const yellow600 = Color(0xFFDC6803);
+  static const yellow700 = Color(0xFFB54708);
+  static const yellow800 = Color(0xFF93370D);
+  static const yellow900 = Color(0xFF792E0D);
 
   // ============== Warning Palette ==============
   static const warning25 = Color(0xFFFFF7EC);
@@ -73,4 +86,21 @@ class AppConstantColors {
   static const white = Color(0xFFFFFFFF);
   static const pureWhite = Color(0xFFFFFFFF);
   static const offWhite = Color(0xFFFFF7EC);
+  static const baseWhite = Color(0x00FEFEFE);
+
+  // ============== Text Colors ==============
+  static const Color textPrimary = Color(0xFF101828);
+  static const Color textSecondary = Color(0xFF475467);
+  static const Color textBody = Color(0xFF344054);
+  static const Color textWarning = Color(0xFFF79009);
+
+  // ============== Card Colors ==============
+  static const Color cardBackground = Color(0xFFF9F9F9);
+  static const Color cardBackgroundSecondary = Color(0xFFFEFEFE);
+
+  // ============== Bars Colors ==============
+  static const Color bottomNavBarBgColor = Color(0xff1C2020);
+  static const Color statusBarColor = Color(0xFFE7E7E7);
+
+
 }
