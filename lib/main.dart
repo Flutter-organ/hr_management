@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
 
+import 'core/design_system/components/custom_primary_button.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -51,7 +53,13 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [],
+        children: [
+          CustomPrimaryButton.gradient(
+            buttonText: 'Testbvmggfhjkhjkhjkhkjhkjg',
+            isEnabled: true,
+            onPressed: (){},
+          )
+        ],
       ),
      );
   }

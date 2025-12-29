@@ -1,112 +1,401 @@
 import 'package:flutter/material.dart';
+import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 
-import '../theme/helper/extention_colors.dart';
+enum ButtonType { filled, outlined, text, gradient }
+
 
 class CustomPrimaryButton extends StatelessWidget {
-  const CustomPrimaryButton(
-      {
-        Key? key,
-        required this.buttonText,
-        required this.onPressedFunction,
-        this.buttonBackgroundColor,
-        this.onPressedColor,
-        this.shadowBackgroundColor,
-        this.elevation = 0.0,
-        this.width = 343,
-        this.height = 48,
-        this.iconColor = (ExtensionColors.grayStatusBar),
-        this.buttonTextStyle = const TextStyle(
-            color: ExtensionColors.whiteContainer
-        ),
-        this.icon,
-        this.radius = 8,
-        this.spaceSize = 8.0,
-        this.boarderWidth = 1.0,
-        this.isLoading = false,
-        this.isEnable = true,
-        this.showBorder = false,
-        this.borderColor = ExtensionColors.whiteContainer, required this.showTextDuringLoading})
-      : super(key: key);
   final String buttonText;
-  final Function() onPressedFunction;
-  final Color? buttonBackgroundColor;
-  final Color? onPressedColor;
-  final Color? shadowBackgroundColor;
-  final double? elevation;
+  final TextStyle? textStyle;
+  final VoidCallback? onPressed;
+
+  final EdgeInsetsGeometry padding;
   final double? width;
-  final double height;
-  final TextStyle? buttonTextStyle;
-  final Color? iconColor;
-  final double? radius;
-  final Widget? icon;
-  final double? spaceSize;
-  final double? boarderWidth;
-  final bool isLoading;
-  final bool isEnable;
-  final bool showBorder;
+  final double? height;
+
+  final Color? backgroundColor;
+  final Color? foregroundColor;
+  final Color? disabledBackgroundColor;
+  final Color? disabledForegroundColor;
+  final Color? overlayColor;
+
   final Color? borderColor;
+  final double borderWidth;
+  final double borderRadius;
+
+  final double elevation;
+  final Color? shadowColor;
+
+  final Widget? icon;
+  final double iconSpacing;
+
+  final bool isLoading;
+  final bool isEnabled;
   final bool showTextDuringLoading;
-  @override
-  Widget build(BuildContext context) {
-    // double getWidgetHeight(double height) {
-    //   final double currentHeight = MediaQuery.heightOf(context) * (height / 812);
-    //   return currentHeight;
-    // }
-    //
-    // double getWidgetWidth(double width) {
-    //   final double currentWidth = MediaQuery.widthOf(context) * (width / 375);
-    //   return currentWidth;
-    // }
-    // final double buttonWidth = getWidgetWidth(width!);
-    // final double buttonHeight = getWidgetHeight(height!);
-    return  SizedBox(
-      width: width ?? double.infinity,
-      height: height ,
-      child: ElevatedButton(
-          onPressed: isLoading || !isEnable ? null : onPressedFunction,
-          style: ButtonStyle(
-            elevation: WidgetStateProperty.all<double>(elevation!),
-            side: WidgetStateProperty.all<BorderSide>(
-              BorderSide(
-                color: showBorder
-                    ? isLoading || !isEnable
-                    ? ExtensionColors.yellow50
-                    : borderColor!
-                    : ExtensionColors.green50,
-                width: boarderWidth ?? 1,
-              ),
-            ),
-            shadowColor: WidgetStateProperty.all(
-              shadowBackgroundColor ?? ExtensionColors.green50.withOpacity(.3),
-            ),
-            overlayColor: WidgetStateProperty.all(
-              onPressedColor ?? ExtensionColors.red500.withOpacity(.25),
-            ),
-            shape: WidgetStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(radius!),
-              ),
-            ),
-            fixedSize:
-            WidgetStateProperty.all<Size>(Size(width ?? double.infinity,height )),
-            backgroundColor: isLoading || !isEnable
-                ? WidgetStateProperty.all(ExtensionColors.poor)
-                : WidgetStateProperty.all(
-                buttonBackgroundColor ?? ExtensionColors.gray200),
-          ),
-            child: Center(
-              child: isLoading
-                  ? _buildLoadingContent()
-                  : _buildNormalContent(),
-            )
-        ),
+
+  final ButtonType buttonType;
+
+  final Gradient? gradient;
+  final Gradient? disabledGradient;
+
+  const CustomPrimaryButton({
+    super.key,
+    required this.buttonText,
+    this.onPressed,
+    this.width,
+    this.height,
+    this.padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+    this.backgroundColor,
+    this.foregroundColor,
+    this.disabledBackgroundColor,
+    this.disabledForegroundColor,
+    this.overlayColor,
+    this.borderColor,
+    this.borderWidth = 1.5,
+    this.borderRadius = 100,
+    this.elevation = 0,
+    this.shadowColor,
+    this.icon,
+    this.iconSpacing = 8,
+    this.isLoading = false,
+    this.isEnabled = true,
+    this.showTextDuringLoading = true,
+    this.textStyle,
+    this.buttonType = ButtonType.filled,
+    this.gradient,
+    this.disabledGradient,
+  });
+
+  factory CustomPrimaryButton.filled({
+    required String buttonText,
+    VoidCallback? onPressed,
+    double? width,
+    double? height,
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+    Color? backgroundColor,
+    Color? foregroundColor,
+    double borderRadius = 100,
+    double elevation = 0,
+    Widget? icon,
+    double iconSpacing = 8,
+    bool isLoading = false,
+    bool isEnabled = true,
+    bool showTextDuringLoading = true,
+    TextStyle? textStyle,
+  }) {
+    return CustomPrimaryButton(
+      buttonText: buttonText,
+      onPressed: onPressed,
+      width: width,
+      height: height,
+      padding: padding,
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
+      borderRadius: borderRadius,
+      elevation: elevation,
+      icon: icon,
+      iconSpacing: iconSpacing,
+      isLoading: isLoading,
+      isEnabled: isEnabled,
+      showTextDuringLoading: showTextDuringLoading,
+      textStyle: textStyle,
+      buttonType: ButtonType.filled,
     );
   }
-  Widget _buildNormalContent() {
+
+  factory CustomPrimaryButton.outlined({
+    required String buttonText,
+    VoidCallback? onPressed,
+    double? width,
+    double? height,
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+    Color? borderColor,
+    Color? foregroundColor,
+    double borderWidth = 1.5,
+    double borderRadius = 100,
+    Widget? icon,
+    double iconSpacing = 8,
+    bool isLoading = false,
+    bool isEnabled = true,
+    bool showTextDuringLoading = true,
+    TextStyle? textStyle,
+  }) {
+    return CustomPrimaryButton(
+      buttonText: buttonText,
+      onPressed: onPressed,
+      width: width,
+      height: height,
+      padding: padding,
+      borderColor: borderColor,
+      foregroundColor: foregroundColor,
+      borderWidth: borderWidth,
+      borderRadius: borderRadius,
+      icon: icon,
+      iconSpacing: iconSpacing,
+      isLoading: isLoading,
+      isEnabled: isEnabled,
+      showTextDuringLoading: showTextDuringLoading,
+      textStyle: textStyle,
+      buttonType: ButtonType.outlined,
+    );
+  }
+
+  factory CustomPrimaryButton.text({
+    required String buttonText,
+    VoidCallback? onPressed,
+    double? width,
+    double? height,
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    Color? foregroundColor,
+    double borderRadius = 100,
+    Widget? icon,
+    double iconSpacing = 8,
+    bool isLoading = false,
+    bool isEnabled = true,
+    bool showTextDuringLoading = true,
+    TextStyle? textStyle,
+  }) {
+    return CustomPrimaryButton(
+      buttonText: buttonText,
+      onPressed: onPressed,
+      width: width,
+      height: height,
+      padding: padding,
+      foregroundColor: foregroundColor,
+      borderRadius: borderRadius,
+      icon: icon,
+      iconSpacing: iconSpacing,
+      isLoading: isLoading,
+      isEnabled: isEnabled,
+      showTextDuringLoading: showTextDuringLoading,
+      textStyle: textStyle,
+      buttonType: ButtonType.text,
+    );
+  }
+
+  factory CustomPrimaryButton.gradient({
+    required String buttonText,
+    Gradient? gradient,
+    VoidCallback? onPressed,
+    double? width,
+    double? height,
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+    Color? foregroundColor,
+    Gradient? disabledGradient,
+    double borderRadius = 100,
+    double elevation = 0,
+    Color? shadowColor,
+    Widget? icon,
+    double iconSpacing = 8,
+    bool isLoading = false,
+    bool isEnabled = true,
+    bool showTextDuringLoading = true,
+    TextStyle? textStyle,
+  }) {
+    return CustomPrimaryButton(
+      buttonText: buttonText,
+      onPressed: onPressed,
+      width: width,
+      height: height,
+      padding: padding,
+      foregroundColor: foregroundColor,
+      borderRadius: borderRadius,
+      elevation: elevation,
+      shadowColor: shadowColor,
+      icon: icon,
+      iconSpacing: iconSpacing,
+      isLoading: isLoading,
+      isEnabled: isEnabled,
+      showTextDuringLoading: showTextDuringLoading,
+      textStyle: textStyle,
+      buttonType: ButtonType.gradient,
+      gradient: gradient,
+      disabledGradient: disabledGradient,
+    );
+  }
+
+  bool get _isInteractive => isEnabled && !isLoading && onPressed != null;
+
+  @override
+  Widget build(BuildContext context) {
+    final Widget button;
+
+    switch (buttonType) {
+      case ButtonType.filled:
+        button = _buildFilledButton(context);
+        break;
+      case ButtonType.outlined:
+        button = _buildOutlinedButton(context);
+        break;
+      case ButtonType.text:
+        button = _buildTextButton(context);
+        break;
+      case ButtonType.gradient:
+        button = _buildGradientButton(context);
+        break;
+    }
+
+    return SizedBox(
+      width: width ?? double.infinity,
+      height: height,
+      child: button,
+    );
+  }
+
+  Widget _buildFilledButton(BuildContext context) {
+    final effectiveBackgroundColor = backgroundColor ?? context.colors.primary;
+    final effectiveForegroundColor = foregroundColor ?? context.colors.white;
+    final effectiveDisabledBgColor = disabledBackgroundColor ?? context.colors.gray300;
+    final effectiveDisabledFgColor = disabledForegroundColor ?? context.colors.gray500;
+
+    return ElevatedButton(
+      onPressed: _isInteractive ? onPressed : null,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: effectiveBackgroundColor,
+        foregroundColor: effectiveForegroundColor,
+        disabledBackgroundColor: isLoading
+            ? effectiveBackgroundColor
+            : effectiveDisabledBgColor,
+        disabledForegroundColor: isLoading
+            ? effectiveForegroundColor
+            : effectiveDisabledFgColor,
+        elevation: elevation,
+        shadowColor: shadowColor ?? Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        padding: padding,
+        minimumSize: Size.zero,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(borderRadius),
+        ),
+      ),
+      child: _buildContent(effectiveForegroundColor),
+    );
+  }
+
+  Widget _buildOutlinedButton(BuildContext context) {
+    final effectiveBorderColor = borderColor ?? context.colors.primary;
+    final effectiveForegroundColor = foregroundColor ?? context.colors.primary;
+    final effectiveDisabledFgColor = disabledForegroundColor ?? context.colors.gray400;
+
+    return OutlinedButton(
+      onPressed: _isInteractive ? onPressed : null,
+      style: OutlinedButton.styleFrom(
+        foregroundColor: effectiveForegroundColor,
+        disabledForegroundColor: isLoading
+            ? effectiveForegroundColor
+            : effectiveDisabledFgColor,
+        side: BorderSide(
+          color: _isInteractive || isLoading
+              ? effectiveBorderColor
+              : context.colors.gray300,
+          width: borderWidth,
+        ),
+        padding: padding,
+        minimumSize: Size.zero,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(borderRadius),
+        ),
+      ),
+      child: _buildContent(effectiveForegroundColor),
+    );
+  }
+
+  Widget _buildTextButton(BuildContext context) {
+    final effectiveForegroundColor = foregroundColor ?? context.colors.primary;
+    final effectiveDisabledFgColor = disabledForegroundColor ?? context.colors.gray400;
+
+    return TextButton(
+      onPressed: _isInteractive ? onPressed : null,
+      style: TextButton.styleFrom(
+        foregroundColor: effectiveForegroundColor,
+        disabledForegroundColor: isLoading
+            ? effectiveForegroundColor
+            : effectiveDisabledFgColor,
+        padding: padding,
+        minimumSize: Size.zero,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(borderRadius),
+        ),
+      ),
+      child: _buildContent(effectiveForegroundColor),
+    );
+  }
+
+  Widget _buildGradientButton(BuildContext context) {
+    final effectiveForegroundColor = foregroundColor ?? context.colors.white;
+
+    final defaultGradient = LinearGradient(
+      colors: [
+        context.colors.purple500,
+        context.colors.primary,
+      ],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+    );
+
+    final effectiveDisabledGradient = disabledGradient ?? LinearGradient(
+      colors: [context.colors.gray300, context.colors.gray400],
+    );
+
+    final isDisabledState = !isEnabled && !isLoading;
+    final effectiveGradient = isDisabledState
+        ? (disabledGradient ?? effectiveDisabledGradient)
+        : (gradient ?? defaultGradient);
+
+    return Opacity(
+      opacity: isDisabledState ? 0.6 : 1.0,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: effectiveGradient,
+          borderRadius: BorderRadius.circular(borderRadius),
+          boxShadow: elevation > 0
+              ? [
+            BoxShadow(
+              color: shadowColor ?? Colors.black.withAlpha(100),
+              blurRadius: elevation * 2,
+              offset: Offset(0, elevation),
+            ),
+          ]
+              : null,
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: _isInteractive ? onPressed : null,
+            borderRadius: BorderRadius.circular(borderRadius),
+            child: Padding(
+              padding: padding,
+              child: Center(
+                child: _buildContent(effectiveForegroundColor),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContent(Color foregroundColor) {
+    if (isLoading) {
+      return _buildLoadingContent(foregroundColor);
+    }
+    return _buildNormalContent(foregroundColor);
+  }
+
+  Widget _buildNormalContent(Color foregroundColor) {
+    final effectiveTextStyle = textStyle?.copyWith(
+      color: textStyle?.color ?? foregroundColor,
+    ) ?? TextStyle(color: foregroundColor);
+
     if (icon == null) {
       return Text(
         buttonText,
-        style: buttonTextStyle,
+        style: effectiveTextStyle,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       );
     }
 
@@ -115,33 +404,45 @@ class CustomPrimaryButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         icon!,
-        SizedBox(width: spaceSize),
-        Text(
-          buttonText,
-          style: buttonTextStyle,
+        SizedBox(width: iconSpacing),
+        Flexible(
+          child: Text(
+            buttonText,
+            style: effectiveTextStyle,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildLoadingContent() {
+  Widget _buildLoadingContent(Color foregroundColor) {
+    final effectiveTextStyle = textStyle?.copyWith(
+      color: textStyle?.color ?? foregroundColor,
+    ) ?? TextStyle(color: foregroundColor);
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const SizedBox(
+        SizedBox(
           width: 18,
           height: 18,
           child: CircularProgressIndicator(
-            strokeWidth: 2.4,
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            strokeWidth: 2.5,
+            valueColor: AlwaysStoppedAnimation<Color>(foregroundColor),
           ),
         ),
         if (showTextDuringLoading) ...[
-          const SizedBox(width: 12),
-          Text(
-            buttonText,
-            style: buttonTextStyle
+          SizedBox(width: iconSpacing),
+          Flexible(
+            child: Text(
+              buttonText,
+              style: effectiveTextStyle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ],
       ],

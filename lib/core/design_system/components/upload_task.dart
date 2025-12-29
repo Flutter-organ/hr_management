@@ -215,41 +215,38 @@ class _UploadTaskState extends State<UploadTask> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    CustomPrimaryButton(
-                      title: "delete".tr(),
-                      style: context.textTheme.bodyMediumFont.copyWith(
+                    CustomPrimaryButton.outlined(
+                      buttonText: "delete".tr(),
+                      textStyle: context.textTheme.bodyMediumFont.copyWith(
                         color: context.colors.error,
                       ),
-                      border: Border.all(width: 2, color: context.colors.error),
-                      borderRadius: BorderRadius.circular(20),
+                      borderWidth: 2,
+                      borderColor: context.colors.error,
+                      borderRadius: 20,
                       padding: EdgeInsets.symmetric(
                         vertical: 8,
                         horizontal: 16,
                       ),
-                      backGroundColor: context.colors.pureWhite,
-                      onTap: () {
+                      onPressed: () {
                         setState(() {
                           pickedFile[index] = null;
                           Navigator.pop(context);
                         });
                       },
                     ),
-                    CustomPrimaryButton(
-                      onTap: () => Navigator.pop(context),
-                      title: "keep_file".tr(),
-                      style: context.textTheme.bodyMediumFont.copyWith(
+                    CustomPrimaryButton.outlined(
+                      onPressed: () => Navigator.pop(context),
+                      buttonText: "keep_file".tr(),
+                      textStyle: context.textTheme.bodyMediumFont.copyWith(
                         color: context.colors.purple500,
                       ),
-                      border: Border.all(
-                        width: 2,
-                        color: context.colors.purple500,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
+                      borderWidth: 2,
+                      borderColor: context.colors.purple500,
+                      borderRadius: 20,
                       padding: EdgeInsets.symmetric(
                         vertical: 8,
                         horizontal: 16,
                       ),
-                      backGroundColor: context.colors.pureWhite,
                     ),
                   ],
                 ),
