@@ -32,4 +32,9 @@ class ExtensionColors {
   static const Color grayStatusBar = Color(0xFFE7E7E7);
   static const Color borderColor = Color(0xffEAECF0);
   static const Color whiteContainer = Color(0xffFEFEFE);
+  static const Color purpleGradient0 = Color(0xff8862F2);
+  static const Color purpleGradient1 = Color(0xff7544FC);
+  static const Color purpleGradient2 = Color(0xff5B2ED4);
+
+
 }
