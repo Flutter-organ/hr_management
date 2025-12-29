@@ -1,9 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hr_management/core/design_system/components/custom_primary_button.dart';
 import 'package:hr_management/core/design_system/theme/color/app_constant_colors.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:pinput/pinput.dart';
+import '../../theme/helper/app_assets.dart';
 import '../../theme/helper/extention_colors.dart';
 
 class CustomPopup extends StatelessWidget {
@@ -110,7 +112,32 @@ class CustomPopup extends StatelessWidget {
       primaryButtonOnPressed: primaryButtonOnPressed,
     );
   }
-
+  factory CustomPopup.ClockOut({
+    required IconData icon,
+    required String title,
+    required String description,
+    required Widget content,
+    required String primaryButtonText,
+    required  primaryButtonOnPressed,
+    required String secondaryButtonText,
+    required VoidCallback secondaryButtonOnPressed,
+  }) {
+    return CustomPopup(
+      icon: icon,
+      title: title,
+      description: description,
+      content:Row(
+        children: [
+          _ClockOutContent(time: "clock_out_time", hour: "Today"),
+          _ClockOutContent(time:"clock_out_time",hour: "Today"),
+        ],
+      ),
+      primaryButtonText: primaryButtonText,
+      primaryButtonOnPressed: primaryButtonOnPressed,
+      secondaryButtonText: secondaryButtonText,
+      secondaryButtonOnPressed: secondaryButtonOnPressed,
+    );
+  }
   factory CustomPopup.verificationPopup({
     required IconData icon,
     required String title,
@@ -130,7 +157,6 @@ class CustomPopup extends StatelessWidget {
       primaryButtonOnPressed: primaryButtonOnPressed,
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -291,7 +317,58 @@ Widget _buildSignInAlternativeFooter(
     overflow: TextOverflow.ellipsis,
   );
 }
+class _ClockOutContent extends StatelessWidget {
+  _ClockOutContent({
+    super.key,
+    required this.time,
+    required this.hour,
+  });
 
+  final String time;
+  final String hour;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 72,
+      decoration: BoxDecoration(
+        color: context.colors.gray300,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: context.colors.gray50, width: 1),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SvgPicture.asset(
+                AppAssets.calendar,
+                width: 20,
+                height: 20,
+              ),
+              const SizedBox(width: 10),
+              Text(
+                time,
+                style: context.textTheme.bodySmallFont.copyWith(
+                  color: ExtensionColors.textSecondary,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Text(
+            hour,
+            style: context.textTheme.bodyLargeFont.copyWith(
+              color: ExtensionColors.textPrimary,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 class _VerificationContent extends StatelessWidget {
   final void Function(String) onCompleted;
   final VoidCallback onResend;
@@ -330,6 +407,45 @@ class _VerificationContent extends StatelessWidget {
       ],
     );
   }
+  Widget _ClockOutContent(BuildContext context, String time , String hour) {
+    return Container(
+        height: 72,
+        decoration: BoxDecoration(
+          color: context.colors.gray300,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: context.colors.gray50, width: 1),
+        ),
+        child: Column(
+            spacing : 10,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                  children: [
+                    SvgPicture.asset(
+                      AppAssets.calendar,
+                      width: 20,
+                      height: 20,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      time,
+                      style: context.textTheme.bodySmallFont.copyWith(
+                        color: ExtensionColors.textSecondary,
+                      ),
+                    ),
+                  ]
+              ),
+              Text(
+                hour,
+                style: context.textTheme.bodyLargeFont.copyWith(
+                  color: ExtensionColors.textPrimary,
+                ),
+              ),
+            ]
+        )
+    );
+  }
+
 
   Widget _buildResendRow(BuildContext context) {
     return Text.rich(

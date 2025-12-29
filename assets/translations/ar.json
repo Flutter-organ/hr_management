@@ -34,7 +34,8 @@
     "Resend_it": "إعادة إرسال الرمز",
     "sign_in_different_method": "تسجيل الدخول بطريقة مختلفة",
     "here": "هنا",
-
+    "clock_out_time":"00:00:00 Hrs",
+    "Today":"اليوم",
     "cancel": "إلغاء",
     "confirm": "تأكيد",
     "continue": "متابعة",
