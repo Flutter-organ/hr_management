@@ -16,10 +16,6 @@ class CustomPopupList extends StatefulWidget {
   final String subtitle;
   final List<String> options;
   final  VoidCallback? onCancel,onConfirm;
-
-  /// Called when Select button is pressed
-  
-
   @override
   State<CustomPopupList> createState() => _CustomPopupListState();
 }
@@ -27,7 +23,7 @@ class CustomPopupList extends StatefulWidget {
 class _CustomPopupListState extends State<CustomPopupList> {
   int? selectedIndex;
   @override
-  
+
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
