@@ -18,6 +18,7 @@
   "approved": "Approved at {}",
   "rejected": "Rejected at {}",
   "by": "By ",
+  "type_a_message...": "Type a message...",
   "upload_claim_document": "Upload Claim Document",
   "format": "Format should be in .pdf .jpeg .png less than 5MB",
   "uploading": "Uploading...",
@@ -27,11 +28,6 @@
   "sub_title": "The tasks assigned to you for today",
   "count_task": "1",
   "wiring_dashboard_analytics": "Wiring Dashboard Analytics",
-  "join_meet":"Join Meet",
-  "today_meeting":"Today Meeting",
-  "meet_subtitle":"Your Schedule for the day",
-  "no_meetings":"No Meeting Available",
-  "no_meet_des":"It looks like you don’t have any meetings scheduled at the moment.\nThis space will be updated as new meetings are added!",
   "sign_in":"Sign In",
   "sign_to_account":"Sign in to my account",
   "email":"Email",
@@ -47,6 +43,10 @@
   "phone_number":"Phone Number",
   "sign_with_email":"Sign In With Email",
   "search":"Search",
-  "search_country":"Search Country"
-
+  "search_country":"Search Country",
+  "join_meet": "Join Meet",
+  "today_meeting": "Today Meeting",
+  "meet_subtitle": "Your Schedule for the day",
+  "no_meetings": "No Meeting Available",
+  "no_meet_des": "It looks like you don’t have any meetings scheduled at the moment.\nThis space will be updated as new meetings are added!"
 }
