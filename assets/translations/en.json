@@ -31,5 +31,22 @@
   "today_meeting":"Today Meeting",
   "meet_subtitle":"Your Schedule for the day",
   "no_meetings":"No Meeting Available",
-  "no_meet_des":"It looks like you don’t have any meetings scheduled at the moment.\nThis space will be updated as new meetings are added!"
+  "no_meet_des":"It looks like you don’t have any meetings scheduled at the moment.\nThis space will be updated as new meetings are added!",
+  "sign_in":"Sign In",
+  "sign_to_account":"Sign in to my account",
+  "email":"Email",
+  "my_email":"My Email",
+  "password":"Password",
+  "my_password":"My Password",
+  "remember_me":"Remember Me",
+  "forgot_password":"Forgot Password",
+  "or":"OR",
+  "sign_with_phone":"Sign In With Phone",
+  "dont_have_account":"Don't have an account? ",
+  "sign_up_here":"Sign Up here",
+  "phone_number":"Phone Number",
+  "sign_with_email":"Sign In With Email",
+  "search":"Search",
+  "search_country":"Search Country"
+
 }
