@@ -154,14 +154,19 @@ class CustomPopup extends StatelessWidget {
               const SizedBox(height: 16),
               _buildDescription(context, description),
               const SizedBox(height: 16),
-              if (content != null) ...[
-                content!,
-                const SizedBox(height: 16),
-              ],
-              _buildPrimaryButton(context, primaryButtonText, primaryButtonOnPressed),
+              if (content != null) ...[content!, const SizedBox(height: 16)],
+              _buildPrimaryButton(
+                context,
+                primaryButtonText,
+                primaryButtonOnPressed,
+              ),
               if (secondaryButtonText != null) ...[
                 const SizedBox(height: 16),
-                _buildSecondaryButton(context, secondaryButtonText!, secondaryButtonOnPressed),
+                _buildSecondaryButton(
+                  context,
+                  secondaryButtonText!,
+                  secondaryButtonOnPressed,
+                ),
               ],
               if (showFooter) ...[
                 const SizedBox(height: 16),
@@ -170,7 +175,7 @@ class CustomPopup extends StatelessWidget {
             ],
           ),
         ),
-        _buildTopIconCircle( icon)
+        _buildTopIconCircle(icon),
       ],
     );
   }
@@ -221,7 +226,11 @@ Widget _buildDescription(BuildContext context, String description) {
   );
 }
 
-Widget _buildPrimaryButton(BuildContext context, String primaryButtonText, VoidCallback primaryButtonOnPressed) {
+Widget _buildPrimaryButton(
+  BuildContext context,
+  String primaryButtonText,
+  VoidCallback primaryButtonOnPressed,
+) {
   return CustomPrimaryButton(
     style: context.textTheme.titleSmallFont.copyWith(
       color: context.colors.white,
@@ -234,7 +243,11 @@ Widget _buildPrimaryButton(BuildContext context, String primaryButtonText, VoidC
   );
 }
 
-Widget _buildSecondaryButton(BuildContext context, String secondaryButtonText, VoidCallback? secondaryButtonOnPressed) {
+Widget _buildSecondaryButton(
+  BuildContext context,
+  String secondaryButtonText,
+  VoidCallback? secondaryButtonOnPressed,
+) {
   return CustomPrimaryButton(
     style: context.textTheme.titleSmallFont.copyWith(
       color: context.colors.purple500,
@@ -247,7 +260,10 @@ Widget _buildSecondaryButton(BuildContext context, String secondaryButtonText, V
   );
 }
 
-Widget _buildSignInAlternativeFooter(BuildContext context ,VoidCallback? onTapHere) {
+Widget _buildSignInAlternativeFooter(
+  BuildContext context,
+  VoidCallback? onTapHere,
+) {
   return Text.rich(
     TextSpan(
       children: [
@@ -275,7 +291,6 @@ Widget _buildSignInAlternativeFooter(BuildContext context ,VoidCallback? onTapHe
     overflow: TextOverflow.ellipsis,
   );
 }
-
 
 class _VerificationContent extends StatelessWidget {
   final void Function(String) onCompleted;
@@ -341,7 +356,7 @@ class _VerificationContent extends StatelessWidget {
         ],
       ),
       maxLines: 1,
-      overflow: TextOverflow.ellipsis
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
