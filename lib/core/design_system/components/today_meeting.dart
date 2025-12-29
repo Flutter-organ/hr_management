@@ -128,15 +128,15 @@ class TodayMeeting extends StatelessWidget {
                   },
                 ],
               ),
-              CustomPrimaryButton(
-                style: context.textTheme.titleSmallFont.copyWith(
+              CustomPrimaryButton.filled(
+                textStyle: context.textTheme.titleSmallFont.copyWith(
                   color: context.colors.white,
                 ),
-                title: "join_meet".tr(),
-                backGroundColor: context.colors.purple500,
+                buttonText: "join_meet".tr(),
+                backgroundColor: context.colors.purple500,
                 padding: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
-                borderRadius: BorderRadius.circular(100),
-                onTap: () {},
+                borderRadius: 100,
+                onPressed: () {},
               ),
             ],
           ),
