@@ -116,7 +116,8 @@ class CustomPopup extends StatelessWidget {
     required IconData icon,
     required String title,
     required String description,
-    required Widget content,
+    required String todayWorkHours,
+    required String overTimeTodayWorkHours,
     required String primaryButtonText,
     required  primaryButtonOnPressed,
     required String secondaryButtonText,
@@ -128,8 +129,19 @@ class CustomPopup extends StatelessWidget {
       description: description,
       content:Row(
         children: [
-          _ClockOutContent(time: "clock_out_time", hour: "Today"),
-          _ClockOutContent(time:"clock_out_time",hour: "Today"),
+          Expanded(
+            child: ClockOutContent(
+              time: "today",
+              hour: todayWorkHours,
+            ),
+          ),
+          SizedBox(width: 8),
+          Expanded(
+            child: ClockOutContent(
+              time: "overtime",
+              hour: overTimeTodayWorkHours,
+            ),
+          ),
         ],
       ),
       primaryButtonText: primaryButtonText,
@@ -257,13 +269,19 @@ Widget _buildPrimaryButton(
   String primaryButtonText,
   VoidCallback primaryButtonOnPressed,
 ) {
-  return CustomPrimaryButton(
+  return CustomPrimaryButton.gradient(
+    height: 48,
     textStyle: context.textTheme.titleSmallFont.copyWith(
       color: context.colors.white,
     ),
+    gradient: LinearGradient(
+      colors: [
+       ExtensionColors.purpleGradient0,
+        ExtensionColors.purpleGradient1,
+        ExtensionColors.purpleGradient2,
+      ],
+    ),
     buttonText: primaryButtonText,
-    backgroundColor: context.colors.purple500,
-    padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
     borderRadius: 100,
     onPressed: primaryButtonOnPressed,
   );
@@ -274,13 +292,13 @@ Widget _buildSecondaryButton(
   String secondaryButtonText,
   VoidCallback? secondaryButtonOnPressed,
 ) {
-  return CustomPrimaryButton(
+  return CustomPrimaryButton.outlined(
+    height: 48,
     textStyle: context.textTheme.titleSmallFont.copyWith(
-      color: context.colors.purple500,
+      color: context.colors.purple600,
     ),
     buttonText: secondaryButtonText!,
-    backgroundColor: context.colors.white,
-    padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
+    borderColor: context.colors.purple600,
     borderRadius: 100,
     onPressed: secondaryButtonOnPressed,
   );
@@ -317,8 +335,8 @@ Widget _buildSignInAlternativeFooter(
     overflow: TextOverflow.ellipsis,
   );
 }
-class _ClockOutContent extends StatelessWidget {
-  _ClockOutContent({
+class ClockOutContent extends StatelessWidget {
+  ClockOutContent({
     super.key,
     required this.time,
     required this.hour,
@@ -330,7 +348,6 @@ class _ClockOutContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 72,
       decoration: BoxDecoration(
         color: context.colors.gray300,
         borderRadius: BorderRadius.circular(8),
@@ -344,9 +361,9 @@ class _ClockOutContent extends StatelessWidget {
           Row(
             children: [
               SvgPicture.asset(
-                AppAssets.calendar,
-                width: 20,
-                height: 20,
+                AppAssets.taskStatusInProgress,
+                width: 16,
+                height: 16,
               ),
               const SizedBox(width: 10),
               Text(
@@ -354,15 +371,19 @@ class _ClockOutContent extends StatelessWidget {
                 style: context.textTheme.bodySmallFont.copyWith(
                   color: ExtensionColors.textSecondary,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
           const SizedBox(height: 4),
           Text(
             hour,
-            style: context.textTheme.bodyLargeFont.copyWith(
+            style: context.textTheme.bodyMediumFont.copyWith(
               color: ExtensionColors.textPrimary,
             ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),
