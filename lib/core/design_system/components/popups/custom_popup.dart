@@ -186,6 +186,7 @@ class CustomPopup extends StatelessWidget {
             ),
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
               _buildTitle(context, title),
@@ -260,7 +261,7 @@ Widget _buildDescription(BuildContext context, String description) {
     ),
     maxLines: 3,
     overflow: TextOverflow.ellipsis,
-    textAlign: TextAlign.center,
+    textAlign: TextAlign.start,
   );
 }
 
@@ -428,46 +429,6 @@ class _VerificationContent extends StatelessWidget {
       ],
     );
   }
-  Widget _ClockOutContent(BuildContext context, String time , String hour) {
-    return Container(
-        height: 72,
-        decoration: BoxDecoration(
-          color: context.colors.gray300,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: context.colors.gray50, width: 1),
-        ),
-        child: Column(
-            spacing : 10,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                  children: [
-                    SvgPicture.asset(
-                      AppAssets.calendar,
-                      width: 20,
-                      height: 20,
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      time,
-                      style: context.textTheme.bodySmallFont.copyWith(
-                        color: ExtensionColors.textSecondary,
-                      ),
-                    ),
-                  ]
-              ),
-              Text(
-                hour,
-                style: context.textTheme.bodyLargeFont.copyWith(
-                  color: ExtensionColors.textPrimary,
-                ),
-              ),
-            ]
-        )
-    );
-  }
-
-
   Widget _buildResendRow(BuildContext context) {
     return Text.rich(
       TextSpan(
