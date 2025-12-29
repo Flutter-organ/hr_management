@@ -258,14 +258,14 @@ Widget _buildPrimaryButton(
   VoidCallback primaryButtonOnPressed,
 ) {
   return CustomPrimaryButton(
-    style: context.textTheme.titleSmallFont.copyWith(
+    textStyle: context.textTheme.titleSmallFont.copyWith(
       color: context.colors.white,
     ),
-    title: primaryButtonText,
-    backGroundColor: context.colors.purple500,
+    buttonText: primaryButtonText,
+    backgroundColor: context.colors.purple500,
     padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
-    borderRadius: BorderRadius.circular(100),
-    onTap: primaryButtonOnPressed,
+    borderRadius: 100,
+    onPressed: primaryButtonOnPressed,
   );
 }
 
@@ -275,14 +275,14 @@ Widget _buildSecondaryButton(
   VoidCallback? secondaryButtonOnPressed,
 ) {
   return CustomPrimaryButton(
-    style: context.textTheme.titleSmallFont.copyWith(
+    textStyle: context.textTheme.titleSmallFont.copyWith(
       color: context.colors.purple500,
     ),
-    title: secondaryButtonText!,
-    backGroundColor: context.colors.white,
+    buttonText: secondaryButtonText!,
+    backgroundColor: context.colors.white,
     padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 8),
-    borderRadius: BorderRadius.circular(100),
-    onTap: secondaryButtonOnPressed,
+    borderRadius: 100,
+    onPressed: secondaryButtonOnPressed,
   );
 }
 
