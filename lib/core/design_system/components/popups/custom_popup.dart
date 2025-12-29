@@ -4,9 +4,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hr_management/core/design_system/components/custom_primary_button.dart';
 import 'package:hr_management/core/design_system/theme/color/app_constant_colors.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:pinput/pinput.dart';
 import '../../theme/helper/app_assets.dart';
 import '../../theme/helper/extention_colors.dart';
+import '../custom_input_field.dart';
 
 class CustomPopup extends StatelessWidget {
   const CustomPopup({
@@ -74,7 +76,8 @@ class CustomPopup extends StatelessWidget {
     required IconData icon,
     required String title,
     required String description,
-    required Widget content,
+    required String labelInputTextField,
+    required String hintInputTextField,
     required String primaryButtonText,
     required VoidCallback primaryButtonOnPressed,
   }) {
@@ -82,7 +85,10 @@ class CustomPopup extends StatelessWidget {
       icon: icon,
       title: title,
       description: description,
-      content: content,
+      content: InputFieldWithLabel(
+        labelInputTextField,
+        hintInputTextField,
+      ),
       primaryButtonText: primaryButtonText,
       primaryButtonOnPressed: primaryButtonOnPressed,
     );
@@ -131,14 +137,14 @@ class CustomPopup extends StatelessWidget {
         children: [
           Expanded(
             child: ClockOutContent(
-              time: "today",
+              time: "today".tr(),
               hour: todayWorkHours,
             ),
           ),
           SizedBox(width: 8),
           Expanded(
             child: ClockOutContent(
-              time: "overtime",
+              time: "overtime".tr(),
               hour: overTimeTodayWorkHours,
             ),
           ),
@@ -336,6 +342,46 @@ Widget _buildSignInAlternativeFooter(
     overflow: TextOverflow.ellipsis,
   );
 }
+
+class InputFieldWithLabel extends StatelessWidget {
+  const InputFieldWithLabel(this.label,
+      this.hint, {
+        super.key,
+      });
+
+  final String label;
+  final String hint;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: Text(
+            label,
+            style: context.textTheme.titleMediumFont.copyWith(
+              fontWeight: FontWeight.w400,
+              color: ExtensionColors.gray600,
+            ),
+            textAlign: TextAlign.left,
+          ),
+        ),
+        const SizedBox(height: 4),
+        CustomInputField(
+          borderColor: context.colors.gray400,
+          filledColor: context.colors.white,
+          hintKey: hint,
+          labelHintStyle: context.colors.gray400,
+          hintFontSize: 4,
+          enabledColor: context.colors.gray400,
+          radius: 8,
+          prefixIcon: Icon(Iconsax.sms, color: context.colors.purple500),
+        ),
+      ],
+    );
+  }
+}
 class ClockOutContent extends StatelessWidget {
   ClockOutContent({
     super.key,
@@ -417,6 +463,7 @@ class _VerificationContent extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
           ),
+          keyboardType: TextInputType.number,
           preFilledWidget: Text(
             "0",
             style: context.textTheme.headLineMediumFont.copyWith(

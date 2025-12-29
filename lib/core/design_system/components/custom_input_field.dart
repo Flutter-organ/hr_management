@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
-
 class CustomInputField extends StatelessWidget {
   final String? hintKey;
   final TextEditingController? controller;
@@ -36,6 +35,7 @@ class CustomInputField extends StatelessWidget {
   final double? contentPaddingVertical;
   final double? hintFontSize;
   final Color? focuseAndErrorColor;
+  final Color? enabledColor;
   final InputBorder? border;
 
   const CustomInputField({
@@ -74,6 +74,7 @@ class CustomInputField extends StatelessWidget {
     this.focuseAndErrorColor,
     this.hintFontSize,
     this.border,
+    this.enabledColor,
   });
   @override
   Widget build(BuildContext context) {
@@ -85,6 +86,7 @@ class CustomInputField extends StatelessWidget {
       ),
       onTap: onTap,
       enabled: enabled,
+      obscureText: isObscureText,
       readOnly: isReadOnly ?? false,
       decoration: InputDecoration(
         hintText: hintKey,
@@ -116,10 +118,12 @@ class CustomInputField extends StatelessWidget {
         fillColor: filledColor,
         filled: true,
         isDense: true,
-        prefix: prefixIcon,
-        suffix: suffixIcon,
         labelStyle: context.textTheme.bodyMediumFont.copyWith(
           color: labelHintStyle,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(radius ?? 4.00),
+          borderSide: BorderSide(color: enabledColor ?? Color(0xFF000000)),
         ),
         border: border ?? InputBorder.none,
       ),
