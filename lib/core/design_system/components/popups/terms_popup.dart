@@ -8,70 +8,76 @@ class TermsPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController scrollController = ScrollController();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
-      child: Column(
-        children: [
-          const SizedBox(height: 16),
-          Text(
-            "terms_and_conditions_title".tr(),
-            textAlign: TextAlign.center,
-            style: context.textTheme.titleLargeFontSemiBold.copyWith(
-              fontWeight: FontWeight.bold,
-              color: context.colors.black,
-              fontSize: 20,
-            ),
-          ),
-
-          const SizedBox(height: 20),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Color(0xffF9FAFB),
-                borderRadius: BorderRadius.circular(12),
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.6,
+        child: Column(
+          mainAxisSize: .min,
+          children: [
+            const SizedBox(height: 16),
+            Text(
+              "terms_and_conditions_title".tr(),
+              textAlign: TextAlign.center,
+              style: context.textTheme.titleLargeFontSemiBold.copyWith(
+                fontWeight: FontWeight.bold,
+                color: context.colors.black,
+                fontSize: 20,
               ),
-              child: Scrollbar(
-                thickness: 6.0,
-                thumbVisibility: true,
-                child: SingleChildScrollView(
-                  child: Text(
-                    "terms_and_conditions_desc".tr(),
+            ),
 
-                    style: context.textTheme.labelMediumFont.copyWith(
-                      fontWeight: FontWeight.w500,
+            const SizedBox(height: 20),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Color(0xffF9FAFB),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Scrollbar(
+                  controller: scrollController,
+                  thickness: 6.0,
+                  thumbVisibility: true,
+                  child: SingleChildScrollView(
+                    controller: scrollController,
+                    child: Text(
+                      "terms_and_conditions_desc".tr(),
+
+                      style: context.textTheme.labelMediumFont.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 20),
-          CustomPrimaryButton(
-            buttonText: "i_agree".tr(),
-            buttonType: ButtonType.gradient,
-            height: 52,
-            borderRadius: 30,
-            textStyle: context.textTheme.labelLargeFont,
-            gradient: LinearGradient(
-              colors: [context.colors.purple500, context.colors.purple800],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+            const SizedBox(height: 20),
+            CustomPrimaryButton(
+              buttonText: "i_agree".tr(),
+              buttonType: ButtonType.gradient,
+              borderRadius: 30,
+              textStyle: context.textTheme.labelLargeFont,
+              gradient: LinearGradient(
+                colors: [context.colors.purple500, context.colors.purple800],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          CustomPrimaryButton(
-            buttonText: "decline".tr(),
-            buttonType: ButtonType.outlined,
-            height: 52,
-            borderRadius: 30,
-            borderColor: context.colors.purple900,
-            foregroundColor: context.colors.purple900,
-            textStyle: context.textTheme.labelLargeFont,
-            onPressed: () {},
-          ),
-          SizedBox(height: 10),
-        ],
+            const SizedBox(height: 20),
+            CustomPrimaryButton(
+              buttonText: "decline".tr(),
+              buttonType: ButtonType.outlined,
+              height: 48,
+              borderRadius: 30,
+              borderColor: context.colors.purple900,
+              foregroundColor: context.colors.purple900,
+              textStyle: context.textTheme.labelLargeFont,
+              onPressed: () {},
+            ),
+            SizedBox(height: 10),
+          ],
+        ),
       ),
     );
   }
