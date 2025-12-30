@@ -22,7 +22,7 @@ class CustomPopupList extends StatefulWidget {
 }
 
 class _CustomPopupListState extends State<CustomPopupList> {
-  final Set<int> selectedIndexes = {};
+  int? selectedIndex;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -60,14 +60,10 @@ class _CustomPopupListState extends State<CustomPopupList> {
                   itemCount: widget.options.length,
                   itemBuilder: (context, index) => SelectableCheckChip(
                     label: widget.options[index],
-                    isSelected: selectedIndexes.contains(index),
+                    isSelected: selectedIndex == index,
                     onTap: () {
                       setState(() {
-                        if (selectedIndexes.contains(index)) {
-                          selectedIndexes.remove(index);
-                        } else {
-                          selectedIndexes.add(index);
-                        }
+                        selectedIndex = index;
                       });
                     },
                   ),
