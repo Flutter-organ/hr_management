@@ -251,8 +251,8 @@ Widget _buildTopIconCircle(IconData icon) {
 Widget _buildTitle(BuildContext context, String title) {
   return Text(
     title,
-    style: context.textTheme.titleLargeFontSemiBold.copyWith(
-      color: context.colors.gray500,
+    style: context.textTheme.popupTitleFont.copyWith(
+      color: context.colors.textPrimary,
     ),
     maxLines: 1,
     overflow: TextOverflow.ellipsis,
@@ -262,8 +262,8 @@ Widget _buildTitle(BuildContext context, String title) {
 Widget _buildDescription(BuildContext context, String description) {
   return Text(
     description,
-    style: context.textTheme.bodySmallFont.copyWith(
-      color: context.colors.gray500,
+    style: context.textTheme.popupBodyFont.copyWith(
+      color: context.colors.textSecondary,
     ),
     maxLines: 3,
     overflow: TextOverflow.ellipsis,
@@ -278,7 +278,7 @@ Widget _buildPrimaryButton(
 ) {
   return CustomPrimaryButton.gradient(
     height: 48,
-    textStyle: context.textTheme.titleSmallFont.copyWith(
+    textStyle: context.textTheme.labelLargeFont.copyWith(
       color: context.colors.white,
     ),
     gradient: LinearGradient(
@@ -301,7 +301,7 @@ Widget _buildSecondaryButton(
 ) {
   return CustomPrimaryButton.outlined(
     height: 48,
-    textStyle: context.textTheme.titleSmallFont.copyWith(
+    textStyle: context.textTheme.labelLargeFont.copyWith(
       color: context.colors.purple600,
     ),
     buttonText: secondaryButtonText!,
@@ -321,7 +321,7 @@ Widget _buildSignInAlternativeFooter(
         TextSpan(
           text: "sign_in_different_method".tr(),
           style: context.textTheme.bodySmallFont.copyWith(
-            color: ExtensionColors.textPrimary,
+            color: context.colors.textPrimary,
           ),
         ),
         WidgetSpan(
@@ -330,7 +330,7 @@ Widget _buildSignInAlternativeFooter(
             onTap: onTapHere,
             child: Text(
               "here".tr(),
-              style: context.textTheme.labelSmallFont.copyWith(
+              style: context.textTheme.labelMediumFont.copyWith(
                 color: AppConstantColors.purple500,
               ),
             ),
@@ -344,7 +344,8 @@ Widget _buildSignInAlternativeFooter(
 }
 
 class InputFieldWithLabel extends StatelessWidget {
-  const InputFieldWithLabel(this.label,
+  const InputFieldWithLabel(
+      this.label,
       this.hint, {
         super.key,
       });
@@ -360,9 +361,9 @@ class InputFieldWithLabel extends StatelessWidget {
           alignment: AlignmentDirectional.centerStart,
           child: Text(
             label,
-            style: context.textTheme.titleMediumFont.copyWith(
-              fontWeight: FontWeight.w400,
-              color: ExtensionColors.gray600,
+            style: context.textTheme.bodySmallFont.copyWith(
+              fontWeight: FontWeight.w500,
+              color:context.colors.gray600,
             ),
             textAlign: TextAlign.left,
           ),
@@ -376,7 +377,7 @@ class InputFieldWithLabel extends StatelessWidget {
           hintFontSize: 4,
           enabledColor: context.colors.gray400,
           radius: 8,
-          prefixIcon: Icon(Iconsax.sms, color: context.colors.purple500),
+          prefixIcon: Icon(Iconsax.sms, color: context.colors.purple400),
         ),
       ],
     );
@@ -396,7 +397,7 @@ class ClockOutContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: context.colors.gray300,
+        color: context.colors.cardBackground,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: context.colors.gray50, width: 1),
       ),
@@ -411,12 +412,16 @@ class ClockOutContent extends StatelessWidget {
                 AppAssets.taskStatusInProgress,
                 width: 16,
                 height: 16,
+                colorFilter: ColorFilter.mode(
+                  context.colors.gray300,
+                  BlendMode.srcIn,
+                ),
               ),
               const SizedBox(width: 10),
               Text(
                 time,
-                style: context.textTheme.bodySmallFont.copyWith(
-                  color: ExtensionColors.textSecondary,
+                style: context.textTheme.labelMediumFont.copyWith(
+                  color:context.colors.textSecondary,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -426,8 +431,9 @@ class ClockOutContent extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             hour,
-            style: context.textTheme.bodyMediumFont.copyWith(
-              color: ExtensionColors.textPrimary,
+            style: context.textTheme.titleLargeFont.copyWith(
+              fontSize: 20,
+              color: context.colors.textPrimary,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -459,7 +465,7 @@ class _VerificationContent extends StatelessWidget {
             width: 45,
             height: 45,
             decoration: BoxDecoration(
-              border: Border.all(color: context.colors.gray200, width: 1),
+              border: Border.all(color: context.colors.gray300, width: 1),
               borderRadius: BorderRadius.circular(8),
             ),
           ),
@@ -467,7 +473,7 @@ class _VerificationContent extends StatelessWidget {
           preFilledWidget: Text(
             "0",
             style: context.textTheme.headLineMediumFont.copyWith(
-              color: context.colors.gray500,
+              color: context.colors.gray200,
             ),
           ),
         ),
@@ -483,7 +489,7 @@ class _VerificationContent extends StatelessWidget {
           TextSpan(
             text: "Haven't_received_the_verification_code?".tr(),
             style: context.textTheme.bodySmallFont.copyWith(
-              color: ExtensionColors.textPrimary,
+              color: context.colors.textPrimary,
             ),
           ),
           WidgetSpan(
@@ -492,7 +498,7 @@ class _VerificationContent extends StatelessWidget {
               onTap: onResend,
               child: Text(
                 "Resend_it".tr(),
-                style: context.textTheme.labelSmallFont.copyWith(
+                style: context.textTheme.labelMediumFont.copyWith(
                   color: AppConstantColors.purple500,
                 ),
               ),

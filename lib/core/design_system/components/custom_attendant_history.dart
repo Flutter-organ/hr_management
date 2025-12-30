@@ -28,7 +28,7 @@ class CustomAttendantHistory extends StatelessWidget {
               ),
               Text(
                 attendanceDate ?? "attendancedate".tr(),
-                style: context.textTheme.bodyLargeFont.copyWith(
+                style: context.textTheme.titleSmallFont.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -48,13 +48,16 @@ class CustomAttendantHistory extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "totalhours".tr(),
-                      style: context.textTheme.titleMediumFont,
+                      "total_hours".tr(),
+                      style: context.textTheme.labelMediumFont.copyWith(
+                        color: context.colors.textSecondary,
+                      ),
                     ),
                     Text(
                       totalHours ?? "defaulttotalhours".tr(),
-                      style: context.textTheme.bodyLargeFont.copyWith(
+                      style: context.textTheme.titleMediumFont.copyWith(
                         fontWeight: FontWeight.w600,
+                        color: context.colors.textBody,
                       ),
                     ),
                   ],
@@ -63,13 +66,16 @@ class CustomAttendantHistory extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "clockinout".tr(),
-                      style: context.textTheme.titleMediumFont,
+                      "clock_in_out".tr(),
+                      style: context.textTheme.labelMediumFont.copyWith(
+                        color: context.colors.textSecondary,
+                      ),
                     ),
                     Text(
                       clockInOut ?? "defaulttimerange".tr(),
-                      style: context.textTheme.bodyLargeFont.copyWith(
+                      style: context.textTheme.titleMediumFont.copyWith(
                         fontWeight: FontWeight.w600,
+                        color: context.colors.textBody,
                       ),
                     ),
                   ],

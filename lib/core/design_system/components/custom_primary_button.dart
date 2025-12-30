@@ -16,7 +16,6 @@ class CustomPrimaryButton extends StatelessWidget {
   final Color? foregroundColor;
   final Color? disabledBackgroundColor;
   final Color? disabledForegroundColor;
-  final Color? overlayColor;
 
   final Color? borderColor;
   final double borderWidth;
@@ -48,7 +47,6 @@ class CustomPrimaryButton extends StatelessWidget {
     this.foregroundColor,
     this.disabledBackgroundColor,
     this.disabledForegroundColor,
-    this.overlayColor,
     this.borderColor,
     this.borderWidth = 1.5,
     this.borderRadius = 100,
@@ -334,11 +332,12 @@ class CustomPrimaryButton extends StatelessWidget {
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
     );
-    final effectiveDisabledGradient = disabledGradient ?? LinearGradient(colors: [context.colors.gray300, context.colors.gray400]);
+    final effectiveDisabledGradient = disabledGradient ??
+        LinearGradient(colors: [context.colors.gray300, context.colors.gray400]);
 
     final isDisabledState = !isEnabled && !isLoading;
     final effectiveGradient = isDisabledState
-        ? (disabledGradient ?? effectiveDisabledGradient)
+        ? effectiveDisabledGradient
         : (gradient ?? defaultGradient);
 
     return Opacity(

@@ -34,7 +34,7 @@ class SelectableCheckChip extends StatelessWidget {
           color: isSelected ? effectiveBgSelected : effectiveBgUnselected,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: isSelected ? effectiveSelectedColor : ExtensionColors.grayCheckBox,
+            color: isSelected ? effectiveSelectedColor : context.colors.gray400,
             width: 1,
           ),
         ),
@@ -55,7 +55,7 @@ class SelectableCheckChip extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: isSelected ? effectiveSelectedColor : context.colors.white,
                 border: Border.all(
-                  color: isSelected ? effectiveSelectedColor : ExtensionColors.grayCheckBox  ,
+                  color: isSelected ? effectiveSelectedColor : context.colors.gray400  ,
                   width: 2,
                 ),
               ),

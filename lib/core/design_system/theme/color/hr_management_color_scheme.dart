@@ -69,11 +69,25 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
   final Color warning800;
   final Color warning900;
 
+  // ============== Yellow Palette ==============
+  final Color yellow25;
+  final Color yellow50;
+  final Color yellow100;
+  final Color yellow200;
+  final Color yellow300;
+  final Color yellow400;
+  final Color yellow500;
+  final Color yellow600;
+  final Color yellow700;
+  final Color yellow800;
+  final Color yellow900;
+
   // ============== Base Colors ==============
   final Color black;
   final Color white;
   final Color pureWhite;
   final Color offWhite;
+  final Color baseWhite;
 
   // ============== Primary ==============
   final Color primary;
@@ -93,6 +107,10 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
   final Color title;
   final Color body;
   final Color hint;
+  final Color textPrimary;
+  final Color textSecondary;
+  final Color textBody;
+  final Color textWarning;
 
   // ============== Border & Stroke ==============
   final Color stroke;
@@ -102,17 +120,15 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
   final Color error;
   final Color onError;
 
-  // final Color errorVariant;
+  // ============== Cards  ==============
+  final Color cardBackground;
+  final Color cardBackgroundSecondary;
 
-  // ============== Semantic: Success ==============
-  // final Color success;
-  // final Color successVariant;
-  // final Color onSuccess;
+  // ============== Bars  ==============
+  final Color bottomNavBarBgColor;
+  final Color statusBarColor;
 
-  // ============== Semantic: Warning ==============
-  // final Color warning;
-  // final Color warningVariant;
-  // final Color onWarning;
+
 
   const HrManagementColorScheme({
     required this.primary,
@@ -126,6 +142,10 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     required this.title,
     required this.body,
     required this.hint,
+    required this.textPrimary,
+    required this.textSecondary,
+    required this.textBody,
+    required this.textWarning,
     required this.stroke,
     required this.disabled,
     required this.error,
@@ -185,10 +205,27 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     required this.warning700,
     required this.warning800,
     required this.warning900,
+    required this.yellow25,
+    required this.yellow50,
+    required this.yellow100,
+    required this.yellow200,
+    required this.yellow300,
+    required this.yellow400,
+    required this.yellow500,
+    required this.yellow600,
+    required this.yellow700,
+    required this.yellow800,
+    required this.yellow900,
     required this.black,
     required this.white,
     required this.pureWhite,
     required this.offWhite,
+    required this.baseWhite,
+    required this.cardBackground,
+    required this.bottomNavBarBgColor,
+    required this.cardBackgroundSecondary,
+    required this.statusBarColor,
+
   });
 
   static const light = HrManagementColorScheme(
@@ -203,10 +240,15 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     title: AppConstantColors.gray900,
     body: AppConstantColors.gray600,
     hint: AppConstantColors.gray400,
+    textPrimary: AppConstantColors.textPrimary,
+    textSecondary: AppConstantColors.textSecondary,
+    textBody: AppConstantColors.textBody,
+    textWarning: AppConstantColors.textWarning,
     stroke: AppConstantColors.gray100,
     disabled: AppConstantColors.gray200,
     error: AppConstantColors.error500,
     onError: AppConstantColors.pureWhite,
+
     gray25: AppConstantColors.gray25,
     gray50: AppConstantColors.gray50,
     gray100: AppConstantColors.gray100,
@@ -262,18 +304,26 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     warning700: AppConstantColors.warning700,
     warning800: AppConstantColors.warning800,
     warning900: AppConstantColors.warning900,
+    yellow25: AppConstantColors.yellow25,
+    yellow50: AppConstantColors.yellow50,
+    yellow100: AppConstantColors.yellow100,
+    yellow200: AppConstantColors.yellow200,
+    yellow300: AppConstantColors.yellow300,
+    yellow400: AppConstantColors.yellow400,
+    yellow500: AppConstantColors.yellow500,
+    yellow600: AppConstantColors.yellow600,
+    yellow700: AppConstantColors.yellow700,
+    yellow800: AppConstantColors.yellow800,
+    yellow900: AppConstantColors.yellow900,
     black: AppConstantColors.black,
     white: AppConstantColors.white,
     pureWhite: AppConstantColors.pureWhite,
     offWhite: AppConstantColors.offWhite,
-
-    // errorVariant: AppConstantColors.error50,
-    // success: AppConstantColors.success500,
-    // successVariant: AppConstantColors.success50,
-    // onSuccess: AppConstantColors.pureWhite,
-    // warning: AppConstantColors.warning500,
-    // warningVariant: AppConstantColors.warning50,
-    // onWarning: AppConstantColors.gray900,
+    baseWhite: AppConstantColors.baseWhite,
+    cardBackground: AppConstantColors.cardBackground,
+    cardBackgroundSecondary: AppConstantColors.cardBackgroundSecondary,
+    bottomNavBarBgColor: AppConstantColors.bottomNavBarBgColor,
+    statusBarColor: AppConstantColors.statusBarColor,
   );
 
   static const dark = HrManagementColorScheme(
@@ -288,6 +338,10 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     title: AppConstantColors.gray25,
     body: AppConstantColors.gray200,
     hint: AppConstantColors.gray400,
+    textPrimary: AppConstantColors.textPrimary,
+    textSecondary: AppConstantColors.textSecondary,
+    textBody: AppConstantColors.textBody,
+    textWarning: AppConstantColors.textWarning,
     stroke: AppConstantColors.gray700,
     disabled: AppConstantColors.gray600,
     error: AppConstantColors.error400,
@@ -348,17 +402,26 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     warning700: AppConstantColors.warning700,
     warning800: AppConstantColors.warning800,
     warning900: AppConstantColors.warning900,
+    yellow25: AppConstantColors.yellow25,
+    yellow50: AppConstantColors.yellow50,
+    yellow100: AppConstantColors.yellow100,
+    yellow200: AppConstantColors.yellow200,
+    yellow300: AppConstantColors.yellow300,
+    yellow400: AppConstantColors.yellow400,
+    yellow500: AppConstantColors.yellow500,
+    yellow600: AppConstantColors.yellow600,
+    yellow700: AppConstantColors.yellow700,
+    yellow800: AppConstantColors.yellow800,
+    yellow900: AppConstantColors.yellow900,
     black: AppConstantColors.black,
     white: AppConstantColors.white,
     pureWhite: AppConstantColors.pureWhite,
     offWhite: AppConstantColors.offWhite,
-    // errorVariant: AppConstantColors.error900,
-    // success: AppConstantColors.success400,
-    // successVariant: AppConstantColors.success900,
-    // onSuccess: AppConstantColors.pureWhite,
-    // warning: AppConstantColors.warning400,
-    // warningVariant: AppConstantColors.warning900,
-    // onWarning: AppConstantColors.gray900,
+    baseWhite: AppConstantColors.baseWhite,
+    cardBackground: AppConstantColors.cardBackground,
+    cardBackgroundSecondary: AppConstantColors.cardBackgroundSecondary,
+    bottomNavBarBgColor: AppConstantColors.bottomNavBarBgColor,
+    statusBarColor: AppConstantColors.statusBarColor,
   );
 
   @override
@@ -374,6 +437,10 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     Color? title,
     Color? body,
     Color? hint,
+    Color? textPrimary,
+    Color? textSecondary,
+    Color? textBody,
+    Color? textWarning,
     Color? stroke,
     Color? disabled,
     Color? error,
@@ -439,10 +506,26 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     Color? warning700,
     Color? warning800,
     Color? warning900,
+    Color? yellow25,
+    Color? yellow50,
+    Color? yellow100,
+    Color? yellow200,
+    Color? yellow300,
+    Color? yellow400,
+    Color? yellow500,
+    Color? yellow600,
+    Color? yellow700,
+    Color? yellow800,
+    Color? yellow900,
     Color? black,
     Color? white,
     Color? pureWhite,
     Color? offWhite,
+    Color? baseWhite,
+    Color? cardBackground,
+    Color? cardBackgroundSecondary,
+    Color? bottomNavBarBgColor,
+    Color? statusBarColor,
   }) {
     return HrManagementColorScheme(
       primary: primary ?? this.primary,
@@ -456,6 +539,10 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
       title: title ?? this.title,
       body: body ?? this.body,
       hint: hint ?? this.hint,
+      textPrimary: textPrimary ?? this.textPrimary,
+      textSecondary: textSecondary ?? this.textSecondary,
+      textBody: textBody ?? this.textBody,
+      textWarning: textWarning ?? this.textWarning,
       stroke: stroke ?? this.stroke,
       disabled: disabled ?? this.disabled,
       error: error ?? this.error,
@@ -515,10 +602,26 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
       warning700: warning700 ?? this.warning700,
       warning800: warning800 ?? this.warning800,
       warning900: warning900 ?? this.warning900,
+      yellow25: yellow25 ?? this.yellow25,
+      yellow50: yellow50 ?? this.yellow50,
+      yellow100: yellow100 ?? this.yellow100,
+      yellow200: yellow200 ?? this.yellow200,
+      yellow300: yellow300 ?? this.yellow300,
+      yellow400: yellow400 ?? this.yellow400,
+      yellow500: yellow500 ?? this.yellow500,
+      yellow600: yellow600 ?? this.yellow600,
+      yellow700: yellow700 ?? this.yellow700,
+      yellow800: yellow800 ?? this.yellow800,
+      yellow900: yellow900 ?? this.yellow900,
       black: black ?? this.black,
       white: white ?? this.white,
       pureWhite: pureWhite ?? this.pureWhite,
       offWhite: offWhite ?? this.offWhite,
+      baseWhite: baseWhite ?? this.baseWhite,
+      cardBackground: cardBackground ?? this.cardBackground,
+      cardBackgroundSecondary: cardBackgroundSecondary ?? this.cardBackgroundSecondary,
+      bottomNavBarBgColor: bottomNavBarBgColor ?? this.bottomNavBarBgColor,
+      statusBarColor: statusBarColor ?? this.statusBarColor,
     );
   }
 
@@ -533,17 +636,17 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
       primaryVariant: Color.lerp(primaryVariant, other.primaryVariant, t)!,
       onPrimary: Color.lerp(onPrimary, other.onPrimary, t)!,
       secondary: Color.lerp(secondary, other.secondary, t)!,
-      secondaryVariant: Color.lerp(
-        secondaryVariant,
-        other.secondaryVariant,
-        t,
-      )!,
+      secondaryVariant: Color.lerp(secondaryVariant, other.secondaryVariant, t,)!,
       surfaceLow: Color.lerp(surfaceLow, other.surfaceLow, t)!,
       surface: Color.lerp(surface, other.surface, t)!,
       surfaceHigh: Color.lerp(surfaceHigh, other.surfaceHigh, t)!,
       title: Color.lerp(title, other.title, t)!,
       body: Color.lerp(body, other.body, t)!,
       hint: Color.lerp(hint, other.hint, t)!,
+      textPrimary: Color.lerp(textPrimary, other.textPrimary, t)!,
+      textSecondary: Color.lerp(textSecondary, other.textSecondary, t)!,
+      textBody: Color.lerp(textBody, other.textBody, t)!,
+      textWarning: Color.lerp(textWarning, other.textWarning, t)!,
       stroke: Color.lerp(stroke, other.stroke, t)!,
       disabled: Color.lerp(disabled, other.disabled, t)!,
       error: Color.lerp(error, other.error, t)!,
@@ -604,10 +707,26 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
       warning700: Color.lerp(warning700, other.warning700, t)!,
       warning800: Color.lerp(warning800, other.warning800, t)!,
       warning900: Color.lerp(warning900, other.warning900, t)!,
+      yellow25: Color.lerp(yellow25, other.yellow25, t)!,
+      yellow50: Color.lerp(yellow50, other.yellow50, t)!,
+      yellow100: Color.lerp(yellow100, other.yellow100, t)!,
+      yellow200: Color.lerp(yellow200, other.yellow200, t)!,
+      yellow300: Color.lerp(yellow300, other.yellow300, t)!,
+      yellow400: Color.lerp(yellow400, other.yellow400, t)!,
+      yellow500: Color.lerp(yellow500, other.yellow500, t)!,
+      yellow600: Color.lerp(yellow600, other.yellow600, t)!,
+      yellow700: Color.lerp(yellow700, other.yellow700, t)!,
+      yellow800: Color.lerp(yellow800, other.yellow800, t)!,
+      yellow900: Color.lerp(yellow900, other.yellow900, t)!,
       black: Color.lerp(black, other.black, t)!,
       white: Color.lerp(white, other.white, t)!,
       pureWhite: Color.lerp(pureWhite, other.pureWhite, t)!,
       offWhite: Color.lerp(offWhite, other.offWhite, t)!,
+      baseWhite: Color.lerp(baseWhite, other.baseWhite, t)!,
+      cardBackground: Color.lerp(cardBackground, other.cardBackground, t)!,
+      cardBackgroundSecondary: Color.lerp(cardBackgroundSecondary, other.cardBackgroundSecondary, t)!,
+      bottomNavBarBgColor: Color.lerp(bottomNavBarBgColor, other.bottomNavBarBgColor, t)!,
+      statusBarColor: Color.lerp(statusBarColor, other.statusBarColor, t)!,
     );
   }
 }

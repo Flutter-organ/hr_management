@@ -41,6 +41,7 @@ dependencies:
   flutter_pdfview: ^1.4.3
   flutter_svg: ^2.2.3
   country_picker: ^2.0.27
+  pinput: ^6.0.1
 
 dev_dependencies:
   flutter_test:
