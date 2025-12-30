@@ -44,7 +44,7 @@ class CustomUserChatTile extends StatelessWidget {
         title: Text(
           title,
           style: context.textTheme.titleMediumFont.copyWith(
-            color: ExtensionColors.textPrimary,
+            color: context.colors.textPrimary,
           ),
         ),
         subtitle: Text(
@@ -61,7 +61,7 @@ class CustomUserChatTile extends StatelessWidget {
             Text(
               timeMessage,
               style: context.textTheme.bodySmallFont.copyWith(
-                color: ExtensionColors.textPrimary,
+                color: context.colors.textPrimary,
               ),
             ),
             if (messageCount > 0)
