@@ -34,8 +34,8 @@ class EmptyStateCard extends StatelessWidget {
                 imgtitle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: context.textTheme.titleLargeFontSemiBold.copyWith(
-                  color: ExtensionColors.textPrimary,
+                style: context.textTheme.titleSmallFont.copyWith(
+                  color: context.colors.textPrimary,
                 ),
               ),
             ),
@@ -45,7 +45,7 @@ class EmptyStateCard extends StatelessWidget {
                 imgDescription,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
-                style: context.textTheme.titleSmallFont.copyWith(
+                style: context.textTheme.labelSmallFont.copyWith(
                   fontWeight: FontWeight.w400,
                   color: context.colors.gray300,
                 ),

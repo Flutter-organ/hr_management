@@ -22,7 +22,7 @@ class TodayMeeting extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: ExtensionColors.whiteContainer,
+          color: context.colors.baseWhite,
         ),
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
 
@@ -57,7 +57,8 @@ class TodayMeeting extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 12),
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: ExtensionColors.backgroundContainer,
+        color: context.colors.gray100,
+        border: Border.all(color: context.colors.gray200),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -88,8 +89,9 @@ class TodayMeeting extends StatelessWidget {
                         meeting.meetingTitle,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style: context.textTheme.titleLargeFontSemiBold
-                            .copyWith(color: ExtensionColors.textPrimary),
+                        style: context.textTheme.titleSmallFont.copyWith(
+                          color: context.colors.textPrimary,
+                        ),
                       ),
                     ),
                   ],
@@ -101,8 +103,8 @@ class TodayMeeting extends StatelessWidget {
                   const SizedBox(width: 4),
                   Text(
                     meetingTime,
-                    style: context.textTheme.titleMediumFont.copyWith(
-                      color: ExtensionColors.textSecondary,
+                    style: context.textTheme.bodySmallFont.copyWith(
+                      color: context.colors.textSecondary,
                     ),
                   ),
                 ],
@@ -129,7 +131,8 @@ class TodayMeeting extends StatelessWidget {
                 ],
               ),
               CustomPrimaryButton.filled(
-                textStyle: context.textTheme.titleSmallFont.copyWith(
+                width: 80,
+                textStyle: context.textTheme.labelSmallFont.copyWith(
                   color: context.colors.white,
                 ),
                 buttonText: "join_meet".tr(),

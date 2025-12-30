@@ -34,13 +34,13 @@ class ExpenseHistoryCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Iconsax.receipt_2, color: ExtensionColors.iconDefault),
+              Icon(Iconsax.receipt_2, color: context.colors.purple500),
               Text(
                 DateFormat(
                   'd MMMM y',
                   context.locale.languageCode,
                 ).format(date),
-                style: textTheme.titleLargeFontSemiBold,
+                style: textTheme.titleSmallFont,
               ),
             ],
           ),
@@ -57,9 +57,9 @@ class ExpenseHistoryCard extends StatelessWidget {
     final textTheme = context.textTheme;
     return Container(
       decoration: BoxDecoration(
-        color: ExtensionColors.backgroundContainer,
+        color: context.colors.gray100,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: ExtensionColors.borderContainer),
+        border: Border.all(color: context.colors.gray200),
       ),
       padding: EdgeInsets.all(12),
       child: Row(
@@ -68,15 +68,35 @@ class ExpenseHistoryCard extends StatelessWidget {
           Column(
             crossAxisAlignment: .start,
             children: [
-              Text("type".tr(), style: textTheme.titleMediumFont),
-              Text(type, style: textTheme.bodyLargeFont),
+              Text(
+                "type".tr(),
+                style: textTheme.labelMediumFont.copyWith(
+                  color: context.colors.gray500,
+                ),
+              ),
+              Text(
+                type,
+                style: textTheme.bodyLargeFont.copyWith(
+                  color: context.colors.textBody,
+                ),
+              ),
             ],
           ),
           Column(
             crossAxisAlignment: .start,
             children: [
-              Text("total_expense".tr(), style: textTheme.titleMediumFont),
-              Text("\$$totalExpense", style: textTheme.bodyLargeFont),
+              Text(
+                "total_expense".tr(),
+                style: textTheme.labelMediumFont.copyWith(
+                  color: context.colors.gray500,
+                ),
+              ),
+              Text(
+                "\$$totalExpense",
+                style: textTheme.bodyLargeFont.copyWith(
+                  color: context.colors.textBody,
+                ),
+              ),
             ],
           ),
         ],
@@ -104,18 +124,24 @@ class ExpenseHistoryCard extends StatelessWidget {
               ? "approved".tr(args: [formattedDate])
               : "rejected".tr(args: [formattedDate]),
           style: status == "ok"
-              ? txtTheme.titleMediumFont.copyWith(color: color.success500)
-              : txtTheme.titleMediumFont.copyWith(color: color.error),
+              ? txtTheme.labelMediumFont.copyWith(color: color.success500)
+              : txtTheme.labelMediumFont.copyWith(color: color.error),
         ),
         Spacer(),
-        Text("by".tr(), style: txtTheme.titleMediumFont),
+        Text(
+          "by".tr(),
+          style: txtTheme.labelMediumFont.copyWith(color: color.textPrimary),
+        ),
         CircleAvatar(
           backgroundImage: AssetImage(
             profileImage ?? AppAssets.profilePlaceholder,
           ),
           radius: 12,
         ),
-        Text(" $userName ", style: txtTheme.titleMediumFont),
+        Text(
+          " $userName ",
+          style: txtTheme.labelMediumFont.copyWith(color: color.textPrimary),
+        ),
       ],
     );
   }
