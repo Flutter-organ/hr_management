@@ -215,37 +215,42 @@ class _UploadTaskState extends State<UploadTask> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    CustomPrimaryButton.outlined(
-                      buttonText: "delete".tr(),
-                      textStyle: context.textTheme.bodyMediumFont.copyWith(
-                        color: context.colors.error,
+                    Expanded(
+                      child: CustomPrimaryButton.outlined(
+                        buttonText: "delete".tr(),
+                        textStyle: context.textTheme.bodyMediumFont.copyWith(
+                          color: context.colors.error,
+                        ),
+                        borderWidth: 2,
+                        borderColor: context.colors.error,
+                        borderRadius: 20,
+                        padding: EdgeInsets.symmetric(
+                          vertical: 8,
+                          horizontal: 16,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            pickedFile[index] = null;
+                            Navigator.pop(context);
+                          });
+                        },
                       ),
-                      borderWidth: 2,
-                      borderColor: context.colors.error,
-                      borderRadius: 20,
-                      padding: EdgeInsets.symmetric(
-                        vertical: 8,
-                        horizontal: 16,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          pickedFile[index] = null;
-                          Navigator.pop(context);
-                        });
-                      },
                     ),
-                    CustomPrimaryButton.outlined(
-                      onPressed: () => Navigator.pop(context),
-                      buttonText: "keep_file".tr(),
-                      textStyle: context.textTheme.bodyMediumFont.copyWith(
-                        color: context.colors.purple500,
-                      ),
-                      borderWidth: 2,
-                      borderColor: context.colors.purple500,
-                      borderRadius: 20,
-                      padding: EdgeInsets.symmetric(
-                        vertical: 8,
-                        horizontal: 16,
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: CustomPrimaryButton.outlined(
+                        onPressed: () => Navigator.pop(context),
+                        buttonText: "keep_file".tr(),
+                        textStyle: context.textTheme.bodyMediumFont.copyWith(
+                          color: context.colors.purple500,
+                        ),
+                        borderWidth: 2,
+                        borderColor: context.colors.purple500,
+                        borderRadius: 20,
+                        padding: EdgeInsets.symmetric(
+                          vertical: 8,
+                          horizontal: 16,
+                        ),
                       ),
                     ),
                   ],

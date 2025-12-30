@@ -105,7 +105,7 @@ class CustomChatBarMessage extends StatelessWidget {
               borderRadius: BorderRadius.circular(28),
               onTap: hasText ? () => onSend?.call(value.text.trim()) : onRecord,
               child: CircleAvatar(
-                backgroundColor: ExtensionColors.iconDefault,
+                backgroundColor: context.colors.purple500,
                 child: Icon(
                   hasText ? Iconsax.send_2 : Iconsax.microphone,
                   color: context.colors.white,

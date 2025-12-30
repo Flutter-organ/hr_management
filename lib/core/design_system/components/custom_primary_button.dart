@@ -3,7 +3,6 @@ import 'package:hr_management/core/design_system/theme/helper/theme_extention.da
 
 enum ButtonType { filled, outlined, text, gradient }
 
-
 class CustomPrimaryButton extends StatelessWidget {
   final String buttonText;
   final TextStyle? textStyle;
@@ -17,7 +16,6 @@ class CustomPrimaryButton extends StatelessWidget {
   final Color? foregroundColor;
   final Color? disabledBackgroundColor;
   final Color? disabledForegroundColor;
-  final Color? overlayColor;
 
   final Color? borderColor;
   final double borderWidth;
@@ -49,7 +47,6 @@ class CustomPrimaryButton extends StatelessWidget {
     this.foregroundColor,
     this.disabledBackgroundColor,
     this.disabledForegroundColor,
-    this.overlayColor,
     this.borderColor,
     this.borderWidth = 1.5,
     this.borderRadius = 100,
@@ -71,7 +68,7 @@ class CustomPrimaryButton extends StatelessWidget {
     VoidCallback? onPressed,
     double? width,
     double? height,
-    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric( horizontal: 24, vertical: 14),
     Color? backgroundColor,
     Color? foregroundColor,
     double borderRadius = 100,
@@ -108,7 +105,7 @@ class CustomPrimaryButton extends StatelessWidget {
     VoidCallback? onPressed,
     double? width,
     double? height,
-    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(  horizontal: 24, vertical: 14),
     Color? borderColor,
     Color? foregroundColor,
     double borderWidth = 1.5,
@@ -145,7 +142,7 @@ class CustomPrimaryButton extends StatelessWidget {
     VoidCallback? onPressed,
     double? width,
     double? height,
-    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric( horizontal: 16, vertical: 8),
     Color? foregroundColor,
     double borderRadius = 100,
     Widget? icon,
@@ -236,7 +233,7 @@ class CustomPrimaryButton extends StatelessWidget {
     }
 
     return SizedBox(
-      width: width ?? double.infinity,
+      width: width ?? (buttonType == ButtonType.text ? null : double.infinity),
       height: height,
       child: button,
     );
@@ -329,20 +326,18 @@ class CustomPrimaryButton extends StatelessWidget {
 
     final defaultGradient = LinearGradient(
       colors: [
-        context.colors.purple500,
+        context.colors.purple500, 
         context.colors.primary,
-      ],
+        ],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
     );
-
-    final effectiveDisabledGradient = disabledGradient ?? LinearGradient(
-      colors: [context.colors.gray300, context.colors.gray400],
-    );
+    final effectiveDisabledGradient = disabledGradient ??
+        LinearGradient(colors: [context.colors.gray300, context.colors.gray400]);
 
     final isDisabledState = !isEnabled && !isLoading;
     final effectiveGradient = isDisabledState
-        ? (disabledGradient ?? effectiveDisabledGradient)
+        ? effectiveDisabledGradient
         : (gradient ?? defaultGradient);
 
     return Opacity(
@@ -351,26 +346,14 @@ class CustomPrimaryButton extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: effectiveGradient,
           borderRadius: BorderRadius.circular(borderRadius),
-          boxShadow: elevation > 0
-              ? [
-            BoxShadow(
-              color: shadowColor ?? Colors.black.withAlpha(100),
-              blurRadius: elevation * 2,
-              offset: Offset(0, elevation),
-            ),
-          ]
-              : null,
+          boxShadow: elevation > 0?[BoxShadow( color: shadowColor ?? Colors.black.withAlpha(100), blurRadius: elevation * 2,offset: Offset(0, elevation) ),]: null,
         ),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             onTap: _isInteractive ? onPressed : null,
             borderRadius: BorderRadius.circular(borderRadius),
-            child: Padding(
-              padding: padding,
-              child: Center(
-                child: _buildContent(effectiveForegroundColor),
-              ),
+            child: Padding(padding: padding, child: Center(child: _buildContent(effectiveForegroundColor)),
             ),
           ),
         ),
@@ -386,9 +369,7 @@ class CustomPrimaryButton extends StatelessWidget {
   }
 
   Widget _buildNormalContent(Color foregroundColor) {
-    final effectiveTextStyle = textStyle?.copyWith(
-      color: textStyle?.color ?? foregroundColor,
-    ) ?? TextStyle(color: foregroundColor);
+    final effectiveTextStyle = textStyle?.copyWith(color: textStyle?.color ?? foregroundColor) ??TextStyle(color: foregroundColor);
 
     if (icon == null) {
       return Text(
@@ -418,9 +399,7 @@ class CustomPrimaryButton extends StatelessWidget {
   }
 
   Widget _buildLoadingContent(Color foregroundColor) {
-    final effectiveTextStyle = textStyle?.copyWith(
-      color: textStyle?.color ?? foregroundColor,
-    ) ?? TextStyle(color: foregroundColor);
+    final effectiveTextStyle = textStyle?.copyWith(color: textStyle?.color ?? foregroundColor)??TextStyle(color: foregroundColor);
 
     return Row(
       mainAxisSize: MainAxisSize.min,

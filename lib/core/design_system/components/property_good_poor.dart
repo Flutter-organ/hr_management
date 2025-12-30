@@ -48,7 +48,7 @@ class PropertyGoodPoor extends StatelessWidget {
       BurnoutStatus.good => ExtensionColors.good,
     };
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: color.onPrimary,
@@ -58,10 +58,7 @@ class PropertyGoodPoor extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text(
-                "property_label".tr(),
-                style: textStyle.titleLargeFontSemiBold,
-              ),
+              Text("property_label".tr(), style: textStyle.labelLargeFont),
               SizedBox(width: 4),
               Container(
                 padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
@@ -71,7 +68,7 @@ class PropertyGoodPoor extends StatelessWidget {
                 ),
                 child: Text(
                   status.label,
-                  style: textStyle.titleMediumFont.copyWith(
+                  style: textStyle.labelMediumFont.copyWith(
                     color: color.onPrimary,
                   ),
                 ),
@@ -85,17 +82,22 @@ class PropertyGoodPoor extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: "property_des1".tr(),
-                    style: textStyle.bodySmallFont,
+                    style: textStyle.bodySmallFont.copyWith(
+                      color: color.textSecondary,
+                    ),
                   ),
                   TextSpan(
                     text: "property_des2".tr(),
                     style: textStyle.bodySmallFont.copyWith(
                       fontWeight: FontWeight.w600,
+                      color: color.textSecondary,
                     ),
                   ),
                   TextSpan(
                     text: "property_des3".tr(),
-                    style: textStyle.bodySmallFont,
+                    style: textStyle.bodySmallFont.copyWith(
+                      color: color.textSecondary,
+                    ),
                   ),
                 ],
               ),
@@ -113,8 +115,8 @@ class PropertyGoodPoor extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: color.primaryVariant,
-        border: Border.all(color: color.stroke),
+        color: color.gray100,
+        border: Border.all(color: color.gray200),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/helper/app_assets.dart';
+import '../theme/helper/extention_colors.dart';
 import '../theme/helper/theme_extention.dart';
 import '../model/task_model.dart';
 import 'custom_btn_low_high_medium.dart';
@@ -49,8 +50,8 @@ class TaskCardItem extends StatelessWidget {
                 taskState.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: context.textTheme.bodySmallFont
-                    .copyWith(color: context.colors.black),
+                style: context.textTheme.titleSmallFont
+                    .copyWith(color: ExtensionColors.cardTitle),
               ),
             ],
           ),
@@ -58,8 +59,8 @@ class TaskCardItem extends StatelessWidget {
             children: [
               CustomBtnLowHighMedium(
                 title:taskState.status.name,
-                color: taskState.status.colorStatus,
-                style: context.textTheme.bodySmallFont
+                color: taskState.status.colorStatus(context),
+                style: context.textTheme.labelMediumFont
                     .copyWith(color: context.colors.gray600),
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 borderRadius: BorderRadius.circular(100),
@@ -68,8 +69,8 @@ class TaskCardItem extends StatelessWidget {
               const SizedBox(width: 8),
               CustomBtnLowHighMedium(
                 title: taskState.priority.name,
-                color: taskState.priority.colorTaskPriority,
-                style: context.textTheme.bodySmallFont
+                color: taskState.priority.colorTaskPriority(context),
+                style: context.textTheme.labelMediumFont
                     .copyWith(color: context.colors.white),
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 borderRadius: BorderRadius.circular(100),
@@ -99,8 +100,8 @@ class TaskCardItem extends StatelessWidget {
                   CustomBtnLowHighMedium(
                     title: taskState.date,
                     color: context.colors.white,
-                    style: context.textTheme.bodySmallFont
-                        .copyWith(color: context.colors.black),
+                    style: context.textTheme.labelSmallFont
+                        .copyWith(color: context.colors.textPrimary),
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                     borderRadius: BorderRadius.circular(100),
                     image: AppAssets.calendar,
@@ -109,8 +110,8 @@ class TaskCardItem extends StatelessWidget {
                   CustomBtnLowHighMedium(
                     title: taskState.comments.length.toString(),
                     color: context.colors.white,
-                    style: context.textTheme.bodySmallFont
-                        .copyWith(color: context.colors.black),
+                    style: context.textTheme.labelSmallFont
+                        .copyWith(color: context.colors.textPrimary),
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                     borderRadius: BorderRadius.circular(100),
                     image: AppAssets.message,

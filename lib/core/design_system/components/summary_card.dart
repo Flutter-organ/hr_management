@@ -151,8 +151,9 @@ class SummaryCard extends StatelessWidget {
         Text(
           title,
           style: titleTextStyle ??
-              themeText.labelLargeFont.copyWith(
-                color: ExtensionColors.textPrimary,
+              themeText.titleSmallFont.copyWith(
+                color: themeColors.textPrimary,
+                fontWeight: FontWeight.w600,
               ),
         ),
         if (subtitle != null) ...[
@@ -193,7 +194,7 @@ class SummaryCard extends StatelessWidget {
     return Container(
       padding: itemPadding,
       decoration: BoxDecoration(
-        color: itemBackgroundColor ?? ExtensionColors.cardBackground,
+        color: itemBackgroundColor ?? context.colors.cardBackground,
         borderRadius: itemBorderRadius,
         border: Border.all(color: context.colors.gray50),
       ),
@@ -226,7 +227,7 @@ class SummaryCard extends StatelessWidget {
                   item.label,
                   style: itemLabelTextStyle ??
                       context.textTheme.labelMediumFont.copyWith(
-                        color: ExtensionColors.textSecondary,
+                        color: context.colors.textSecondary,
                       ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -238,7 +239,7 @@ class SummaryCard extends StatelessWidget {
             item.value,
             style: itemValueTextStyle ??
                 context.textTheme.titleLargeFont.copyWith(
-                  color: ExtensionColors.textPrimary,
+                  color: context.colors.textPrimary,
                 ),
           ),
         ],

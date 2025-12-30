@@ -57,7 +57,7 @@ class CustomAttendantClockin extends StatelessWidget {
                 ),
                 Text(
                   dateTitle ?? "attendancedate".tr(),
-                  style: context.textTheme.titleMediumFont.copyWith(
+                  style: context.textTheme.labelMediumFont.copyWith(
                     color: context.colors.purple500,
                   ),
                 ),

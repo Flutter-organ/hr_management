@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
-
 class CustomInputField extends StatelessWidget {
   final String? hintKey;
   final TextEditingController? controller;
@@ -36,6 +35,7 @@ class CustomInputField extends StatelessWidget {
   final double? contentPaddingVertical;
   final double? hintFontSize;
   final Color? focuseAndErrorColor;
+  final Color? enabledColor;
   final InputBorder? border;
 
   const CustomInputField({
@@ -74,6 +74,7 @@ class CustomInputField extends StatelessWidget {
     this.focuseAndErrorColor,
     this.hintFontSize,
     this.border,
+    this.enabledColor,
   });
   @override
   Widget build(BuildContext context) {
@@ -81,16 +82,16 @@ class CustomInputField extends StatelessWidget {
       controller: controller,
       keyboardType: keyboardType,
       style: context.textTheme.bodyMediumFont.copyWith(
-        color: textInputColor ?? context.colors.black,
+        color: textInputColor ?? context.colors.textPrimary
       ),
       onTap: onTap,
       enabled: enabled,
+      obscureText: isObscureText,
       readOnly: isReadOnly ?? false,
       decoration: InputDecoration(
         hintText: hintKey,
         hintStyle: context.textTheme.bodyMediumFont.apply(
-          color: labelHintStyle,
-        ),
+          color: labelHintStyle ?? context.colors.gray400,),
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
         contentPadding: EdgeInsets.symmetric(
@@ -100,13 +101,13 @@ class CustomInputField extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius ?? 0),
           borderSide: BorderSide(
-            color: focuseAndErrorColor ?? Color(0xFF000000),
+            color: focuseAndErrorColor ?? context.colors.purple500,
           ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radius ?? 4.00),
           borderSide: BorderSide(
-            color: focuseAndErrorColor ?? Color(0xFF000000),
+            color: focuseAndErrorColor ?? context.colors.error500,
           ),
         ),
         errorStyle: context.textTheme.bodySmallFont.copyWith(
@@ -116,10 +117,12 @@ class CustomInputField extends StatelessWidget {
         fillColor: filledColor,
         filled: true,
         isDense: true,
-        prefix: prefixIcon,
-        suffix: suffixIcon,
         labelStyle: context.textTheme.bodyMediumFont.copyWith(
-          color: labelHintStyle,
+          color: labelHintStyle ?? context.colors.gray600,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(radius ?? 4.00),
+          borderSide: BorderSide(color: enabledColor ?? context.colors.gray400)
         ),
         border: border ?? InputBorder.none,
       ),

@@ -23,8 +23,8 @@ class CustomClockinAreaMapUser extends StatelessWidget {
       padding: padding,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: circularColor ?? ExtensionColors.kOne,
-        border: Border.all(color: ExtensionColors.kTwo),
+        color: circularColor ?? context.colors.gray200,
+        border: Border.all(color: context.colors.purple500),
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(100),
