@@ -94,14 +94,13 @@ class _SignInPopupState extends State<SignInPopup> {
                   "sign_in".tr(),
                   style: textTheme.headLineSmallFont.copyWith(
                     fontWeight: .w600,
-                    color: ExtensionColors.textPrimary,
+                    color: color.textPrimary,
                   ),
                 ),
                 Text(
                   "sign_to_account".tr(),
-                  style: textTheme.titleLargeFontSemiBold.copyWith(
-                    fontWeight: .w500,
-                    color: ExtensionColors.textSecondary,
+                  style: textTheme.titleSmallFont.copyWith(
+                    color: color.textSecondary,
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -129,7 +128,7 @@ class _SignInPopupState extends State<SignInPopup> {
                       onPressed: () {},
                       padding: EdgeInsetsGeometry.zero,
                       buttonText: "forgot_password".tr(),
-                      textStyle: textTheme.labelMediumFont.copyWith(
+                      textStyle: textTheme.bodySmallFont.copyWith(
                         color: color.purple600,
                       ),
                     ),
@@ -139,7 +138,7 @@ class _SignInPopupState extends State<SignInPopup> {
                 CustomPrimaryButton.gradient(
                   onPressed: () {},
                   buttonText: "sign_in".tr(),
-                  textStyle: textTheme.titleLargeFont.copyWith(
+                  textStyle: textTheme.labelLargeFont.copyWith(
                     color: color.pureWhite,
                   ),
                 ),
@@ -199,7 +198,7 @@ class _SignInPopupState extends State<SignInPopup> {
                       TextSpan(
                         text: "dont_have_account".tr(),
                         style: textTheme.labelSmallFont.copyWith(
-                          color: ExtensionColors.textPrimary,
+                          color: color.textPrimary,
                         ),
                       ),
                       TextSpan(
@@ -227,10 +226,7 @@ class _SignInPopupState extends State<SignInPopup> {
           alignment: AlignmentDirectional.centerStart,
           child: Text(
             "email".tr(),
-            style: textTheme.titleMediumFont.copyWith(
-              fontWeight: FontWeight.w400,
-              color: ExtensionColors.gray600,
-            ),
+            style: textTheme.bodySmallFont.copyWith(color: color.gray600),
             textAlign: TextAlign.left,
           ),
         ),
@@ -253,10 +249,7 @@ class _SignInPopupState extends State<SignInPopup> {
           alignment: AlignmentDirectional.centerStart,
           child: Text(
             "password".tr(),
-            style: textTheme.titleMediumFont.copyWith(
-              fontWeight: FontWeight.w400,
-              color: ExtensionColors.gray600,
-            ),
+            style: textTheme.bodySmallFont.copyWith(color: color.gray600),
             textAlign: TextAlign.left,
           ),
         ),
@@ -298,9 +291,9 @@ class _SignInPopupState extends State<SignInPopup> {
           alignment: AlignmentDirectional.centerStart,
           child: Text(
             "phone_number".tr(),
-            style: textTheme.titleMediumFont.copyWith(
+            style: textTheme.bodySmallFont.copyWith(
               fontWeight: FontWeight.w400,
-              color: ExtensionColors.gray600,
+              color: color.gray600,
             ),
             textAlign: TextAlign.left,
           ),
@@ -328,12 +321,12 @@ class _SignInPopupState extends State<SignInPopup> {
                     topLeft: Radius.circular(24),
                     topRight: Radius.circular(24),
                   ),
-                  textStyle: textTheme.titleMediumFont.copyWith(
-                    color: ExtensionColors.textPrimary,
+                  textStyle: textTheme.titleSmallFont.copyWith(
+                    color: color.textPrimary,
                     fontWeight: FontWeight.w500,
                   ),
-                  searchTextStyle: textTheme.titleMediumFont.copyWith(
-                    color: ExtensionColors.textPrimary,
+                  searchTextStyle: textTheme.titleSmallFont.copyWith(
+                    color: color.textPrimary,
                   ),
                   inputDecoration: InputDecoration(
                     labelText: 'search'.tr(),
@@ -363,8 +356,8 @@ class _SignInPopupState extends State<SignInPopup> {
                 children: [
                   Text(
                     "+$_countryCode",
-                    style: textTheme.titleMediumFont.copyWith(
-                      color: ExtensionColors.textPrimary,
+                    style: textTheme.titleSmallFont.copyWith(
+                      color: color.textPrimary,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

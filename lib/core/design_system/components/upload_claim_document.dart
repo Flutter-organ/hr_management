@@ -133,14 +133,14 @@ class _UploadClaimDocumentState extends State<UploadClaimDocument> {
             const SizedBox(height: 10),
             Text(
               "upload_claim_document".tr(),
-              style: textTheme.titleLargeFont.copyWith(
+              style: textTheme.labelLargeFont.copyWith(
                 color: color.purple500,
                 fontWeight: FontWeight.w500,
               ),
             ),
             Text(
               "format".tr(),
-              style: textTheme.bodySmallFont.copyWith(
+              style: textTheme.labelSmallFont.copyWith(
                 color: color.gray500,
                 fontSize: 10.0,
               ),
@@ -253,9 +253,8 @@ class _UploadClaimDocumentState extends State<UploadClaimDocument> {
               const SizedBox(height: 10),
               Text(
                 "Uploading File",
-                style: textTheme.titleLargeFont.copyWith(
+                style: textTheme.labelMediumFont.copyWith(
                   color: color.purple500,
-                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],

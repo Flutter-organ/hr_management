@@ -24,7 +24,7 @@ class BottomNavBar extends StatelessWidget {
         highlightColor: ExtensionColors.transparentColor,
       ),
       child: BottomNavigationBar(
-        backgroundColor: ExtensionColors.bottomNavBarBgColor,
+        backgroundColor: color.bottomNavBarBgColor,
         type: BottomNavigationBarType.fixed,
         currentIndex: index,
         onTap: (value) => onTap(value),
