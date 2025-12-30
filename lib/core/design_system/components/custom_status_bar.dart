@@ -86,10 +86,10 @@ class _CustomStatusBarState extends State<CustomStatusBar> {
             children: [
               Text(
                 title,
-                style: context.textTheme.titleMediumFont.copyWith(
+                style: context.textTheme.labelMediumFont.copyWith(
                   color: isSelected
                       ? context.colors.white
-                      : context.colors.black,
+                      : context.colors.textSecondary,
                 ),
               ),
               if (num > 0)
@@ -104,7 +104,8 @@ class _CustomStatusBarState extends State<CustomStatusBar> {
                     ),
                     child: Text(
                       num.toString(),
-                      style: context.textTheme.titleSmallFont.copyWith(
+                      style: context.textTheme.labelSmallFont.copyWith(
+                        fontSize: 10,
                         color: context.colors.white,
                       ),
                     ),

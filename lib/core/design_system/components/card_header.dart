@@ -22,7 +22,13 @@ class CardHeader extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(title, style: context.textTheme.titleMediumFont),
+            Text(
+                title,
+                style: context.textTheme.titleLargeFontSemiBold.copyWith(
+                  fontSize: 14,
+                  color: context.colors.textPrimary,
+                ),
+            ),
             const SizedBox(width: 4),
             if (count != null)
               Container(
@@ -30,12 +36,13 @@ class CardHeader extends StatelessWidget {
                 width: 20,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4),
-                  color: context.colors.purple50,
+                  color: context.colors.purple100,
                 ),
                 child: Center(
                   child: Text(
                     count!,
-                    style: context.textTheme.bodySmallFont.copyWith(
+                    style: context.textTheme.titleLargeFontSemiBold.copyWith(
+                      fontSize: 12,
                       color: context.colors.purple500,
                     ),
                   ),
@@ -46,7 +53,7 @@ class CardHeader extends StatelessWidget {
         Text(
           subtitle,
           style: context.textTheme.bodySmallFont.copyWith(
-            color: ExtensionColors.textSecondary,
+            color: context.colors.textSecondary,
           ),
         ),
       ],
