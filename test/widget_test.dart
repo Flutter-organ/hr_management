@@ -5,6 +5,7 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -12,8 +13,15 @@ import 'package:hr_management/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+    await EasyLocalization.ensureInitialized();
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(
+      EasyLocalization(
+        supportedLocales: const [Locale('ar'), Locale('en')],
+        path: 'assets/translations',
+        child: MyApp(),
+      ),
+    );
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
