@@ -2,7 +2,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AppConfig {
   AppConfig._();
-
   static bool _isInitialized = false;
   static Future<void> init() async {
     if (_isInitialized) return;
