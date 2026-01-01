@@ -25,6 +25,8 @@ class AppConfig {
     return dotenv.env['API_BASE_URL'] ?? 'https://localhost:8080';
   }
 
+  static String get xApiKey => dotenv.get('X_API_KEY', fallback: '');
+
   static String get appName {
     _ensureInitialized();
     return dotenv.env['APP_NAME'] ?? 'HR App';
