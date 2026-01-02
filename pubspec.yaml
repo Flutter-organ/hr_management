@@ -42,6 +42,13 @@ dependencies:
   flutter_svg: ^2.2.3
   country_picker: ^2.0.27
   pinput: ^6.0.1
+  get_it: ^8.0.2
+  dio: ^5.9.0
+  dartz: ^0.10.1
+  equatable: ^2.0.7
+  logger: ^2.6.2
+
+
 
 dev_dependencies:
   flutter_test:

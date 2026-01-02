@@ -4,50 +4,83 @@ class AppException implements Exception {
   final int? statusCode;
   final bool isUnauthorized;
 
-  AppException({
+  const AppException({
     required this.message,
     this.code,
     this.statusCode,
-    this.data,
     this.isUnauthorized = false,
-    this.originalError,
   });
 
   @override
   String toString() => 'AppException: $message (code: $code, status: $statusCode)';
 }
 
-
 class NetworkException extends AppException {
-  NetworkException(String message)
+  const NetworkException([String message = 'No internet connection'])
       : super(
     message: message,
     code: 'NETWORK_ERROR',
   );
 }
 
-class TimeoutException extends AppException {
-  TimeoutException()
-      : super(
-    message: 'Connection is slow or timed out. Please try again.',
+class ConnectionTimeoutException extends AppException {
+  const ConnectionTimeoutException([
+    String message = 'Connection timed out. Please try again.',
+  ]) : super(
+    message: message,
     code: 'TIMEOUT',
   );
 }
 
 class ServerException extends AppException {
-  ServerException(String message, int? statusCode)
-      : super(
+  const ServerException({
+    required String message,
+    String? code,
+    int? statusCode,
+  }) : super(
     message: message,
-    code: 'SERVER_ERROR',
+    code: code ?? 'SERVER_ERROR',
     statusCode: statusCode,
   );
 }
 
 class UnauthorizedException extends AppException {
-  UnauthorizedException()
-      : super(
-    message: 'Session expired. Please sign in again.',
+  const UnauthorizedException([
+    String message = 'Session expired. Please sign in again.',
+  ]) : super(
+    message: message,
     isUnauthorized: true,
     code: 'UNAUTHORIZED',
+    statusCode: 401,
+  );
+}
+
+class CacheException extends AppException {
+  const CacheException([String message = 'Failed to access local storage'])
+      : super(
+    message: message,
+    code: 'CACHE_ERROR',
+  );
+}
+
+class ValidationException extends AppException {
+  final Map<String, List<String>>? errors;
+
+  const ValidationException({
+    required String message,
+    this.errors,
+  }) : super(
+    message: message,
+    code: 'VALIDATION_ERROR',
+    statusCode: 422,
+  );
+}
+
+class UnknowException extends AppException {
+  const UnknowException([String message = 'An unexpected error occurred',])
+      : super(
+    message: message,
+    code: 'UNKNOWN_ERROR',
+
   );
 }

@@ -1,0 +1,259 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import '../error/exceptions.dart';
+import '../exceptions/app_exception.dart';
+import '../utils/logger_service.dart';
+import 'api_constants.dart';
+
+class DioClient {
+  late final Dio _dio;
+  final AuthLocalDataSource _localDataSource;
+
+  DioClient(this._localDataSource) {
+    _dio = Dio(
+      BaseOptions(
+        baseUrl: ApiConstants.baseUrl,
+        connectTimeout: ApiConstants.connectionTimeout,
+        receiveTimeout: ApiConstants.receiveTimeout,
+        headers: {
+          'Accept': ApiConstants.accept,
+          'Content-Type': ApiConstants.contentType,
+          ApiConstants.apiKeyHeader: ApiConstants.apiKey,
+        },
+      ),
+    );
+
+    _dio.interceptors.add(_AuthInterceptor(_localDataSource));
+
+    if (kDebugMode) {
+      _dio.interceptors.add(_LoggingInterceptor());
+    }
+  }
+
+  Future<Response> get(
+      String path, {
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+      }) async {
+    try {
+      return await _dio.get(
+        path,
+        queryParameters: queryParameters,
+        options: options,
+      );
+    } on DioException catch (e) {
+      throw _handleDioException(e);
+    }
+  }
+
+  Future<Response> post(
+      String path, {
+        dynamic data,
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+      }) async {
+    try {
+      return await _dio.post(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+      );
+    } on DioException catch (e) {
+      throw _handleDioException(e);
+    }
+  }
+
+  Future<Response> put(
+      String path, {
+        dynamic data,
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+      }) async {
+    try {
+      return await _dio.put(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+      );
+    } on DioException catch (e) {
+      throw _handleDioException(e);
+    }
+  }
+
+  Future<Response> patch(
+      String path, {
+        dynamic data,
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+      }) async {
+    try {
+      return await _dio.patch(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+      );
+    } on DioException catch (e) {
+      throw _handleDioException(e);
+    }
+  }
+
+  Future<Response> delete(
+      String path, {
+        dynamic data,
+        Map<String, dynamic>? queryParameters,
+        Options? options,
+      }) async {
+    try {
+      return await _dio.delete(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: options,
+      );
+    } on DioException catch (e) {
+      throw _handleDioException(e);
+    }
+  }
+
+  AppException _handleDioException(DioException e) {
+    switch (e.type) {
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
+        return const ConnectionTimeoutException();
+
+      case DioExceptionType.connectionError:
+        return const NetworkException();
+
+      case DioExceptionType.badResponse:
+        return _handleBadResponse(e.response?.statusCode);
+
+      case DioExceptionType.cancel:
+        return const ServerException(message: 'Request was cancelled');
+
+      case DioExceptionType.badCertificate:
+        return const ServerException(message: 'Invalid security certificate');
+
+      case DioExceptionType.unknown:
+      default:
+        if (e.error != null && e.error.toString().contains('SocketException')) {
+          return const NetworkException();
+        }
+        return const ServerException(message: 'Unknown error occurred');
+    }
+  }
+
+
+  AppException _handleBadResponse(int? statusCode) {
+    switch (statusCode) {
+      case 400:
+        return const ServerException(
+          message: 'Bad request',
+          code: 'BAD_REQUEST',
+          statusCode: 400,
+        );
+
+      case 401:
+        return const UnauthorizedException();
+
+      case 403:
+        return const ServerException(
+          message: 'Access forbidden',
+          code: 'FORBIDDEN',
+          statusCode: 403,
+        );
+
+      case 404:
+        return const ServerException(
+          message: 'Resource not found',
+          code: 'NOT_FOUND',
+          statusCode: 404,
+        );
+
+      case 422:
+        return const ServerException(
+          message: 'Validation error',
+          code: 'VALIDATION_ERROR',
+          statusCode: 422,
+        );
+
+      case 429:
+        return const ServerException(
+          message: 'Too many requests. Please try again later.',
+          code: 'TOO_MANY_REQUESTS',
+          statusCode: 429,
+        );
+
+      case 500:
+      case 502:
+      case 503:
+      case 504:
+        return const ServerException(
+          message: 'Server error. Please try again later.',
+          code: 'SERVER_ERROR',
+          statusCode: 500,
+        );
+
+      default:
+        return ServerException(
+          message: 'Error: ${statusCode ?? 'unknown'}',
+          statusCode: statusCode,
+        );
+    }
+  }
+}
+
+// ==================== Interceptors ====================
+
+class _AuthInterceptor extends Interceptor {
+  final AuthLocalDataSource _localDataSource;
+
+  _AuthInterceptor(this._localDataSource);
+
+  @override
+  void onRequest(
+      RequestOptions options,
+      RequestInterceptorHandler handler,
+      ) async {
+    final token = await _localDataSource.getToken();
+    if (token != null && token.isNotEmpty) {
+      options.headers[ApiConstants.authorizationHeader] = 'Bearer $token';
+    }
+    handler.next(options);
+  }
+}
+
+class _LoggingInterceptor extends Interceptor {
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    logger.logRequest(
+      method: options.method,
+      path: options.path,
+      data: options.data,
+    );
+    handler.next(options);
+  }
+
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    logger.logResponse(
+      statusCode: response.statusCode,
+      path: response.requestOptions.path,
+      data: response.data,
+    );
+    handler.next(response);
+  }
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    logger.logError(
+      statusCode: err.response?.statusCode,
+      path: err.requestOptions.path,
+      error: err.message,
+    );
+    handler.next(err);
+  }
+}
