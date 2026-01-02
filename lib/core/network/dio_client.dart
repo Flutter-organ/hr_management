@@ -206,8 +206,6 @@ class DioClient {
   }
 }
 
-// ==================== Interceptors ====================
-
 class _AuthInterceptor extends Interceptor {
   final AuthLocalDataSource _localDataSource;
 
