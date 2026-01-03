@@ -77,10 +77,9 @@ class ValidationException extends AppException {
 }
 
 class UnknowException extends AppException {
-  const UnknowException([String message = 'An unexpected error occurred',])
+  const UnknowException([String message = 'An unexpected error occurred'])
       : super(
     message: message,
     code: 'UNKNOWN_ERROR',
-
   );
 }

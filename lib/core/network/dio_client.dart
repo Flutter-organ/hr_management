@@ -137,12 +137,11 @@ class DioClient {
       case DioExceptionType.badCertificate:
         return const ServerException(message: 'Invalid security certificate');
 
-      case DioExceptionType.unknown:
       default:
         if (e.error != null && e.error.toString().contains('SocketException')) {
           return const NetworkException();
         }
-        return const ServerException(message: 'Unknown error occurred');
+        return const UnknowException();
     }
   }
 
