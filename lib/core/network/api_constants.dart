@@ -6,7 +6,7 @@ class ApiConstants {
 
   static const String baseUrl = productionBaseUrl;
 
-  static const String apiKey = 'API_KEY_HERE';
+  static const String apiKey = 'hqJrRzmRCv3aOnUquOTXyv6TN084pxWv';
 
   static const Duration connectionTimeout = Duration(seconds: 30);
   static const Duration receiveTimeout = Duration(seconds: 30);
@@ -26,4 +26,7 @@ class ApiConstants {
   static const String deleteAccount = '/api/auth/delete-account';
 
   static const String currentUser = '/api/user';
+
+  static const String token_key = 'token';
+
 }
