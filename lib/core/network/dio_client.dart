@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import '../error/exceptions.dart';
+import '../../features/auth/data/data_source/local/auth_local_data_source.dart';
 import '../exceptions/app_exception.dart';
 import '../utils/logger_service.dart';
 import 'api_constants.dart';
+
+typedef ProgressCallback = void Function(int sent, int total);
 
 class DioClient {
   late final Dio _dio;
@@ -51,6 +55,9 @@ class DioClient {
         dynamic data,
         Map<String, dynamic>? queryParameters,
         Options? options,
+        CancelToken? cancelToken,
+        ProgressCallback? onSendProgress,
+        ProgressCallback? onReceiveProgress,
       }) async {
     try {
       return await _dio.post(
@@ -58,6 +65,9 @@ class DioClient {
         data: data,
         queryParameters: queryParameters,
         options: options,
+        cancelToken: cancelToken,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress,
       );
     } on DioException catch (e) {
       throw _handleDioException(e);
@@ -112,6 +122,35 @@ class DioClient {
         data: data,
         queryParameters: queryParameters,
         options: options,
+      );
+    } on DioException catch (e) {
+      throw _handleDioException(e);
+    }
+  }
+
+  Future<Response> uploadFiles(
+      String path, {
+        required Map<String, MultipartFile> files,
+        Map<String, dynamic>? extraFields,
+        ProgressCallback? onProgress,
+        Map<String, dynamic>? queryParameters,
+      }) async {
+    try {
+      final formData = FormData.fromMap({
+        ...files,
+        if (extraFields != null) ...extraFields,
+      });
+
+      return await _dio.post(
+        path,
+        data: formData,
+        queryParameters: queryParameters,
+        options: Options(
+          contentType: ApiConstants.content_Type,
+        ),
+        onSendProgress: onProgress != null
+            ? (sent, total) => onProgress(sent, total)
+            : null,
       );
     } on DioException catch (e) {
       throw _handleDioException(e);
@@ -221,6 +260,7 @@ class _AuthInterceptor extends Interceptor {
     }
     handler.next(options);
   }
+
 }
 
 class _LoggingInterceptor extends Interceptor {

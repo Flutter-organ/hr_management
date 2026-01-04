@@ -29,4 +29,6 @@ class ApiConstants {
 
   static const String token_key = 'token';
 
+  static const String content_Type = 'multipart/form-data';
+
 }
