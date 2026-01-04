@@ -54,7 +54,6 @@ class AppConfig {
     _ensureInitialized();
     return dotenv.get('APP_NAME', fallback: 'HR App');
   }
-
   static int get timeout {
     _ensureInitialized();
     final value = dotenv.get('TIMEOUT_SECONDS', fallback: '10');
