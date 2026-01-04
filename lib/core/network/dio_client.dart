@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source.dart';
+import '../config/app_config.dart';
 import '../exceptions/app_exception.dart';
 import '../utils/logger_service.dart';
 import 'api_constants.dart';
@@ -16,13 +17,13 @@ class DioClient {
   DioClient(this._localDataSource) {
     _dio = Dio(
       BaseOptions(
-        baseUrl: ApiConstants.baseUrl,
-        connectTimeout: ApiConstants.connectionTimeout,
-        receiveTimeout: ApiConstants.receiveTimeout,
+        baseUrl: AppConfig.apiBaseUrl,
+        connectTimeout: Duration(seconds: AppConfig.timeout),
+        receiveTimeout: Duration(seconds: AppConfig.timeout),
         headers: {
           'Accept': ApiConstants.accept,
           'Content-Type': ApiConstants.contentType,
-          ApiConstants.apiKeyHeader: ApiConstants.apiKey,
+          ApiConstants.apiKeyHeader: AppConfig.xApiKey,
         },
       ),
     );

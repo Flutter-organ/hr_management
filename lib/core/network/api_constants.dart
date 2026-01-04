@@ -1,16 +1,6 @@
 class ApiConstants {
   ApiConstants._();
 
-  static const String productionBaseUrl = 'https://api.mohammedzom.online';
-  static const String localBaseUrl = 'http://localhost:8000';
-
-  static const String baseUrl = productionBaseUrl;
-
-  static const String apiKey = 'hqJrRzmRCv3aOnUquOTXyv6TN084pxWv';
-
-  static const Duration connectionTimeout = Duration(seconds: 30);
-  static const Duration receiveTimeout = Duration(seconds: 30);
-
   static const String contentType = 'application/json';
   static const String accept = 'application/json';
   static const String apiKeyHeader = 'x-api-key';
