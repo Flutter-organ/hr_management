@@ -1,12 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:hr_management/core/config/app_config.dart';
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-
+  await AppConfig.init();
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('ar'), Locale('en')],
@@ -48,11 +48,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         ],
       ),
-     );
+    );
   }
 }
