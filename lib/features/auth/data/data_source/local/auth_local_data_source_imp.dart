@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
-import '../../../../../core/cashe/secure_storage_data_source.dart';
+import '../../../../../core/cache/secure_storage_data_source.dart';
+import '../../../../../core/exceptions/app_exception.dart';
 import '../../../../../core/network/api_constants.dart';
 import 'auth_local_data_source.dart';
 
@@ -11,15 +10,40 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
       : _secureStorageService = secureStorageService;
 
   Future<String?> getToken() async {
-    return await _secureStorageService.read(key:ApiConstants.token_key);
+      try {
+        return await _secureStorageService.read(key: ApiConstants.tokenKey);
+      } catch (e) {
+        throw CacheException('Failed to read token: $e');
+      }
   }
 
   Future<void> saveToken(String token) async {
-    return await _secureStorageService.write(key: ApiConstants.token_key, value: token);
+    if (token.isEmpty) {
+      throw const CacheException('Token cannot be empty');
+    }
+    try {
+      await _secureStorageService.write(key: ApiConstants.tokenKey, value: token);
+    } catch (e) {
+      throw CacheException('Failed to save token: $e');
+    }
   }
 
   Future<void> clearToken() async {
-    return await _secureStorageService.delete(key: ApiConstants.token_key);
+    try {
+      await _secureStorageService.delete(key: ApiConstants.tokenKey);
+    } catch (e) {
+      throw CacheException('Failed to delete token: $e');
+    }
+  }
+
+  @override
+  Future<bool> hasToken() async {
+    try {
+      final token = await getToken();
+      return token != null && token.isNotEmpty;
+    } catch (e) {
+      return false;
+    }
   }
 
 }

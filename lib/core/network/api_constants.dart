@@ -14,11 +14,9 @@ class ApiConstants {
   static const String logout = '/api/auth/logout';
   static const String logoutAll = '/api/auth/logout-all';
   static const String deleteAccount = '/api/auth/delete-account';
-
   static const String currentUser = '/api/user';
 
-  static const String token_key = 'token';
-
-  static const String content_Type = 'multipart/form-data';
+  static const String tokenKey = 'token';
+  static const String multipartContentType = 'multipart/form-data';
 
 }
