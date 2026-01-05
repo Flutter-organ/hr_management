@@ -13,47 +13,47 @@ abstract class PreferencesService {
 
 
 class SharedPreferencesServiceImpl implements PreferencesService {
-  final SharedPreferences _prefs;
+  final SharedPreferences sharedPreferences;
 
-  SharedPreferencesServiceImpl(this._prefs);
+  SharedPreferencesServiceImpl(this.sharedPreferences);
 
   @override
   Future<void> setString({required String key, required String value}) async {
-    await _prefs.setString(key, value);
+    await sharedPreferences.setString(key, value);
   }
 
   @override
   Future<String?> getString({required String key}) {
-    return Future.value(_prefs.getString(key));
+    return Future.value(sharedPreferences.getString(key));
   }
 
   @override
   Future<void> setBool({required String key, required bool value}) async {
-    await _prefs.setBool(key, value);
+    await sharedPreferences.setBool(key, value);
   }
 
   @override
   Future<bool?> getBool({required String key}) {
-    return Future.value(_prefs.getBool(key));
+    return Future.value(sharedPreferences.getBool(key));
   }
 
   @override
   Future<void> setInt({required String key, required int value}) async {
-    await _prefs.setInt(key, value);
+    await sharedPreferences.setInt(key, value);
   }
 
   @override
   Future<int?> getInt({required String key}) {
-    return Future.value(_prefs.getInt(key));
+    return Future.value(sharedPreferences.getInt(key));
   }
 
   @override
   Future<void> remove({required String key}) async {
-    await _prefs.remove(key);
+    await sharedPreferences.remove(key);
   }
 
   @override
   Future<void> clearAll() async {
-    await _prefs.clear();
+    await sharedPreferences.clear();
   }
 }
