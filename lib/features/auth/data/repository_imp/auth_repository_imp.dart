@@ -1,11 +1,16 @@
 import '../../domain/repository/auth_repository.dart';
 import '../data_source/local/auth_local_data_source.dart';
+import '../data_source/remote/auth_remote_data_source.dart';
 
-class AuthRepositoryImp implements AuthRepository{
+class AuthRepositoryImp extends AuthRepository{
+  final AuthRemoteDataSource _remoteDataSource;
   final AuthLocalDataSource _localDataSource;
 
-  AuthRepositoryImp({required AuthLocalDataSource localDataSource})
-      : _localDataSource = localDataSource;
+  AuthRepositoryImp({
+    required AuthRemoteDataSource remoteDataSource,
+    required AuthLocalDataSource localDataSource,
+  })  : _remoteDataSource = remoteDataSource,
+        _localDataSource = localDataSource;
 
   @override
   Future<String?> getToken() async {
