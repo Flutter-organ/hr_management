@@ -4,6 +4,8 @@ import 'package:hr_management/core/config/app_config.dart';
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
 import 'core/di/injection_container.dart';
 
+import 'core/routes/route_generator.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
@@ -32,27 +34,7 @@ class MyApp extends StatelessWidget {
       theme: HrManagementTheme.light(),
       darkTheme: HrManagementTheme.dark(),
       themeMode: ThemeMode.light,
-      home: const MyHomePage(title: 'HR Management Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        ],
-      ),
+      routerConfig: router,
     );
   }
 }
