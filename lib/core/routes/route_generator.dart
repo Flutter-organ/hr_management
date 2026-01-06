@@ -7,9 +7,9 @@ final GoRouter router = GoRouter(
       // Uncomment when ready to implement:
       //
       // GoRoute(
-      //   path: RouteNames.notifications,
-      //   name: RouteNames.notifications,
-      //   builder: (context, state) => const NotificationsScreen(),
+      //   path: RouteNames.loginHomePageRoute,
+      //   name: RouteNames.loginHomePageRoute,
+      //   builder: (context, state) => const loginHomePageRoute(),
       // ),
       ]
 );
