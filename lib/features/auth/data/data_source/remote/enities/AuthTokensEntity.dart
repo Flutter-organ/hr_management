@@ -15,9 +15,4 @@ class AuthTokensEntity {
       tokenType: json['token_type'] as String,
     );
   }
-
-  AuthTokensModel toDomain() => AuthTokensModel(
-    accessToken: accessToken,
-    tokenType: tokenType,
-  );
 }

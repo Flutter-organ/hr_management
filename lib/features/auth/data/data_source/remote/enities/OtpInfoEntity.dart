@@ -24,12 +24,4 @@ class OtpInfoEntity {
       devOtp: json['dev_otp'] as Map<String, dynamic>?,
     );
   }
-
-  OtpInfoModel toDomain() => OtpInfoModel(
-    userId: userId,
-    identifier: identifier,
-    loginType: loginType,
-    otpType: otpType,
-    devOtp: devOtp,
-  );
 }
