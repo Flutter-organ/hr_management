@@ -8,7 +8,11 @@ abstract class SecureStorageService {
 }
 
 class SecureStorageServiceImpl implements SecureStorageService {
-  final FlutterSecureStorage _storage = const FlutterSecureStorage();
+  final FlutterSecureStorage _storage;
+
+  const SecureStorageServiceImpl({
+    FlutterSecureStorage? storage,
+  }) : _storage = storage ?? const FlutterSecureStorage();
 
   @override
   Future<void> write({required String key, required String value}) async {

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source.dart';
@@ -133,9 +131,14 @@ class DioClient {
       String path, {
         required Map<String, MultipartFile> files,
         Map<String, dynamic>? extraFields,
-        ProgressCallback? onProgress,
         Map<String, dynamic>? queryParameters,
+        CancelToken? cancelToken,
+        ProgressCallback? onProgress,
       }) async {
+    if (files.isEmpty) {
+      throw const ValidationException(message: 'At least one file is required');
+    }
+
     try {
       final formData = FormData.fromMap({
         ...files,
@@ -146,8 +149,9 @@ class DioClient {
         path,
         data: formData,
         queryParameters: queryParameters,
+        cancelToken: cancelToken,
         options: Options(
-          contentType: ApiConstants.content_Type,
+          contentType: ApiConstants.multipartContentType,
         ),
         onSendProgress: onProgress != null
             ? (sent, total) => onProgress(sent, total)
@@ -181,7 +185,7 @@ class DioClient {
         if (e.error != null && e.error.toString().contains('SocketException')) {
           return const NetworkException();
         }
-        return const UnknowException();
+        return const UnknownException();
     }
   }
 
