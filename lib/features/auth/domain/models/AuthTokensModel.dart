@@ -1,6 +1,6 @@
 class AuthTokensModel {
-  final String accessToken;
-  final String tokenType;
+  final String? accessToken;
+  final String? tokenType;
 
   const AuthTokensModel({
     required this.accessToken,

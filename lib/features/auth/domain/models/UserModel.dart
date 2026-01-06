@@ -1,8 +1,8 @@
 class UserModel {
-  final int id;
-  final String email;
-  final bool isActive;
-  final String role;
+  final int? id;
+  final String? email;
+  final bool? isActive;
+  final String? role;
 
   const UserModel({
     required this.id,

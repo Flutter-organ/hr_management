@@ -1,8 +1,8 @@
 import '../../../../domain/models/AuthTokensModel.dart';
 
 class AuthTokensEntity {
-  final String accessToken;
-  final String tokenType;
+  final String? accessToken;
+  final String? tokenType;
 
   AuthTokensEntity({
     required this.accessToken,
