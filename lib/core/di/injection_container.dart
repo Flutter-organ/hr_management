@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source_imp.dart';
+import '../../features/auth/data/data_source/remote/auth_remote_data_source.dart';
 import '../../features/auth/data/repository_imp/auth_repository_imp.dart';
 import '../../features/auth/domain/repository/auth_repository.dart';
 import '../cache/secure_storage_data_source.dart';
@@ -26,7 +27,7 @@ Future<void> _initCore() async {
 
 Future<void> _initAuth() async {
   sl.registerLazySingleton<AuthRepository>(
-        () => AuthRepositoryImp(localDataSource: sl<AuthLocalDataSource>()),
+        () => AuthRepositoryImp(localDataSource: sl<AuthLocalDataSource>(), remoteDataSource: sl<AuthRemoteDataSource>()),
   );
 
   sl.registerLazySingleton<AuthLocalDataSource>(
