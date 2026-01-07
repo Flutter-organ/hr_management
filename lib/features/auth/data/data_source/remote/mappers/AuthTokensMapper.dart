@@ -1,9 +1,9 @@
-import '../../../../domain/models/AuthTokensModel.dart';
-import '../enities/AuthTokensEntity.dart';
+import '../../../../domain/models/AuthToken.dart';
+import '../enities/AuthTokensDto.dart';
 
 class AuthTokensMapper {
-  static AuthTokensModel toDomain(AuthTokensEntity entity) {
-    return AuthTokensModel(
+  static AuthToken toDomain(AuthTokensDto entity) {
+    return AuthToken(
       accessToken: entity.accessToken,
       tokenType: entity.tokenType,
     );

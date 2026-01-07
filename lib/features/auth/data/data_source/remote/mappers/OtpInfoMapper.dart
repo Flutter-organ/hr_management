@@ -1,10 +1,10 @@
 
-import '../../../../domain/models/OtpInfoModel.dart';
-import '../enities/OtpInfoEntity.dart';
+import '../../../../domain/models/OtpInfo.dart';
+import '../enities/OtpInfoDto.dart';
 
 class OtpInfoMapper {
-  static OtpInfoModel toDomain(OtpInfoEntity entity) {
-    return OtpInfoModel(
+  static OtpInfo toDomain(OtpInfoDto entity) {
+    return OtpInfo(
       identifier: entity.identifier,
       loginType: entity.loginType,
       otpType: entity.otpType,

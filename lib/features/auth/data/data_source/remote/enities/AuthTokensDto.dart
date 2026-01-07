@@ -1,16 +1,16 @@
-import '../../../../domain/models/AuthTokensModel.dart';
+import '../../../../domain/models/AuthToken.dart';
 
-class AuthTokensEntity {
+class AuthTokensDto {
   final String? accessToken;
   final String? tokenType;
 
-  AuthTokensEntity({
+  AuthTokensDto({
     required this.accessToken,
     required this.tokenType,
   });
 
-  factory AuthTokensEntity.fromJson(Map<String, dynamic> json) {
-    return AuthTokensEntity(
+  factory AuthTokensDto.fromJson(Map<String, dynamic> json) {
+    return AuthTokensDto(
       accessToken: json['access_token'] as String,
       tokenType: json['token_type'] as String,
     );

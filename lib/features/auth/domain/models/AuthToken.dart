@@ -1,11 +1,9 @@
-class AuthTokensModel {
+class AuthToken {
   final String? accessToken;
   final String? tokenType;
 
-  const AuthTokensModel({
+  const AuthToken({
     required this.accessToken,
     required this.tokenType,
   });
-
-  String get bearerToken => '$tokenType $accessToken';
 }

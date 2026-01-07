@@ -1,9 +1,9 @@
-import '../../../../domain/models/UserModel.dart';
-import '../enities/UserEntity.dart';
+import '../../../../domain/models/User.dart';
+import '../enities/UserDto.dart';
 
 class UserMapper {
-  static UserModel toDomain(UserEntity entity) {
-    return UserModel(
+  static User toDomain(UserDto entity) {
+    return User(
       id: entity.id,
       email: entity.email,
       isActive: entity.isActive,

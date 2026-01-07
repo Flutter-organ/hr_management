@@ -1,9 +1,9 @@
-class OtpInfoModel {
+class OtpInfo {
   final String? identifier;
   final String? loginType;
   final String? otpType;
 
-  const OtpInfoModel({
+  const OtpInfo({
     required this.identifier,
     required this.loginType,
     required this.otpType,
