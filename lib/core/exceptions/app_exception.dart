@@ -1,4 +1,4 @@
-class AppException implements Exception {
+sealed class AppException implements Exception {
   final String message;
   final String? code;
   final int? statusCode;
@@ -16,7 +16,7 @@ class AppException implements Exception {
 }
 
 class NetworkException extends AppException {
-  const NetworkException([String message = 'No internet connection'])
+  const NetworkException({String message = 'No internet connection'})
       : super(
     message: message,
     code: 'NETWORK_ERROR',
@@ -24,9 +24,9 @@ class NetworkException extends AppException {
 }
 
 class ConnectionTimeoutException extends AppException {
-  const ConnectionTimeoutException([
+  const ConnectionTimeoutException({
     String message = 'Connection timed out. Please try again.',
-  ]) : super(
+}) : super(
     message: message,
     code: 'TIMEOUT',
   );
@@ -34,29 +34,30 @@ class ConnectionTimeoutException extends AppException {
 
 class ServerException extends AppException {
   const ServerException({
-    required String message,
+    required super.message,
     String? code,
     int? statusCode,
   }) : super(
-    message: message,
-    code: code ?? 'SERVER_ERROR',
+    code: code,
     statusCode: statusCode,
   );
 }
 
 class UnauthorizedException extends AppException {
-  const UnauthorizedException([
+  const UnauthorizedException({
     String message = 'Session expired. Please sign in again.',
-  ]) : super(
+    int? statusCode,
+    String? code,
+  }) : super(
     message: message,
     isUnauthorized: true,
-    code: 'UNAUTHORIZED',
-    statusCode: 401,
+    code: code,
+    statusCode: statusCode,
   );
 }
 
 class CacheException extends AppException {
-  const CacheException([String message = 'Failed to access local storage'])
+  const CacheException({String message = 'Failed to access local storage'})
       : super(
     message: message,
     code: 'CACHE_ERROR',
@@ -67,17 +68,19 @@ class ValidationException extends AppException {
   final Map<String, List<String>>? errors;
 
   const ValidationException({
-    required String message,
+    required super.message,
     this.errors,
   }) : super(
-    message: message,
     code: 'VALIDATION_ERROR',
-    statusCode: 422,
   );
+
+  String? getFieldError(String field) => errors?[field]?.firstOrNull;
+
+  String get allErrors => errors?.values.expand((e) => e).join('\n') ?? message;
 }
 
 class UnknownException extends AppException {
-  const UnknownException([String message = 'An unexpected error occurred'])
+  const UnknownException({String message = 'An unexpected error occurred'})
       : super(
     message: message,
     code: 'UNKNOWN_ERROR',
