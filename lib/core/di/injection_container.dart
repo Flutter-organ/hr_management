@@ -3,7 +3,7 @@ import '../../features/auth/data/data_source/local/auth_local_data_source.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source_imp.dart';
 import '../../features/auth/data/repository_imp/auth_repository_imp.dart';
 import '../../features/auth/domain/repository/auth_repository.dart';
-import '../cashe/secure_storage_data_source.dart';
+import '../cache/secure_storage_data_source.dart';
 import '../network/dio_client.dart';
 
 final sl = GetIt.instance;

@@ -1,4 +1,4 @@
-import '../../../../../core/cashe/shared_preferences_service.dart';
+import '../../../../../core/cache/shared_preferences_service.dart';
 import '../../../utils/shared_prefs_keys.dart';
 import 'SettingsLocalDataSource.dart';
 
