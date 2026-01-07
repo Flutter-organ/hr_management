@@ -9,30 +9,33 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
   const AuthLocalDataSourceImp ({required SecureStorageService secureStorageService})
       : _secureStorageService = secureStorageService;
 
+  @override
   Future<String?> getToken() async {
       try {
         return await _secureStorageService.read(key: ApiConstants.tokenKey);
       } catch (e) {
-        throw CacheException('Failed to read token: $e');
+        throw CacheException(message: 'Failed to read token: $e');
       }
   }
 
+  @override
   Future<void> saveToken(String token) async {
     if (token.isEmpty) {
-      throw const CacheException('Token cannot be empty');
+      throw const CacheException(message:'Token cannot be empty');
     }
     try {
       await _secureStorageService.write(key: ApiConstants.tokenKey, value: token);
     } catch (e) {
-      throw CacheException('Failed to save token: $e');
+      throw CacheException(message:'Failed to save token: $e');
     }
   }
 
+  @override
   Future<void> clearToken() async {
     try {
       await _secureStorageService.delete(key: ApiConstants.tokenKey);
     } catch (e) {
-      throw CacheException('Failed to delete token: $e');
+      throw CacheException(message: 'Failed to delete token: $e');
     }
   }
 

@@ -1,5 +1,8 @@
+import 'package:fpdart/fpdart.dart';
+import '../../domain/failures/failure.dart';
 import '../../domain/repository/auth_repository.dart';
 import '../data_source/local/auth_local_data_source.dart';
+import '../mappers/auth_failure_mapper.dart';
 
 class AuthRepositoryImp implements AuthRepository{
   final AuthLocalDataSource _localDataSource;
@@ -8,23 +11,43 @@ class AuthRepositoryImp implements AuthRepository{
       : _localDataSource = localDataSource;
 
   @override
-  Future<String?> getToken() async {
-    return await _localDataSource.getToken();
+  Future<Either<Failure, String?>> getToken() async {
+    try {
+      final token = await _localDataSource.getToken();
+      return Right(token);
+    } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
   }
 
   @override
-  Future<void> saveToken(String token) async {
-    await _localDataSource.saveToken(token);
+  Future<Either<Failure, Unit>> saveToken(String token) async {
+    try {
+      await _localDataSource.saveToken(token);
+      return const Right(unit);
+    } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
   }
 
   @override
-  Future<void> clearToken() async {
-    await _localDataSource.clearToken();
+  Future<Either<Failure, Unit>> clearToken() async {
+    try {
+      await _localDataSource.clearToken();
+      return const Right(unit);
+    } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
   }
 
   @override
-  Future<bool> hasToken() async {
-    return await _localDataSource.hasToken();
+  Future<Either<Failure, bool>> hasToken() async {
+    try {
+      final hasToken = await _localDataSource.hasToken();
+      return Right(hasToken);
+    } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
   }
 
 }
