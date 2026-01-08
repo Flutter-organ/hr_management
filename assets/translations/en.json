@@ -70,5 +70,11 @@
   "cancel":"Cancel",
   "select":"Select",
   "i_agree":"I Agree",
-  "decline":"Decline"
+  "decline":"Decline",
+  "on_boarding_title_one":"Welcome to Workmate!",
+  "on_boarding_subtitle_one":"Make Smart Decisions! Set clear timelines for projects and celebrate your achievements!",
+  "on_boarding_title_two":"Manage Stress Effectively",
+  "on_boarding_subtitle_two":"Stay Balanced! Track your workload and maintain a healthy stress level with ease.",
+  "on_boarding_title_three":"Plan for Success",
+  "on_boarding_subtitle_three":"Your Journey Starts Here! Earn achievement badges as you conquer your tasks. Let’s get started!"
 }
