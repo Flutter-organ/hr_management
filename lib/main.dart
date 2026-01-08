@@ -59,5 +59,5 @@ class Test extends StatelessWidget {
 Future <void>callotp()async{
   Otpusecase _otpusecase=sl<Otpusecase>(); ;
 
-  await _otpusecase.call(email: "niharev934@ixospace.com", code: "461500", type: "registration");
+  await _otpusecase.call(email: "bekirog634@jparksky.com", code: "187585", type: "registration");
 }
