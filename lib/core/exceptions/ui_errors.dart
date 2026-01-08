@@ -3,40 +3,69 @@ sealed class UiError {
   const UiError(this.message);
 }
 
-class NetworkError extends UiError {
-  const NetworkError([super.message = 'Please check your internet connection']);
+class GenericUiError extends UiError {
+  const GenericUiError(super.message);
 }
 
-class TimeoutError extends UiError {
-  const TimeoutError([super.message = 'Connection timed out. Please try again']);
+class NetworkUiError extends UiError {
+  const NetworkUiError([super.message = 'Please check your internet connection']);
 }
 
-class UnauthorizedError extends UiError {
-  const UnauthorizedError([super.message = 'Session expired. Please sign in again']);
+class TimeoutUiError extends UiError {
+  const TimeoutUiError([super.message = 'Connection timed out. Please try again']);
 }
 
-class ServerError extends UiError {
-  const ServerError([super.message = 'Something went wrong. Please try again later']);
+class UnauthorizedUiError extends UiError {
+  const UnauthorizedUiError([super.message = 'Session expired. Please sign in again']);
 }
 
-class ValidationError extends UiError {
+class InvalidCredentialsUiError extends UiError {
+  const InvalidCredentialsUiError([super.message = 'Invalid email or password']);
+}
+
+class InvalidOtpUiError extends UiError {
+  const InvalidOtpUiError([super.message = 'Invalid or expired OTP code']);
+}
+
+class AccountExistsUiError extends UiError {
+  const AccountExistsUiError([super.message = 'An account already exists with this email']);
+}
+
+class AccountNotVerifiedUiError extends UiError {
+  const AccountNotVerifiedUiError([super.message = 'Please verify your account first']);
+}
+
+class AccountDisabledUiError extends UiError {
+  const AccountDisabledUiError([super.message = 'Your account has been disabled']);
+}
+
+class TooManyAttemptsUiError extends UiError {
+  const TooManyAttemptsUiError([super.message = 'Too many attempts. Please try again later']);
+}
+
+class ServerUiError extends UiError {
+  const ServerUiError([super.message = 'Something went wrong. Please try again later']);
+}
+
+class NotFoundUiError extends UiError {
+  const NotFoundUiError([super.message = 'Resource not found']);
+}
+
+class ValidationUiError extends UiError {
   final Map<String, List<String>>? fieldErrors;
 
-  const ValidationError({String message='Validation error',
+  const ValidationUiError({
+    String message = 'Please check your input',
     this.fieldErrors,
   }): super(message);
 
   String? getFieldError(String field) => fieldErrors?[field]?.firstOrNull;
 }
 
-class NotFoundError extends UiError {
-  const NotFoundError([super.message = 'Resource not found']);
+class CacheUiError extends UiError {
+  const CacheUiError([super.message = 'Failed to load data']);
 }
 
-class CacheError extends UiError {
-  const CacheError([super.message = 'Failed to load data']);
-}
-
-class UnknownError extends UiError {
-  const UnknownError([super.message = 'An unexpected error occurred']);
+class UnknownUiError extends UiError {
+  const UnknownUiError([super.message = 'An unexpected error occurred']);
 }
