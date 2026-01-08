@@ -1,38 +1,47 @@
+import '../../../../domain/enitites/User.dart';
+
 class UserDto {
-  UserDto({
-      int? id,
-      String? email, 
-      bool? isActive, 
-      String? role,}){
-    _id = id;
-    _email = email;
-    _isActive = isActive;
-    _role = role;
-}
+  final int id;
+  final String? email;
+  final String? phone;
+  final bool isActive;
+  final String? role;
 
-  UserDto.fromJson(dynamic json) {
-    _id = json['id'];
-    _email = json['email'];
-    _isActive = json['is_active'];
-    _role = json['role'];
+  const UserDto({
+    required this.id,
+    this.email,
+    this.phone,
+    this.isActive = false,
+    this.role,
+  });
+
+  factory UserDto.fromJson(Map<String, dynamic> json) {
+    return UserDto(
+      id: json['id'] as int,
+      email: json['email'] as String?,
+      phone: json['phone'] as String?,
+      isActive: json['is_active'] as bool? ?? false,
+      role: json['role'] as String?,
+    );
   }
-  int? _id;
-  String? _email;
-  bool? _isActive;
-  String? _role;
-
-  int? get id => _id;
-  String? get email => _email;
-  bool? get isActive => _isActive;
-  String? get role => _role;
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = _id;
-    map['email'] = _email;
-    map['is_active'] = _isActive;
-    map['role'] = _role;
-    return map;
+    return {
+      'id': id,
+      'email': email,
+      'phone': phone,
+      'is_active': isActive,
+      'role': role,
+    };
   }
 
+  User toEntity() {
+    return User(
+      id: id,
+      email: email,
+      phone: phone,
+      isActive: isActive,
+      role: role,
+    );
+  }
 }
