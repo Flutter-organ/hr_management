@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:hr_management/features/auth/domain/usecase/OtpUseCase.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source_imp.dart';
 import '../../features/auth/data/data_source/remote/AuthRemoteDataSource.dart';
@@ -45,4 +46,10 @@ Future<void> _initAuth() async {
           sl<AuthRepository>(),
         ),
   );
+  sl.registerLazySingleton<Otpusecase>(
+        () => Otpusecase(
+          sl<AuthRepository>(),
+        ),
+  );
+
 }

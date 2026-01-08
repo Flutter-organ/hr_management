@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:hr_management/features/auth/data/data_source/remote/dto/ApiResponse.dart';
 
 import '../../../../../core/exceptions/app_exception.dart';
 import '../../../../../core/network/api_constants.dart';
@@ -45,5 +46,16 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         'login_type': 'email'
       },
     );
+  }
+  
+  @override
+  Future<ApiResponse> otp({required String email, required String code, required String type}) async{
+   final res= await _dioClient.post( ApiConstants.verifyOtp, data: {
+      'identifier': email,
+      'code': code,
+      'type': type
+      
+    });
+    return ApiResponse.fromJson(res.data);
   }
 }

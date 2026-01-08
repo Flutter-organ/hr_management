@@ -1,4 +1,6 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:hr_management/features/auth/data/data_source/remote/dto/CurrentUser.dart';
+import 'package:hr_management/features/auth/data/mappers/AuthMapper.dart';
 import 'package:hr_management/features/auth/domain/enitites/User.dart';
 import '../../domain/failures/failure.dart';
 import '../../domain/repository/auth_repository.dart';
@@ -73,6 +75,23 @@ class AuthRepositoryImp implements AuthRepository {
       password: password,
       confirmPassword: confirmPassword,
     );
+  }
+  
+  @override
+  Future<Either<Failure, User>> otp({required String email, required String code, required String type})async {
+    try {
+      final res = await _remoteDataSource.otp(email: email, code: code, type: type);
+      final currentuser = CurrentUser.fromJson(res);
+      if(res.success&&res.data!=null){
+        final user=AuthMapper.toDomain(currentuser.user!);
+        return Right(user);
+      }else{
+        return Left(AuthFailureMapper.mapException(res.message));
+      }
+
+    } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
   }
 
 
