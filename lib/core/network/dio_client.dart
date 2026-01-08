@@ -263,9 +263,13 @@ class _AuthInterceptor extends Interceptor {
       RequestOptions options,
       RequestInterceptorHandler handler,
       ) async {
-    final token = await _localDataSource.getToken();
-    if (token != null && token.isNotEmpty) {
-      options.headers[ApiConstants.authorizationHeader] = 'Bearer $token';
+    try {
+      final token = await _localDataSource.getToken();
+      if (token != null && token.isNotEmpty) {
+        options.headers[ApiConstants.authorizationHeader] = 'Bearer $token';
+      }
+    } catch (_) {
+      // Continue without token
     }
     handler.next(options);
   }
