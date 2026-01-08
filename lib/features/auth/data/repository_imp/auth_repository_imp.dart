@@ -1,14 +1,47 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:hr_management/features/auth/data/data_source/remote/auth_remote_data_source/auth_remote_data_source.dart';
+import 'package:hr_management/features/auth/data/data_source/remote/dto/CurrentUser.dart';
+import 'package:hr_management/features/auth/data/mappers/AuthMapper.dart';
+import '../../domain/enitites/User.dart';
 import '../../domain/failures/failure.dart';
 import '../../domain/repository/auth_repository.dart';
 import '../data_source/local/auth_local_data_source.dart';
 import '../mappers/auth_failure_mapper.dart';
 
-class AuthRepositoryImp implements AuthRepository{
+class AuthRepositoryImp implements AuthRepository {
   final AuthLocalDataSource _localDataSource;
+  final AuthRemoteDataSource _remoteDataSource;
 
-  AuthRepositoryImp({required AuthLocalDataSource localDataSource})
-      : _localDataSource = localDataSource;
+  AuthRepositoryImp({
+    required AuthLocalDataSource localDataSource,
+    required AuthRemoteDataSource remoteDatasource,
+  }) : _localDataSource = localDataSource,
+       _remoteDataSource = remoteDatasource;
+
+  Future<Either<Failure, User>> login({
+    required String identifier,
+    required String password,
+    required String loginType,
+  }) async {
+    try {
+      final response = await _remoteDataSource.login(
+        identifier: identifier,
+        password: password,
+        loginType: loginType,
+      );
+      if (response.success && response.data != null) {
+        final currentUser = CurrentUser.fromJson(response.data);
+        await _localDataSource.saveToken(currentUser.accessToken!);
+
+        final user = AuthMapper.toDomain(currentUser.user!);
+        return Right(user);
+      } else {
+        return Left(AuthFailureMapper.mapException(response.message));
+      }
+    } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
+  }
 
   @override
   Future<Either<Failure, String?>> getToken() async {
@@ -49,5 +82,4 @@ class AuthRepositoryImp implements AuthRepository{
       return Left(AuthFailureMapper.mapException(e));
     }
   }
-
 }

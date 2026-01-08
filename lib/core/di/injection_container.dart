@@ -1,4 +1,7 @@
 import 'package:get_it/get_it.dart';
+import 'package:hr_management/features/auth/data/data_source/remote/auth_remote_data_source/auth_remote_data_source.dart';
+import 'package:hr_management/features/auth/data/data_source/remote/auth_remote_data_source/auth_remote_data_source_imp.dart';
+import 'package:hr_management/features/auth/domain/use_cases/login_use_case.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source_imp.dart';
 import '../../features/auth/data/repository_imp/auth_repository_imp.dart';
@@ -15,22 +18,30 @@ Future<void> setupDependencies() async {
 
 Future<void> _initCore() async {
   sl.registerLazySingleton<SecureStorageService>(
-        () => SecureStorageServiceImpl(),
+    () => SecureStorageServiceImpl(),
+  );
+  sl.registerLazySingleton<AuthLocalDataSource>(
+    () => AuthLocalDataSourceImp(
+      secureStorageService: sl<SecureStorageService>(),
+    ),
   );
 
   sl.registerLazySingleton<DioClient>(
-        () => DioClient(sl<AuthLocalDataSource>()),
+    () => DioClient(sl<AuthLocalDataSource>()),
   );
 
+  sl.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImp(sl<DioClient>()),
+  );
 }
 
 Future<void> _initAuth() async {
   sl.registerLazySingleton<AuthRepository>(
-        () => AuthRepositoryImp(localDataSource: sl<AuthLocalDataSource>()),
+    () => AuthRepositoryImp(
+      localDataSource: sl<AuthLocalDataSource>(),
+      remoteDatasource: sl<AuthRemoteDataSource>(),
+    ),
   );
 
-  sl.registerLazySingleton<AuthLocalDataSource>(
-        () => AuthLocalDataSourceImp(secureStorageService: sl<SecureStorageService>()),
-  );
-
+  sl.registerLazySingleton(() => LoginUseCase(sl<AuthRepository>()));
 }
