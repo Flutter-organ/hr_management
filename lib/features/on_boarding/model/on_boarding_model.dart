@@ -13,17 +13,17 @@ class OnBoardingModel {
 
 List<OnBoardingModel> onBoardingitems = [
   OnBoardingModel(
-    image: AppAssets.kOnBoarging1,
+    image: AppAssets.kOnBoargingOne,
     title: 'on_boarding_title_one'.tr(),
     subTitle: 'on_boarding_subtitle_one'.tr(),
   ),
   OnBoardingModel(
-    image: AppAssets.kOnBoarging2,
+    image: AppAssets.kOnBoargingTwo,
     title: 'on_boarding_title_two'.tr(),
     subTitle: 'on_boarding_subtitle_two'.tr(),
   ),
   OnBoardingModel(
-    image: AppAssets.kOnBoarging3,
+    image: AppAssets.kOnBoargingThree,
     title: 'on_boarding_title_three'.tr(),
     subTitle: 'on_boarding_subtitle_three'.tr(),
   ),
