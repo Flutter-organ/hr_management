@@ -18,7 +18,7 @@ class CustomInputField extends StatelessWidget {
   final int maxLines;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final String? Function(String?)? onChanged;
+  final String? Function(String)? onChanged;
   final Function()? onSaved;
   final Color? borderColor;
   final Color? filledColor;
@@ -154,6 +154,10 @@ class CustomInputField extends StatelessWidget {
             ),
             border: border ?? InputBorder.none,
           ),
+          validator: validator,
+          minLines: minLines,
+          maxLines: maxLines,
+          onChanged: onChanged,
         ),
       ],
     );
