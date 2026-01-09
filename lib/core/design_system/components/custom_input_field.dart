@@ -18,7 +18,7 @@ class CustomInputField extends StatelessWidget {
   final int maxLines;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final String? Function(String)? onChanged;
+  final void Function(String)? onChanged;
   final Function()? onSaved;
   final Color? borderColor;
   final Color? filledColor;
