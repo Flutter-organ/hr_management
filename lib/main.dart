@@ -36,28 +36,26 @@ class MyApp extends StatelessWidget {
       darkTheme: HrManagementTheme.dark(),
       themeMode: ThemeMode.light,
       routerConfig: router,
-
-
     );
   }
 }
-
-class Test extends StatelessWidget {
-  const Test({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ElevatedButton(onPressed: (){
-          callotp();
-        }, child: Text("test"))
-      ],
-    );
-  }
-}
-Future <void>callotp()async{
-  Otpusecase _otpusecase=sl<Otpusecase>(); ;
-
-  await _otpusecase.call(email: "bekirog634@jparksky.com", code: "187585", type: "registration");
-}
+//
+// class Test extends StatelessWidget {
+//   const Test({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         ElevatedButton(onPressed: (){
+//           callotp();
+//         }, child: Text("test"))
+//       ],
+//     );
+//   }
+// }
+// Future <void>callotp()async{
+//   Otpusecase _otpusecase=sl<Otpusecase>(); ;
+//
+//   await _otpusecase.call(email: "bekirog634@jparksky.com", code: "187585", type: "registration");
+// }

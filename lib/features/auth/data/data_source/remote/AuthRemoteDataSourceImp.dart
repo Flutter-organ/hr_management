@@ -13,30 +13,18 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   AuthRemoteDataSourceImpl(this._dioClient);
 
-  Future<void> register({
+  Future<ApiResponse> register({
     required String email,
     required String phoneNumber,
     required String password,
     required String confirmPassword,
   }) async {
-    // final FormData staticData = FormData();
-    // staticData.fields.add(
-    //   MapEntry<String, String>('email', email),
-    // );
-    // staticData.fields.add(
-    //   MapEntry<String, String>('phone',phoneNumber),
-    // );
-    // staticData.fields.add(
-    //   MapEntry<String, String>('password',password),
-    // );
-    // staticData.fields.add(
-    //   MapEntry<String, String>(
-    //       'password_confirmation',confirmPassword),
-    // );
-    // staticData.fields.add(
-    //   MapEntry<String, String>('login_type', 'email'),
-    // );
-     _dioClient.post(
+
+    print("iam in remote before post email is $email" );
+    print(phoneNumber);
+    print(password);
+    print(confirmPassword);
+    final response = await _dioClient.post(
       ApiConstants.register,
       data: {
         'email': email,
@@ -46,16 +34,18 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         'login_type': 'email'
       },
     );
+    print("respose data is ${response}");
+    return ApiResponse.fromJson(response.data);
   }
   
   @override
   Future<ApiResponse> otp({required String email, required String code, required String type}) async{
-   final res= await _dioClient.post( ApiConstants.verifyOtp, data: {
+   final response= await _dioClient.post( ApiConstants.verifyOtp, data: {
       'identifier': email,
       'code': code,
       'type': type
       
     });
-    return ApiResponse.fromJson(res.data);
+    return ApiResponse.fromJson(response.data);
   }
 }

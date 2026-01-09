@@ -1,3 +1,7 @@
+import 'package:fpdart/fpdart.dart';
+
+import '../../data/data_source/remote/dto/AuthDto.dart';
+import '../failures/failure.dart';
 import '../repository/auth_repository.dart';
 import 'ValidationUseCase.dart';
 
@@ -6,7 +10,7 @@ class RegisterUseCase {
 
   RegisterUseCase(this.repository);
 
-  Future<void> call({
+  Future<Either<Failure, AuthDto>> call({
     required String email,
     required String phoneNumber,
     required String password,
@@ -19,7 +23,7 @@ class RegisterUseCase {
       confirmPassword: confirmPassword,
     );
 
-   await repository.register(
+  return await repository.register(
       email: email,
       phoneNumber: phoneNumber,
       password: password,

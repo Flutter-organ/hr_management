@@ -3,7 +3,7 @@ import 'package:hr_management/features/auth/data/data_source/remote/dto/ApiRespo
 import 'dto/CurrentUser.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<void> register({
+  Future<ApiResponse> register({
     required String email,
     required String phoneNumber,
     required String password,

@@ -1,5 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 
+import '../../data/data_source/remote/dto/AuthDto.dart';
 import '../enitites/User.dart';
 import '../failures/failure.dart';
 
@@ -8,7 +9,7 @@ abstract class AuthRepository {
   Future<Either<Failure, Unit>> saveToken(String token);
   Future<Either<Failure, Unit>> clearToken();
   Future<Either<Failure, bool>> hasToken();
-  Future<void> register({
+  Future<Either<Failure, AuthDto>> register({
     required String email,
     required String phoneNumber,
     required String password,

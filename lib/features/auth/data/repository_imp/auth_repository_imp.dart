@@ -63,18 +63,28 @@ class AuthRepositoryImp implements AuthRepository {
   }
 
   @override
-  Future<void> register({
+  Future<Either<Failure, AuthDto>> register({
     required String email,
     required String phoneNumber,
     required String password,
     required String confirmPassword,
   }) async {
-    _remoteDataSource.register(
-      email: email,
-      phoneNumber: phoneNumber,
-      password: password,
-      confirmPassword: confirmPassword,
-    );
+    try {
+      final response = await _remoteDataSource.register(
+        email: email,
+        phoneNumber: phoneNumber,
+        password: password,
+        confirmPassword: confirmPassword,
+      );
+      if (response.success) {
+        final authDto = AuthDto.fromJson(response);
+        return Right(authDto);
+      } else {
+        return Left(AuthFailureMapper.mapException(response.message));
+      }
+    } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
   }
   
   @override
@@ -93,6 +103,5 @@ class AuthRepositoryImp implements AuthRepository {
       return Left(AuthFailureMapper.mapException(e));
     }
   }
-
 
 }
