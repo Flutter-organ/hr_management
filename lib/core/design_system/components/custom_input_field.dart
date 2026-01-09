@@ -158,6 +158,14 @@ class CustomInputField extends StatelessWidget {
           minLines: minLines,
           maxLines: maxLines,
           onChanged: onChanged,
+          inputFormatters: [
+            if (isDigitOnly)
+              FilteringTextInputFormatter.digitsOnly
+            else
+              ...inputFormatter ?? [],
+          ],
+          focusNode: fieldFocusNode,
+          textInputAction: action,
         ),
       ],
     );
