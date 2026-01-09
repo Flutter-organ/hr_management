@@ -35,7 +35,7 @@ class UserDto {
     };
   }
 
-  User toEntity() {
+  User toDomain() {
     return User(
       id: id,
       email: email,

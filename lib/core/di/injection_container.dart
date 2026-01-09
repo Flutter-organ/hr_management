@@ -7,6 +7,8 @@ import '../../features/auth/data/repository_imp/auth_repository_imp.dart';
 import '../../features/auth/domain/repository/auth_repository.dart';
 import '../../features/auth/domain/usecases/ForgotPasswordUseCase.dart';
 import '../../features/auth/domain/usecases/ResetPasswordUseCase.dart';
+import '../../features/auth/presentation/logic/forget_password/forgot_password_cubit.dart';
+import '../../features/auth/presentation/logic/reset_password/ResetPasswordCubit.dart';
 import '../cache/secure_storage_data_source.dart';
 import '../network/dio_client.dart';
 
@@ -51,12 +53,12 @@ Future<void> _initAuth() async {
         () => ResetPasswordUseCase(sl<AuthRepository>()),
   );
 
-  // sl.registerFactory<ForgotPasswordCubit>(
-  //       () => ForgotPasswordCubit(sl<ForgotPasswordUseCase>()),
-  // );
-  //
-  // sl.registerFactory<ResetPasswordCubit>(
-  //       () => ResetPasswordCubit(sl<ResetPasswordUseCase>()),
-  // );
+  sl.registerFactory<ForgotPasswordCubit>(
+        () => ForgotPasswordCubit(sl<ForgotPasswordUseCase>()),
+  );
+
+  sl.registerFactory<ResetPasswordCubit>(
+        () => ResetPasswordCubit(sl<ResetPasswordUseCase>()),
+  );
 
 }

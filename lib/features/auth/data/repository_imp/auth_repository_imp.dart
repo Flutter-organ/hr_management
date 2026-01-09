@@ -97,7 +97,7 @@ class AuthRepositoryImp implements AuthRepository{
 
       await _localDataSource.saveToken(response.accessToken);
 
-      return Right(response.user.toEntity());
+      return Right(response.user.toDomain());
     } catch (e) {
       return Left(AuthFailureMapper.mapException(e));
     }
