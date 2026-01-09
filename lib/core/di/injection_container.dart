@@ -7,6 +7,7 @@ import '../../features/auth/data/data_source/remote/AuthRemoteDataSourceImp.dart
 import '../../features/auth/data/repository_imp/auth_repository_imp.dart';
 import '../../features/auth/domain/repository/auth_repository.dart';
 import '../../features/auth/domain/usecase/RegisterUseCase.dart';
+import '../../features/auth/presentation/sign_up_screan/logic/sign_up_cubit.dart';
 import '../cache/secure_storage_data_source.dart';
 import '../network/dio_client.dart';
 
@@ -22,6 +23,10 @@ Future<void> _initCore() async {
         () => SecureStorageServiceImpl(),
   );
 
+  sl.registerLazySingleton<AuthLocalDataSource>(
+        () => AuthLocalDataSourceImp(secureStorageService: sl<SecureStorageService>()),
+  );
+
   sl.registerLazySingleton<DioClient>(
         () => DioClient(sl<AuthLocalDataSource>()),
   );
@@ -29,17 +34,20 @@ Future<void> _initCore() async {
 }
 
 Future<void> _initAuth() async {
-  sl.registerLazySingleton<AuthRepository>(
-        () => AuthRepositoryImp(localDataSource: sl<AuthLocalDataSource>(), remoteDataSource: sl<AuthRemoteDataSource>()),
-  );
 
-  sl.registerLazySingleton<AuthLocalDataSource>(
-        () => AuthLocalDataSourceImp(secureStorageService: sl<SecureStorageService>()),
-  );
+
 
   sl.registerLazySingleton<AuthRemoteDataSource>(
         () => AuthRemoteDataSourceImpl(sl<DioClient>()),
   );
+
+  sl.registerLazySingleton<AuthRepository>(
+        () => AuthRepositoryImp(
+            localDataSource: sl<AuthLocalDataSource>(),
+            remoteDataSource: sl<AuthRemoteDataSource>()
+        ),
+  );
+
 
   sl.registerLazySingleton<RegisterUseCase>(
         () => RegisterUseCase(
@@ -49,6 +57,11 @@ Future<void> _initAuth() async {
   sl.registerLazySingleton<Otpusecase>(
         () => Otpusecase(
           sl<AuthRepository>(),
+        ),
+  );
+  sl.registerFactory<SignUpCubit>(
+        () => SignUpCubit(
+          sl<RegisterUseCase>(),
         ),
   );
 
