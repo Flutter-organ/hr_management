@@ -6,6 +6,7 @@ import 'package:hr_management/core/design_system/theme/color/app_constant_colors
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pinput/pinput.dart';
+
 import '../../theme/helper/app_assets.dart';
 import '../../theme/helper/extention_colors.dart';
 import '../custom_input_field.dart';
@@ -23,6 +24,8 @@ class CustomPopup extends StatelessWidget {
     this.secondaryButtonOnPressed,
     this.onTapHere,
     this.showFooter = false,
+    this.isPrimaryButtonLoading = false,
+    this.isPrimaryButtonEnabled = true,
   });
 
   final IconData icon;
@@ -35,6 +38,8 @@ class CustomPopup extends StatelessWidget {
   final VoidCallback? secondaryButtonOnPressed;
   final VoidCallback? onTapHere;
   final bool showFooter;
+  final bool isPrimaryButtonLoading;
+  final bool isPrimaryButtonEnabled;
 
   factory CustomPopup.primary({
     required IconData icon,
@@ -85,10 +90,7 @@ class CustomPopup extends StatelessWidget {
       icon: icon,
       title: title,
       description: description,
-      content: InputFieldWithLabel(
-        labelInputTextField,
-        hintInputTextField,
-      ),
+      content: InputFieldWithLabel(labelInputTextField, hintInputTextField),
       primaryButtonText: primaryButtonText,
       primaryButtonOnPressed: primaryButtonOnPressed,
     );
@@ -118,6 +120,7 @@ class CustomPopup extends StatelessWidget {
       primaryButtonOnPressed: primaryButtonOnPressed,
     );
   }
+
   factory CustomPopup.ClockOut({
     required IconData icon,
     required String title,
@@ -125,7 +128,7 @@ class CustomPopup extends StatelessWidget {
     required String todayWorkHours,
     required String overTimeTodayWorkHours,
     required String primaryButtonText,
-    required  primaryButtonOnPressed,
+    required primaryButtonOnPressed,
     required String secondaryButtonText,
     required VoidCallback secondaryButtonOnPressed,
   }) {
@@ -133,13 +136,10 @@ class CustomPopup extends StatelessWidget {
       icon: icon,
       title: title,
       description: description,
-      content:Row(
+      content: Row(
         children: [
           Expanded(
-            child: ClockOutContent(
-              time: "today".tr(),
-              hour: todayWorkHours,
-            ),
+            child: ClockOutContent(time: "today".tr(), hour: todayWorkHours),
           ),
           SizedBox(width: 8),
           Expanded(
@@ -156,6 +156,7 @@ class CustomPopup extends StatelessWidget {
       secondaryButtonOnPressed: secondaryButtonOnPressed,
     );
   }
+
   factory CustomPopup.verificationPopup({
     required IconData icon,
     required String title,
@@ -175,6 +176,7 @@ class CustomPopup extends StatelessWidget {
       primaryButtonOnPressed: primaryButtonOnPressed,
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -204,6 +206,8 @@ class CustomPopup extends StatelessWidget {
                 context,
                 primaryButtonText,
                 primaryButtonOnPressed,
+                isPrimaryButtonLoading,
+                isPrimaryButtonEnabled,
               ),
               if (secondaryButtonText != null) ...[
                 const SizedBox(height: 16),
@@ -275,6 +279,8 @@ Widget _buildPrimaryButton(
   BuildContext context,
   String primaryButtonText,
   VoidCallback primaryButtonOnPressed,
+  bool isLoading,
+  bool isEnabled,
 ) {
   return CustomPrimaryButton.gradient(
     height: 48,
@@ -283,7 +289,7 @@ Widget _buildPrimaryButton(
     ),
     gradient: LinearGradient(
       colors: [
-       ExtensionColors.purpleGradient0,
+        ExtensionColors.purpleGradient0,
         ExtensionColors.purpleGradient1,
         ExtensionColors.purpleGradient2,
       ],
@@ -291,6 +297,8 @@ Widget _buildPrimaryButton(
     buttonText: primaryButtonText,
     borderRadius: 100,
     onPressed: primaryButtonOnPressed,
+    isLoading: isLoading,
+    isEnabled: isEnabled,
   );
 }
 
@@ -304,7 +312,7 @@ Widget _buildSecondaryButton(
     textStyle: context.textTheme.labelLargeFont.copyWith(
       color: context.colors.purple600,
     ),
-    buttonText: secondaryButtonText!,
+    buttonText: secondaryButtonText,
     borderColor: context.colors.purple600,
     borderRadius: 100,
     onPressed: secondaryButtonOnPressed,
@@ -344,11 +352,7 @@ Widget _buildSignInAlternativeFooter(
 }
 
 class InputFieldWithLabel extends StatelessWidget {
-  const InputFieldWithLabel(
-      this.label,
-      this.hint, {
-        super.key,
-      });
+  const InputFieldWithLabel(this.label, this.hint, {super.key});
 
   final String label;
   final String hint;
@@ -363,7 +367,7 @@ class InputFieldWithLabel extends StatelessWidget {
             label,
             style: context.textTheme.bodySmallFont.copyWith(
               fontWeight: FontWeight.w500,
-              color:context.colors.gray600,
+              color: context.colors.gray600,
             ),
             textAlign: TextAlign.left,
           ),
@@ -383,12 +387,9 @@ class InputFieldWithLabel extends StatelessWidget {
     );
   }
 }
+
 class ClockOutContent extends StatelessWidget {
-  ClockOutContent({
-    super.key,
-    required this.time,
-    required this.hour,
-  });
+  ClockOutContent({super.key, required this.time, required this.hour});
 
   final String time;
   final String hour;
@@ -421,7 +422,7 @@ class ClockOutContent extends StatelessWidget {
               Text(
                 time,
                 style: context.textTheme.labelMediumFont.copyWith(
-                  color:context.colors.textSecondary,
+                  color: context.colors.textSecondary,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -443,6 +444,7 @@ class ClockOutContent extends StatelessWidget {
     );
   }
 }
+
 class _VerificationContent extends StatelessWidget {
   final void Function(String) onCompleted;
   final VoidCallback onResend;
@@ -482,6 +484,7 @@ class _VerificationContent extends StatelessWidget {
       ],
     );
   }
+
   Widget _buildResendRow(BuildContext context) {
     return Text.rich(
       TextSpan(
