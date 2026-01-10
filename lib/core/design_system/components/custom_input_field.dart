@@ -18,7 +18,7 @@ class CustomInputField extends StatelessWidget {
   final int maxLines;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final String? Function(String?)? onChanged;
+  final void Function(String)? onChanged;
   final Function()? onSaved;
   final Color? borderColor;
   final Color? filledColor;
@@ -130,6 +130,11 @@ class CustomInputField extends StatelessWidget {
                 color: focuseAndErrorColor ?? context.colors.purple500,
               ),
             ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(radius ?? 8),
+              borderSide: BorderSide(color: context.colors.error500, width: 2),
+            ),
+
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(radius ?? 4.00),
               borderSide: BorderSide(
@@ -154,6 +159,18 @@ class CustomInputField extends StatelessWidget {
             ),
             border: border ?? InputBorder.none,
           ),
+          validator: validator,
+          minLines: minLines,
+          maxLines: maxLines,
+          onChanged: onChanged,
+          inputFormatters: [
+            if (isDigitOnly)
+              FilteringTextInputFormatter.digitsOnly
+            else
+              ...inputFormatter ?? [],
+          ],
+          focusNode: fieldFocusNode,
+          textInputAction: action,
         ),
       ],
     );

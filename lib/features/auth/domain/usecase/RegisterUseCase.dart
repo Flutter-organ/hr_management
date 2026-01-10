@@ -10,24 +10,12 @@ class RegisterUseCase {
 
   RegisterUseCase(this.repository);
 
-  Future<Either<Failure, AuthDto>> call({
-    required String email,
-    required String phoneNumber,
-    required String password,
-    required String confirmPassword,
+  Future<Either<Failure, bool>> call({
+   required RegisterParams registerParams,
   }) async {
-     RegisterValidator.validate(
-      email: email,
-      phoneNumber: phoneNumber,
-      password: password,
-      confirmPassword: confirmPassword,
-    );
 
   return await repository.register(
-      email: email,
-      phoneNumber: phoneNumber,
-      password: password,
-      confirmPassword: confirmPassword,
+    registerParams: registerParams,
     );
   }
 }

@@ -4,11 +4,9 @@ import 'package:hr_management/features/auth/data/mappers/AuthMapper.dart';
 import 'package:hr_management/features/auth/domain/enitites/User.dart';
 import '../../domain/failures/failure.dart';
 import '../../domain/repository/auth_repository.dart';
+import '../../domain/usecase/RegisterUseCase.dart';
 import '../data_source/local/auth_local_data_source.dart';
 import '../data_source/remote/AuthRemoteDataSource.dart';
-import '../data_source/remote/AuthRemoteDataSourceImp.dart';
-import '../data_source/remote/dto/AuthDto.dart';
-import '../data_source/remote/dto/UserDto.dart';
 import '../mappers/auth_failure_mapper.dart';
 
 class AuthRepositoryImp implements AuthRepository {
@@ -18,9 +16,8 @@ class AuthRepositoryImp implements AuthRepository {
   AuthRepositoryImp({
     required AuthLocalDataSource localDataSource,
     required AuthRemoteDataSource remoteDataSource,
-  })
-      : _localDataSource = localDataSource,
-        _remoteDataSource = remoteDataSource;
+  }) : _localDataSource = localDataSource,
+       _remoteDataSource = remoteDataSource;
 
   @override
   Future<Either<Failure, String?>> getToken() async {
@@ -63,45 +60,40 @@ class AuthRepositoryImp implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, AuthDto>> register({
-    required String email,
-    required String phoneNumber,
-    required String password,
-    required String confirmPassword,
+  Future<Either<Failure, bool>> register({
+    required RegisterParams registerParams,
   }) async {
     try {
-      final response = await _remoteDataSource.register(
-        email: email,
-        phoneNumber: phoneNumber,
-        password: password,
-        confirmPassword: confirmPassword,
+      final isRegistered = await _remoteDataSource.register(
+        registerParams: registerParams,
       );
-      if (response.success) {
-        final authDto = AuthDto.fromJson(response);
-        return Right(authDto);
-      } else {
-        return Left(AuthFailureMapper.mapException(response.message));
-      }
+      return Right(isRegistered);
     } catch (e) {
       return Left(AuthFailureMapper.mapException(e));
     }
   }
-  
+
   @override
-  Future<Either<Failure, User>> otp({required String email, required String code, required String type})async {
+  Future<Either<Failure, User>> otp({
+    required String email,
+    required String code,
+    required String type,
+  }) async {
     try {
-      final res = await _remoteDataSource.otp(email: email, code: code, type: type);
+      final res = await _remoteDataSource.otp(
+        email: email,
+        code: code,
+        type: type,
+      );
       final currentuser = CurrentUser.fromJson(res);
-      if(res.success&&res.data!=null){
-        final user=AuthMapper.toDomain(currentuser.user!);
+      if (res.success && res.data != null) {
+        final user = AuthMapper.toDomain(currentuser.user!);
         return Right(user);
-      }else{
+      } else {
         return Left(AuthFailureMapper.mapException(res.message));
       }
-
     } catch (e) {
       return Left(AuthFailureMapper.mapException(e));
     }
   }
-
 }
