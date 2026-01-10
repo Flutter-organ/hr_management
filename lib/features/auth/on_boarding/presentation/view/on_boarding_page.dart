@@ -5,8 +5,8 @@ import 'package:hr_management/core/design_system/components/custom_primary_butto
 import 'package:hr_management/core/design_system/theme/helper/extention_colors.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:hr_management/core/routes/route_names.dart';
-import 'package:hr_management/features/on_boarding/model/on_boarding_model.dart';
-import 'package:hr_management/features/on_boarding/presentation/widget/list_generate_widget.dart';
+import 'package:hr_management/features/auth/on_boarding/model/on_boarding_model.dart';
+import 'package:hr_management/features/auth/on_boarding/presentation/widget/list_generate_widget.dart';
 
 class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({super.key});
@@ -87,6 +87,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   onPressed: () {
                     if (currentIndex == onBoardingitems.length - 1) {
                       context.replace(RouteNames.onBoardingFinalPageRoute);
+                      
                     }
                     pageController.animateToPage(
                       ++currentIndex,
