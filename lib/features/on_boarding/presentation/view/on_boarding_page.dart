@@ -84,7 +84,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 CustomPrimaryButton.gradient(
                   buttonText: "next".tr(),
                   textStyle: context.textTheme.labelLargeFont,
-                  onPressed: () async {
+                  onPressed: () {
                     if (currentIndex == onBoardingitems.length - 1) {
                       context.replace(RouteNames.onBoardingFinalPageRoute);
                     }
@@ -105,6 +105,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     context.replace(RouteNames.onBoardingFinalPageRoute);
                   },
                 ),
+                SizedBox(height: 30),
               ],
             ),
           ),
