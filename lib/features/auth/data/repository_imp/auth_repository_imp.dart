@@ -1,14 +1,15 @@
 import 'package:fpdart/fpdart.dart';
+
 import '../../domain/failures/failure.dart';
 import '../../domain/repository/auth_repository.dart';
 import '../data_source/local/auth_local_data_source.dart';
 import '../mappers/auth_failure_mapper.dart';
 
-class AuthRepositoryImp implements AuthRepository{
+class AuthRepositoryImp implements AuthRepository {
   final AuthLocalDataSource _localDataSource;
 
   AuthRepositoryImp({required AuthLocalDataSource localDataSource})
-      : _localDataSource = localDataSource;
+    : _localDataSource = localDataSource;
 
   @override
   Future<Either<Failure, String?>> getToken() async {
@@ -50,4 +51,25 @@ class AuthRepositoryImp implements AuthRepository{
     }
   }
 
+  @override
+  Future<Either<Failure, Unit>> setOnBoardingStatus({
+    required bool value,
+  }) async {
+    try {
+      await _localDataSource.setOnBoardingStatus(value: value);
+      return const Right(unit);
+    } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> getOnBoardingStatus() async {
+    try {
+      final value = await _localDataSource.getOnBoardingStatus();
+      return Right(value ?? false);
+    } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
+  }
 }

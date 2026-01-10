@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:hr_management/core/cache/shared_preferences_service.dart';
+
 import '../../features/auth/data/data_source/local/auth_local_data_source.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source_imp.dart';
 import '../../features/auth/data/repository_imp/auth_repository_imp.dart';
@@ -15,22 +17,23 @@ Future<void> setupDependencies() async {
 
 Future<void> _initCore() async {
   sl.registerLazySingleton<SecureStorageService>(
-        () => SecureStorageServiceImpl(),
+    () => SecureStorageServiceImpl(),
   );
 
   sl.registerLazySingleton<DioClient>(
-        () => DioClient(sl<AuthLocalDataSource>()),
+    () => DioClient(sl<AuthLocalDataSource>()),
   );
-
 }
 
 Future<void> _initAuth() async {
   sl.registerLazySingleton<AuthRepository>(
-        () => AuthRepositoryImp(localDataSource: sl<AuthLocalDataSource>()),
+    () => AuthRepositoryImp(localDataSource: sl<AuthLocalDataSource>()),
   );
 
   sl.registerLazySingleton<AuthLocalDataSource>(
-        () => AuthLocalDataSourceImp(secureStorageService: sl<SecureStorageService>()),
+    () => AuthLocalDataSourceImp(
+      secureStorageService: sl<SecureStorageService>(),
+      preferencesService: sl<PreferencesService>(),
+    ),
   );
-
 }

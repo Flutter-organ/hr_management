@@ -1,3 +1,5 @@
+import 'package:hr_management/core/cache/shared_preferences_service.dart';
+
 import '../../../../../core/cache/secure_storage_data_source.dart';
 import '../../../../../core/exceptions/app_exception.dart';
 import '../../../../../core/network/api_constants.dart';
@@ -5,28 +7,35 @@ import 'auth_local_data_source.dart';
 
 class AuthLocalDataSourceImp implements AuthLocalDataSource {
   final SecureStorageService _secureStorageService;
+  final PreferencesService _preferencesService;
 
-  const AuthLocalDataSourceImp ({required SecureStorageService secureStorageService})
-      : _secureStorageService = secureStorageService;
+  const AuthLocalDataSourceImp({
+    required SecureStorageService secureStorageService,
+    required PreferencesService preferencesService,
+  }) : _secureStorageService = secureStorageService,
+       _preferencesService = preferencesService;
 
   @override
   Future<String?> getToken() async {
-      try {
-        return await _secureStorageService.read(key: ApiConstants.tokenKey);
-      } catch (e) {
-        throw CacheException(message: 'Failed to read token: $e');
-      }
+    try {
+      return await _secureStorageService.read(key: ApiConstants.tokenKey);
+    } catch (e) {
+      throw CacheException(message: 'Failed to read token: $e');
+    }
   }
 
   @override
   Future<void> saveToken(String token) async {
     if (token.isEmpty) {
-      throw const CacheException(message:'Token cannot be empty');
+      throw const CacheException(message: 'Token cannot be empty');
     }
     try {
-      await _secureStorageService.write(key: ApiConstants.tokenKey, value: token);
+      await _secureStorageService.write(
+        key: ApiConstants.tokenKey,
+        value: token,
+      );
     } catch (e) {
-      throw CacheException(message:'Failed to save token: $e');
+      throw CacheException(message: 'Failed to save token: $e');
     }
   }
 
@@ -49,4 +58,25 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
     }
   }
 
+  Future<void> setOnBoardingStatus({required bool value}) async {
+    try {
+      await _preferencesService.setBool(
+        key: ApiConstants.onBoardingKey,
+        value: value,
+      );
+    } catch (e) {
+      throw CacheException(message: 'Failed to set onboarding status: $e');
+    }
+  }
+
+  Future<bool?> getOnBoardingStatus() async {
+    try {
+      return await _preferencesService.getBool(
+            key: ApiConstants.onBoardingKey,
+          ) ??
+          false;
+    } catch (e) {
+      throw CacheException(message: 'Failed to get onboarding status: $e');
+    }
+  }
 }
