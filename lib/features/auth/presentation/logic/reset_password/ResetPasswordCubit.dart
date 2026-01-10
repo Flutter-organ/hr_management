@@ -1,5 +1,4 @@
 import 'package:hr_management/features/auth/presentation/logic/reset_password/reset_password_state.dart';
-
 import '../../../../../core/base_viewmodel/base_cubit.dart';
 import '../../../domain/usecases/ResetPasswordUseCase.dart';
 
@@ -7,7 +6,7 @@ class ResetPasswordCubit extends BaseCubit<ResetPasswordState> {
   final ResetPasswordUseCase _resetPasswordUseCase;
 
   ResetPasswordCubit(this._resetPasswordUseCase)
-      : super(ResetPasswordInitial());
+      : super(const ResetPasswordInitial());
 
   Future<void> resetPassword({
     required String identifier,
@@ -16,7 +15,7 @@ class ResetPasswordCubit extends BaseCubit<ResetPasswordState> {
     required String passwordConfirmation,
   }) async {
     await execute(
-      onLoading: () => emit(ResetPasswordLoading()),
+      onLoading: () => emit(const ResetPasswordLoading()),
       call: () => _resetPasswordUseCase(
         identifier: identifier,
         code: code,
@@ -29,6 +28,6 @@ class ResetPasswordCubit extends BaseCubit<ResetPasswordState> {
   }
 
   void reset() {
-    emit(ResetPasswordInitial());
+    emit(const ResetPasswordInitial());
   }
 }

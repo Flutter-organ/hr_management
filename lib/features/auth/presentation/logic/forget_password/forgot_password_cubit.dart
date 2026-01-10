@@ -7,28 +7,45 @@ class ForgotPasswordCubit extends BaseCubit<ForgotPasswordState> {
   final ForgotPasswordUseCase _forgotPasswordUseCase;
 
   ForgotPasswordCubit(this._forgotPasswordUseCase)
-      : super(ForgotPasswordInitial());
+      : super(const ForgotPasswordInitial());
 
   String? _identifier;
-  String? get identifier => _identifier;
+  LoginType? _loginType;
 
-  Future<void> forgotPassword({required String email}) async {
+  String? get identifier => _identifier;
+  LoginType? get loginType => _loginType;
+
+  Future<void> forgotPassword({
+    required String identifier,
+    required LoginType loginType,
+  }) async {
     await execute(
-      onLoading: () => emit(ForgotPasswordLoading()),
+      onLoading: () => emit(const ForgotPasswordLoading()),
       call: () => _forgotPasswordUseCase(
-        identifier: email,
-        loginType: LoginType.email,
+        identifier: identifier,
+        loginType: loginType,
       ),
       onSuccess: (identifier) {
         _identifier = identifier;
+        _loginType = loginType;
         emit(ForgotPasswordSuccess(identifier));
       },
       onError: (error) => emit(ForgotPasswordError(error)),
     );
   }
 
+  Future<void> resendOtp() async {
+    if (_identifier == null || _loginType == null) return;
+
+    await forgotPassword(
+      identifier: _identifier!,
+      loginType: _loginType!,
+    );
+  }
+
   void reset() {
     _identifier = null;
-    emit(ForgotPasswordInitial());
+    _loginType = null;
+    emit(const ForgotPasswordInitial());
   }
 }

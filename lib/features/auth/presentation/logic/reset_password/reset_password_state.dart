@@ -1,22 +1,38 @@
+import 'package:equatable/equatable.dart';
 import '../../../../../core/exceptions/ui_errors.dart';
 import '../../../domain/enitites/User.dart';
 
-abstract class ResetPasswordState {}
+sealed class ResetPasswordState extends Equatable {
+  const ResetPasswordState();
 
-class ResetPasswordInitial extends ResetPasswordState {}
+  @override
+  List<Object?> get props => [];
+}
 
-class ResetPasswordLoading extends ResetPasswordState {}
+class ResetPasswordInitial extends ResetPasswordState {
+  const ResetPasswordInitial();
+}
+
+class ResetPasswordLoading extends ResetPasswordState {
+  const ResetPasswordLoading();
+}
 
 class ResetPasswordSuccess extends ResetPasswordState {
   final User user;
 
-  ResetPasswordSuccess(this.user);
+  const ResetPasswordSuccess(this.user);
+
+  @override
+  List<Object?> get props => [user];
 }
 
 class ResetPasswordError extends ResetPasswordState {
   final UiError error;
 
-  ResetPasswordError(this.error);
+  const ResetPasswordError(this.error);
 
   String get message => error.message;
+
+  @override
+  List<Object?> get props => [error.message];
 }

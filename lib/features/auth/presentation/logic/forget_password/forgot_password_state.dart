@@ -1,21 +1,37 @@
+import 'package:equatable/equatable.dart';
 import 'package:hr_management/core/exceptions/ui_errors.dart';
 
-abstract class ForgotPasswordState {}
+sealed class ForgotPasswordState extends Equatable {
+  const ForgotPasswordState();
 
-class ForgotPasswordInitial extends ForgotPasswordState {}
+  @override
+  List<Object?> get props => [];
+}
 
-class ForgotPasswordLoading extends ForgotPasswordState {}
+class ForgotPasswordInitial extends ForgotPasswordState {
+  const ForgotPasswordInitial();
+}
+
+class ForgotPasswordLoading extends ForgotPasswordState {
+  const ForgotPasswordLoading();
+}
 
 class ForgotPasswordSuccess extends ForgotPasswordState {
   final String identifier;
 
-  ForgotPasswordSuccess(this.identifier);
+  const ForgotPasswordSuccess(this.identifier);
+
+  @override
+  List<Object?> get props => [identifier];
 }
 
 class ForgotPasswordError extends ForgotPasswordState {
   final UiError error;
 
-  ForgotPasswordError(this.error);
+  const ForgotPasswordError(this.error);
 
   String get message => error.message;
+
+  @override
+  List<Object?> get props => [error.message];
 }
