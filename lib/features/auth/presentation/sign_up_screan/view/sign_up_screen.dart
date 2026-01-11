@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../../core/design_system/components/popups/terms_popup.dart';
 import '../../../../../core/design_system/theme/color/app_constant_colors.dart';
 import '../../../../../core/design_system/theme/helper/theme_extention.dart';
 import '../../../../../core/di/injection_container.dart';
@@ -11,12 +10,9 @@ import '../../verify_otp/view/verify_otp_screen.dart';
 import '../logic/sign_up_cubit.dart';
 import '../logic/sign_up_state.dart';
 import '../widgets/build_already_have_account.dart';
-import '../widgets/build_email.dart';
-import '../widgets/build_password.dart';
-import '../widgets/build_phone_number.dart';
 import '../widgets/build_signup_button.dart';
+import '../widgets/build_signup_form.dart';
 import '../widgets/build_terms_and_conditions.dart';
-import '../widgets/show_terms_popup.dart';
 
 class SignUpScreen extends StatelessWidget {
 
@@ -37,7 +33,6 @@ class SignUpScreen extends StatelessWidget {
               );
             },
           );
-
         }
       },
       builder: (context, state) {
@@ -74,35 +69,7 @@ class SignUpScreen extends StatelessWidget {
 
                           SizedBox(height: 24),
 
-                          Form(
-                            key: cubit.formKey,
-                            child: Column(
-                              spacing: 16,
-                              children: [
-                                buildEmail(
-                                  context,
-                                  cubit.emailController,
-                                ),
-
-                                buildPhoneNumber(
-                                  context,
-                                  cubit.phoneController,
-                                ),
-
-                                buildPassword(
-                                  context,
-                                  cubit.passwordController,
-                                  "password".tr(),
-                                ),
-
-                                buildPassword(
-                                  context,
-                                  cubit.confirmPasswordController,
-                                  "confirm_password".tr(),
-                                ),
-                              ],
-                            ),
-                          ),
+                          buildSignUpForm(context, cubit),
                           SizedBox(height: 12),
 
                           buildTermsAndConditions(
