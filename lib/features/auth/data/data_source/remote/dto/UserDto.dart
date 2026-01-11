@@ -2,7 +2,7 @@ class UserDto {
   UserDto({
       int? id,
       String? email, 
-      bool? isActive, 
+      int? isActive, 
       String? role,}){
     _id = id;
     _email = email;
@@ -18,12 +18,12 @@ class UserDto {
   }
   int? _id;
   String? _email;
-  bool? _isActive;
+  int? _isActive;
   String? _role;
 
   int? get id => _id;
   String? get email => _email;
-  bool? get isActive => _isActive;
+  int? get isActive => _isActive;
   String? get role => _role;
 
   Map<String, dynamic> toJson() {
