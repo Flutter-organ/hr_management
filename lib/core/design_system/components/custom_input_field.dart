@@ -130,6 +130,11 @@ class CustomInputField extends StatelessWidget {
                 color: focuseAndErrorColor ?? context.colors.purple500,
               ),
             ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(radius ?? 8),
+              borderSide: BorderSide(color: context.colors.error500, width: 2),
+            ),
+
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(radius ?? 4.00),
               borderSide: BorderSide(
