@@ -4,12 +4,12 @@ import 'package:hr_management/features/auth/domain/enitites/User.dart';
 import 'package:hr_management/features/auth/domain/failures/failure.dart';
 import 'package:hr_management/features/auth/domain/repository/auth_repository.dart';
 
-class Otpusecase {
+class OtpUseCase {
   AuthRepository _authRepository;
 
 
 
-  Otpusecase(this._authRepository);
+  OtpUseCase(this._authRepository);
 
   Future<Either<Failure, User>> call({
     required String email,

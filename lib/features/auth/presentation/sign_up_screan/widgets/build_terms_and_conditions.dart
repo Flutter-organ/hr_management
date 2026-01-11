@@ -45,9 +45,9 @@ Widget buildTermsAndConditions(
               TextSpan(
                 style: defaultStyle,
                 children: [
-                  TextSpan(text: "I agree with ".tr()),
+                  TextSpan(text: "agree_with".tr()),
                   TextSpan(
-                    text: "terms & conditions".tr(),
+                    text: "terms_conditions".tr(),
                     style: linkStyle,
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
@@ -56,9 +56,9 @@ Widget buildTermsAndConditions(
                         });
                       },
                   ),
-                  TextSpan(text: " and ".tr()),
+                  TextSpan(text: "and".tr()),
                   TextSpan(
-                      text: "privacy policy".tr(),
+                      text: "privacy_policy".tr(),
                       style: linkStyle,
                       recognizer: TapGestureRecognizer()
                   ),

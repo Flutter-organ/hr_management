@@ -1,9 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax/iconsax.dart';
 import '../../../../../core/design_system/components/popups/terms_popup.dart';
 import '../../../../../core/design_system/theme/color/app_constant_colors.dart';
 import '../../../../../core/design_system/theme/helper/theme_extention.dart';
+import '../../../../../core/di/injection_container.dart';
+import '../../verify_otp/logic/verify_otp_cubit.dart';
+import '../../verify_otp/view/verify_otp_screen.dart';
 import '../logic/sign_up_cubit.dart';
 import '../logic/sign_up_state.dart';
 import '../widgets/build_already_have_account.dart';
@@ -22,11 +26,18 @@ class SignUpScreen extends StatelessWidget {
    cubit.setupTextFieldController();
     return BlocConsumer<SignUpCubit, SignUpStates>(
       listener: (BuildContext context, SignUpStates state) {
-        if (state is CheckInputValidationState) {
-          context.read<SignUpCubit>().formKey.currentState!.validate();
-        }
-        if (state is FailureState) {
-          print("stateeeeee is ${state.message}");
+        if (state is SuccessState) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) {
+              return BlocProvider(
+                create: (_) => sl<VerifyOtpCubit>(),
+                child: VerifyOTPScreen(email: cubit.emailController.text),
+              );
+            },
+          );
+
         }
       },
       builder: (context, state) {
@@ -137,6 +148,6 @@ Widget _logoSignUp(BuildContext context) {
         ),
       ],
     ),
-    child: Icon(Icons.person, color: AppConstantColors.white, size: 40),
+    child: Icon(Iconsax.sms, color: AppConstantColors.white, size: 40),
   );
 }

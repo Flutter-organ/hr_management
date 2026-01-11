@@ -3,7 +3,6 @@ import 'package:fpdart/fpdart.dart';
 import '../../data/data_source/remote/dto/AuthDto.dart';
 import '../failures/failure.dart';
 import '../repository/auth_repository.dart';
-import 'ValidationUseCase.dart';
 
 class RegisterUseCase {
   final AuthRepository repository;

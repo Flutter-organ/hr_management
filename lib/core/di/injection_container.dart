@@ -8,6 +8,7 @@ import '../../features/auth/data/repository_imp/auth_repository_imp.dart';
 import '../../features/auth/domain/repository/auth_repository.dart';
 import '../../features/auth/domain/usecase/RegisterUseCase.dart';
 import '../../features/auth/presentation/sign_up_screan/logic/sign_up_cubit.dart';
+import '../../features/auth/presentation/verify_otp/logic/verify_otp_cubit.dart';
 import '../cache/secure_storage_data_source.dart';
 import '../network/dio_client.dart';
 
@@ -54,8 +55,8 @@ Future<void> _initAuth() async {
           sl<AuthRepository>(),
         ),
   );
-  sl.registerLazySingleton<Otpusecase>(
-        () => Otpusecase(
+  sl.registerLazySingleton<OtpUseCase>(
+        () => OtpUseCase(
           sl<AuthRepository>(),
         ),
   );
@@ -63,6 +64,11 @@ Future<void> _initAuth() async {
         () => SignUpCubit(
           sl<RegisterUseCase>(),
         ),
+  );
+  sl.registerFactory<VerifyOtpCubit>(
+        () => VerifyOtpCubit(
+          sl<OtpUseCase>(),
+        )
   );
 
 }

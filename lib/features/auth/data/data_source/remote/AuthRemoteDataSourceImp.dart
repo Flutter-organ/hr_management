@@ -41,6 +41,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String code,
     required String type,
   }) async {
+    print("email is $email");
+    print("code is $code");
+    print("type is $type");
     final response = await _dioClient.post(
       ApiConstants.verifyOtp,
       data: {'identifier': email, 'code': code, 'type': type},

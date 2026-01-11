@@ -50,7 +50,6 @@ class SignUpCubit extends BaseCubit<SignUpStates> {
     final fullPhoneNumber = '$countryCode${phoneController.text.trim()}';
 
     execute(
-      onLoading: () => emit(LoadingState()),
       call: () {
         final isRegistered = _registerUseCase.call(
           registerParams: RegisterParams(
@@ -63,7 +62,9 @@ class SignUpCubit extends BaseCubit<SignUpStates> {
         return isRegistered;
       },
       onSuccess: (_) {
-        emit(SuccessState());
+        emit(SuccessState(
+          email: emailController.text,
+        ));
       },
       onError: (error) {
         emit(FailureState(message: error.message));

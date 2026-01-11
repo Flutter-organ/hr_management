@@ -41,7 +41,7 @@ Widget buildPhoneNumber(BuildContext context, TextEditingController _phoneContro
           borderColor: context.colors.gray400,
           filledColor: context.colors.white,
           keyboardType: TextInputType.number,
-          hintKey: "01*********",
+          hintKey: "phone_hint".tr(),
           labelHintStyle: context.colors.gray400,
           hintFontSize: 4,
           enabledColor: context.colors.gray400,

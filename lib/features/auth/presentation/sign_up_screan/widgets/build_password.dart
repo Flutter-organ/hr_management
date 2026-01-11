@@ -8,12 +8,14 @@ import '../../../../../core/design_system/theme/helper/theme_extention.dart';
 import '../logic/sign_up_cubit.dart';
 import '../logic/sign_up_state.dart';
 
-Widget buildPassword(BuildContext context,
+Widget buildPassword(
+    BuildContext context,
     TextEditingController _passwordController,
     String label) {
   final cubit = context.read<SignUpCubit>();
   return BlocBuilder<SignUpCubit, SignUpStates>(
     buildWhen: (previous, current) => current is ShowOrHidePasswordState,
+
     builder: (context, state) {
       return CustomInputField(
           label: label,
@@ -22,7 +24,7 @@ Widget buildPassword(BuildContext context,
           borderColor: context.colors.gray400,
           filledColor: context.colors.white,
           keyboardType: TextInputType.visiblePassword,
-          hintKey: "my_password".tr(),
+          hintKey: "password_hint".tr(),
           isObscureText: cubit.isObscurePassWord,
           labelHintStyle: context.colors.gray400,
           hintFontSize: 4,

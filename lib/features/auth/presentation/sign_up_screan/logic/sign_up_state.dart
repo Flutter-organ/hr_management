@@ -7,7 +7,13 @@ class InitialState extends SignUpStates {}
 
 class LoadingState extends SignUpStates {}
 
-class SuccessState extends SignUpStates {}
+class SuccessState extends SignUpStates {
+  final String email;
+  SuccessState({required this.email});
+}
+
+class ToggleCheckedTermAndConditionsState extends SignUpStates {
+}
 
 class FailureState extends SignUpStates {
   final String message;
@@ -25,4 +31,3 @@ class CountryCodeChangedState extends SignUpStates {
 
 class ShowOrHidePasswordState extends SignUpStates {}
 
-class ToggleCheckedTermAndConditionsState extends SignUpStates {}

@@ -23,6 +23,7 @@ class CustomPopup extends StatelessWidget {
     this.secondaryButtonOnPressed,
     this.onTapHere,
     this.showFooter = false,
+    this.isEnablePrimaryButton = false,
   });
 
   final IconData icon;
@@ -35,6 +36,8 @@ class CustomPopup extends StatelessWidget {
   final VoidCallback? secondaryButtonOnPressed;
   final VoidCallback? onTapHere;
   final bool showFooter;
+  final bool isEnablePrimaryButton;
+
 
   factory CustomPopup.primary({
     required IconData icon,
@@ -102,7 +105,7 @@ class CustomPopup extends StatelessWidget {
     required VoidCallback primaryButtonOnPressed,
     required void Function(String) onCompleted,
     required VoidCallback onTapResend,
-    required VoidCallback onTapHere,
+    VoidCallback? onTapHere,
     bool showFooter = true,
   }) {
     return CustomPopup(
@@ -204,6 +207,7 @@ class CustomPopup extends StatelessWidget {
                 context,
                 primaryButtonText,
                 primaryButtonOnPressed,
+               isEnablePrimaryButton,
               ),
               if (secondaryButtonText != null) ...[
                 const SizedBox(height: 16),
@@ -275,6 +279,7 @@ Widget _buildPrimaryButton(
   BuildContext context,
   String primaryButtonText,
   VoidCallback primaryButtonOnPressed,
+  bool isEnablePrimaryButton,
 ) {
   return CustomPrimaryButton.gradient(
     height: 48,

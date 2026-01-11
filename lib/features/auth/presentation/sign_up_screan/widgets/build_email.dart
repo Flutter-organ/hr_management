@@ -10,13 +10,13 @@ import '../logic/sign_up_cubit.dart';
 Widget buildEmail(BuildContext context, TextEditingController _emailController) {
   final cubit = context.read<SignUpCubit>();
   return CustomInputField(
-      label: "Email".tr(),
+      label: "email_label".tr(),
       labelColor: context.colors.textPrimary,
       controller: _emailController,
       borderColor: context.colors.gray400,
       filledColor: context.colors.white,
       keyboardType: TextInputType.visiblePassword,
-      hintKey: "name@email.com".tr(),
+      hintKey: "email_hint".tr(),
       labelHintStyle: context.colors.gray400,
       hintFontSize: 4,
       enabledColor: context.colors.gray400,

@@ -9,7 +9,7 @@ Widget buildAlreadyHaveAnAccount(BuildContext context) {
     TextSpan(
       children: [
         TextSpan(
-          text: "Already have an account?".tr(),
+          text: "already_have_account".tr(),
           style: context.textTheme.bodySmallFont.copyWith(
             color: context.colors.textPrimary,
           ),
@@ -19,7 +19,7 @@ Widget buildAlreadyHaveAnAccount(BuildContext context) {
           child: GestureDetector(
             onTap: (){},
             child: Text(
-              "Sign in here".tr(),
+              "sign_in_here".tr(),
               style: context.textTheme.labelMediumFont.copyWith(
                 color: AppConstantColors.purple500,
               ),
