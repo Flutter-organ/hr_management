@@ -50,26 +50,4 @@ class AuthRepositoryImp implements AuthRepository {
       return Left(AuthFailureMapper.mapException(e));
     }
   }
-
-  @override
-  Future<Either<Failure, Unit>> setOnBoardingStatus({
-    required bool value,
-  }) async {
-    try {
-      await _localDataSource.setOnBoardingStatus(value: value);
-      return const Right(unit);
-    } catch (e) {
-      return Left(AuthFailureMapper.mapException(e));
-    }
-  }
-
-  @override
-  Future<Either<Failure, bool>> getOnBoardingStatus() async {
-    try {
-      final value = await _localDataSource.getOnBoardingStatus();
-      return Right(value ?? false);
-    } catch (e) {
-      return Left(AuthFailureMapper.mapException(e));
-    }
-  }
 }

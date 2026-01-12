@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/config/app_config.dart';
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/di/injection_container.dart';
 import 'core/routes/route_generator.dart';
@@ -10,7 +11,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await AppConfig.init();
-  await setupDependencies();
+  final sharedPrefs = await SharedPreferences.getInstance();
+  await setupDependencies(sharedPrefs);
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('ar'), Locale('en')],

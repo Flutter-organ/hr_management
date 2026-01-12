@@ -1,5 +1,3 @@
-import 'package:hr_management/core/cache/shared_preferences_service.dart';
-
 import '../../../../../core/cache/secure_storage_data_source.dart';
 import '../../../../../core/exceptions/app_exception.dart';
 import '../../../../../core/network/api_constants.dart';
@@ -7,13 +5,10 @@ import 'auth_local_data_source.dart';
 
 class AuthLocalDataSourceImp implements AuthLocalDataSource {
   final SecureStorageService _secureStorageService;
-  final PreferencesService _preferencesService;
 
   const AuthLocalDataSourceImp({
     required SecureStorageService secureStorageService,
-    required PreferencesService preferencesService,
-  }) : _secureStorageService = secureStorageService,
-       _preferencesService = preferencesService;
+  }) : _secureStorageService = secureStorageService;
 
   @override
   Future<String?> getToken() async {
@@ -55,28 +50,6 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
       return token != null && token.isNotEmpty;
     } catch (e) {
       return false;
-    }
-  }
-
-  Future<void> setOnBoardingStatus({required bool value}) async {
-    try {
-      await _preferencesService.setBool(
-        key: ApiConstants.onBoardingKey,
-        value: value,
-      );
-    } catch (e) {
-      throw CacheException(message: 'Failed to set onboarding status: $e');
-    }
-  }
-
-  Future<bool?> getOnBoardingStatus() async {
-    try {
-      return await _preferencesService.getBool(
-            key: ApiConstants.onBoardingKey,
-          ) ??
-          false;
-    } catch (e) {
-      throw CacheException(message: 'Failed to get onboarding status: $e');
     }
   }
 }

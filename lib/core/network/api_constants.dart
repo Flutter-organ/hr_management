@@ -19,5 +19,4 @@ class ApiConstants {
 
   static const String tokenKey = 'token';
   static const String multipartContentType = 'multipart/form-data';
-  static const String onBoardingKey = "isFirstTime";
 }

@@ -35,22 +35,18 @@ class OnBoardingFinalPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 35),
-                Column(
-                  children: [
-                    CustomPrimaryButton.gradient(
-                      buttonText: "sign_in".tr(),
-                      textStyle: context.textTheme.labelLargeFont,
-                      onPressed: () {},
-                    ),
-                    SizedBox(height: 16),
-                    CustomPrimaryButton.outlined(
-                      buttonText: "sign_up".tr(),
-                      textStyle: context.textTheme.labelLargeFont.copyWith(
-                        color: ExtensionColors.kButtonBackgroundPrimary,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ],
+                CustomPrimaryButton.gradient(
+                  buttonText: "sign_in".tr(),
+                  textStyle: context.textTheme.labelLargeFont,
+                  onPressed: () {},
+                ),
+                SizedBox(height: 16),
+                CustomPrimaryButton.outlined(
+                  buttonText: "sign_up".tr(),
+                  textStyle: context.textTheme.labelLargeFont.copyWith(
+                    color: ExtensionColors.kButtonBackgroundPrimary,
+                  ),
+                  onPressed: () {},
                 ),
               ],
             ),

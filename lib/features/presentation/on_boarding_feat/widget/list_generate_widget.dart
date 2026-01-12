@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
-import 'package:hr_management/features/auth/on_boarding/model/on_boarding_model.dart';
+import 'package:hr_management/features/auth/domain/enitites/on_boarding.dart';
 
 class ListGenerateWidget extends StatelessWidget {
   final int currentIndex;
