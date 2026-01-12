@@ -103,7 +103,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               context.read<OnboardingCubit>().checkOnboardingStatus();
               if (currentIndex == onBoardingitems.length - 1) {
                 context.read<OnboardingCubit>().completeOnboarding();
-                context.push(RouteNames.onBoardingFinalPageRoute);
+                context.replaceNamed(RouteNames.onBoardingFinalPageRoute);
               }
               pageController.animateToPage(
                 ++currentIndex,
@@ -119,7 +119,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               color: ExtensionColors.kButtonBackgroundPrimary,
             ),
             onPressed: () {
-              context.push(RouteNames.onBoardingFinalPageRoute);
+              context.replaceNamed(RouteNames.onBoardingFinalPageRoute);
               context.read<OnboardingCubit>().completeOnboarding();
             },
           ),

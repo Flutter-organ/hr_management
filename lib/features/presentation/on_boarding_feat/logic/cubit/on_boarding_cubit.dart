@@ -9,12 +9,6 @@ class OnboardingCubit extends Cubit<OnboardingState> {
 
   Future<bool> checkOnboardingStatus() async {
     final isCompleted = await completeOnboardingUseCase.check();
-    if (isCompleted) {
-      emit(OnboardingCompleted());
-    } else {
-      emit(OnboardingNotCompleted());
-    }
-    print(isCompleted);
     return isCompleted;
   }
 
