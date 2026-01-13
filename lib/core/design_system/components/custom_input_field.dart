@@ -88,20 +88,20 @@ class CustomInputField extends StatelessWidget {
       children: [
         label != null
             ? Column(
-                children: [
-                  Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: Text(
-                      label!,
-                      style: context.textTheme.bodySmallFont.copyWith(
-                        color: labelColor!,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                ],
-              )
+          children: [
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Text(
+                label!,
+                style: context.textTheme.bodySmallFont.copyWith(
+                  color: labelColor!,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ),
+            const SizedBox(height: 4),
+          ],
+        )
             : const SizedBox(height: 0),
         TextFormField(
           controller: controller,
