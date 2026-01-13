@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/config/app_config.dart';
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
-import 'package:hr_management/features/auth/domain/usecase/OtpUseCase.dart';
 import 'core/di/injection_container.dart';
 
 import 'core/routes/route_generator.dart';
@@ -39,23 +38,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-//
-// class Test extends StatelessWidget {
-//   const Test({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         ElevatedButton(onPressed: (){
-//           callotp();
-//         }, child: Text("test"))
-//       ],
-//     );
-//   }
-// }
-// Future <void>callotp()async{
-//   Otpusecase _otpusecase=sl<Otpusecase>(); ;
-//
-//   await _otpusecase.call(email: "bekirog634@jparksky.com", code: "187585", type: "registration");
-// }
