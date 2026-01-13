@@ -21,17 +21,17 @@ class LoginCubit extends BaseCubit<LoginStates> {
         password: password,
         loginType: loginType,
       ),
-      onLoading: () => emit(
-        LoginLoading(
+      onLoading: () => updateState(
+        (currentState) => LoginLoading(
           loginType: state.loginType,
+          isChecked: state.isChecked,
           isObscure: state.isObscure,
           countryCode: state.countryCode,
-          isChecked: state.isChecked,
           isEnabled: state.isEnabled,
         ),
       ),
-      onSuccess: (user) => emit(
-        LoginSuccess(
+      onSuccess: (user) => updateState(
+        (currentState) => LoginSuccess(
           user: user,
           loginType: state.loginType,
           isObscure: state.isObscure,
@@ -40,8 +40,8 @@ class LoginCubit extends BaseCubit<LoginStates> {
           isEnabled: state.isEnabled,
         ),
       ),
-      onError: (value) => emit(
-        LoginFailure(
+      onError: (value) => updateState(
+        (currentState) => LoginFailure(
           message: value.message,
           loginType: state.loginType,
           isObscure: state.isObscure,
@@ -58,24 +58,26 @@ class LoginCubit extends BaseCubit<LoginStates> {
         ? LoginType.phone
         : LoginType.email;
 
-    emit(state.copyWith(loginType: newType));
+    updateState((currentState) => state.copyWith(loginType: newType));
   }
 
   void togglePassword() {
-    emit(state.copyWith(isObscure: !state.isObscure));
+    updateState((currentState) => state.copyWith(isObscure: !state.isObscure));
   }
 
   void changeCountryCode(Country country) {
-    emit(state.copyWith(countryCode: country.phoneCode));
+    updateState(
+      (currentState) => state.copyWith(countryCode: country.phoneCode),
+    );
   }
 
   void isRememberd(bool value) {
-    emit(state.copyWith(isChecked: value));
+    updateState((currentState) => state.copyWith(isChecked: value));
   }
 
   void filledFields(String identifier, String password) {
-    emit(
-      state.copyWith(
+    updateState(
+      (currentState) => state.copyWith(
         isEnabled: (identifier.isNotEmpty && password.isNotEmpty)
             ? true
             : false,
