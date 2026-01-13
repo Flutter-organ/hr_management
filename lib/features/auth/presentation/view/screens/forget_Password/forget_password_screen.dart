@@ -1,47 +1,39 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconsax/iconsax.dart';
 import '../../../../../../core/design_system/components/popups/custom_popup.dart';
 import '../../../../../../core/design_system/theme/helper/theme_extention.dart';
 import '../../../../../../core/di/injection_container.dart';
 import '../../../../domain/enitites/login_type.dart';
 import '../../../logic/forget_password/forgot_password_cubit.dart';
 import '../../../logic/forget_password/forgot_password_state.dart';
-import '../../../widgets/forgot_password_content.dart';
-import '../../helpers/auth_popup_helper.dart';
 import '../verify_otp/verify_otp_screen.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
-  const ForgotPasswordScreen({super.key});
+class ForgotPasswordPopup extends StatefulWidget {
+  const ForgotPasswordPopup({super.key});
 
-  static Future<void> show(BuildContext context) async {
-    await AuthPopupHelper.showAuthPopup(
+  static Future<void> show(BuildContext context) {
+    return showModalBottomSheet(
       context: context,
-      popup: BlocProvider(
-        create: (_) => sl<ForgotPasswordCubit>(),
-        child: const _ForgotPasswordPopup(),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: BlocProvider(
+          create: (_) => sl<ForgotPasswordCubit>(),
+          child: const ForgotPasswordPopup(),
+        ),
       ),
     );
   }
 
   @override
-  Widget build(BuildContext context) {
-    // This can be an empty scaffold that auto-shows the popup
-    // Or you can just use the static show() method from other screens
-    return const SizedBox.shrink();
-  }
+  State<ForgotPasswordPopup> createState() => _ForgotPasswordPopupState();
 }
 
-class _ForgotPasswordPopup extends StatefulWidget {
-  const _ForgotPasswordPopup();
-
-  @override
-  State<_ForgotPasswordPopup> createState() => _ForgotPasswordPopupState();
-}
-
-class _ForgotPasswordPopupState extends State<_ForgotPasswordPopup> {
+class _ForgotPasswordPopupState extends State<ForgotPasswordPopup> {
   final _emailController = TextEditingController();
   String? _emailError;
 
@@ -51,7 +43,7 @@ class _ForgotPasswordPopupState extends State<_ForgotPasswordPopup> {
     super.dispose();
   }
 
-  bool _validateEmail() {
+  bool _validate() {
     final email = _emailController.text.trim();
 
     if (email.isEmpty) {
@@ -69,7 +61,7 @@ class _ForgotPasswordPopupState extends State<_ForgotPasswordPopup> {
   }
 
   void _onSendCode() {
-    if (_validateEmail()) {
+    if (_validate()) {
       context.read<ForgotPasswordCubit>().forgotPassword(
         identifier: _emailController.text.trim(),
         loginType: LoginType.email,
@@ -82,16 +74,12 @@ class _ForgotPasswordPopupState extends State<_ForgotPasswordPopup> {
     return BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
       listener: (context, state) {
         if (state is ForgotPasswordSuccess) {
-          // Close current popup
           Navigator.of(context).pop();
-
-          // Show OTP verification popup
-          VerifyOtpScreen.show(
+          VerifyOtpPopup.show(
             context,
             identifier: state.identifier,
             loginType: LoginType.email,
           );
-
         } else if (state is ForgotPasswordError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -105,15 +93,12 @@ class _ForgotPasswordPopupState extends State<_ForgotPasswordPopup> {
       builder: (context, state) {
         final isLoading = state is ForgotPasswordLoading;
 
-        return CustomPopup(
-          icon: Iconsax.shield_tick,
+        return CustomPopup.forgotPasswordPopup(
           title: 'forgot_password'.tr(),
           description: 'forgot_password_description'.tr(),
-          content: ForgotPasswordEmailContent(
-            controller: _emailController,
-            enabled: !isLoading,
-            errorText: _emailError,
-          ),
+          emailController: _emailController,
+          emailErrorText: _emailError,
+          enabled: !isLoading,
           primaryButtonText: 'send_verification_code'.tr(),
           isPrimaryButtonLoading: isLoading,
           isPrimaryButtonEnabled: !isLoading,

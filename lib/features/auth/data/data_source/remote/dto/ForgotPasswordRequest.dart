@@ -7,7 +7,7 @@ class ForgotPasswordRequest {
 
   const ForgotPasswordRequest({
     required this.identifier,
-    this.type = 'forget_password',
+    this.type = 'password_reset',
     required this.loginType,
   });
 

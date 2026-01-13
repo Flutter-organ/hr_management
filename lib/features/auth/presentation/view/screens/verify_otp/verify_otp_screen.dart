@@ -1,46 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconsax/iconsax.dart';
-
 import '../../../../../../core/design_system/components/popups/custom_popup.dart';
 import '../../../../../../core/design_system/theme/helper/theme_extention.dart';
 import '../../../../../../core/di/injection_container.dart';
 import '../../../../domain/enitites/login_type.dart';
 import '../../../logic/forget_password/forgot_password_cubit.dart';
 import '../../../logic/forget_password/forgot_password_state.dart';
-import '../../helpers/auth_popup_helper.dart';
 import '../reset_password/reset_password_screen.dart';
 
-class VerifyOtpScreen extends StatelessWidget {
-  const VerifyOtpScreen({super.key});
-
-  static Future<void> show(
-      BuildContext context, {
-        required String identifier,
-        required LoginType loginType,
-      }) async {
-    await AuthPopupHelper.showAuthPopup(
-      context: context,
-      popup: BlocProvider(
-        create: (_) => sl<ForgotPasswordCubit>(),
-        child: _VerifyOtpPopup(
-          identifier: identifier,
-          loginType: loginType,
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox.shrink();
-  }
-}
-
-class _VerifyOtpPopup extends StatefulWidget {
-  const _VerifyOtpPopup({
+class VerifyOtpPopup extends StatefulWidget {
+  const VerifyOtpPopup({
+    super.key,
     required this.identifier,
     required this.loginType,
   });
@@ -48,11 +19,35 @@ class _VerifyOtpPopup extends StatefulWidget {
   final String identifier;
   final LoginType loginType;
 
+  static Future<void> show(
+      BuildContext context, {
+        required String identifier,
+        required LoginType loginType,
+      }) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: BlocProvider(
+          create: (_) => sl<ForgotPasswordCubit>(),
+          child: VerifyOtpPopup(
+            identifier: identifier,
+            loginType: loginType,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
-  State<_VerifyOtpPopup> createState() => _VerifyOtpPopupState();
+  State<VerifyOtpPopup> createState() => _VerifyOtpPopupState();
 }
 
-class _VerifyOtpPopupState extends State<_VerifyOtpPopup> {
+class _VerifyOtpPopupState extends State<VerifyOtpPopup> {
   final _otpController = TextEditingController();
   bool _isOtpComplete = false;
 
@@ -65,8 +60,7 @@ class _VerifyOtpPopupState extends State<_VerifyOtpPopup> {
   void _onSubmit() {
     if (_isOtpComplete) {
       Navigator.of(context).pop();
-
-      ResetPasswordScreen.show(
+      ResetPasswordPopup.show(
         context,
         identifier: widget.identifier,
         otp: _otpController.text,
@@ -108,124 +102,25 @@ class _VerifyOtpPopupState extends State<_VerifyOtpPopup> {
       builder: (context, state) {
         final isLoading = state is ForgotPasswordLoading;
 
-        return CustomPopup.verificationPopup(
-          icon: Iconsax.shield_tick,
+        return CustomPopup.otpVerificationPopup(
           title: 'forgot_password'.tr(),
           description: 'otp_sent_description'.tr(args: [widget.identifier]),
-          // content: _OtpContent(
-          //   controller: _otpController,
-          //   enabled: !isLoading,
-          //   onChanged: (value) {
-          //     setState(() => _isOtpComplete = value.length == 6);
-          //   },
-          onCompleted: (value) {setState(() => _isOtpComplete = true);},
-          onTap: (){isLoading ? null : _onResendOtp;},
+          otpController: _otpController,
+          enabled: !isLoading,
+          onOtpChanged: (value) {
+            setState(() => _isOtpComplete = value.length == 6);
+          },
+          onOtpCompleted: (value) {
+            setState(() => _isOtpComplete = true);
+          },
+          onResendOtp: _onResendOtp,
+          isResendEnabled: !isLoading,
           primaryButtonText: 'submit'.tr(),
-          // isPrimaryButtonLoading: isLoading,
-          // isPrimaryButtonEnabled: _isOtpComplete && !isLoading,
+          isPrimaryButtonLoading: isLoading,
+          isPrimaryButtonEnabled: _isOtpComplete && !isLoading,
           primaryButtonOnPressed: _onSubmit,
         );
       },
     );
   }
 }
-
-// class _OtpContent extends StatelessWidget {
-//   const _OtpContent({
-//     required this.controller,
-//     required this.enabled,
-//     required this.onChanged,
-//     required this.onCompleted,
-//     required this.onResend,
-//   });
-//
-//   final TextEditingController controller;
-//   final bool enabled;
-//   final void Function(String) onChanged;
-//   final void Function(String) onCompleted;
-//   final VoidCallback? onResend;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         // OTP Pinput
-//         Center(
-//           child: Pinput(
-//             length: 6,
-//             controller: controller,
-//             enabled: enabled,
-//             onChanged: onChanged,
-//             onCompleted: onCompleted,
-//             defaultPinTheme: PinTheme(
-//               width: 45,
-//               height: 45,
-//               textStyle: context.textTheme.headLineMediumFont.copyWith(
-//                 color: context.colors.textPrimary,
-//               ),
-//               decoration: BoxDecoration(
-//                 border: Border.all(
-//                   color: context.colors.gray300,
-//                   width: 1,
-//                 ),
-//                 borderRadius: BorderRadius.circular(8),
-//               ),
-//             ),
-//             focusedPinTheme: PinTheme(
-//               width: 45,
-//               height: 45,
-//               textStyle: context.textTheme.headLineMediumFont.copyWith(
-//                 color: context.colors.textPrimary,
-//               ),
-//               decoration: BoxDecoration(
-//                 border: Border.all(
-//                   color: AppConstantColors.purple500,
-//                   width: 2,
-//                 ),
-//                 borderRadius: BorderRadius.circular(8),
-//               ),
-//             ),
-//             keyboardType: TextInputType.number,
-//             preFilledWidget: Text(
-//               '0',
-//               style: context.textTheme.headLineMediumFont.copyWith(
-//                 color: context.colors.gray200,
-//               ),
-//             ),
-//           ),
-//         ),
-//         const SizedBox(height: 16),
-//
-//         // Resend row
-//         Text.rich(
-//           TextSpan(
-//             children: [
-//               TextSpan(
-//                 text: "havent_received_code".tr(),
-//                 style: context.textTheme.bodySmallFont.copyWith(
-//                   color: context.colors.textPrimary,
-//                 ),
-//               ),
-//               const TextSpan(text: ' '),
-//               WidgetSpan(
-//                 alignment: PlaceholderAlignment.middle,
-//                 child: GestureDetector(
-//                   onTap: onResend,
-//                   child: Text(
-//                     'resend_it'.tr(),
-//                     style: context.textTheme.labelMediumFont.copyWith(
-//                       color: onResend != null
-//                           ? AppConstantColors.purple500
-//                           : context.colors.gray400,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }

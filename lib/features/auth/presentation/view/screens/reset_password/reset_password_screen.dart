@@ -1,45 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/features/auth/presentation/view/screens/reset_password/password_reset_success_screen.dart';
-import 'package:hr_management/features/auth/presentation/widgets/reset_password_content.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../../core/design_system/components/popups/custom_popup.dart';
 import '../../../../../../core/design_system/theme/helper/theme_extention.dart';
 import '../../../../../../core/di/injection_container.dart';
 import '../../../logic/reset_password/ResetPasswordCubit.dart';
 import '../../../logic/reset_password/reset_password_state.dart';
-import '../../helpers/auth_popup_helper.dart';
 
-class ResetPasswordScreen extends StatelessWidget {
-  const ResetPasswordScreen({super.key});
-
-  static Future<void> show(
-      BuildContext context, {
-        required String identifier,
-        required String otp,
-      }) async {
-    await AuthPopupHelper.showAuthPopup(
-      context: context,
-      popup: BlocProvider(
-        create: (_) => sl<ResetPasswordCubit>(),
-        child: _ResetPasswordPopup(
-          identifier: identifier,
-          otp: otp,
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox.shrink();
-  }
-}
-
-class _ResetPasswordPopup extends StatefulWidget {
-  const _ResetPasswordPopup({
+class ResetPasswordPopup extends StatefulWidget {
+  const ResetPasswordPopup({
+    super.key,
     required this.identifier,
     required this.otp,
   });
@@ -47,11 +19,35 @@ class _ResetPasswordPopup extends StatefulWidget {
   final String identifier;
   final String otp;
 
+  static Future<void> show(
+      BuildContext context, {
+        required String identifier,
+        required String otp,
+      }) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: BlocProvider(
+          create: (_) => sl<ResetPasswordCubit>(),
+          child: ResetPasswordPopup(
+            identifier: identifier,
+            otp: otp,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
-  State<_ResetPasswordPopup> createState() => _ResetPasswordPopupState();
+  State<ResetPasswordPopup> createState() => _ResetPasswordPopupState();
 }
 
-class _ResetPasswordPopupState extends State<_ResetPasswordPopup> {
+class _ResetPasswordPopupState extends State<ResetPasswordPopup> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
@@ -102,14 +98,32 @@ class _ResetPasswordPopupState extends State<_ResetPasswordPopup> {
     }
   }
 
+  void _showSuccessPopup() {
+    showModalBottomSheet(
+      context: context,
+      isDismissible: false,
+      enableDrag: false,
+      backgroundColor: Colors.transparent,
+      builder: (context) => CustomPopup.singleactionpopup(
+        icon: Iconsax.shield_tick,
+        title: 'password_created'.tr(),
+        description: 'password_created_description'.tr(),
+        primaryButtonText: 'sign_in'.tr(),
+        primaryButtonOnPressed: () {
+          Navigator.of(context).pop();
+          context.go('/auth/login');
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
       listener: (context, state) {
         if (state is ResetPasswordSuccess) {
           Navigator.of(context).pop();
-
-          PasswordResetSuccessScreen.show(context);
+          _showSuccessPopup();
         } else if (state is ResetPasswordError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -123,17 +137,14 @@ class _ResetPasswordPopupState extends State<_ResetPasswordPopup> {
       builder: (context, state) {
         final isLoading = state is ResetPasswordLoading;
 
-        return CustomPopup(
-          icon: Iconsax.shield_tick,
+        return CustomPopup.resetPasswordPopup(
           title: 'set_new_password'.tr(),
           description: 'set_new_password_description'.tr(),
-          content: ResetPasswordContent(
-            passwordController: _passwordController,
-            confirmPasswordController: _confirmPasswordController,
-            enabled: !isLoading,
-            passwordError: _passwordError,
-            confirmPasswordError: _confirmPasswordError,
-          ),
+          passwordController: _passwordController,
+          confirmPasswordController: _confirmPasswordController,
+          passwordErrorText: _passwordError,
+          confirmPasswordErrorText: _confirmPasswordError,
+          enabled: !isLoading,
           primaryButtonText: 'submit'.tr(),
           isPrimaryButtonLoading: isLoading,
           isPrimaryButtonEnabled: !isLoading,
