@@ -24,7 +24,7 @@ Widget buildSignUpButton(BuildContext context , onSignUpPressed) {
     ),
     buttonText: "sign_up".tr(),
     borderRadius: 100,
-    onPressed: cubit.isEnableSignUpButton ? onSignUpPressed : null,
-    isEnabled: cubit.isEnableSignUpButton,
+    onPressed:  cubit.state.isEnableSignUpButton ? onSignUpPressed : null,
+    isEnabled:  cubit.state.isEnableSignUpButton,
   );
 }

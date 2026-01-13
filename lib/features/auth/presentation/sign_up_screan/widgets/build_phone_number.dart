@@ -31,8 +31,8 @@ Widget buildPhoneNumber(BuildContext context, TextEditingController _phoneContro
     'SD',
     'YE',
   ];
-  return BlocBuilder<SignUpCubit, SignUpStates>(
-    buildWhen: (previous, current) => current is CountryCodeChangedState,
+  return BlocBuilder<SignUpCubit, SignUpUiState>(
+    buildWhen: (previous, current) => current.countryCode!=previous.countryCode,
     builder: (context, state) {
       return CustomInputField(
           label: "phone_number".tr(),
@@ -88,7 +88,7 @@ Widget buildPhoneNumber(BuildContext context, TextEditingController _phoneContro
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    cubit.countryCode,
+                    cubit.state.countryCode,
                     style: context.textTheme.titleSmallFont.copyWith(
                       color: context.colors.textPrimary,
                       fontWeight: FontWeight.w600,

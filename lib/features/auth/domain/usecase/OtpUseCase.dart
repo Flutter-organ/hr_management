@@ -4,6 +4,8 @@ import 'package:hr_management/features/auth/domain/enitites/User.dart';
 import 'package:hr_management/features/auth/domain/failures/failure.dart';
 import 'package:hr_management/features/auth/domain/repository/auth_repository.dart';
 
+import '../enitites/verify_otp.dart';
+
 class OtpUseCase {
   AuthRepository _authRepository;
 
@@ -12,10 +14,10 @@ class OtpUseCase {
   OtpUseCase(this._authRepository);
 
   Future<Either<Failure, User>> call({
-    required String email,
-    required String code,
-    required String type,
+    required VerifyOTP verifyOtp,
   }) async {
-    return await _authRepository.otp(email: email, code: code, type: type);
+    return await _authRepository.otp(
+      verifyOtp: verifyOtp
+    );
   }
 }

@@ -1,20 +1,40 @@
-part of 'verify_otp_cubit.dart';
+import 'package:equatable/equatable.dart';
 
-sealed class VerifyOtpState {}
-
-final class VerifyOtpInitial extends VerifyOtpState {}
-final class VerifyOtpCodeChanged extends VerifyOtpState {
+class VerifyOtpUiState extends Equatable {
+  final String identifier;
   final String code;
-  VerifyOtpCodeChanged(this.code);
+  final String type;
+  final bool isLoading;
+  final bool isVerified;
+  final String? errorMessage;
+
+  VerifyOtpUiState({
+    this.identifier = '',
+    this.code = '',
+    this.type = '',
+    this.isLoading = false,
+    this.isVerified = false,
+    this.errorMessage,
+  });
+
+  @override
+  List<Object?> get props => [identifier, code, type];
+
+  VerifyOtpUiState copyWith({
+    String? identifier,
+    String? code,
+    String? type,
+    bool? isLoading,
+    bool? isVerified,
+    String? errorMessage,
+  }) {
+    return VerifyOtpUiState(
+      identifier: identifier ?? this.identifier,
+      code: code ?? this.code,
+      type: type ?? this.type,
+      isVerified: isVerified ?? this.isVerified,
+      isLoading: isLoading ?? this.isLoading,
+      errorMessage: errorMessage ?? this.errorMessage,
+    );
+  }
 }
-
-final class VerifyOtpLoading extends VerifyOtpState {}
-
-final class VerifyOtpSuccess extends VerifyOtpState {}
-
-final class VerifyOtpFailure extends VerifyOtpState {
-  final String message;
-  VerifyOtpFailure({required this.message});
-}
-
-final class VerifyOtpResent extends VerifyOtpState {}

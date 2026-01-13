@@ -3,84 +3,101 @@ import 'package:flutter/cupertino.dart';
 import 'package:hr_management/features/auth/presentation/sign_up_screan/logic/sign_up_state.dart';
 
 import '../../../../../core/base_viewmodel/base_cubit.dart';
+import '../../../../../core/exceptions/ui_errors.dart';
+import '../../../domain/enitites/Register.dart';
 import '../../../domain/usecase/RegisterUseCase.dart';
 
-class SignUpCubit extends BaseCubit<SignUpStates> {
-  SignUpCubit(this._registerUseCase) : super(InitialState());
+class SignUpCubit extends BaseCubit<SignUpUiState> {
+  SignUpCubit(this._registerUseCase) : super(SignUpUiState());
   final formKey = GlobalKey<FormState>();
   final RegisterUseCase _registerUseCase;
-  late TextEditingController emailController;
+  late TextEditingController emailController = TextEditingController();
+  late TextEditingController phoneController = TextEditingController();
+  late TextEditingController passwordController = TextEditingController();
+  late TextEditingController confirmPasswordController = TextEditingController();
+  final String registerType = 'email';
 
-  late TextEditingController phoneController;
-
-  late TextEditingController passwordController;
-
-  late TextEditingController confirmPasswordController;
-
-  late bool isObscurePassWord = true;
-  late bool isCheckedTermAndConditions = false;
-  late bool isEnableSignUpButton = false;
-
-  late String countryCode = "+20";
 
   void setupTextFieldController() {
-    emailController = TextEditingController();
-    phoneController = TextEditingController();
-    passwordController = TextEditingController();
-    confirmPasswordController = TextEditingController();
+    emailController.addListener(_onTextChanged);
+    phoneController.addListener(_onTextChanged);
+    passwordController.addListener(_onTextChanged);
+    confirmPasswordController.addListener(_onTextChanged);
   }
 
-
-  void onToggleButtonState() {
-    final isFormValid = formKey.currentState?.validate() ?? false;
-    final shouldEnable = isFormValid && isCheckedTermAndConditions;
-
-    if (shouldEnable != isEnableSignUpButton) {
-      isEnableSignUpButton = shouldEnable;
-      emit(CheckInputValidationState());
-    }
+  void _onTextChanged() {
+    updateState(
+          (state) => state.copyWith(
+        email: emailController.text,
+        phone: phoneController.text,
+        password: passwordController.text,
+        confirmPassword: confirmPasswordController.text,
+      ),
+    );
+    _updateButtonState();
   }
   void onToggleTerms(bool value) {
-    isCheckedTermAndConditions = value;
-    onToggleButtonState();
-    emit(ToggleCheckedTermAndConditionsState());
+    updateState(
+          (state) => state.copyWith(isCheckedTermAndConditions: value),
+    );
+    _updateButtonState();
+  }
+  void _updateButtonState() {
+    final enable = state.isCheckedTermAndConditions &&
+        state.email.isNotEmpty &&
+        state.phone.isNotEmpty &&
+        state.password.isNotEmpty &&
+        state.confirmPassword.isNotEmpty &&
+        state.countryCode.isNotEmpty;
+
+    updateState((state) => state.copyWith(isEnableSignUpButton: enable));
   }
 
-  Future<void> signUp() async {
-    final fullPhoneNumber = '$countryCode${phoneController.text.trim()}';
 
+  Future<void> signUp() async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
+    final fullPhoneNumber =
+        '${state.countryCode}${phoneController.text.trim()}';
     execute(
       call: () {
         final isRegistered = _registerUseCase.call(
-          registerParams: RegisterParams(
-            email: emailController.text,
-            PhoneNumber: fullPhoneNumber,
-            password: passwordController.text,
-            confirmPassword: confirmPasswordController.text,
+          register: Register(
+            email: emailController.text.trim(),
+            phone: fullPhoneNumber,
+            password: passwordController.text.trim(),
+            passwordConfirmation: confirmPasswordController.text.trim(),
+            registerType: registerType,
           ),
         );
         return isRegistered;
       },
       onSuccess: (_) {
-        emit(SuccessState(
-          email: emailController.text,
-        ));
+        updateState(
+          (currentState) => currentState.copyWith(
+            email: emailController.text,
+            isRegistered: true,
+          ),
+        );
       },
       onError: (error) {
-        emit(FailureState(message: error.message));
+        emit(SignUpUiState(errorMessage: error.message));
       },
     );
   }
+
   void toggleObscurePassword() {
-    isObscurePassWord = !isObscurePassWord;
-    emit(ShowOrHidePasswordState());
+    updateState(
+      (currentState) =>
+          currentState.copyWith(isObscurePassWord: !state.isObscurePassWord),
+    );
   }
 
   void setCountryCode(String code) {
-    countryCode = "+$code";
-    emit(CountryCodeChangedState(countryCode));
+    SignUpUiState(countryCode: code);
   }
-
 
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {

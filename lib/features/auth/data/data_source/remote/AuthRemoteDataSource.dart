@@ -1,14 +1,14 @@
 import 'package:hr_management/features/auth/data/data_source/remote/dto/ApiResponse.dart';
+import 'package:hr_management/features/auth/data/data_source/remote/dto/register_dto_request.dart';
+import 'package:hr_management/features/auth/data/data_source/remote/dto/verify_otp_dto.dart';
 
 import '../../../domain/usecase/RegisterUseCase.dart';
 import 'dto/CurrentUser.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<bool> register({required RegisterParams registerParams});
+  Future<bool> register({required RegisterDtoRequest registerDtoRequest});
 
-  Future<ApiResponse> otp({
-    required String email,
-    required String code,
-    required String type,
+  Future<CurrentUser> otp({
+    required VerifyOtpDto verifyOtpDto,
   });
 }

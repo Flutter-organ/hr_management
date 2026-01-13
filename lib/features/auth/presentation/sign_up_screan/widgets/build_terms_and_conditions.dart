@@ -26,15 +26,15 @@ Widget buildTermsAndConditions(
     color: AppConstantColors.purple500,
   );
   final cubit = context.read<SignUpCubit>();
-  return BlocBuilder<SignUpCubit, SignUpStates>(
-    buildWhen: (previous, current) => current is ToggleCheckedTermAndConditionsState,
+  return BlocBuilder<SignUpCubit, SignUpUiState>(
+    buildWhen: (previous, current) => current.isCheckedTermAndConditions!=previous.isCheckedTermAndConditions,
     builder: (context, state) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CustomCheckbox(
             size: 16,
-            isChecked: cubit.isCheckedTermAndConditions,
+            isChecked:  cubit.state.isCheckedTermAndConditions,
             onChanged: (value) {
               cubit.onToggleTerms(value);
             },

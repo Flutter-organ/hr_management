@@ -1,10 +1,11 @@
+import 'package:hr_management/features/auth/presentation/verify_otp/logic/verify_otp_state.dart';
+
 import '../../../../../core/base_viewmodel/base_cubit.dart';
+import '../../../domain/enitites/verify_otp.dart';
 import '../../../domain/usecase/OtpUseCase.dart';
 
-part 'verify_otp_state.dart';
-
-class VerifyOtpCubit extends BaseCubit<VerifyOtpState> {
-  VerifyOtpCubit(this._OTPUseCase) : super(VerifyOtpInitial());
+class VerifyOtpCubit extends BaseCubit<VerifyOtpUiState> {
+  VerifyOtpCubit(this._OTPUseCase) : super(VerifyOtpUiState());
   final OtpUseCase _OTPUseCase;
 
   String otpCode = '';
@@ -12,8 +13,7 @@ class VerifyOtpCubit extends BaseCubit<VerifyOtpState> {
   bool get isOtpComplete => otpCode.length == 6;
 
   void setOtp(String code) {
-    otpCode = code;
-    emit(VerifyOtpCodeChanged(code));
+    updateState((currentState) => currentState.copyWith(code: code));
   }
 
   Future<void> verifyOtp({
@@ -23,19 +23,24 @@ class VerifyOtpCubit extends BaseCubit<VerifyOtpState> {
     execute(
       call: () async {
         final user =  _OTPUseCase.call(
-          email: email,
-          code: otpCode,
-          type: type,
+          verifyOtp: VerifyOTP(
+            identifier: email,
+            code: state.code,
+            type: type,
+          )
         );
         return user;
       },
-      onSuccess: (_) => emit(VerifyOtpSuccess()),
-      onError: (error) => emit(VerifyOtpFailure(message: error.message))
+      onSuccess: (_) =>{
+        updateState((currentState) => currentState.copyWith(isVerified: true))
+      }
+        ,
+      onError: (error) => {
+        updateState((currentState) => currentState.copyWith(errorMessage: error.message))
+      }
     );
 
   }
 
-  void resendOtp() {
-    emit(VerifyOtpResent());
-  }
+  void resendOtp() {}
 }

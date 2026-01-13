@@ -1,6 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 
 import '../../data/data_source/remote/dto/AuthDto.dart';
+import '../enitites/Register.dart';
 import '../failures/failure.dart';
 import '../repository/auth_repository.dart';
 
@@ -10,25 +11,11 @@ class RegisterUseCase {
   RegisterUseCase(this.repository);
 
   Future<Either<Failure, bool>> call({
-   required RegisterParams registerParams,
+   required Register register,
   }) async {
 
   return await repository.register(
-    registerParams: registerParams,
+    register: register,
     );
   }
-}
-class RegisterParams{
-  final String email;
-  final String password;
-  final String PhoneNumber;
-  final String confirmPassword;
-
-
-  RegisterParams({
-    required this.email,
-    required this.PhoneNumber,
-    required this.password,
-    required this.confirmPassword,
-  });
 }

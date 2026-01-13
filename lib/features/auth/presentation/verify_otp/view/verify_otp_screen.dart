@@ -1,37 +1,45 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../../core/design_system/components/popups/custom_popup.dart';
 import '../logic/verify_otp_cubit.dart';
 
-class VerifyOTPScreen extends StatelessWidget {
+class VerifyOtpBottomSheet extends StatelessWidget {
   final String email;
+  final String type;
 
-  const VerifyOTPScreen({required this.email});
+  const VerifyOtpBottomSheet({
+    super.key,
+    required this.email,
+    required this.type,
+  });
 
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<VerifyOtpCubit>();
-    return Material(
-      child: CustomPopup.phoneAuthPopup(
-        icon: Iconsax.sms_notification,
-        title: 'verification_code_title'.tr(),
-        description: 'verification_code_desc'.tr(
-          args: ["type_verification".tr(), email],
-        ),        primaryButtonText: 'submit'.tr(),
-        primaryButtonOnPressed: () {
-          cubit.verifyOtp(
-              email: email,
-              type:"type_verification".tr()
-          );
-        },
-        onCompleted: (String p1) {
-          cubit.setOtp(p1);
-        },
-        onTapResend: () {},
+
+    return CustomPopup.phoneAuthPopup(
+      icon: Iconsax.sms_notification,
+      title: 'verification_code_title'.tr(),
+      description: 'verification_code_desc'.tr(
+        args: [
+          type.tr(),
+          email,
+        ],
       ),
+      primaryButtonText: 'submit'.tr(),
+      primaryButtonOnPressed: () {
+        cubit.verifyOtp(email: email, type: 'registration');
+      },
+      onCompleted: (code) {
+        cubit.setOtp(code);
+      },
+      onTapResend: () {
+        cubit.resendOtp();
+      },
+      onTapHere: () {},
     );
   }
 }

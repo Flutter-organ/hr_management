@@ -39,17 +39,6 @@ class CustomPopup extends StatelessWidget {
     this.isPrimaryButtonEnabled = true,
   });
 
-  final IconData icon;
-  final String title;
-  final String description;
-  final Widget? content;
-  final String primaryButtonText;
-  final VoidCallback primaryButtonOnPressed;
-  final String? secondaryButtonText;
-  final VoidCallback? secondaryButtonOnPressed;
-  final VoidCallback? onTapHere;
-  final bool showFooter;
-
   factory CustomPopup.primary({
     required IconData icon,
     required String title,
@@ -295,12 +284,24 @@ class CustomPopup extends StatelessWidget {
       icon: icon,
       title: title,
       description: description,
-      content: _VerificationContent(onCompleted: onCompleted, onResend: onTap),
-      showFooter: false,
+      content: _ResetPasswordContent(
+        passwordController: passwordController,
+        confirmPasswordController: confirmPasswordController,
+        passwordLabel: passwordLabel ?? 'password'.tr(),
+        passwordHint: passwordHint ?? 'input_password'.tr(),
+        confirmPasswordLabel: confirmPasswordLabel ?? 'confirm_password'.tr(),
+        confirmPasswordHint: confirmPasswordHint ?? 're_enter_password'.tr(),
+        passwordErrorText: passwordErrorText,
+        confirmPasswordErrorText: confirmPasswordErrorText,
+        enabled: enabled,
+      ),
       primaryButtonText: primaryButtonText,
       primaryButtonOnPressed: primaryButtonOnPressed,
+      isPrimaryButtonLoading: isPrimaryButtonLoading,
+      isPrimaryButtonEnabled: isPrimaryButtonEnabled,
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -420,6 +421,8 @@ Widget _buildPrimaryButton(
     ),
     buttonText: primaryButtonText,
     borderRadius: 100,
+    isLoading: isLoading,
+    isEnabled: isEnabled,
     onPressed: primaryButtonOnPressed,
   );
 }

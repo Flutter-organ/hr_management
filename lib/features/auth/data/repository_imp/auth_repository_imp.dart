@@ -1,12 +1,16 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:hr_management/features/auth/data/data_source/remote/dto/CurrentUser.dart';
-import 'package:hr_management/features/auth/data/mappers/AuthMapper.dart';
 import 'package:hr_management/features/auth/domain/enitites/User.dart';
+import '../../domain/enitites/Register.dart';
+import '../../domain/enitites/User.dart';
+import '../../domain/enitites/verify_otp.dart';
 import '../../domain/failures/failure.dart';
 import '../../domain/repository/auth_repository.dart';
 import '../../domain/usecase/RegisterUseCase.dart';
 import '../data_source/local/auth_local_data_source.dart';
 import '../data_source/remote/AuthRemoteDataSource.dart';
+import '../data_source/remote/dto/UserDto.dart';
+import '../mappers/AuthMapper.dart';
 import '../mappers/auth_failure_mapper.dart';
 
 class AuthRepositoryImp implements AuthRepository {
@@ -61,38 +65,33 @@ class AuthRepositoryImp implements AuthRepository {
 
   @override
   Future<Either<Failure, bool>> register({
-    required RegisterParams registerParams,
+    required Register register,
   }) async {
     try {
-      final isRegistered = await _remoteDataSource.register(
-        registerParams: registerParams,
+      final registerDtoRequest = AuthMapper.toRegisterDtoRequest(register);
+      final res = await _remoteDataSource.register(
+        registerDtoRequest: registerDtoRequest,
       );
-      return Right(isRegistered);
-    } catch (e) {
+      return Right(res);
+
+    }catch(e){
       return Left(AuthFailureMapper.mapException(e));
     }
   }
 
   @override
   Future<Either<Failure, User>> otp({
-    required String email,
-    required String code,
-    required String type,
+    required VerifyOTP verifyOtp,
   }) async {
     try {
-      final res = await _remoteDataSource.otp(
-        email: email,
-        code: code,
-        type: type,
+      final verifyOtpDto = AuthMapper.toVerifyOtpDto(verifyOtp);
+      final CurrentUser = await _remoteDataSource.otp(
+        verifyOtpDto: verifyOtpDto,
       );
-      final currentuser = CurrentUser.fromJson(res);
-      if (res.success && res.data != null) {
-        final user = AuthMapper.toDomain(currentuser.user!);
-        return Right(user);
-      } else {
-        return Left(AuthFailureMapper.mapException(res.message));
-      }
-    } catch (e) {
+      final userDto = UserDto.fromJson(CurrentUser.toJson());
+      final user = AuthMapper.toUser(userDto);
+      return Right(user);
+    }catch(e){
       return Left(AuthFailureMapper.mapException(e));
     }
   }

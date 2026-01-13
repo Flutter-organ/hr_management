@@ -16,18 +16,15 @@ Widget buildSignUpForm(BuildContext context, SignUpCubit cubit) {
           context,
           cubit.emailController,
         ),
-        const SizedBox(height: 16),
         buildPhoneNumber(
           context,
           cubit.phoneController,
         ),
-        const SizedBox(height: 16),
         buildPassword(
           context,
           cubit.passwordController,
           "password".tr(),
         ),
-        const SizedBox(height: 16),
         buildPassword(
           context,
           cubit.confirmPasswordController,

@@ -13,9 +13,8 @@ Widget buildPassword(
     TextEditingController _passwordController,
     String label) {
   final cubit = context.read<SignUpCubit>();
-  return BlocBuilder<SignUpCubit, SignUpStates>(
-    buildWhen: (previous, current) => current is ShowOrHidePasswordState,
-
+  return BlocBuilder<SignUpCubit, SignUpUiState>(
+    buildWhen: (previous, current) => current.isObscurePassWord!=previous.isObscurePassWord,
     builder: (context, state) {
       return CustomInputField(
           label: label,
@@ -25,7 +24,7 @@ Widget buildPassword(
           filledColor: context.colors.white,
           keyboardType: TextInputType.visiblePassword,
           hintKey: "password_hint".tr(),
-          isObscureText: cubit.isObscurePassWord,
+          isObscureText: cubit.state.isObscurePassWord,
           labelHintStyle: context.colors.gray400,
           hintFontSize: 4,
           enabledColor: context.colors.gray400,
@@ -35,14 +34,12 @@ Widget buildPassword(
              cubit.toggleObscurePassword();
             },
             icon: Icon(
-              cubit.isObscurePassWord ? Iconsax.eye_slash : Iconsax.eye,
+              cubit.state.isObscurePassWord ? Iconsax.eye_slash : Iconsax.eye,
             ),
             color: context.colors.purple500,
           ),
           prefixIcon: Icon(Iconsax.scan, color: context.colors.purple500),
-          validator: context
-              .read<SignUpCubit>()
-              .validatePassword
+          validator: cubit.validatePassword
       );
     },
   );
