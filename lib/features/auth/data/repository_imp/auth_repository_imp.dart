@@ -69,10 +69,10 @@ class AuthRepositoryImp implements AuthRepository {
   }) async {
     try {
       final registerDtoRequest = AuthMapper.toRegisterDtoRequest(register);
-      final res = await _remoteDataSource.register(
+      final response = await _remoteDataSource.register(
         registerDtoRequest: registerDtoRequest,
       );
-      return Right(res);
+      return Right(response);
 
     }catch(e){
       return Left(AuthFailureMapper.mapException(e));
@@ -88,6 +88,9 @@ class AuthRepositoryImp implements AuthRepository {
       final CurrentUser = await _remoteDataSource.otp(
         verifyOtpDto: verifyOtpDto,
       );
+      if (CurrentUser.accessToken != null) {
+        await _localDataSource.saveToken(CurrentUser.accessToken!);
+      }
       final userDto = UserDto.fromJson(CurrentUser.toJson());
       final user = AuthMapper.toUser(userDto);
       return Right(user);
