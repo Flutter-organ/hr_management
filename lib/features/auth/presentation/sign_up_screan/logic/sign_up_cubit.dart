@@ -99,48 +99,34 @@ class SignUpCubit extends BaseCubit<SignUpUiState> {
   }
 
   String? validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'invalid_email(name@gmail.com)'.tr();
-    }
-
-    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-
-    if (!emailRegex.hasMatch(value)) {
-      return 'invalid_email'.tr();
-    }
-
-    return null;
-  }
-
-  String? validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'password_required'.tr();
-    }
-
-    if (value.length < 6) {
-      return 'password_short'.tr();
-    }
-
-    return null;
-  }
-
-  String? validateConfirmPassword(String? value) {
-    if (value != passwordController.text) {
-      return 'password_not_match'.tr();
-    }
+    (value == null || value.isEmpty) ? 'email_required'.tr() :
+    !RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)
+        ? 'invalid_email'.tr()
+        : null;
     return null;
   }
 
   String? validatePhone(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'phone_required'.tr();
-    }
+    if (value == null || value.isEmpty) return 'phone_required'.tr();
+    final regex = RegExp(r'^[0-9]{10,15}$');
+    if (!regex.hasMatch(value)) return 'invalid_phone'.tr();
+    return null;
+  }
 
-    final phoneRegex = RegExp(r'^[0-9]{10,15}$');
-    if (!phoneRegex.hasMatch(value)) {
-      return 'invalid_phone'.tr();
+  String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) return 'password_required'.tr();
+    if (value.length < 8) return 'password_too_short'.tr();
+    if (!RegExp(r'[A-Z]').hasMatch(value) ||
+        !RegExp(r'[a-z]').hasMatch(value) ||
+        !RegExp(r'[0-9]').hasMatch(value) ||
+        !RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
+      return 'password_complexity'.tr();
     }
+    return null;
+  }
 
+  String? validateConfirmPassword(String? value) {
+    if (value != passwordController.text) return 'passwords_not_match'.tr();
     return null;
   }
 }

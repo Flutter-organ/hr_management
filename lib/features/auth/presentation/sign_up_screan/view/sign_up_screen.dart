@@ -7,7 +7,7 @@ import '../../../../../core/design_system/theme/helper/theme_extention.dart';
 import '../../../../../core/di/injection_container.dart';
 import '../../../domain/usecase/OtpUseCase.dart';
 import '../../verify_otp/logic/verify_otp_cubit.dart';
-import '../../verify_otp/view/verify_otp_screen.dart';
+import '../../verify_otp/view/verify_otp_popup.dart';
 import '../logic/sign_up_cubit.dart';
 import '../logic/sign_up_state.dart';
 import '../widgets/build_already_have_account.dart';
@@ -35,7 +35,7 @@ class SignUpScreen extends StatelessWidget {
                 print(state.email);
                 return BlocProvider(
                   create: (_) => VerifyOtpCubit(sl<OtpUseCase>()),
-                  child: VerifyOtpBottomSheet(
+                  child: VerifyOtpPopUp(
                     email: state.email,
                     type: 'registration'.tr(),
                   ),
@@ -46,7 +46,6 @@ class SignUpScreen extends StatelessWidget {
         },
         builder: (context, state) {
           return Scaffold(
-            appBar: AppBar(title: Text("title")),
             body: Center(
               child: Column(
                 children: [

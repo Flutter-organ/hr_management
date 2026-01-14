@@ -114,5 +114,12 @@
   "agree_with": "I agree with ",
   "terms_conditions": "terms & conditions",
   "and": " and ",
-  "privacy_policy": "privacy policy"
+  "privacy_policy": "privacy policy",
+  "welcome_to_workmate": "Welcome to WorkMate",
+  "welcome_popup_description": "To enhance your user experience, please set up your profile first. This will help us tailor the app to your needs and ensure you get the most out of our features!",
+  "setup_my_profile": "Set Up My Profile",
+  "explore_app_first": "Explore the App First",
+  "password_too_short": "Password too short (min 8 chars)",
+  "password_complexity": "Password must contain uppercase, lowercase, number and special character",
+  "passwords_not_match": "Passwords do not match"
 }
