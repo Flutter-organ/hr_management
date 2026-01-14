@@ -89,7 +89,7 @@ class AuthRepositoryImp implements AuthRepository {
         verifyOtpDto: verifyOtpDto,
       );
       if (CurrentUser.accessToken != null) {
-        await _localDataSource.saveToken(CurrentUser.accessToken!);
+        await saveToken(CurrentUser.accessToken!);
       }
       final userDto = UserDto.fromJson(CurrentUser.toJson());
       final user = AuthMapper.toUser(userDto);
