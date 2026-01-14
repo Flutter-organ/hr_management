@@ -23,6 +23,3 @@ class ResetPasswordArgument extends RouteArgument {
     required this.otp,
   });
 }
-
-
-

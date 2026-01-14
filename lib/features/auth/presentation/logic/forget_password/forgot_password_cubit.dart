@@ -7,45 +7,74 @@ class ForgotPasswordCubit extends BaseCubit<ForgotPasswordState> {
   final ForgotPasswordUseCase _forgotPasswordUseCase;
 
   ForgotPasswordCubit(this._forgotPasswordUseCase)
-      : super(const ForgotPasswordInitial());
+      : super(const ForgotPasswordState());
 
-  String? _identifier;
-  LoginType? _loginType;
+  Future<void> submit() async {
+    if (!_validateEmail()) return;
 
-  String? get identifier => _identifier;
-  LoginType? get loginType => _loginType;
-
-  Future<void> forgotPassword({
-    required String identifier,
-    required LoginType loginType,
-  }) async {
     await execute(
-      onLoading: () => emit(const ForgotPasswordLoading()),
+      onLoading: () => updateState((s) => s.copyWith(isLoading: true, clearApiError: true)),
       call: () => _forgotPasswordUseCase(
-        identifier: identifier,
-        loginType: loginType,
+        identifier: state.email.trim(),
+        loginType: LoginType.email,
       ),
       onSuccess: (identifier) {
-        _identifier = identifier;
-        _loginType = loginType;
-        emit(ForgotPasswordSuccess(identifier));
+        updateState((s) => s.copyWith(isLoading: false, isSuccess: true, successIdentifier: identifier));
       },
-      onError: (error) => emit(ForgotPasswordError(error)),
+      onError: (failure) {
+        updateState((s) => s.copyWith(
+          isLoading: false,
+          apiError: failure.message,
+          isSuccess: false,
+        ));
+      },
     );
   }
 
   Future<void> resendOtp() async {
-    if (_identifier == null || _loginType == null) return;
+    if (!_validateEmail()) return;
 
-    await forgotPassword(
-      identifier: _identifier!,
-      loginType: _loginType!,
-    );
+    await submit();
   }
 
   void reset() {
-    _identifier = null;
-    _loginType = null;
-    emit(const ForgotPasswordInitial());
+    updateState((s) => s == const ForgotPasswordState() ? s : const ForgotPasswordState());
+  }
+
+  void clearState() {
+    emit(const ForgotPasswordState());
+  }
+
+  void onEmailChanged(String value) {
+    updateState((state) => state.copyWith(
+      email: value,
+      clearEmailError: true,
+      clearApiError: true,
+    ));
+  }
+
+  void clearError() {
+    updateState((s) => s.copyWith(clearApiError: true, clearEmailError: true));
+  }
+
+
+  bool _validateEmail() {
+    final email = state.email.trim();
+
+    if (email.isEmpty) {
+      updateState((currentState) => currentState.copyWith(emailError: 'Email is required'));
+      return false;
+    }
+
+    if (!_isValidEmail(email)) {
+      updateState((s) => s.copyWith(emailError: 'Please enter a valid email'));
+      return false;
+    }
+
+    return true;
+  }
+
+  bool _isValidEmail(String email) {
+    return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
   }
 }

@@ -4,23 +4,23 @@ class UserDto {
   final int id;
   final String? email;
   final String? phone;
-  final int isActive;
+  final bool isActive;
   final String? role;
 
   const UserDto({
     required this.id,
     this.email,
     this.phone,
-    this.isActive = 0,
+    this.isActive = false,
     this.role,
   });
 
   factory UserDto.fromJson(Map<String, dynamic> json) {
     return UserDto(
-      id: json['id'] as int,
+      id: json['id'] as int? ?? 0,
       email: json['email'] as String?,
       phone: json['phone'] as String?,
-      isActive: json['is_active'] as int? ?? 0,
+      isActive: json['is_active'] as bool? ?? false,
       role: json['role'] as String?,
     );
   }

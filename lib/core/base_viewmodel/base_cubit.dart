@@ -3,7 +3,7 @@ import 'package:fpdart/fpdart.dart';
 import '../../features/auth/domain/failures/failure.dart';
 import '../exceptions/ui_errors.dart';
 
-abstract class BaseCubit<State> extends Cubit<State> {
+abstract class BaseCubit<STATE> extends Cubit<STATE> {
   BaseCubit(super.initialState);
 
 
@@ -30,6 +30,10 @@ abstract class BaseCubit<State> extends Cubit<State> {
       },
           (data) => onSuccess(data),
     );
+  }
+
+  void updateState(STATE Function(STATE currentState) updater) {
+    emit(updater(state));
   }
 
   UiError _mapFailureToUiError(Failure failure) {

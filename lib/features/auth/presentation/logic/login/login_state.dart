@@ -1,38 +1,43 @@
 import 'package:equatable/equatable.dart';
 
-class ForgotPasswordState extends Equatable {
+class LoginState extends Equatable {
   final String email;
+  final String password;
   final String? emailError;
+  final String? passwordError;
   final bool isLoading;
   final bool isSuccess;
-  final String? successIdentifier;
   final String? apiError;
 
-  const ForgotPasswordState({
+  const LoginState({
     this.email = '',
+    this.password = '',
     this.emailError,
+    this.passwordError,
     this.isLoading = false,
     this.isSuccess = false,
-    this.successIdentifier,
     this.apiError,
   });
 
-  ForgotPasswordState copyWith({
+  LoginState copyWith({
     String? email,
+    String? password,
     String? emailError,
+    String? passwordError,
     bool? isLoading,
     bool? isSuccess,
-    String? successIdentifier,
     String? apiError,
     bool clearEmailError = false,
+    bool clearPasswordError = false,
     bool clearApiError = false,
   }) {
-    return ForgotPasswordState(
+    return LoginState(
       email: email ?? this.email,
+      password: password ?? this.password,
       emailError: clearEmailError ? null : (emailError ?? this.emailError),
+      passwordError: clearPasswordError ? null : (passwordError ?? this.passwordError),
       isLoading: isLoading ?? this.isLoading,
       isSuccess: isSuccess ?? this.isSuccess,
-      successIdentifier: successIdentifier ?? this.successIdentifier,
       apiError: clearApiError ? null : (apiError ?? this.apiError),
     );
   }
@@ -40,10 +45,11 @@ class ForgotPasswordState extends Equatable {
   @override
   List<Object?> get props => [
     email,
+    password,
     emailError,
+    passwordError,
     isLoading,
     isSuccess,
-    successIdentifier,
     apiError,
   ];
 }
