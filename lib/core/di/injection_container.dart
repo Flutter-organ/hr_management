@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:hr_management/features/auth/data/repository_imp/auth_repository_imp.dart';
+import 'package:hr_management/features/auth/domain/repository/auth_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hr_management/features/auth/data/data_source/remote/auth_remote_data_source/auth_remote_data_source.dart';
 import 'package:hr_management/features/auth/data/data_source/remote/auth_remote_data_source/auth_remote_data_source_imp.dart';
@@ -31,7 +33,9 @@ Future<void> _initCore() async {
   sl.registerSingleton<SharedPreferences>(sharedPreferences);
 
   sl.registerLazySingleton<PreferencesService>(
-        () => SharedPreferencesServiceImpl(sl<SharedPreferences>()),
+    () => SharedPreferencesServiceImpl(sl<SharedPreferences>()),
+  );
+
   sl.registerLazySingleton<DioClient>(
     () => DioClient(sl<AuthLocalDataSource>()),
   );
@@ -42,14 +46,6 @@ Future<void> _initCore() async {
 }
 
 Future<void> _initAuth() async {
-  sl.registerLazySingleton<AuthLocalDataSource>(
-        () => AuthLocalDataSourceImp(
-      secureStorageService: sl<SecureStorageService>(),
-    ),
-  );
-  sl.registerLazySingleton<DioClient>(
-        () => DioClient(sl<AuthLocalDataSource>()),
-  );
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImp(
       localDataSource: sl<AuthLocalDataSource>(),
@@ -60,4 +56,5 @@ Future<void> _initAuth() async {
   sl.registerLazySingleton(() => LoginUseCase(sl<AuthRepository>()));
 
   sl.registerFactory(() => LoginCubit(sl<LoginUseCase>()));
+
 }

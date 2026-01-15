@@ -1,8 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:hr_management/features/auth/data/data_source/remote/auth_remote_data_source/auth_remote_data_source.dart';
 import 'package:hr_management/features/auth/data/data_source/remote/dto/CurrentUser.dart';
-import 'package:hr_management/features/auth/data/mappers/AuthMapper.dart';
-import '../../domain/enitites/User.dart';
+import 'package:hr_management/features/auth/domain/enitites/User.dart';
 import '../../domain/failures/failure.dart';
 import '../../domain/repository/auth_repository.dart';
 import '../data_source/local/auth_local_data_source.dart';
@@ -32,8 +31,7 @@ class AuthRepositoryImp implements AuthRepository {
       if (response.success && response.data != null) {
         final currentUser = CurrentUser.fromJson(response.data);
         await _localDataSource.saveToken(currentUser.accessToken!);
-
-        final user = AuthMapper.toDomain(currentUser.user!);
+        final user = currentUser.user!.toDomain();
         return Right(user);
       } else {
         return Left(AuthFailureMapper.mapException(response.message));

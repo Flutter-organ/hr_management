@@ -1,4 +1,5 @@
 import 'package:hr_management/core/design_system/components/popups/sign_in_popup.dart';
+import 'package:hr_management/features/auth/data/data_source/remote/dto/CurrentUser.dart';
 import 'package:hr_management/features/auth/domain/enitites/User.dart';
 
 class LoginStates {

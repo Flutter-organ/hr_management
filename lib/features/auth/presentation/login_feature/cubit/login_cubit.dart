@@ -1,7 +1,6 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:hr_management/core/base_viewmodel/base_cubit.dart';
 import 'package:hr_management/core/design_system/components/popups/sign_in_popup.dart';
-import 'package:hr_management/features/auth/domain/enitites/User.dart';
 import 'package:hr_management/features/auth/domain/use_cases/login_use_case.dart';
 import 'package:hr_management/features/auth/presentation/login_feature/cubit/login_states.dart';
 
@@ -15,7 +14,7 @@ class LoginCubit extends BaseCubit<LoginStates> {
     required String password,
     required String loginType,
   }) async {
-    await execute<User>(
+    await execute(
       call: () => _loginUseCase.call(
         identifier: identifier,
         password: password,
