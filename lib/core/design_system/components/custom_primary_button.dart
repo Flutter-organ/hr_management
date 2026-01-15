@@ -325,12 +325,14 @@ class CustomPrimaryButton extends StatelessWidget {
     final effectiveForegroundColor = foregroundColor ?? context.colors.white;
 
     final defaultGradient = LinearGradient(
-      colors: [
-        context.colors.purple500, 
-        context.colors.primary,
-        ],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
+      stops: [0.0, 0.29, 1.0],
+      colors: [
+        context.colors.purple500,
+        context.colors.purple600,
+        context.colors.purple700,
+      ],
     );
     final effectiveDisabledGradient = disabledGradient ??
         LinearGradient(colors: [context.colors.gray300, context.colors.gray400]);
