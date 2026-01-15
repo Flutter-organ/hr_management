@@ -6,17 +6,17 @@ import 'package:hr_management/features/auth/domain/repository/auth_repository.da
 
 import '../enitites/verify_otp.dart';
 
-class OtpUseCase {
+class verifyOTPUseCase {
   AuthRepository _authRepository;
 
 
 
-  OtpUseCase(this._authRepository);
+  verifyOTPUseCase(this._authRepository);
 
   Future<Either<Failure, User>> call({
     required VerifyOTP verifyOtp,
   }) async {
-    return await _authRepository.otp(
+    return await _authRepository.verifyOTP(
       verifyOtp: verifyOtp
     );
   }

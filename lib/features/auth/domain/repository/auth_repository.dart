@@ -15,7 +15,7 @@ abstract class AuthRepository {
   Future<Either<Failure, bool>> register({
    required Register register ,
   });
-  Future<Either<Failure, User>> otp({
+  Future<Either<Failure, User>> verifyOTP({
    required VerifyOTP verifyOtp
   });
 }

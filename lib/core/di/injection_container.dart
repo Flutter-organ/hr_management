@@ -60,8 +60,8 @@ Future<void> _initAuth() async {
       sl<AuthRepository>(),
     ),
   );
-  sl.registerLazySingleton<OtpUseCase>(
-        () => OtpUseCase(
+  sl.registerLazySingleton<verifyOTPUseCase>(
+        () => verifyOTPUseCase(
       sl<AuthRepository>(),
     ),
   );
@@ -72,7 +72,7 @@ Future<void> _initAuth() async {
   );
   sl.registerFactory<VerifyOtpCubit>(
           () => VerifyOtpCubit(
-        sl<OtpUseCase>(),
+        sl<verifyOTPUseCase>(),
       )
   );
 

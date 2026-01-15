@@ -80,12 +80,12 @@ class AuthRepositoryImp implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, User>> otp({
+  Future<Either<Failure, User>> verifyOTP({
     required VerifyOTP verifyOtp,
   }) async {
     try {
       final verifyOtpDto = AuthMapper.toVerifyOtpDto(verifyOtp);
-      final otpVerifyResponse = await _remoteDataSource.otp(
+      final otpVerifyResponse = await _remoteDataSource.verifyOTP(
         verifyOtpDto: verifyOtpDto,
       );
       if (otpVerifyResponse.accessToken != null) {

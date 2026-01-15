@@ -9,7 +9,7 @@ import 'dto/OtpVerifyResponse.dart';
 abstract class AuthRemoteDataSource {
   Future<bool> register({required RegisterDtoRequest registerDtoRequest});
 
-  Future<OtpVerifyResponse> otp({
+  Future<OtpVerifyResponse> verifyOTP({
     required VerifyOtpDto verifyOtpDto,
   });
 }
