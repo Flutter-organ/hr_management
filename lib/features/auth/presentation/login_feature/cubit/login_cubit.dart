@@ -1,24 +1,29 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:hr_management/core/base_viewmodel/base_cubit.dart';
 import 'package:hr_management/core/design_system/components/popups/sign_in_popup.dart';
+import 'package:hr_management/features/auth/domain/use_cases/load_identifier_use_case.dart';
 import 'package:hr_management/features/auth/domain/use_cases/login_use_case.dart';
 import 'package:hr_management/features/auth/presentation/login_feature/cubit/login_states.dart';
 
 class LoginCubit extends BaseCubit<LoginStates> {
   LoginUseCase _loginUseCase;
+  LoadIdentifierUseCase _loadIdentifierUseCase;
 
-  LoginCubit(this._loginUseCase) : super(LoginInitial());
+  LoginCubit(this._loginUseCase, this._loadIdentifierUseCase)
+    : super(LoginInitial());
 
   Future<void> login({
     required String identifier,
     required String password,
     required String loginType,
+    required bool isRememberd,
   }) async {
     await execute(
       call: () => _loginUseCase.call(
         identifier: identifier,
         password: password,
         loginType: loginType,
+        isRememberd: state.isChecked,
       ),
       onLoading: () => updateState(
         (currentState) => LoginLoading(
@@ -33,8 +38,6 @@ class LoginCubit extends BaseCubit<LoginStates> {
         (currentState) => LoginSuccess(
           user: user,
           loginType: state.loginType,
-          isObscure: state.isObscure,
-          countryCode: state.countryCode,
           isChecked: state.isChecked,
           isEnabled: state.isEnabled,
         ),
@@ -82,5 +85,21 @@ class LoginCubit extends BaseCubit<LoginStates> {
             : false,
       ),
     );
+  }
+
+  Future<void> loadSavedCredentials() async {
+    final result = await _loadIdentifierUseCase.getIdentifier();
+
+    result.fold((l) => null, (mail) {
+      if (mail != null && mail.isNotEmpty) {
+        updateState(
+          (currentState) => state.copyWith(
+            isChecked: true,
+            identifier: mail,
+            loginType: mail.contains('@') ? LoginType.email : LoginType.phone,
+          ),
+        );
+      }
+    });
   }
 }

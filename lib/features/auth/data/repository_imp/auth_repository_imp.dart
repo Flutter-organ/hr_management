@@ -21,6 +21,7 @@ class AuthRepositoryImp implements AuthRepository {
     required String identifier,
     required String password,
     required String loginType,
+    required bool isRememberd,
   }) async {
     try {
       final response = await _remoteDataSource.login(
@@ -29,6 +30,11 @@ class AuthRepositoryImp implements AuthRepository {
         loginType: loginType,
       );
       if (response.success && response.data != null) {
+        if (isRememberd) {
+          await _localDataSource.saveIdentifier(identifier);
+        } else {
+          await _localDataSource.clearIdentifier();
+        }
         final currentUser = CurrentUser.fromJson(response.data);
         await _localDataSource.saveToken(currentUser.accessToken!);
         final user = currentUser.user!.toDomain();
@@ -76,6 +82,38 @@ class AuthRepositoryImp implements AuthRepository {
     try {
       final hasToken = await _localDataSource.hasToken();
       return Right(hasToken);
+    } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String?>> getIdentifier() async {
+    try {
+      final mail = await _localDataSource.getIdentifier();
+      return Right(mail);
+    } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
+  }
+
+ 
+
+  @override
+  Future<Either<Failure, Unit>> saveIdentifier(String mail) async {
+    try {
+      await _localDataSource.saveIdentifier(mail);
+      return Right(unit);
+    } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> clearIdentifier() async {
+    try {
+      await _localDataSource.clearIdentifier();
+      return Right(unit);
     } catch (e) {
       return Left(AuthFailureMapper.mapException(e));
     }

@@ -1,5 +1,4 @@
 import 'package:hr_management/core/design_system/components/popups/sign_in_popup.dart';
-import 'package:hr_management/features/auth/data/data_source/remote/dto/CurrentUser.dart';
 import 'package:hr_management/features/auth/domain/enitites/User.dart';
 
 class LoginStates {
@@ -9,6 +8,7 @@ class LoginStates {
   final bool isChecked;
   final bool isEnabled;
   final List<String> countryFilter;
+  final String identifier;
   LoginStates({
     this.loginType = LoginType.email,
     this.isObscure = true,
@@ -35,6 +35,7 @@ class LoginStates {
       'YE',
     ],
     this.isEnabled = false,
+    this.identifier = "",
   });
   LoginStates copyWith({
     LoginType? loginType,
@@ -42,6 +43,7 @@ class LoginStates {
     String? countryCode,
     bool? isChecked,
     bool? isEnabled,
+    String?identifier
   }) {
     return LoginStates(
       loginType: loginType ?? this.loginType,
@@ -49,6 +51,7 @@ class LoginStates {
       countryCode: countryCode ?? this.countryCode,
       isChecked: isChecked ?? this.isChecked,
       isEnabled: isEnabled ?? this.isEnabled,
+      identifier: identifier ?? this.identifier
     );
   }
 }

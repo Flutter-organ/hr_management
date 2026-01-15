@@ -15,7 +15,6 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              // نداء ميثود اللوج أوت الكروكي
               _showLogoutDialog(context);
             },
             icon: const Icon(Icons.logout, color: Colors.red),

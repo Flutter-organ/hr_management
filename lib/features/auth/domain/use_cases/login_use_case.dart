@@ -11,11 +11,13 @@ class LoginUseCase {
     required String identifier,
     required String password,
     required String loginType,
+    required bool isRememberd
   }) async {
     return await _authRepository.login(
       identifier: identifier,
       password: password,
       loginType: loginType,
+      isRememberd: isRememberd
     );
   }
 }

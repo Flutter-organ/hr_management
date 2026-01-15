@@ -12,5 +12,10 @@ abstract class AuthRepository {
     required String identifier,
     required String password,
     required String loginType,
+    required bool isRememberd,
   });
+
+  Future<Either<Failure, Unit>> saveIdentifier(String mail);
+  Future<Either<Failure, String?>> getIdentifier();
+  Future<Either<Failure, Unit>> clearIdentifier();
 }
