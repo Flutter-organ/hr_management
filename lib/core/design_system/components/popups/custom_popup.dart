@@ -252,14 +252,15 @@ class CustomPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double topMargin = icon != null ? 50 : 0;
+    //final double topMargin = icon != null ? 50 : 0;
     final double topPadding = icon != null ? 60 : 24;
     return Stack(
+      alignment: Alignment.topCenter,
       clipBehavior: Clip.none,
       children: [
         Container(
           width: double.infinity,
-          margin: EdgeInsets.only(top: topMargin),
+          //margin: EdgeInsets.only(top: topMargin),
           padding: EdgeInsets.fromLTRB(24, topPadding, 24, 24),
           decoration: BoxDecoration(
             color: context.colors.white,
@@ -318,7 +319,7 @@ class CustomPopup extends StatelessWidget {
         ),
         if (icon != null)
           Positioned(
-            top: 0,
+            top: -50,
             left: 0,
             right: 0,
             child: Center(
