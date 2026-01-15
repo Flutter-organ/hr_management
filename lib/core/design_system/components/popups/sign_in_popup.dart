@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hr_management/core/design_system/components/check_box.dart';
 import 'package:hr_management/core/design_system/components/custom_input_field.dart';
 import 'package:hr_management/core/design_system/components/custom_primary_button.dart';
+import 'package:hr_management/core/design_system/theme/helper/snackbar_helper.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:hr_management/core/routes/route_names.dart';
 import 'package:hr_management/features/auth/presentation/login_feature/cubit/login_cubit.dart';
@@ -51,16 +52,13 @@ class _SignInPopupState extends State<SignInPopup> {
     return BlocConsumer<LoginCubit, LoginStates>(
       listener: (context, state) {
         if (state is LoginSuccess) {
+          SnackBarHelper.showSuccess(context, "Logged In Successfully ");
           context.go(RouteNames.homeScreen);
-          
         }
 
         if (state is LoginFailure) {
           print("state is ${state.message}");
-          showDialog(
-            context: context,
-            builder: (context) => Dialog(child: Text(state.message)),
-          );
+          SnackBarHelper.showError(context, state.message);
         }
       },
       builder: (context, state) => Padding(

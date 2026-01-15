@@ -20,7 +20,7 @@ void main() async {
       child: EasyLocalization(
         supportedLocales: const [Locale('ar'), Locale('en')],
         path: 'assets/translations',
-        child: MyApp(),
+        child: MyApp(isLoggedIn: hasToken.fold((l) => false, (r) => r)),
       ),
     ),
   );
