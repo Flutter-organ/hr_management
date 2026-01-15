@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/theme/helper/app_assets.dart';
-import 'package:hr_management/core/design_system/theme/helper/extention_colors.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 
 class CustomClockinAreaMapUser extends StatelessWidget {

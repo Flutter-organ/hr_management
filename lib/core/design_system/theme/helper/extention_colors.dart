@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/design_system/theme/color/app_constant_colors.dart';
 
 class ExtensionColors {
   static const purpleProfile = Color(0xff675aff);
