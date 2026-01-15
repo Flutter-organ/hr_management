@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../core/design_system/theme/color/app_constant_colors.dart';
+import '../../../../../core/design_system/theme/helper/PopupHelper.dart';
 import '../../../../../core/design_system/theme/helper/theme_extention.dart';
 import '../../../../../core/di/injection_container.dart';
 import '../../../domain/usecase/OtpUseCase.dart';
@@ -24,23 +25,16 @@ class SignUpScreen extends StatelessWidget {
     return BlocConsumer<SignUpCubit, SignUpUiState>(
         listener: (BuildContext context, SignUpUiState state) {
           if (state.isRegistered ) {
-            showModalBottomSheet(
+            PopupHelper.show(
               context: context,
-              isScrollControlled: true,
-              isDismissible: false,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+              popup: BlocProvider(
+                create: (_) => sl<VerifyOtpCubit>(),
+                child: VerifyOtpPopUp(
+                  email: state.email,
+                  type: 'registration'.tr(),
+                ),
+                // VerifyOtpPopUp._(),
               ),
-              builder: (_) {
-                print(state.email);
-                return BlocProvider(
-                  create: (_) => VerifyOtpCubit(sl<OtpUseCase>()),
-                  child: VerifyOtpPopUp(
-                    email: state.email,
-                    type: 'registration'.tr(),
-                  ),
-                );
-              },
             );
           }
         },

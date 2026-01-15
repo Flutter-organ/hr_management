@@ -11,9 +11,9 @@ class CurrentUser {
 }
 
   CurrentUser.fromJson(dynamic json) {
-    _user = json['user'] != null ? UserDto.fromJson(json['user']) : null;
-    _accessToken = json['access_token'];
-    _tokenType = json['token_type'];
+    _user = json['user'] as UserDto?;
+    _accessToken = json['access_token'] as String?;
+    _tokenType = json['token_type'] as String?;
   }
   UserDto? _user;
   String? _accessToken;

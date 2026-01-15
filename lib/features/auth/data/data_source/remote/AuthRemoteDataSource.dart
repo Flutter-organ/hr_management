@@ -4,11 +4,12 @@ import 'package:hr_management/features/auth/data/data_source/remote/dto/verify_o
 
 import '../../../domain/usecase/RegisterUseCase.dart';
 import 'dto/CurrentUser.dart';
+import 'dto/OtpVerifyResponse.dart';
 
 abstract class AuthRemoteDataSource {
   Future<bool> register({required RegisterDtoRequest registerDtoRequest});
 
-  Future<CurrentUser> otp({
+  Future<OtpVerifyResponse> otp({
     required VerifyOtpDto verifyOtpDto,
   });
 }

@@ -22,19 +22,20 @@ class VerifyOtpCubit extends BaseCubit<VerifyOtpUiState> {
   }) async {
     execute(
       call: () async {
-        final user =  _OTPUseCase.call(
+        final user =  await _OTPUseCase.call(
           verifyOtp: VerifyOTP(
             identifier: email,
             code: state.code,
             type: type,
           )
         );
+        print(user);
         return user;
       },
       onSuccess: (_) =>{
+        print('success'),
         updateState((currentState) => currentState.copyWith(isVerified: true))
-      }
-        ,
+      },
       onError: (error) => {
         updateState((currentState) => currentState.copyWith(errorMessage: error.message))
       }

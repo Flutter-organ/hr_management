@@ -4,14 +4,14 @@ class User extends Equatable {
   final int id;
   final String? email;
   final String? phone;
-  final int isActive;
+  final bool isActive;
   final String? role;
 
   const User({
     required this.id,
     this.email,
     this.phone,
-    this.isActive = 0,
+    this.isActive = false,
     this.role,
   });
 
@@ -21,13 +21,13 @@ class User extends Equatable {
 
   String get displayIdentifier => email ?? phone ?? 'Unknown';
 
-  int get isVerified => isActive;
+  bool get isVerified => isActive;
 
   User copyWith({
     int? id,
     String? email,
     String? phone,
-    int? isActive,
+    bool? isActive,
     String? role,
   }) {
     return User(

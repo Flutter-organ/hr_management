@@ -5,6 +5,7 @@ import 'package:hr_management/core/design_system/theme/color/app_constant_colors
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pinput/pinput.dart';
+import '../../theme/helper/extention_colors.dart';
 import '../custom_input_field.dart';
 
 class CustomPopup extends StatelessWidget {
@@ -317,35 +318,35 @@ class CustomPopup extends StatelessWidget {
           ),
         ),
         if (icon != null)
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: AppConstantColors.purple500,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppConstantColors.purple500.withOpacity(0.4),
-                      blurRadius: 16,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(
-                    icon,
-                    color: Colors.white,
-                    size: 48,
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                color: AppConstantColors.purple500,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppConstantColors.purple500.withOpacity(0.4),
+                    blurRadius: 16,
+                    offset: const Offset(0, 8),
                   ),
+                ],
+              ),
+              child: Center(
+                child: Icon(
+                  icon,
+                  color: Colors.white,
+                  size: 48,
                 ),
               ),
             ),
           ),
+        ),
       ],
     );
   }

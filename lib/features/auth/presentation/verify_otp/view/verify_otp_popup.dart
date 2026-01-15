@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../core/design_system/components/popups/custom_popup.dart';
+import '../../../../../core/design_system/theme/helper/PopupHelper.dart';
 import '../../../../../core/di/injection_container.dart';
 import '../../../domain/usecase/OtpUseCase.dart';
 import '../../welcome_to_work_mate_popup/logic/welcome_to_work_mate_popup_cubit.dart';
@@ -26,23 +27,19 @@ class VerifyOtpPopUp extends StatelessWidget {
 
     return BlocListener<VerifyOtpCubit, VerifyOtpUiState>(
       listener: (context, state) {
+        if (state.errorMessage != null) {
+          print(state.errorMessage);
+        }
+        print("++==========${state.isVerified}");
         if (state.isVerified) {
-
           Navigator.of(context).pop();
-
-          showModalBottomSheet(
+          print(state.isVerified);
+          PopupHelper.show(
             context: context,
-            isScrollControlled: true,
-            isDismissible: false,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+            popup: BlocProvider(
+              create: (_) => sl<WelcomeToWorkMatePopupCubit>(),
+              child: WelcomeToWorkMatePopUp(),
             ),
-            builder: (_) {
-              return BlocProvider(
-                create: (_) => WelcomeToWorkMatePopupCubit(),
-                child: const WelcomeToWorkMatePopUp(),
-              );
-            },
           );
         }
       },

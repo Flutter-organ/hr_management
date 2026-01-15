@@ -9,6 +9,7 @@ import '../../../domain/usecase/RegisterUseCase.dart';
 import 'AuthRemoteDataSource.dart';
 import 'AuthRemoteDataSourceImp.dart';
 import 'dto/CurrentUser.dart';
+import 'dto/OtpVerifyResponse.dart';
 import 'dto/verify_otp_dto.dart'; // if you have a separate file for endpoints
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -38,7 +39,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<CurrentUser> otp({
+  Future<OtpVerifyResponse> otp({
     required VerifyOtpDto verifyOtpDto,
   }) async {
     print("email is ${verifyOtpDto.identifier}");
@@ -52,6 +53,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         "type": verifyOtpDto.type
       },
     );
-    return CurrentUser.fromJson(response.data);
+    final data = response.data['data'];
+    print("data is ${data}");
+    print(OtpVerifyResponse.fromJson(data));
+    return OtpVerifyResponse.fromJson(data);
   }
 }

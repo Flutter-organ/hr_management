@@ -85,14 +85,14 @@ class AuthRepositoryImp implements AuthRepository {
   }) async {
     try {
       final verifyOtpDto = AuthMapper.toVerifyOtpDto(verifyOtp);
-      final CurrentUser = await _remoteDataSource.otp(
+      final otpVerifyResponse = await _remoteDataSource.otp(
         verifyOtpDto: verifyOtpDto,
       );
-      if (CurrentUser.accessToken != null) {
-        await saveToken(CurrentUser.accessToken!);
+      if (otpVerifyResponse.accessToken != null) {
+        await saveToken(otpVerifyResponse.accessToken);
       }
-      final userDto = UserDto.fromJson(CurrentUser.toJson());
-      final user = AuthMapper.toUser(userDto);
+      print("CurrentUser is ${otpVerifyResponse.user}");
+      final user = AuthMapper.toUser(otpVerifyResponse.user!);
       return Right(user);
     }catch(e){
       return Left(AuthFailureMapper.mapException(e));
