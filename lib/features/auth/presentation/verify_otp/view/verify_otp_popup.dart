@@ -46,7 +46,7 @@ class VerifyOtpPopUp extends StatelessWidget {
           );
         }
       },
-      child: CustomPopup.verificationPopup(
+      child: CustomPopup.otpVerificationPopup(
         icon: Iconsax.sms_notification,
         title: 'verification_code_title'.tr(),
         description: 'verification_code_desc'.tr(
@@ -59,10 +59,10 @@ class VerifyOtpPopUp extends StatelessWidget {
         primaryButtonOnPressed: () {
           cubit.verifyOtp(email: email, type: type);
         },
-        onCompleted: (code) {
+        onOtpChanged: (code) {
           cubit.setOtp(code);
         },
-        onTapResend: () {
+        onResendOtp: () {
           cubit.resendOtp();
         }
       ),

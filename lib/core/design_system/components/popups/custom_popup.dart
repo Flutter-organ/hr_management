@@ -5,12 +5,11 @@ import 'package:hr_management/core/design_system/theme/color/app_constant_colors
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pinput/pinput.dart';
-import '../../theme/helper/extention_colors.dart';
 import '../custom_input_field.dart';
 
 class CustomPopup extends StatelessWidget {
 
-  final IconData icon;
+  final IconData? icon;
   final String title;
   final String description;
   final Widget? content;
@@ -176,7 +175,6 @@ class CustomPopup extends StatelessWidget {
     bool enabled = true,
     bool isPrimaryButtonLoading = false,
     bool isPrimaryButtonEnabled = true,
-    IconData icon = Iconsax.shield_tick,
   }) {
     return CustomPopup(
       icon: icon,
@@ -817,7 +815,6 @@ class _LoginContentState extends State<_LoginContent> {
         ),
         const SizedBox(height: 8),
         CustomInputField(
-          controller: widget.confirmPasswordController,
           enabled: widget.enabled,
           isObscureText: _obscurePassword,
           onChanged: widget.onPasswordChanged,
