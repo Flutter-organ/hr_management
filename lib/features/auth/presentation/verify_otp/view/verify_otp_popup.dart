@@ -1,10 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/features/auth/presentation/verify_otp/view/welcome_to_work_mate_popup.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../core/design_system/components/popups/custom_popup.dart';
+import '../../../../../core/di/injection_container.dart';
+import '../../../domain/usecase/OtpUseCase.dart';
+import '../../welcome_to_work_mate_popup/logic/welcome_to_work_mate_popup_cubit.dart';
+import '../../welcome_to_work_mate_popup/view/welcome_to_work_mate_popup.dart';
 import '../logic/verify_otp_cubit.dart';
 import '../logic/verify_otp_state.dart';
 
@@ -24,7 +26,10 @@ class VerifyOtpPopUp extends StatelessWidget {
 
     return BlocListener<VerifyOtpCubit, VerifyOtpUiState>(
       listener: (context, state) {
-        if (state.isVerified ) {
+        if (state.isVerified) {
+
+          Navigator.of(context).pop();
+
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,
@@ -33,12 +38,15 @@ class VerifyOtpPopUp extends StatelessWidget {
               borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
             ),
             builder: (_) {
-              return WelcomeToWorkMatePopUp();
+              return BlocProvider(
+                create: (_) => WelcomeToWorkMatePopupCubit(),
+                child: const WelcomeToWorkMatePopUp(),
+              );
             },
           );
         }
       },
-      child: CustomPopup.phoneAuthPopup(
+      child: CustomPopup.verificationPopup(
         icon: Iconsax.sms_notification,
         title: 'verification_code_title'.tr(),
         description: 'verification_code_desc'.tr(
@@ -56,8 +64,7 @@ class VerifyOtpPopUp extends StatelessWidget {
         },
         onTapResend: () {
           cubit.resendOtp();
-        },
-        onTapHere: () {},
+        }
       ),
     );
   }

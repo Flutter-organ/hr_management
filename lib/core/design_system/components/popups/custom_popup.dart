@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/components/custom_primary_button.dart';
 import 'package:hr_management/core/design_system/theme/color/app_constant_colors.dart';
@@ -9,7 +10,6 @@ import '../../theme/helper/extention_colors.dart';
 import '../custom_input_field.dart';
 
 class CustomPopup extends StatelessWidget {
-
   final IconData icon;
   final String title;
   final String description;
@@ -148,8 +148,8 @@ class CustomPopup extends StatelessWidget {
     required VoidCallback primaryButtonOnPressed,
     required void Function(String) onCompleted,
     required VoidCallback onTapResend,
-    required VoidCallback onTapHere,
-    bool showFooter = true,
+    required VoidCallback? onTapHere,
+    bool showFooter = false,
     bool isPrimaryButtonLoading = false,
     bool isPrimaryButtonEnabled = true,
   }) {
@@ -401,12 +401,12 @@ Widget _buildDescription(BuildContext context, String description) {
 }
 
 Widget _buildPrimaryButton(
-    BuildContext context,
-    String primaryButtonText,
-    VoidCallback primaryButtonOnPressed,
-    bool isLoading,
-    bool isEnabled,
-    ) {
+  BuildContext context,
+  String primaryButtonText,
+  VoidCallback primaryButtonOnPressed,
+  bool isLoading,
+  bool isEnabled,
+) {
   return CustomPrimaryButton.gradient(
     height: 48,
     textStyle: context.textTheme.labelLargeFont.copyWith(
@@ -428,10 +428,10 @@ Widget _buildPrimaryButton(
 }
 
 Widget _buildSecondaryButton(
-    BuildContext context,
-    String secondaryButtonText,
-    VoidCallback? secondaryButtonOnPressed,
-    ) {
+  BuildContext context,
+  String secondaryButtonText,
+  VoidCallback? secondaryButtonOnPressed,
+) {
   return CustomPrimaryButton.outlined(
     height: 48,
     textStyle: context.textTheme.labelLargeFont.copyWith(
@@ -445,9 +445,9 @@ Widget _buildSecondaryButton(
 }
 
 Widget _buildSignInAlternativeFooter(
-    BuildContext context,
-    VoidCallback? onTapHere,
-    ) {
+  BuildContext context,
+  VoidCallback? onTapHere,
+) {
   return Text.rich(
     TextSpan(
       children: [
@@ -457,18 +457,14 @@ Widget _buildSignInAlternativeFooter(
             color: context.colors.textPrimary,
           ),
         ),
-        WidgetSpan(
-          alignment: PlaceholderAlignment.middle,
-          child: GestureDetector(
-            onTap: onTapHere,
-            child: Text(
-              "here".tr(),
-              style: context.textTheme.labelMediumFont.copyWith(
-                color: AppConstantColors.purple500,
-              ),
-            ),
+        TextSpan(
+          text: "here".tr(),
+          style: context.textTheme.labelMediumFont.copyWith(
+            color: AppConstantColors.purple500,
           ),
-        ),
+          recognizer: TapGestureRecognizer()
+            ..onTap = onTapHere,
+        )
       ],
     ),
     maxLines: 1,
@@ -477,10 +473,7 @@ Widget _buildSignInAlternativeFooter(
 }
 
 class _InputFieldWithLabel extends StatelessWidget {
-  const _InputFieldWithLabel({
-    required this.label,
-    required this.hint,
-  });
+  const _InputFieldWithLabel({required this.label, required this.hint});
 
   final String label;
   final String hint;
@@ -623,7 +616,10 @@ class _OtpInputContent extends StatelessWidget {
                 color: context.colors.textPrimary,
               ),
               decoration: BoxDecoration(
-                border: Border.all(color: AppConstantColors.purple500, width: 2),
+                border: Border.all(
+                  color: AppConstantColors.purple500,
+                  width: 2,
+                ),
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
@@ -729,19 +725,17 @@ class _VerificationContent extends StatelessWidget {
               color: context.colors.textPrimary,
             ),
           ),
-          WidgetSpan(
-            alignment: PlaceholderAlignment.middle,
-            child: GestureDetector(
-              onTap: isResendEnabled ? onResend : null,
-              child: Text(
-                "Resend_it".tr(),
-                style: context.textTheme.labelMediumFont.copyWith(
-                  color: isResendEnabled
-                      ? AppConstantColors.purple500
-                      : context.colors.gray400,
-                ),
-              ),
+          TextSpan(
+            text: "Resend_it".tr(),
+            style: context.textTheme.labelMediumFont.copyWith(
+              color: isResendEnabled
+                  ? AppConstantColors.purple500
+                  : context.colors.gray400,
             ),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                isResendEnabled ? onResend : null;
+              },
           ),
         ],
       ),
@@ -865,7 +859,9 @@ class _ResetPasswordContentState extends State<_ResetPasswordContent> {
           ),
           suffixIcon: IconButton(
             onPressed: () {
-              setState(() => _obscureConfirmPassword = !_obscureConfirmPassword);
+              setState(
+                () => _obscureConfirmPassword = !_obscureConfirmPassword,
+              );
             },
             icon: Icon(
               _obscureConfirmPassword ? Iconsax.eye_slash : Iconsax.eye,
@@ -902,10 +898,7 @@ class _ClockOutContent extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: _ClockOutItem(
-            time: "today".tr(),
-            hour: todayWorkHours,
-          ),
+          child: _ClockOutItem(time: "today".tr(), hour: todayWorkHours),
         ),
         const SizedBox(width: 8),
         Expanded(
@@ -920,10 +913,7 @@ class _ClockOutContent extends StatelessWidget {
 }
 
 class _ClockOutItem extends StatelessWidget {
-  const _ClockOutItem({
-    required this.time,
-    required this.hour,
-  });
+  const _ClockOutItem({required this.time, required this.hour});
 
   final String time;
   final String hour;
