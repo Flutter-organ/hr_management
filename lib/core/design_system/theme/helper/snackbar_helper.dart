@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
-
-final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey =
-GlobalKey<ScaffoldMessengerState>();
+import 'package:toastification/toastification.dart';
 
 class SnackBarHelper {
   SnackBarHelper._();
@@ -10,74 +8,72 @@ class SnackBarHelper {
   static void showError(
       BuildContext context,
       String message, {
-        Duration duration = const Duration(seconds: 2),
+        Duration duration = const Duration(seconds: 3),
       }) {
-    _show(
-      context,
-      message: message,
-      backgroundColor: context.colors.error,
-      icon: Icons.error_outline,
-      duration: duration,
+    toastification.show(
+      context: context,
+      title: Text(
+        message,
+        style: TextStyle(
+          color: context.colors.white,
+        ),
+      ),
+      type: ToastificationType.error,
+      style: ToastificationStyle.fillColored,
+      autoCloseDuration: duration,
+      alignment: Alignment.bottomCenter,
+      margin: const EdgeInsets.all(16),
+      borderRadius: BorderRadius.circular(12),
+      showProgressBar: false,
+      dragToClose: true,
     );
   }
 
   static void showSuccess(
       BuildContext context,
       String message, {
-        Duration duration = const Duration(seconds: 2),
+        Duration duration = const Duration(seconds: 3),
       }) {
-    _show(
-      context,
-      message: message,
-      backgroundColor: context.colors.success25,
-      icon: Icons.check_circle_outline,
-      duration: duration,
+    toastification.show(
+      context: context,
+      title: Text(
+        message,
+        style: TextStyle(
+          color: context.colors.white,
+        ),
+      ),
+      type: ToastificationType.success,
+      style: ToastificationStyle.fillColored,
+      autoCloseDuration: duration,
+      alignment: Alignment.bottomCenter,
+      margin: const EdgeInsets.all(16),
+      borderRadius: BorderRadius.circular(12),
+      showProgressBar: false,
+      dragToClose: true,
     );
   }
 
   static void showInfo(
       BuildContext context,
       String message, {
-        Duration duration = const Duration(seconds: 2),
+        Duration duration = const Duration(seconds: 3),
       }) {
-    _show(
-      context,
-      message: message,
-      backgroundColor: context.colors.purple500,
-      icon: Icons.info_outline,
-      duration: duration,
-    );
-  }
-
-  static void _show(
-      BuildContext context, {
-        required String message,
-        required Color backgroundColor,
-        required IconData icon,
-        Duration duration = const Duration(seconds: 2),
-      }) {
-    rootScaffoldMessengerKey.currentState?.showSnackBar(
-      SnackBar(
-        content: Row(
-          children: [
-            Icon(icon, color: Colors.white),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                message,
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
+    toastification.show(
+      context: context,
+      title: Text(
+        message,
+        style: TextStyle(
+          color: context.colors.white,
         ),
-        backgroundColor: backgroundColor,
-        behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.all(16),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        duration: duration,
       ),
+      type: ToastificationType.info,
+      style: ToastificationStyle.fillColored,
+      autoCloseDuration: duration,
+      alignment: Alignment.bottomCenter,
+      margin: const EdgeInsets.all(16),
+      borderRadius: BorderRadius.circular(12),
+      showProgressBar: false,
+      dragToClose: true,
     );
   }
 }

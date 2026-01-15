@@ -3,12 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/core/design_system/theme/helper/snackbar_helper.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../core/design_system/components/popups/custom_popup.dart';
-import '../../../../../core/design_system/theme/helper/theme_extention.dart';
 import '../../../../../core/di/injection_container.dart';
 import '../../../domain/enitites/login_type.dart';
 import '../../logic/forget_password/forgot_password_cubit.dart';
 import '../../logic/forget_password/forgot_password_state.dart';
-import '../helpers/popup_helper.dart';
+import '../../../../../core/design_system/theme/helper/popup_helper.dart';
 import 'reset_password_popup.dart';
 
 class VerifyOtpPopup extends StatefulWidget {
@@ -26,6 +25,8 @@ class VerifyOtpPopup extends StatefulWidget {
         required LoginType loginType,
       }) {
     return PopupHelper.show(
+      isDismissible: false,
+      enableDrag: false,
       context: context,
       popup: BlocProvider(
         create: (_) => sl<ForgotPasswordCubit>(),
@@ -49,7 +50,7 @@ class _VerifyOtpPopupState extends State<VerifyOtpPopup> {
     return BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
       listener: (context, state) {
         if (state.isSuccess) {
-          SnackBarHelper.showError(context, 'OTP sent successfully!');
+          SnackBarHelper.showSuccess(context, 'OTP sent successfully!');
         }
 
         if (state.apiError != null) {
@@ -60,7 +61,7 @@ class _VerifyOtpPopupState extends State<VerifyOtpPopup> {
         final cubit = context.read<ForgotPasswordCubit>();
         final isOtpComplete = _otp.length == 6;
 
-        return CustomPopup.otpVerification(
+        return CustomPopup.otpVerificationPopup(
           icon: Iconsax.security_safe4,
           title: 'Forgot Password',
           description: 'A reset code has been sent to ${widget.identifier}, check your email to continue the password reset process.',

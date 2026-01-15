@@ -52,6 +52,7 @@ dependencies:
   go_router: ^12.1.1
   flutter_bloc: ^9.1.1
   fpdart: ^1.1.0
+  toastification: ^3.0.3
 
 
 

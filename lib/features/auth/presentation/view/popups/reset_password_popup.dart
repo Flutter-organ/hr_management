@@ -5,11 +5,10 @@ import 'package:hr_management/core/design_system/theme/helper/snackbar_helper.da
 import 'package:hr_management/features/auth/presentation/view/popups/password_reset_success_popup.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../core/design_system/components/popups/custom_popup.dart';
-import '../../../../../core/design_system/theme/helper/theme_extention.dart';
 import '../../../../../core/di/injection_container.dart';
 import '../../logic/reset_password/reset_password_cubit.dart';
 import '../../logic/reset_password/reset_password_state.dart';
-import '../helpers/popup_helper.dart';
+import '../../../../../core/design_system/theme/helper/popup_helper.dart';
 
 class ResetPasswordPopup extends StatelessWidget {
   const ResetPasswordPopup._({
@@ -26,6 +25,8 @@ class ResetPasswordPopup extends StatelessWidget {
         required String otp,
       }) {
     return PopupHelper.show(
+      isDismissible: false,
+      enableDrag: false,
       context: context,
       popup: BlocProvider(
         create: (_) => sl<ResetPasswordCubit>()
@@ -55,7 +56,7 @@ class ResetPasswordPopup extends StatelessWidget {
       builder: (context, state) {
         final cubit = context.read<ResetPasswordCubit>();
 
-        return CustomPopup.passwordReset(
+        return CustomPopup.passwordResetPopup(
           icon: Iconsax.security_safe4,
           title: 'Set a New Password',
           description: 'Please set a new password to secure your Work Mate account.',

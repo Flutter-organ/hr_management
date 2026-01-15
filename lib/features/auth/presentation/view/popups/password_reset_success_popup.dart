@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../core/design_system/components/popups/custom_popup.dart';
-import '../helpers/popup_helper.dart';
+import '../../../../../core/design_system/theme/helper/popup_helper.dart';
 
 class PasswordResetSuccessPopup extends StatelessWidget {
   const PasswordResetSuccessPopup._();
@@ -17,7 +17,7 @@ class PasswordResetSuccessPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomPopup.singleAction(
+    return CustomPopup.singleActionPopup(
       icon: Iconsax.security_safe4,
       title: 'Password Has Been Created',
       description: 'To log in to your account, click the Sign in button and enter your email along with your new password.',

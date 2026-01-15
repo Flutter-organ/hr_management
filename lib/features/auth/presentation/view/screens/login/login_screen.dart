@@ -82,7 +82,7 @@ class _LoginCard extends StatelessWidget {
       builder: (context, state) {
         final cubit = context.read<LoginCubit>();
 
-        return CustomPopup.login(
+        return CustomPopup.loginPopup(
           title: 'Sign In',
           description: 'Sign in to your account to continue',
           identifierLabel: 'Email',

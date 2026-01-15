@@ -5,7 +5,6 @@ import 'package:hr_management/core/design_system/theme/color/app_constant_colors
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pinput/pinput.dart';
-import '../../theme/helper/extention_colors.dart';
 import '../custom_input_field.dart';
 
 class CustomPopup extends StatelessWidget {
@@ -63,7 +62,7 @@ class CustomPopup extends StatelessWidget {
     );
   }
 
-  factory CustomPopup.singleAction({
+  factory CustomPopup.singleActionPopup({
     required IconData icon,
     required String title,
     required String description,
@@ -83,7 +82,7 @@ class CustomPopup extends StatelessWidget {
     );
   }
 
-  factory CustomPopup.singleInput({
+  factory CustomPopup.singleInputPopup({
     required IconData icon,
     required String title,
     required String description,
@@ -127,7 +126,7 @@ class CustomPopup extends StatelessWidget {
     );
   }
 
-  factory CustomPopup.otpVerification({
+  factory CustomPopup.otpVerificationPopup({
     required IconData icon,
     required String title,
     required String description,
@@ -159,7 +158,7 @@ class CustomPopup extends StatelessWidget {
     );
   }
 
-  factory CustomPopup.passwordReset({
+  factory CustomPopup.passwordResetPopup({
     required IconData icon,
     required String title,
     required String description,
@@ -199,7 +198,7 @@ class CustomPopup extends StatelessWidget {
     );
   }
 
-  factory CustomPopup.login({
+  factory CustomPopup.loginPopup({
     IconData? icon,
     required String title,
     required String description,
@@ -253,14 +252,13 @@ class CustomPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double topMargin = icon != null ? 50 : 0;
     final double topPadding = icon != null ? 60 : 24;
     return Stack(
+      alignment: Alignment.topCenter,
       clipBehavior: Clip.none,
       children: [
         Container(
           width: double.infinity,
-          margin: EdgeInsets.only(top: topMargin),
           padding: EdgeInsets.fromLTRB(24, topPadding, 24, 24),
           decoration: BoxDecoration(
             color: context.colors.white,
@@ -319,7 +317,7 @@ class CustomPopup extends StatelessWidget {
         ),
         if (icon != null)
         Positioned(
-          top: 0,
+          top: -50,
           left: 0,
           right: 0,
           child: Center(

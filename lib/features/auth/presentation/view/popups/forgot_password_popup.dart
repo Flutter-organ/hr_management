@@ -9,7 +9,7 @@ import 'package:hr_management/features/auth/presentation/logic/forget_password/f
 import 'package:hr_management/features/auth/presentation/view/popups/verify_otp_popup.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../core/design_system/components/popups/custom_popup.dart';
-import '../helpers/popup_helper.dart';
+import '../../../../../core/design_system/theme/helper/popup_helper.dart';
 
 class ForgotPasswordPopup extends StatelessWidget {
   const ForgotPasswordPopup._();
@@ -44,7 +44,7 @@ class ForgotPasswordPopup extends StatelessWidget {
       builder: (context, state) {
         final cubit = context.read<ForgotPasswordCubit>();
 
-        return CustomPopup.singleInput(
+        return CustomPopup.singleInputPopup(
           icon: Iconsax.security_safe4,
           title: 'Forgot Password',
           description: 'Reset password code will be sent to your email to reset your password.',

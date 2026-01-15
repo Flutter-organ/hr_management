@@ -7,7 +7,7 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../../core/design_system/components/popups/custom_popup.dart';
 import '../../logic/login/login_cubit.dart';
 import '../../logic/login/login_state.dart';
-import '../helpers/popup_helper.dart';
+import '../../../../../core/design_system/theme/helper/popup_helper.dart';
 import 'forgot_password_popup.dart';
 
 class LoginPopup extends StatelessWidget {
@@ -46,7 +46,7 @@ class LoginPopup extends StatelessWidget {
       builder: (context, state) {
         final cubit = context.read<LoginCubit>();
 
-        return CustomPopup.login(
+        return CustomPopup.loginPopup(
           icon: Iconsax.user,
           title: 'Sign In',
           description: 'Sign in to your account to continue',
