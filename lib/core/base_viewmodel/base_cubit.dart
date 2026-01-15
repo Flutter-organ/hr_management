@@ -33,7 +33,8 @@ abstract class BaseCubit<STATE> extends Cubit<STATE> {
   }
 
   void updateState(STATE Function(STATE currentState) updater) {
-    emit(updater(state));
+    emit(updater(state)
+    );
   }
 
   UiError _mapFailureToUiError(Failure failure) {

@@ -25,11 +25,8 @@ class VerifyOtpPopUp extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<VerifyOtpCubit>();
 
-    return BlocListener<VerifyOtpCubit, VerifyOtpUiState>(
+    return BlocConsumer<VerifyOtpCubit, VerifyOtpUiState>(
       listener: (context, state) {
-        if (state.errorMessage != null) {
-          print(state.errorMessage);
-        }
         print("++==========${state.isVerified}");
         if (state.isVerified) {
           Navigator.of(context).pop();
@@ -43,26 +40,28 @@ class VerifyOtpPopUp extends StatelessWidget {
           );
         }
       },
-      child: CustomPopup.otpVerificationPopup(
-        icon: Iconsax.sms_notification,
-        title: 'verification_code_title'.tr(),
-        description: 'verification_code_desc'.tr(
-          args: [
-            type.tr(),
-            email,
-          ],
-        ),
-        primaryButtonText: 'submit'.tr(),
-        primaryButtonOnPressed: () {
-          cubit.verifyOtp(email: email, type: type);
-        },
-        onOtpChanged: (code) {
-          cubit.setOtp(code);
-        },
-        onResendOtp: () {
-          cubit.resendOtp();
-        }
-      ),
+      builder: (context, state) {
+        return CustomPopup.otpVerificationPopup(
+            icon: Iconsax.sms_notification,
+            title: 'verification_code_title'.tr(),
+            description: 'verification_code_desc'.tr(
+              args: [
+                type.tr(),
+                email,
+              ],
+            ),
+            primaryButtonText: 'submit'.tr(),
+            primaryButtonOnPressed: () {
+              cubit.verifyOtp(email: email, type: type);
+            },
+            onOtpChanged: (code) {
+              cubit.setOtp(code);
+            },
+            onResendOtp: () {
+              cubit.resendOtp();
+            }
+        );
+      }
     );
   }
 }

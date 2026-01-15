@@ -32,12 +32,15 @@ class VerifyOtpCubit extends BaseCubit<VerifyOtpUiState> {
         print(user);
         return user;
       },
-      onSuccess: (_) =>{
-        print('success'),
-        updateState((currentState) => currentState.copyWith(isVerified: true))
-      },
-      onError: (error) => {
-        updateState((currentState) => currentState.copyWith(errorMessage: error.message))
+        onSuccess: (_) {
+          print('success');
+          updateState((currentState) => currentState.copyWith(isVerified: true));
+
+          print("isVerified after update: ${state.isVerified}");
+        },
+
+        onError: (error) {
+        updateState((currentState) => currentState.copyWith(errorMessage: error.message));
       }
     );
 

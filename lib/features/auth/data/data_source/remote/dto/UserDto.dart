@@ -17,7 +17,7 @@ class UserDto {
 
   factory UserDto.fromJson(Map<String, dynamic> json) {
     return UserDto(
-      id: json['id'] as int,
+      id: json['id'] as int? ?? 0,
       email: json['email'] as String?,
       phone: json['phone'] as String?,
       isActive: json['is_active'] as bool? ?? false,

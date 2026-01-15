@@ -18,7 +18,7 @@ class VerifyOtpUiState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [identifier, code, type];
+  List<Object?> get props => [identifier, code, type, isLoading, isVerified, errorMessage];
 
   VerifyOtpUiState copyWith({
     String? identifier,
