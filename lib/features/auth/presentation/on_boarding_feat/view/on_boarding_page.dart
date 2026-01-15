@@ -111,9 +111,10 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   onBoardingitems.length - 1) {
                 context.read<OnboardingCubit>().completeOnboarding();
                 context.replaceNamed(RouteNames.onBoardingFinalPageRoute);
-                print("$state");
               }
+
               context.read<OnboardingCubit>().nextPage();
+              print("$state");
             },
           ),
           SizedBox(height: 15),
@@ -124,6 +125,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             ),
             onPressed: () {
               context.read<OnboardingCubit>().completeOnboarding();
+              print("$state");
               context.replaceNamed(RouteNames.onBoardingFinalPageRoute);
             },
           ),
