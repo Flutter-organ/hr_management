@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/components/custom_primary_button.dart';
 import 'package:hr_management/core/design_system/theme/color/app_constant_colors.dart';
@@ -10,6 +9,7 @@ import '../../theme/helper/extention_colors.dart';
 import '../custom_input_field.dart';
 
 class CustomPopup extends StatelessWidget {
+
   final IconData icon;
   final String title;
   final String description;
@@ -25,7 +25,7 @@ class CustomPopup extends StatelessWidget {
 
   const CustomPopup({
     super.key,
-    required this.icon,
+    this.icon,
     required this.title,
     required this.description,
     this.content,
@@ -63,7 +63,7 @@ class CustomPopup extends StatelessWidget {
     );
   }
 
-  factory CustomPopup.singleactionpopup({
+  factory CustomPopup.singleActionPopup({
     required IconData icon,
     required String title,
     required String description,
@@ -83,142 +83,41 @@ class CustomPopup extends StatelessWidget {
     );
   }
 
-  factory CustomPopup.inputfieldpopup({
-    required IconData icon,
-    required String title,
-    required String description,
-    required String labelInputTextField,
-    required String hintInputTextField,
-    required String primaryButtonText,
-    required VoidCallback primaryButtonOnPressed,
-    bool isPrimaryButtonLoading = false,
-    bool isPrimaryButtonEnabled = true,
-  }) {
-    return CustomPopup(
-      icon: icon,
-      title: title,
-      description: description,
-      content: _InputFieldWithLabel(
-        label: labelInputTextField,
-        hint: hintInputTextField,
-      ),
-      primaryButtonText: primaryButtonText,
-      primaryButtonOnPressed: primaryButtonOnPressed,
-      isPrimaryButtonLoading: isPrimaryButtonLoading,
-      isPrimaryButtonEnabled: isPrimaryButtonEnabled,
-    );
-  }
-
-  factory CustomPopup.verificationPopup({
+  factory CustomPopup.singleInputPopup({
     required IconData icon,
     required String title,
     required String description,
     required String primaryButtonText,
     required VoidCallback primaryButtonOnPressed,
-    required void Function(String) onCompleted,
-    required VoidCallback onTapResend,
-    TextEditingController? otpController,
-    bool isPrimaryButtonLoading = false,
-    bool isPrimaryButtonEnabled = true,
-    bool isResendEnabled = true,
-  }) {
-    return CustomPopup(
-      icon: icon,
-      title: title,
-      description: description,
-      content: _VerificationContent(
-        controller: otpController,
-        onCompleted: onCompleted,
-        onResend: onTapResend,
-        isResendEnabled: isResendEnabled,
-      ),
-      showFooter: false,
-      primaryButtonText: primaryButtonText,
-      primaryButtonOnPressed: primaryButtonOnPressed,
-      isPrimaryButtonLoading: isPrimaryButtonLoading,
-      isPrimaryButtonEnabled: isPrimaryButtonEnabled,
-    );
-  }
-
-  factory CustomPopup.phoneAuthPopup({
-    required IconData icon,
-    required String title,
-    required String description,
-    required String primaryButtonText,
-    required VoidCallback primaryButtonOnPressed,
-    required void Function(String) onCompleted,
-    required VoidCallback onTapResend,
-    required VoidCallback? onTapHere,
-    bool showFooter = false,
-    bool isPrimaryButtonLoading = false,
-    bool isPrimaryButtonEnabled = true,
-  }) {
-    return CustomPopup(
-      showFooter: showFooter,
-      icon: icon,
-      title: title,
-      description: description,
-      content: _VerificationContent(
-        onCompleted: onCompleted,
-        onResend: onTapResend,
-      ),
-      primaryButtonText: primaryButtonText,
-      primaryButtonOnPressed: primaryButtonOnPressed,
-      onTapHere: onTapHere,
-      isPrimaryButtonLoading: isPrimaryButtonLoading,
-      isPrimaryButtonEnabled: isPrimaryButtonEnabled,
-    );
-  }
-
-  factory CustomPopup.ClockOut({
-    required IconData icon,
-    required String title,
-    required String description,
-    required String todayWorkHours,
-    required String overTimeTodayWorkHours,
-    required String primaryButtonText,
-    required VoidCallback primaryButtonOnPressed,
-    required String secondaryButtonText,
-    required VoidCallback secondaryButtonOnPressed,
-  }) {
-    return CustomPopup(
-      icon: icon,
-      title: title,
-      description: description,
-      content: _ClockOutContent(
-        todayWorkHours: todayWorkHours,
-        overTimeTodayWorkHours: overTimeTodayWorkHours,
-      ),
-      primaryButtonText: primaryButtonText,
-      primaryButtonOnPressed: primaryButtonOnPressed,
-      secondaryButtonText: secondaryButtonText,
-      secondaryButtonOnPressed: secondaryButtonOnPressed,
-    );
-  }
-
-  factory CustomPopup.forgotPasswordPopup({
-    required String title,
-    required String description,
-    required String primaryButtonText,
-    required VoidCallback primaryButtonOnPressed,
-    required TextEditingController emailController,
-    String? emailLabel,
-    String? emailHint,
-    String? emailErrorText,
+    required String inputLabel,
+    required String inputHint,
+    required ValueChanged<String> onInputChanged,
+    TextEditingController? controller,
+    String? initialValue,
+    String? errorText,
+    TextInputType keyboardType = TextInputType.text,
+    Widget? prefixIcon,
+    bool obscureText = false,
+    Widget? suffixIcon,
     bool enabled = true,
     bool isPrimaryButtonLoading = false,
     bool isPrimaryButtonEnabled = true,
-    IconData icon = Iconsax.shield_tick,
   }) {
     return CustomPopup(
       icon: icon,
       title: title,
       description: description,
-      content: _EmailInputContent(
-        controller: emailController,
-        label: emailLabel ?? 'email'.tr(),
-        hint: emailHint ?? 'enter_your_email'.tr(),
-        errorText: emailErrorText,
+      content: _SingleInputContent(
+        label: inputLabel,
+        hint: inputHint,
+        onChanged: onInputChanged,
+        controller: controller,
+        initialValue: initialValue,
+        errorText: errorText,
+        keyboardType: keyboardType,
+        prefixIcon: prefixIcon,
+        obscureText: obscureText,
+        suffixIcon: suffixIcon,
         enabled: enabled,
       ),
       primaryButtonText: primaryButtonText,
@@ -229,19 +128,18 @@ class CustomPopup extends StatelessWidget {
   }
 
   factory CustomPopup.otpVerificationPopup({
+    required IconData icon,
     required String title,
     required String description,
     required String primaryButtonText,
     required VoidCallback primaryButtonOnPressed,
-    required void Function(String) onOtpCompleted,
-    required void Function(String) onOtpChanged,
+    required ValueChanged<String> onOtpChanged,
     required VoidCallback onResendOtp,
     TextEditingController? otpController,
     bool enabled = true,
     bool isResendEnabled = true,
     bool isPrimaryButtonLoading = false,
     bool isPrimaryButtonEnabled = true,
-    IconData icon = Iconsax.shield_tick,
   }) {
     return CustomPopup(
       icon: icon,
@@ -251,7 +149,6 @@ class CustomPopup extends StatelessWidget {
         controller: otpController,
         enabled: enabled,
         onChanged: onOtpChanged,
-        onCompleted: onOtpCompleted,
         onResend: onResendOtp,
         isResendEnabled: isResendEnabled,
       ),
@@ -262,18 +159,19 @@ class CustomPopup extends StatelessWidget {
     );
   }
 
-  factory CustomPopup.resetPasswordPopup({
+  factory CustomPopup.passwordResetPopup({
+    required IconData icon,
     required String title,
     required String description,
     required String primaryButtonText,
     required VoidCallback primaryButtonOnPressed,
-    required TextEditingController passwordController,
-    required TextEditingController confirmPasswordController,
-    String? passwordLabel,
-    String? passwordHint,
-    String? confirmPasswordLabel,
-    String? confirmPasswordHint,
+    required String passwordLabel,
+    required String passwordHint,
+    required ValueChanged<String> onPasswordChanged,
     String? passwordErrorText,
+    required String confirmPasswordLabel,
+    required String confirmPasswordHint,
+    required ValueChanged<String> onConfirmPasswordChanged,
     String? confirmPasswordErrorText,
     bool enabled = true,
     bool isPrimaryButtonLoading = false,
@@ -284,15 +182,67 @@ class CustomPopup extends StatelessWidget {
       icon: icon,
       title: title,
       description: description,
-      content: _ResetPasswordContent(
-        passwordController: passwordController,
-        confirmPasswordController: confirmPasswordController,
-        passwordLabel: passwordLabel ?? 'password'.tr(),
-        passwordHint: passwordHint ?? 'input_password'.tr(),
-        confirmPasswordLabel: confirmPasswordLabel ?? 'confirm_password'.tr(),
-        confirmPasswordHint: confirmPasswordHint ?? 're_enter_password'.tr(),
+      content: _PasswordResetContent(
+        passwordLabel: passwordLabel,
+        passwordHint: passwordHint,
+        onPasswordChanged: onPasswordChanged,
         passwordErrorText: passwordErrorText,
+        confirmPasswordLabel: confirmPasswordLabel,
+        confirmPasswordHint: confirmPasswordHint,
+        onConfirmPasswordChanged: onConfirmPasswordChanged,
         confirmPasswordErrorText: confirmPasswordErrorText,
+        enabled: enabled,
+      ),
+      primaryButtonText: primaryButtonText,
+      primaryButtonOnPressed: primaryButtonOnPressed,
+      isPrimaryButtonLoading: isPrimaryButtonLoading,
+      isPrimaryButtonEnabled: isPrimaryButtonEnabled,
+    );
+  }
+
+  factory CustomPopup.loginPopup({
+    IconData? icon,
+    required String title,
+    required String description,
+    required String primaryButtonText,
+    required VoidCallback primaryButtonOnPressed,
+    required String identifierLabel,
+    required String identifierHint,
+    required ValueChanged<String> onIdentifierChanged,
+    String? identifierErrorText,
+    TextInputType identifierKeyboardType = TextInputType.emailAddress,
+    Widget? identifierPrefixIcon,
+    required String passwordLabel,
+    required String passwordHint,
+    required ValueChanged<String> onPasswordChanged,
+    String? passwordErrorText,
+    String? forgotPasswordText,
+    VoidCallback? onForgotPasswordTap,
+    String? signUpText,
+    VoidCallback? onSignUpTap,
+    bool enabled = true,
+    bool isPrimaryButtonLoading = false,
+    bool isPrimaryButtonEnabled = true,
+  }) {
+    return CustomPopup(
+      icon: icon,
+      title: title,
+      description: description,
+      content: _LoginContent(
+        identifierLabel: identifierLabel,
+        identifierHint: identifierHint,
+        onIdentifierChanged: onIdentifierChanged,
+        identifierErrorText: identifierErrorText,
+        identifierKeyboardType: identifierKeyboardType,
+        identifierPrefixIcon: identifierPrefixIcon,
+        passwordLabel: passwordLabel,
+        passwordHint: passwordHint,
+        onPasswordChanged: onPasswordChanged,
+        passwordErrorText: passwordErrorText,
+        forgotPasswordText: forgotPasswordText,
+        onForgotPasswordTap: onForgotPasswordTap,
+        signUpText: signUpText,
+        onSignUpTap: onSignUpTap,
         enabled: enabled,
       ),
       primaryButtonText: primaryButtonText,
@@ -304,223 +254,214 @@ class CustomPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double topMargin = icon != null ? 50 : 0;
+    final double topPadding = icon != null ? 60 : 24;
     return Stack(
-      alignment: Alignment.topCenter,
       clipBehavior: Clip.none,
       children: [
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.fromLTRB(20, 82, 20, 20),
+          margin: EdgeInsets.only(top: topMargin),
+          padding: EdgeInsets.fromLTRB(24, topPadding, 24, 24),
           decoration: BoxDecoration(
             color: context.colors.white,
             borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
+              topLeft: Radius.circular(24),
+              topRight: Radius.circular(24),
             ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _buildTitle(context, title),
-              const SizedBox(height: 16),
-              _buildDescription(context, description),
-              const SizedBox(height: 16),
-              if (content != null) ...[content!, const SizedBox(height: 16)],
-              _buildPrimaryButton(
-                context,
-                primaryButtonText,
-                primaryButtonOnPressed,
-                isPrimaryButtonLoading,
-                isPrimaryButtonEnabled,
-              ),
-              if (secondaryButtonText != null) ...[
-                const SizedBox(height: 16),
-                _buildSecondaryButton(
-                  context,
-                  secondaryButtonText!,
-                  secondaryButtonOnPressed,
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title,
+                  style: context.textTheme.popupTitleFont.copyWith(
+                    color: context.colors.textPrimary,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
+                const SizedBox(height: 12),
+
+                Text(
+                  description,
+                  style: context.textTheme.popupBodyFont.copyWith(
+                    color: context.colors.textSecondary,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 24),
+
+                if (content != null) ...[
+                  content!,
+                  const SizedBox(height: 24),
+                ],
+
+                _buildPrimaryButton(context),
+
+                if (secondaryButtonText != null) ...[
+                  const SizedBox(height: 12),
+                  _buildSecondaryButton(context),
+                ],
+
+                if (showFooter) ...[
+                  const SizedBox(height: 16),
+                  _buildFooter(context),
+                ],
               ],
-              if (showFooter) ...[
-                const SizedBox(height: 16),
-                _buildSignInAlternativeFooter(context, onTapHere),
-              ],
-            ],
+            ),
           ),
         ),
-        _buildTopIconCircle(icon),
+        if (icon != null)
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: AppConstantColors.purple500,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppConstantColors.purple500.withOpacity(0.4),
+                      blurRadius: 16,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Icon(
+                    icon,
+                    color: Colors.white,
+                    size: 48,
+                  ),
+                ),
+              ),
+            ),
+          ),
       ],
     );
   }
-}
 
-Widget _buildTopIconCircle(IconData icon) {
-  return Positioned(
-    top: -50,
-    child: Container(
-      width: 100,
-      height: 100,
-      decoration: BoxDecoration(
-        color: AppConstantColors.purple500,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: AppConstantColors.purple500.withOpacity(0.4),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+  Widget _buildPrimaryButton(BuildContext context) {
+    return CustomPrimaryButton.gradient(
+      height: 52,
+      textStyle: context.textTheme.labelLargeFont.copyWith(
+        color: context.colors.white,
+      ),
+      buttonText: primaryButtonText,
+      borderRadius: 100,
+      isLoading: isPrimaryButtonLoading,
+      isEnabled: isPrimaryButtonEnabled,
+      onPressed: primaryButtonOnPressed,
+    );
+  }
+
+  Widget _buildSecondaryButton(BuildContext context) {
+    return CustomPrimaryButton.outlined(
+      height: 52,
+      textStyle: context.textTheme.labelLargeFont.copyWith(
+        color: context.colors.purple600,
+      ),
+      buttonText: secondaryButtonText!,
+      borderColor: context.colors.purple600,
+      borderRadius: 100,
+      onPressed: secondaryButtonOnPressed,
+    );
+  }
+
+  Widget _buildFooter(BuildContext context) {
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(
+            text: "sign_in_different_method".tr(),
+            style: context.textTheme.bodySmallFont.copyWith(
+              color: context.colors.textPrimary,
+            ),
+          ),
+          WidgetSpan(
+            alignment: PlaceholderAlignment.middle,
+            child: GestureDetector(
+              onTap: onTapHere,
+              child: Text(
+                " ${"here".tr()}",
+                style: context.textTheme.labelMediumFont.copyWith(
+                  color: AppConstantColors.purple500,
+                ),
+              ),
+            ),
           ),
         ],
       ),
-      child: Icon(icon, color: AppConstantColors.white, size: 40),
-    ),
-  );
-}
-
-Widget _buildTitle(BuildContext context, String title) {
-  return Text(
-    title,
-    style: context.textTheme.popupTitleFont.copyWith(
-      color: context.colors.textPrimary,
-    ),
-    maxLines: 1,
-    overflow: TextOverflow.ellipsis,
-  );
-}
-
-Widget _buildDescription(BuildContext context, String description) {
-  return Text(
-    description,
-    style: context.textTheme.popupBodyFont.copyWith(
-      color: context.colors.textSecondary,
-    ),
-    maxLines: 3,
-    overflow: TextOverflow.ellipsis,
-    textAlign: TextAlign.start,
-  );
-}
-
-Widget _buildPrimaryButton(
-  BuildContext context,
-  String primaryButtonText,
-  VoidCallback primaryButtonOnPressed,
-  bool isLoading,
-  bool isEnabled,
-) {
-  return CustomPrimaryButton.gradient(
-    height: 48,
-    textStyle: context.textTheme.labelLargeFont.copyWith(
-      color: context.colors.white,
-    ),
-    gradient: LinearGradient(
-      colors: [
-        ExtensionColors.purpleGradient0,
-        ExtensionColors.purpleGradient1,
-        ExtensionColors.purpleGradient2,
-      ],
-    ),
-    buttonText: primaryButtonText,
-    borderRadius: 100,
-    isLoading: isLoading,
-    isEnabled: isEnabled,
-    onPressed: primaryButtonOnPressed,
-  );
-}
-
-Widget _buildSecondaryButton(
-  BuildContext context,
-  String secondaryButtonText,
-  VoidCallback? secondaryButtonOnPressed,
-) {
-  return CustomPrimaryButton.outlined(
-    height: 48,
-    textStyle: context.textTheme.labelLargeFont.copyWith(
-      color: context.colors.purple600,
-    ),
-    buttonText: secondaryButtonText,
-    borderColor: context.colors.purple600,
-    borderRadius: 100,
-    onPressed: secondaryButtonOnPressed,
-  );
-}
-
-Widget _buildSignInAlternativeFooter(
-  BuildContext context,
-  VoidCallback? onTapHere,
-) {
-  return Text.rich(
-    TextSpan(
-      children: [
-        TextSpan(
-          text: "sign_in_different_method".tr(),
-          style: context.textTheme.bodySmallFont.copyWith(
-            color: context.colors.textPrimary,
-          ),
-        ),
-        TextSpan(
-          text: "here".tr(),
-          style: context.textTheme.labelMediumFont.copyWith(
-            color: AppConstantColors.purple500,
-          ),
-          recognizer: TapGestureRecognizer()
-            ..onTap = onTapHere,
-        )
-      ],
-    ),
-    maxLines: 1,
-    overflow: TextOverflow.ellipsis,
-  );
-}
-
-class _InputFieldWithLabel extends StatelessWidget {
-  const _InputFieldWithLabel({required this.label, required this.hint});
-
-  final String label;
-  final String hint;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: context.textTheme.bodySmallFont.copyWith(
-            fontWeight: FontWeight.w500,
-            color: context.colors.gray600,
-          ),
-        ),
-        const SizedBox(height: 4),
-        CustomInputField(
-          borderColor: context.colors.gray400,
-          filledColor: context.colors.white,
-          hintKey: hint,
-          labelHintStyle: context.colors.gray400,
-          enabledColor: context.colors.gray400,
-          radius: 8,
-          contentPaddingHorizontal: 12,
-          contentPaddingVertical: 14,
-          prefixIcon: Icon(Iconsax.sms, color: context.colors.purple400),
-        ),
-      ],
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
 
-class _EmailInputContent extends StatelessWidget {
-  const _EmailInputContent({
-    required this.controller,
+class _SingleInputContent extends StatefulWidget {
+  const _SingleInputContent({
     required this.label,
     required this.hint,
-    required this.enabled,
+    required this.onChanged,
+    this.controller,
+    this.initialValue,
     this.errorText,
+    this.keyboardType = TextInputType.text,
+    this.prefixIcon,
+    this.obscureText = false,
+    this.suffixIcon,
+    this.enabled = true,
   });
 
-  final TextEditingController controller;
   final String label;
   final String hint;
+  final ValueChanged<String> onChanged;
+  final TextEditingController? controller;
+  final String? initialValue;
   final String? errorText;
+  final TextInputType keyboardType;
+  final Widget? prefixIcon;
+  final bool obscureText;
+  final Widget? suffixIcon;
   final bool enabled;
+
+  @override
+  State<_SingleInputContent> createState() => _SingleInputContentState();
+}
+
+class _SingleInputContentState extends State<_SingleInputContent> {
+  late TextEditingController _controller;
+  bool _isInternalController = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.controller != null) {
+      _controller = widget.controller!;
+    } else {
+      _controller = TextEditingController(text: widget.initialValue ?? '');
+      _isInternalController = true;
+    }
+  }
+
+  @override
+  void dispose() {
+    if (_isInternalController) {
+      _controller.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -528,37 +469,38 @@ class _EmailInputContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          label,
+          widget.label,
           style: context.textTheme.bodySmallFont.copyWith(
             fontWeight: FontWeight.w500,
             color: context.colors.gray600,
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 8),
+
         CustomInputField(
-          controller: controller,
-          enabled: enabled,
-          keyboardType: TextInputType.emailAddress,
-          borderColor: errorText != null
+          controller: _controller,
+          enabled: widget.enabled,
+          keyboardType: widget.keyboardType,
+          isObscureText: widget.obscureText,
+          onChanged: widget.onChanged,
+          borderColor: widget.errorText != null
               ? context.colors.error
-              : context.colors.gray400,
+              : context.colors.gray300,
           filledColor: context.colors.white,
-          hintKey: hint,
+          hintKey: widget.hint,
           labelHintStyle: context.colors.gray400,
-          enabledColor: context.colors.gray400,
-          radius: 8,
-          contentPaddingHorizontal: 12,
-          contentPaddingVertical: 14,
-          prefixIcon: Icon(
-            Iconsax.sms,
-            color: context.colors.purple400,
-            size: 20,
-          ),
+          enabledColor: context.colors.gray300,
+          radius: 12,
+          contentPaddingHorizontal: 16,
+          contentPaddingVertical: 16,
+          prefixIcon: widget.prefixIcon,
+          suffixIcon: widget.suffixIcon,
         ),
-        if (errorText != null) ...[
-          const SizedBox(height: 4),
+
+        if (widget.errorText != null) ...[
+          const SizedBox(height: 8),
           Text(
-            errorText!,
+            widget.errorText!,
             style: context.textTheme.bodySmallFont.copyWith(
               color: context.colors.error,
             ),
@@ -572,7 +514,6 @@ class _EmailInputContent extends StatelessWidget {
 class _OtpInputContent extends StatelessWidget {
   const _OtpInputContent({
     required this.onChanged,
-    required this.onCompleted,
     required this.onResend,
     this.controller,
     this.enabled = true,
@@ -581,124 +522,39 @@ class _OtpInputContent extends StatelessWidget {
 
   final TextEditingController? controller;
   final bool enabled;
-  final void Function(String) onChanged;
-  final void Function(String) onCompleted;
+  final ValueChanged<String> onChanged;
   final VoidCallback onResend;
   final bool isResendEnabled;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Center(
-          child: Pinput(
-            length: 6,
-            controller: controller,
-            enabled: enabled,
-            onChanged: onChanged,
-            onCompleted: onCompleted,
-            defaultPinTheme: PinTheme(
-              width: 45,
-              height: 45,
-              textStyle: context.textTheme.headLineMediumFont.copyWith(
-                color: context.colors.textPrimary,
-              ),
-              decoration: BoxDecoration(
-                border: Border.all(color: context.colors.gray300, width: 1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            focusedPinTheme: PinTheme(
-              width: 45,
-              height: 45,
-              textStyle: context.textTheme.headLineMediumFont.copyWith(
-                color: context.colors.textPrimary,
-              ),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: AppConstantColors.purple500,
-                  width: 2,
-                ),
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            keyboardType: TextInputType.number,
-            preFilledWidget: Text(
-              "0",
-              style: context.textTheme.headLineMediumFont.copyWith(
-                color: context.colors.gray200,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 16),
-        _buildResendRow(context),
-      ],
-    );
-  }
-
-  Widget _buildResendRow(BuildContext context) {
-    return Text.rich(
-      TextSpan(
-        children: [
-          TextSpan(
-            text: "havent_received_code".tr(),
-            style: context.textTheme.bodySmallFont.copyWith(
-              color: context.colors.textPrimary,
-            ),
-          ),
-          const TextSpan(text: ' '),
-          WidgetSpan(
-            alignment: PlaceholderAlignment.middle,
-            child: GestureDetector(
-              onTap: isResendEnabled ? onResend : null,
-              child: Text(
-                "resend_it".tr(),
-                style: context.textTheme.labelMediumFont.copyWith(
-                  color: isResendEnabled
-                      ? AppConstantColors.purple500
-                      : context.colors.gray400,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-    );
-  }
-}
-
-class _VerificationContent extends StatelessWidget {
-  final TextEditingController? controller;
-  final void Function(String) onCompleted;
-  final VoidCallback onResend;
-  final bool isResendEnabled;
-
-  const _VerificationContent({
-    required this.onCompleted,
-    required this.onResend,
-    this.controller,
-    this.isResendEnabled = true,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Pinput(
           length: 6,
           controller: controller,
-          onCompleted: onCompleted,
+          enabled: enabled,
+          onChanged: onChanged,
           defaultPinTheme: PinTheme(
-            width: 45,
-            height: 45,
+            width: 48,
+            height: 48,
+            textStyle: context.textTheme.headLineMediumFont.copyWith(
+              color: context.colors.textPrimary,
+            ),
             decoration: BoxDecoration(
               border: Border.all(color: context.colors.gray300, width: 1),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          focusedPinTheme: PinTheme(
+            width: 48,
+            height: 48,
+            textStyle: context.textTheme.headLineMediumFont.copyWith(
+              color: context.colors.textPrimary,
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(color: AppConstantColors.purple500, width: 2),
+              borderRadius: BorderRadius.circular(12),
             ),
           ),
           keyboardType: TextInputType.number,
@@ -710,69 +566,63 @@ class _VerificationContent extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        _buildResendRow(context),
-      ],
-    );
-  }
 
-  Widget _buildResendRow(BuildContext context) {
-    return Text.rich(
-      TextSpan(
-        children: [
-          TextSpan(
-            text: "Haven't_received_the_verification_code?".tr(),
-            style: context.textTheme.bodySmallFont.copyWith(
-              color: context.colors.textPrimary,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Haven't received the verification code? ",
+              style: context.textTheme.bodySmallFont.copyWith(
+                color: context.colors.textSecondary,
+              ),
             ),
-          ),
-          TextSpan(
-            text: "Resend_it".tr(),
-            style: context.textTheme.labelMediumFont.copyWith(
-              color: isResendEnabled
-                  ? AppConstantColors.purple500
-                  : context.colors.gray400,
+            GestureDetector(
+              onTap: isResendEnabled ? onResend : null,
+              child: Text(
+                "Resend it.",
+                style: context.textTheme.labelMediumFont.copyWith(
+                  color: isResendEnabled
+                      ? AppConstantColors.purple500
+                      : context.colors.gray400,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
-            recognizer: TapGestureRecognizer()
-              ..onTap = () {
-                isResendEnabled ? onResend : null;
-              },
-          ),
-        ],
-      ),
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
+          ],
+        ),
+      ],
     );
   }
 }
 
-class _ResetPasswordContent extends StatefulWidget {
-  const _ResetPasswordContent({
-    required this.passwordController,
-    required this.confirmPasswordController,
+class _PasswordResetContent extends StatefulWidget {
+  const _PasswordResetContent({
     required this.passwordLabel,
     required this.passwordHint,
+    required this.onPasswordChanged,
+    this.passwordErrorText,
     required this.confirmPasswordLabel,
     required this.confirmPasswordHint,
-    required this.enabled,
-    this.passwordErrorText,
+    required this.onConfirmPasswordChanged,
     this.confirmPasswordErrorText,
+    this.enabled = true,
   });
 
-  final TextEditingController passwordController;
-  final TextEditingController confirmPasswordController;
   final String passwordLabel;
   final String passwordHint;
+  final ValueChanged<String> onPasswordChanged;
+  final String? passwordErrorText;
   final String confirmPasswordLabel;
   final String confirmPasswordHint;
-  final String? passwordErrorText;
+  final ValueChanged<String> onConfirmPasswordChanged;
   final String? confirmPasswordErrorText;
   final bool enabled;
 
   @override
-  State<_ResetPasswordContent> createState() => _ResetPasswordContentState();
+  State<_PasswordResetContent> createState() => _PasswordResetContentState();
 }
 
-class _ResetPasswordContentState extends State<_ResetPasswordContent> {
+class _PasswordResetContentState extends State<_PasswordResetContent> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
 
@@ -781,6 +631,183 @@ class _ResetPasswordContentState extends State<_ResetPasswordContent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        _buildPasswordField(
+          context,
+          label: widget.passwordLabel,
+          hint: widget.passwordHint,
+          onChanged: widget.onPasswordChanged,
+          errorText: widget.passwordErrorText,
+          obscure: _obscurePassword,
+          onToggleObscure: () {
+            setState(() => _obscurePassword = !_obscurePassword);
+          },
+        ),
+        const SizedBox(height: 16),
+
+        _buildPasswordField(
+          context,
+          label: widget.confirmPasswordLabel,
+          hint: widget.confirmPasswordHint,
+          onChanged: widget.onConfirmPasswordChanged,
+          errorText: widget.confirmPasswordErrorText,
+          obscure: _obscureConfirmPassword,
+          onToggleObscure: () {
+            setState(() => _obscureConfirmPassword = !_obscureConfirmPassword);
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPasswordField(
+      BuildContext context, {
+        required String label,
+        required String hint,
+        required ValueChanged<String> onChanged,
+        String? errorText,
+        required bool obscure,
+        required VoidCallback onToggleObscure,
+      }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: context.textTheme.bodySmallFont.copyWith(
+            fontWeight: FontWeight.w500,
+            color: context.colors.gray600,
+          ),
+        ),
+        const SizedBox(height: 8),
+        CustomInputField(
+          enabled: widget.enabled,
+          isObscureText: obscure,
+          onChanged: onChanged,
+          borderColor: errorText != null
+              ? context.colors.error
+              : context.colors.gray300,
+          filledColor: context.colors.white,
+          hintKey: hint,
+          labelHintStyle: context.colors.gray400,
+          enabledColor: context.colors.gray300,
+          radius: 12,
+          contentPaddingHorizontal: 16,
+          contentPaddingVertical: 16,
+          prefixIcon: Icon(
+            Iconsax.lock,
+            color: context.colors.purple400,
+            size: 20,
+          ),
+          suffixIcon: IconButton(
+            onPressed: onToggleObscure,
+            icon: Icon(
+              obscure ? Iconsax.eye_slash : Iconsax.eye,
+              color: context.colors.gray400,
+              size: 20,
+            ),
+          ),
+        ),
+        if (errorText != null) ...[
+          const SizedBox(height: 8),
+          Text(
+            errorText,
+            style: context.textTheme.bodySmallFont.copyWith(
+              color: context.colors.error,
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _LoginContent extends StatefulWidget {
+  const _LoginContent({
+    required this.identifierLabel,
+    required this.identifierHint,
+    required this.onIdentifierChanged,
+    this.identifierErrorText,
+    this.identifierKeyboardType = TextInputType.emailAddress,
+    this.identifierPrefixIcon,
+    required this.passwordLabel,
+    required this.passwordHint,
+    required this.onPasswordChanged,
+    this.passwordErrorText,
+    this.forgotPasswordText,
+    this.onForgotPasswordTap,
+    this.signUpText,
+    this.onSignUpTap,
+    this.enabled = true,
+  });
+
+  final String identifierLabel;
+  final String identifierHint;
+  final ValueChanged<String> onIdentifierChanged;
+  final String? identifierErrorText;
+  final TextInputType identifierKeyboardType;
+  final Widget? identifierPrefixIcon;
+  final String passwordLabel;
+  final String passwordHint;
+  final ValueChanged<String> onPasswordChanged;
+  final String? passwordErrorText;
+  final String? forgotPasswordText;
+  final VoidCallback? onForgotPasswordTap;
+  final String? signUpText;
+  final VoidCallback? onSignUpTap;
+  final bool enabled;
+
+  @override
+  State<_LoginContent> createState() => _LoginContentState();
+}
+
+class _LoginContentState extends State<_LoginContent> {
+  bool _obscurePassword = true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.identifierLabel,
+          style: context.textTheme.bodySmallFont.copyWith(
+            fontWeight: FontWeight.w500,
+            color: context.colors.gray600,
+          ),
+        ),
+        const SizedBox(height: 8),
+        CustomInputField(
+          enabled: widget.enabled,
+          keyboardType: widget.identifierKeyboardType,
+          onChanged: widget.onIdentifierChanged,
+          borderColor: widget.identifierErrorText != null
+              ? context.colors.error
+              : context.colors.gray300,
+          filledColor: context.colors.white,
+          hintKey: widget.identifierHint,
+          labelHintStyle: context.colors.gray400,
+          enabledColor: context.colors.gray300,
+          radius: 12,
+          contentPaddingHorizontal: 16,
+          contentPaddingVertical: 16,
+          prefixIcon: widget.identifierPrefixIcon ??
+              Icon(
+                Iconsax.sms,
+                color: context.colors.purple400,
+                size: 20,
+              ),
+        ),
+        if (widget.identifierErrorText != null) ...[
+          const SizedBox(height: 8),
+          Text(
+            widget.identifierErrorText!,
+            style: context.textTheme.bodySmallFont.copyWith(
+              color: context.colors.error,
+            ),
+          ),
+        ],
+        const SizedBox(height: 16),
+
         Text(
           widget.passwordLabel,
           style: context.textTheme.bodySmallFont.copyWith(
@@ -788,21 +815,22 @@ class _ResetPasswordContentState extends State<_ResetPasswordContent> {
             color: context.colors.gray600,
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 8),
         CustomInputField(
-          controller: widget.passwordController,
+          controller: widget.confirmPasswordController,
           enabled: widget.enabled,
           isObscureText: _obscurePassword,
+          onChanged: widget.onPasswordChanged,
           borderColor: widget.passwordErrorText != null
               ? context.colors.error
-              : context.colors.gray400,
+              : context.colors.gray300,
           filledColor: context.colors.white,
           hintKey: widget.passwordHint,
           labelHintStyle: context.colors.gray400,
-          enabledColor: context.colors.gray400,
-          radius: 8,
-          contentPaddingHorizontal: 12,
-          contentPaddingVertical: 14,
+          enabledColor: context.colors.gray300,
+          radius: 12,
+          contentPaddingHorizontal: 16,
+          contentPaddingVertical: 16,
           prefixIcon: Icon(
             Iconsax.lock,
             color: context.colors.purple400,
@@ -820,7 +848,7 @@ class _ResetPasswordContentState extends State<_ResetPasswordContent> {
           ),
         ),
         if (widget.passwordErrorText != null) ...[
-          const SizedBox(height: 4),
+          const SizedBox(height: 8),
           Text(
             widget.passwordErrorText!,
             style: context.textTheme.bodySmallFont.copyWith(
@@ -828,129 +856,24 @@ class _ResetPasswordContentState extends State<_ResetPasswordContent> {
             ),
           ),
         ],
-        const SizedBox(height: 16),
 
-        Text(
-          widget.confirmPasswordLabel,
-          style: context.textTheme.bodySmallFont.copyWith(
-            fontWeight: FontWeight.w500,
-            color: context.colors.gray600,
-          ),
-        ),
-        const SizedBox(height: 4),
-        CustomInputField(
-          controller: widget.confirmPasswordController,
-          enabled: widget.enabled,
-          isObscureText: _obscureConfirmPassword,
-          borderColor: widget.confirmPasswordErrorText != null
-              ? context.colors.error
-              : context.colors.gray400,
-          filledColor: context.colors.white,
-          hintKey: widget.confirmPasswordHint,
-          labelHintStyle: context.colors.gray400,
-          enabledColor: context.colors.gray400,
-          radius: 8,
-          contentPaddingHorizontal: 12,
-          contentPaddingVertical: 14,
-          prefixIcon: Icon(
-            Iconsax.lock,
-            color: context.colors.purple400,
-            size: 20,
-          ),
-          suffixIcon: IconButton(
-            onPressed: () {
-              setState(
-                () => _obscureConfirmPassword = !_obscureConfirmPassword,
-              );
-            },
-            icon: Icon(
-              _obscureConfirmPassword ? Iconsax.eye_slash : Iconsax.eye,
-              color: context.colors.gray400,
-              size: 20,
-            ),
-          ),
-        ),
-        if (widget.confirmPasswordErrorText != null) ...[
-          const SizedBox(height: 4),
-          Text(
-            widget.confirmPasswordErrorText!,
-            style: context.textTheme.bodySmallFont.copyWith(
-              color: context.colors.error,
+        if (widget.forgotPasswordText != null) ...[
+          const SizedBox(height: 12),
+          Align(
+            alignment: AlignmentDirectional.centerEnd,
+            child: GestureDetector(
+              onTap: widget.enabled ? widget.onForgotPasswordTap : null,
+              child: Text(
+                widget.forgotPasswordText!,
+                style: context.textTheme.bodySmallFont.copyWith(
+                  color: context.colors.purple600,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
           ),
         ],
       ],
-    );
-  }
-}
-
-class _ClockOutContent extends StatelessWidget {
-  const _ClockOutContent({
-    required this.todayWorkHours,
-    required this.overTimeTodayWorkHours,
-  });
-
-  final String todayWorkHours;
-  final String overTimeTodayWorkHours;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _ClockOutItem(time: "today".tr(), hour: todayWorkHours),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: _ClockOutItem(
-            time: "overtime".tr(),
-            hour: overTimeTodayWorkHours,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _ClockOutItem extends StatelessWidget {
-  const _ClockOutItem({required this.time, required this.hour});
-
-  final String time;
-  final String hour;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: context.colors.cardBackground,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: context.colors.gray50, width: 1),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            time,
-            style: context.textTheme.labelMediumFont.copyWith(
-              color: context.colors.textSecondary,
-            ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            hour,
-            style: context.textTheme.titleLargeFont.copyWith(
-              fontSize: 20,
-              color: context.colors.textPrimary,
-            ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
-      ),
     );
   }
 }
