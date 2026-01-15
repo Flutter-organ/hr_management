@@ -6,7 +6,6 @@ import 'package:hr_management/core/design_system/components/empty_state_card.dar
 import 'package:hr_management/core/design_system/components/horizontal_stacked_avatars.dart';
 import 'package:hr_management/core/design_system/model/meeting_data_model.dart';
 import 'package:hr_management/core/design_system/theme/helper/app_assets.dart';
-import 'package:hr_management/core/design_system/theme/helper/extention_colors.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:iconsax/iconsax.dart';
 

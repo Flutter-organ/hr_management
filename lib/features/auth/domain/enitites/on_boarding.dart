@@ -10,21 +10,3 @@ class OnBoardingEntity {
     required this.subTitle,
   });
 }
-
-List<OnBoardingEntity> onBoardingitems = [
-  OnBoardingEntity(
-    image: AppAssets.kOnBoargingOne,
-    title: 'on_boarding_title_one'.tr(),
-    subTitle: 'on_boarding_subtitle_one'.tr(),
-  ),
-  OnBoardingEntity(
-    image: AppAssets.kOnBoargingTwo,
-    title: 'on_boarding_title_two'.tr(),
-    subTitle: 'on_boarding_subtitle_two'.tr(),
-  ),
-  OnBoardingEntity(
-    image: AppAssets.kOnBoargingThree,
-    title: 'on_boarding_title_three'.tr(),
-    subTitle: 'on_boarding_subtitle_three'.tr(),
-  ),
-];

@@ -4,7 +4,12 @@ import 'package:hr_management/features/auth/domain/enitites/on_boarding.dart';
 
 class ListGenerateWidget extends StatelessWidget {
   final int currentIndex;
-  const ListGenerateWidget({super.key, required this.currentIndex});
+  final List<OnBoardingEntity> onBoardingitems;
+  const ListGenerateWidget({
+    super.key,
+    required this.currentIndex,
+    required this.onBoardingitems,
+  });
 
   @override
   Widget build(BuildContext context) {

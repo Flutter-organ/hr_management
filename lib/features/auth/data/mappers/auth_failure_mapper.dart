@@ -13,8 +13,23 @@ class AuthFailureMapper {
       return const NetworkFailure();
     }
 
+    if (exception is ConnectionTimeoutException) {
+      return const TimeoutFailure();
+    }
+
     if (exception is CacheException) {
       return CacheFailure(exception.message);
+    }
+
+    if (exception is UnauthorizedException) {
+      return const SessionExpiredFailure();
+    }
+
+    if (exception is ValidationException) {
+      return ValidationFailure(
+        message: exception.message,
+        fieldErrors: exception.errors,
+      );
     }
 
     if (exception is AppException) {
@@ -23,7 +38,6 @@ class AuthFailureMapper {
 
     return UnknownFailure(exception.toString());
   }
-
 
   static Failure _mapServerException(ServerException exception) {
     switch (exception.statusCode) {

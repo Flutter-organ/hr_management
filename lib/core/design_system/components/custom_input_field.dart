@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
+
 class CustomInputField extends StatelessWidget {
   final String? hintKey;
   final TextEditingController? controller;
@@ -17,7 +18,7 @@ class CustomInputField extends StatelessWidget {
   final int maxLines;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final String? Function(String?)? onChanged;
+  final void Function(String)? onChanged;
   final Function()? onSaved;
   final Color? borderColor;
   final Color? filledColor;
@@ -37,6 +38,8 @@ class CustomInputField extends StatelessWidget {
   final Color? focuseAndErrorColor;
   final Color? enabledColor;
   final InputBorder? border;
+  final String? label;
+  final Color? labelColor;
 
   const CustomInputField({
     Key? key,
@@ -75,57 +78,101 @@ class CustomInputField extends StatelessWidget {
     this.hintFontSize,
     this.border,
     this.enabledColor,
+    this.label,
+    this.labelColor,
   });
+
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      keyboardType: keyboardType,
-      style: context.textTheme.bodyMediumFont.copyWith(
-        color: textInputColor ?? context.colors.textPrimary
-      ),
-      onTap: onTap,
-      enabled: enabled,
-      obscureText: isObscureText,
-      readOnly: isReadOnly ?? false,
-      decoration: InputDecoration(
-        hintText: hintKey,
-        hintStyle: context.textTheme.bodyMediumFont.apply(
-          color: labelHintStyle ?? context.colors.gray400,),
-        suffixIcon: suffixIcon,
-        prefixIcon: prefixIcon,
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: contentPaddingHorizontal ?? 0.0,
-          vertical: contentPaddingVertical ?? 0.0,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(radius ?? 0),
-          borderSide: BorderSide(
-            color: focuseAndErrorColor ?? context.colors.purple500,
+    return Column(
+      children: [
+        label != null
+            ? Column(
+          children: [
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Text(
+                label!,
+                style: context.textTheme.bodySmallFont.copyWith(
+                  color: labelColor!,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ),
+            const SizedBox(height: 4),
+          ],
+        )
+            : const SizedBox(height: 0),
+        TextFormField(
+          controller: controller,
+          keyboardType: keyboardType,
+          style: context.textTheme.bodyMediumFont.copyWith(
+            color: textInputColor ?? context.colors.textPrimary,
           ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(radius ?? 4.00),
-          borderSide: BorderSide(
-            color: focuseAndErrorColor ?? context.colors.error500,
+          onTap: onTap,
+          enabled: enabled,
+          obscureText: isObscureText,
+          readOnly: isReadOnly ?? false,
+          decoration: InputDecoration(
+            hintText: hintKey,
+            hintStyle: context.textTheme.bodyMediumFont.apply(
+              color: labelHintStyle ?? context.colors.gray400,
+            ),
+            suffixIcon: suffixIcon,
+            prefixIcon: prefixIcon,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: contentPaddingHorizontal ?? 0.0,
+              vertical: contentPaddingVertical ?? 0.0,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(radius ?? 0),
+              borderSide: BorderSide(
+                color: focuseAndErrorColor ?? context.colors.purple500,
+              ),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(radius ?? 8),
+              borderSide: BorderSide(color: context.colors.error500, width: 2),
+            ),
+
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(radius ?? 4.00),
+              borderSide: BorderSide(
+                color: focuseAndErrorColor ?? context.colors.error500,
+              ),
+            ),
+            errorStyle: context.textTheme.bodySmallFont.copyWith(
+              color: labelErrorStyle,
+            ),
+            errorMaxLines: 2,
+            fillColor: filledColor,
+            filled: true,
+            isDense: true,
+            labelStyle: context.textTheme.bodyMediumFont.copyWith(
+              color: labelHintStyle ?? context.colors.gray600,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(radius ?? 4.00),
+              borderSide: BorderSide(
+                color: enabledColor ?? context.colors.gray400,
+              ),
+            ),
+            border: border ?? InputBorder.none,
           ),
+          validator: validator,
+          minLines: minLines,
+          maxLines: maxLines,
+          onChanged: onChanged,
+          inputFormatters: [
+            if (isDigitOnly)
+              FilteringTextInputFormatter.digitsOnly
+            else
+              ...inputFormatter ?? [],
+          ],
+          focusNode: fieldFocusNode,
+          textInputAction: action,
         ),
-        errorStyle: context.textTheme.bodySmallFont.copyWith(
-          color: labelErrorStyle,
-        ),
-        errorMaxLines: 2,
-        fillColor: filledColor,
-        filled: true,
-        isDense: true,
-        labelStyle: context.textTheme.bodyMediumFont.copyWith(
-          color: labelHintStyle ?? context.colors.gray600,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(radius ?? 4.00),
-          borderSide: BorderSide(color: enabledColor ?? context.colors.gray400)
-        ),
-        border: border ?? InputBorder.none,
-      ),
+      ],
     );
   }
 }

@@ -2,9 +2,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hr_management/core/di/injection_container.dart';
 import 'package:hr_management/core/routes/route_names.dart';
-import 'package:hr_management/features/presentation/on_boarding_feat/logic/cubit/on_boarding_cubit.dart';
-import 'package:hr_management/features/presentation/on_boarding_feat/view/on_boarding_final_page.dart';
-import 'package:hr_management/features/presentation/on_boarding_feat/view/on_boarding_page.dart';
+import 'package:hr_management/features/auth/presentation/on_boarding_feat/logic/cubit/on_boarding_cubit.dart';
+import 'package:hr_management/features/auth/presentation/on_boarding_feat/view/on_boarding_final_page.dart';
+import 'package:hr_management/features/auth/presentation/on_boarding_feat/view/on_boarding_page.dart';
+import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: RouteNames.onBoardingPageRoute,

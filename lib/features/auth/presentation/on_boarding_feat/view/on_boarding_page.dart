@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hr_management/core/design_system/components/custom_primary_button.dart';
+import 'package:hr_management/core/design_system/theme/helper/app_assets.dart';
 import 'package:hr_management/core/design_system/theme/helper/extention_colors.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:hr_management/core/routes/route_names.dart';
 import 'package:hr_management/features/auth/domain/enitites/on_boarding.dart';
-import 'package:hr_management/features/presentation/on_boarding_feat/logic/cubit/on_boarding_cubit.dart';
-import 'package:hr_management/features/presentation/on_boarding_feat/logic/cubit/on_boarding_state.dart';
-import 'package:hr_management/features/presentation/on_boarding_feat/widget/list_generate_widget.dart';
+import 'package:hr_management/features/auth/presentation/on_boarding_feat/logic/cubit/on_boarding_cubit.dart';
+import 'package:hr_management/features/auth/presentation/on_boarding_feat/logic/cubit/on_boarding_state.dart';
+import 'package:hr_management/features/auth/presentation/on_boarding_feat/widget/list_generate_widget.dart';
 
 class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({super.key});
@@ -19,12 +20,17 @@ class OnBoardingPage extends StatefulWidget {
 }
 
 class _OnBoardingPageState extends State<OnBoardingPage> {
-  final pageController = PageController(initialPage: 0);
-  int currentIndex = 0;
+  late final OnboardingCubit _onboardingCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _onboardingCubit = context.read<OnboardingCubit>();
+  }
 
   @override
   void dispose() {
-    pageController.dispose();
+    _onboardingCubit.pageController.dispose();
     super.dispose();
   }
 
@@ -36,7 +42,10 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           return Column(
             children: [
               _pageView(),
-              ListGenerateWidget(currentIndex: currentIndex),
+              ListGenerateWidget(
+                currentIndex: context.read<OnboardingCubit>().currentIndex,
+                onBoardingitems: onBoardingitems,
+              ),
               SizedBox(height: 23),
               _nextAndSkipBottons(),
             ],
@@ -50,11 +59,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     return Expanded(
       child: PageView.builder(
         onPageChanged: (value) {
-          setState(() {
-            currentIndex = value;
-          });
+          context.read<OnboardingCubit>().currentIndex = value;
         },
-        controller: pageController,
+        controller: context.read<OnboardingCubit>().pageController,
         itemCount: onBoardingitems.length,
         itemBuilder: (context, index) {
           return ListView(
@@ -100,16 +107,13 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             buttonText: "next".tr(),
             textStyle: context.textTheme.labelLargeFont,
             onPressed: () {
-              context.read<OnboardingCubit>().checkOnboardingStatus();
-              if (currentIndex == onBoardingitems.length - 1) {
+              if (context.read<OnboardingCubit>().currentIndex ==
+                  onBoardingitems.length - 1) {
                 context.read<OnboardingCubit>().completeOnboarding();
                 context.replaceNamed(RouteNames.onBoardingFinalPageRoute);
               }
-              pageController.animateToPage(
-                ++currentIndex,
-                duration: Duration(milliseconds: 300),
-                curve: Curves.easeIn,
-              );
+              context.read<OnboardingCubit>().nextPage();
+              print("$State");
             },
           ),
           SizedBox(height: 15),
@@ -119,8 +123,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               color: ExtensionColors.kButtonBackgroundPrimary,
             ),
             onPressed: () {
-              context.replaceNamed(RouteNames.onBoardingFinalPageRoute);
               context.read<OnboardingCubit>().completeOnboarding();
+              context.replaceNamed(RouteNames.onBoardingFinalPageRoute);
             },
           ),
           SizedBox(height: 30),
@@ -128,4 +132,22 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       ),
     );
   }
+
+  List<OnBoardingEntity> onBoardingitems = [
+    OnBoardingEntity(
+      image: AppAssets.kOnBoargingOne,
+      title: 'on_boarding_title_one'.tr(),
+      subTitle: 'on_boarding_subtitle_one'.tr(),
+    ),
+    OnBoardingEntity(
+      image: AppAssets.kOnBoargingTwo,
+      title: 'on_boarding_title_two'.tr(),
+      subTitle: 'on_boarding_subtitle_two'.tr(),
+    ),
+    OnBoardingEntity(
+      image: AppAssets.kOnBoargingThree,
+      title: 'on_boarding_title_three'.tr(),
+      subTitle: 'on_boarding_subtitle_three'.tr(),
+    ),
+  ];
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/theme/helper/app_assets.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:iconsax/iconsax.dart';
-import '../theme/helper/extention_colors.dart';
 
 class ExpenseHistoryCard extends StatelessWidget {
   final String status;
