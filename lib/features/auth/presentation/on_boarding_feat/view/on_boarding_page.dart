@@ -47,7 +47,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 onBoardingitems: onBoardingitems,
               ),
               SizedBox(height: 23),
-              _nextAndSkipBottons(),
+              _nextAndSkipBottons(state),
             ],
           );
         },
@@ -98,7 +98,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     );
   }
 
-  Widget _nextAndSkipBottons() {
+  Widget _nextAndSkipBottons(OnboardingState state) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 30, left: 34, right: 34),
       child: Column(
@@ -111,9 +111,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   onBoardingitems.length - 1) {
                 context.read<OnboardingCubit>().completeOnboarding();
                 context.replaceNamed(RouteNames.onBoardingFinalPageRoute);
+                print("$state");
               }
               context.read<OnboardingCubit>().nextPage();
-              print("$State");
             },
           ),
           SizedBox(height: 15),
