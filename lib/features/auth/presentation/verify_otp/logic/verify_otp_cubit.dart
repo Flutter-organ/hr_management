@@ -6,7 +6,7 @@ import '../../../domain/usecase/OtpUseCase.dart';
 
 class VerifyOtpCubit extends BaseCubit<VerifyOtpUiState> {
   VerifyOtpCubit(this._OTPUseCase) : super(VerifyOtpUiState());
-  final OtpUseCase _OTPUseCase;
+  final verifyOTPUseCase _OTPUseCase;
 
   String otpCode = '';
 
