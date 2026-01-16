@@ -157,6 +157,13 @@ class CustomInputField extends StatelessWidget {
                 color: enabledColor ?? context.colors.gray400,
               ),
             ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(radius ?? 4.00),
+              borderSide: BorderSide(
+                color: enabledColor ?? context.colors.gray300,
+                width: 1,
+              ),
+            ),
             border: border ?? InputBorder.none,
           ),
           validator: validator,

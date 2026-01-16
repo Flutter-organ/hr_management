@@ -43,6 +43,11 @@ class ResetPasswordPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
+      listenWhen: (previous, current) {
+        return (current.isSuccess && !previous.isSuccess) ||
+            (current.apiError != null &&
+                current.apiError != previous.apiError);
+      },
       listener: (context, state) {
         if (state.isSuccess) {
           Navigator.of(context).pop();

@@ -12,7 +12,12 @@ class ResetPasswordCubit extends BaseCubit<ResetPasswordState> {
     if (!_validate()) return;
 
     await execute(
-      onLoading: () => updateState((s) => s.copyWith(isLoading: true, clearApiError: true)),
+      onLoading: () => updateState((s) => s.copyWith(
+          isLoading: true,
+          clearOtpError: true,
+          clearPasswordError: true,
+          clearConfirmPasswordError: true,
+          clearApiError: true)),
       call: () => _resetPasswordUseCase(
         identifier: state.identifier,
         code: state.otp,
@@ -62,7 +67,8 @@ class ResetPasswordCubit extends BaseCubit<ResetPasswordState> {
   }
 
   void clearError() {
-    updateState((s) => s.copyWith(clearApiError: true,
+    updateState((s) => s.copyWith(
+        clearApiError: true,
         clearOtpError: true,
         clearPasswordError: true,
         clearConfirmPasswordError: true));

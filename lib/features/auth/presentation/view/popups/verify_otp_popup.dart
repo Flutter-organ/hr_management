@@ -48,6 +48,11 @@ class _VerifyOtpPopupState extends State<VerifyOtpPopup> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ForgotPasswordCubit, ForgotPasswordState>(
+      listenWhen: (previous, current) {
+        return (current.isSuccess && !previous.isSuccess) ||
+            (current.apiError != null &&
+                current.apiError != previous.apiError);
+      },
       listener: (context, state) {
         if (state.isSuccess) {
           SnackBarHelper.showSuccess(context, 'OTP sent successfully!');

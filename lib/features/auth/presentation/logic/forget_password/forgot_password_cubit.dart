@@ -13,7 +13,11 @@ class ForgotPasswordCubit extends BaseCubit<ForgotPasswordState> {
     if (!_validateEmail()) return;
 
     await execute(
-      onLoading: () => updateState((s) => s.copyWith(isLoading: true, clearApiError: true)),
+      onLoading: () => updateState((s) => s.copyWith(
+          isLoading: true,
+          clearEmailError: true,
+          isSuccess: false,
+          clearApiError: true)),
       call: () => _forgotPasswordUseCase(
         identifier: state.email.trim(),
         loginType: LoginType.email,
@@ -33,7 +37,10 @@ class ForgotPasswordCubit extends BaseCubit<ForgotPasswordState> {
 
   Future<void> resendOtp() async {
     if (!_validateEmail()) return;
-
+    updateState((s) => s.copyWith(
+      clearApiError: true,
+      isSuccess: false,
+    ));
     await submit();
   }
 
@@ -42,7 +49,12 @@ class ForgotPasswordCubit extends BaseCubit<ForgotPasswordState> {
   }
 
   void clearState() {
-    emit(const ForgotPasswordState());
+    updateState((s) => s.copyWith(
+      clearApiError: true,
+      clearEmailError: true,
+      isSuccess: false,
+      successIdentifier: null,
+    ));
   }
 
   void onEmailChanged(String value) {
