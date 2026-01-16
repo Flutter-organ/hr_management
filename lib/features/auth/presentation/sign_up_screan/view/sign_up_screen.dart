@@ -6,7 +6,6 @@ import '../../../../../core/design_system/theme/color/app_constant_colors.dart';
 import '../../../../../core/design_system/theme/helper/PopupHelper.dart';
 import '../../../../../core/design_system/theme/helper/theme_extention.dart';
 import '../../../../../core/di/injection_container.dart';
-import '../../../domain/usecase/OtpUseCase.dart';
 import '../../verify_otp/logic/verify_otp_cubit.dart';
 import '../../verify_otp/view/verify_otp_popup.dart';
 import '../logic/sign_up_cubit.dart';

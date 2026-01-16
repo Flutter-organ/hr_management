@@ -99,10 +99,13 @@ class SignUpCubit extends BaseCubit<SignUpUiState> {
   }
 
   String? validateEmail(String? value) {
-    (value == null || value.isEmpty) ? 'email_required'.tr() :
-    !RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)
-        ? 'invalid_email'.tr()
-        : null;
+    if (value == null || value.isEmpty) {
+      return 'email_required'.tr();
+    }
+
+    if (!value.endsWith('@gmail.com')) {
+      return 'email_must_be_name@gmail.com'.tr();
+    }
     return null;
   }
 

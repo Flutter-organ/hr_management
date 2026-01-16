@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../core/design_system/components/popups/custom_popup.dart';
 import '../../../../../core/design_system/theme/helper/PopupHelper.dart';
+import '../../../../../core/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../core/di/injection_container.dart';
 import '../../../domain/usecase/OtpUseCase.dart';
 import '../../welcome_to_work_mate_popup/logic/welcome_to_work_mate_popup_cubit.dart';
@@ -15,22 +16,22 @@ class VerifyOtpPopUp extends StatelessWidget {
   final String email;
   final String type;
 
-  const VerifyOtpPopUp({
-    super.key,
-    required this.email,
-    required this.type,
-  });
+  const VerifyOtpPopUp({super.key, required this.email, required this.type});
 
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<VerifyOtpCubit>();
 
     return BlocConsumer<VerifyOtpCubit, VerifyOtpUiState>(
+      listenWhen: (previous, current) {
+        return previous.errorMessage != current.errorMessage ||
+            previous.isVerified != current.isVerified;
+      },
       listener: (context, state) {
-        print("++==========${state.isVerified}");
         if (state.isVerified) {
           Navigator.of(context).pop();
-          print(state.isVerified);
+
+          SnackBarHelper.showSuccess(context, 'verification_success'.tr());
           PopupHelper.show(
             context: context,
             popup: BlocProvider(
@@ -38,30 +39,30 @@ class VerifyOtpPopUp extends StatelessWidget {
               child: WelcomeToWorkMatePopUp(),
             ),
           );
+          return;
+        }
+
+        if (state.errorMessage != null) {
+          SnackBarHelper.showError(context, state.errorMessage!);
         }
       },
       builder: (context, state) {
         return CustomPopup.otpVerificationPopup(
-            icon: Iconsax.sms_notification,
-            title: 'verification_code_title'.tr(),
-            description: 'verification_code_desc'.tr(
-              args: [
-                type.tr(),
-                email,
-              ],
-            ),
-            primaryButtonText: 'submit'.tr(),
-            primaryButtonOnPressed: () {
-              cubit.verifyOtp(email: email, type: type);
-            },
-            onOtpChanged: (code) {
-              cubit.setOtp(code);
-            },
-            onResendOtp: () {
-              cubit.resendOtp();
-            }
+          icon: Iconsax.sms_notification,
+          title: 'verification_code_title'.tr(),
+          description: 'verification_code_desc'.tr(args: [type.tr(), email]),
+          primaryButtonText: 'submit'.tr(),
+          primaryButtonOnPressed: () {
+            cubit.verifyOtp(email: email, type: type);
+          },
+          onOtpChanged: (code) {
+            cubit.setOtp(code);
+          },
+          onResendOtp: () {
+            cubit.resendOtp();
+          },
         );
-      }
+      },
     );
   }
 }
