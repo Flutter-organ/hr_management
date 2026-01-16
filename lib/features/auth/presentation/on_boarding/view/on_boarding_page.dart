@@ -61,12 +61,13 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         listeners: [
           BlocListener<OnboardingCubit, OnboardingState>(
             listenWhen: (previous, current) =>
-            previous.currentIndex != current.currentIndex,
+                previous.currentIndex != current.currentIndex,
             listener: _onPageIndexChanged,
           ),
           BlocListener<OnboardingCubit, OnboardingState>(
             listenWhen: (previous, current) =>
-            previous.shouldNavigateToFinal != current.shouldNavigateToFinal &&
+                previous.shouldNavigateToFinal !=
+                    current.shouldNavigateToFinal &&
                 current.shouldNavigateToFinal == true,
             listener: _onNavigationTriggered,
           ),
@@ -109,13 +110,14 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
 
   Widget _buildPageView(BuildContext context) {
     return Expanded(
-      child: PageView.builder(
+      child: PageView(
         controller: _pageController,
         onPageChanged: context.read<OnboardingCubit>().onPageChanged,
-        itemCount: _items.length,
-        itemBuilder: (context, index) {
-          return OnboardingPageContent(item: _items[index]);
-        },
+        children: [
+          OnboardingPageContent(item: _items[0]),
+          OnboardingPageContent(item: _items[1]),
+          OnboardingPageContent(item: _items[2]),
+        ],
       ),
     );
   }
