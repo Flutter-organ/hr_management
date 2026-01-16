@@ -82,6 +82,7 @@
   "sign_up": "Sign Up",
   "next": "Next",
   "skip": "Skip",
+  "get_started": "Get Started",
   "forgot_password_description": "Reset password code will be sent to your email to reset your password.",
   "enter_your_email": "Enter your email",
   "email_required": "Email is required",

@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/config/app_config.dart';
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
-
 import 'core/di/injection_container.dart';
 import 'core/routes/route_generator.dart';
 
@@ -11,6 +10,7 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await AppConfig.init();
   await setupDependencies();
+  //await _debugCheckOnboardingStatus();
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('ar'), Locale('en')],
@@ -19,6 +19,21 @@ void main() async {
     ),
   );
 }
+
+// Future<void> _debugCheckOnboardingStatus() async {
+//   final checkOnboardingUseCase = sl<CheckOnboardingStatusUseCase>();
+//   final result = await checkOnboardingUseCase.call();
+//
+//   debugPrint('═══════════════════════════════════════════');
+//   debugPrint('🚀 APP STARTED');
+//
+//   result.fold(
+//         (failure) => debugPrint('❌ Error checking onboarding: $failure'),
+//         (isCompleted) => debugPrint('📋 onboarding_completed = $isCompleted'),
+//   );
+//
+//   debugPrint('═══════════════════════════════════════════');
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

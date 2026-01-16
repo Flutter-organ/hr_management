@@ -4,14 +4,16 @@ import 'package:hr_management/features/auth/data/mappers/auth_failure_mapper.dar
 import 'package:hr_management/features/auth/domain/failures/failure.dart';
 import 'package:hr_management/features/auth/domain/repository/on_boarding_repository.dart';
 
-class OnboardingRepositoryImp implements OnboardingRepository {
+class OnboardingRepositoryImpl implements OnboardingRepository {
   final OnboardingLocalDataSource _localDataSource;
-  OnboardingRepositoryImp({required OnboardingLocalDataSource localDataSource})
-    : _localDataSource = localDataSource;
+
+  OnboardingRepositoryImpl(this._localDataSource);
+
   @override
   Future<Either<Failure, bool>> isOnboardingCompleted() async {
     try {
-      return Right(await _localDataSource.isOnboardingCompleted());
+      final result = _localDataSource.isOnboardingCompleted();
+      return Right(result);
     } catch (e) {
       return Left(AuthFailureMapper.mapException(e));
     }
@@ -21,7 +23,7 @@ class OnboardingRepositoryImp implements OnboardingRepository {
   Future<Either<Failure, Unit>> saveOnboardingCompleted() async {
     try {
       await _localDataSource.saveOnboardingCompleted();
-      return Right(unit);
+      return const Right(unit);
     } catch (e) {
       return Left(AuthFailureMapper.mapException(e));
     }

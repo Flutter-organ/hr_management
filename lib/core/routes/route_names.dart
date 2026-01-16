@@ -1,8 +1,6 @@
 class RouteNames {
-  // ───────────────────── Future / Commented Routes ─────────────────────
-  // Uncomment when ready to implement:
-  // static const String namePageRoute = "namePage";
-  // static const String loginHomePageRoute = "/LoginHomePage";
-  static const onBoardingFinalPageRoute = "/OnBoardingFinalPage";
-  static const onBoardingPageRoute = "/";
+  static const String onboarding = '/';
+  static const String onboardingFinal = '/onboarding-final';
+  static const String login = '/login';
+  static const String register = '/register';
 }

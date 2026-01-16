@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
-import 'package:hr_management/features/auth/domain/enitites/on_boarding.dart';
 
-class ListGenerateWidget extends StatelessWidget {
+class OnboardingDotsIndicator extends StatelessWidget {
   final int currentIndex;
-  final List<OnBoardingEntity> onBoardingitems;
-  const ListGenerateWidget({
+  final int itemCount;
+
+  const OnboardingDotsIndicator({
     super.key,
     required this.currentIndex,
-    required this.onBoardingitems,
+    required this.itemCount,
   });
 
   @override
@@ -16,9 +16,9 @@ class ListGenerateWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ...List.generate(onBoardingitems.length, (index) {
+        ...List.generate(itemCount, (index) {
           return Container(
-            margin: EdgeInsetsDirectional.only(end: 2),
+            margin: const EdgeInsetsDirectional.only(end: 2),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: currentIndex == index

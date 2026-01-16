@@ -3,11 +3,12 @@ import 'package:hr_management/features/auth/data/data_source/local/onboarding_lo
 import 'package:hr_management/features/auth/data/data_source/local/onboarding_local_data_source_impl.dart';
 import 'package:hr_management/features/auth/data/repository_imp/on_boarding_repository_imp.dart';
 import 'package:hr_management/features/auth/domain/repository/on_boarding_repository.dart';
-import 'package:hr_management/features/auth/domain/use_cases/on_boarding_use_case.dart';
-import 'package:hr_management/features/auth/presentation/on_boarding_feat/logic/cubit/on_boarding_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source_imp.dart';
+import '../../features/auth/domain/use_cases/check_onboarding_status_use_case.dart';
+import '../../features/auth/domain/use_cases/complete_onboarding_use_case.dart';
+import '../../features/auth/presentation/on_boarding/logic/cubit/on_boarding_cubit.dart';
 import '../cache/secure_storage_data_source.dart';
 import '../cache/shared_preferences_service.dart';
 import '../network/dio_client.dart';
@@ -29,7 +30,7 @@ Future<void> _initCore() async {
   sl.registerSingleton<SharedPreferences>(sharedPreferences);
 
   sl.registerLazySingleton<PreferencesService>(
-    () => SharedPreferencesServiceImpl(sl<SharedPreferences>()),
+        () => SharedPreferencesServiceImpl(sl<SharedPreferences>()),
   );
 }
 
@@ -46,15 +47,25 @@ Future<void> _initAuth() async {
 
 Future<void> _initOnboarding() async {
   sl.registerLazySingleton<OnboardingLocalDataSource>(
-    () => OnboardingLocalDataSourceImpl(sl<PreferencesService>()),
+        () => OnboardingLocalDataSourceImpl(sl<PreferencesService>()),
   );
+
   sl.registerLazySingleton<OnboardingRepository>(
-    () => OnboardingRepositoryImp(
-      localDataSource: sl<OnboardingLocalDataSource>(),
+        () => OnboardingRepositoryImpl(sl<OnboardingLocalDataSource>()),
+  );
+
+  sl.registerLazySingleton<CompleteOnboardingUseCase>(
+        () => CompleteOnboardingUseCase(sl<OnboardingRepository>()),
+  );
+
+  sl.registerLazySingleton<CheckOnboardingStatusUseCase>(
+        () => CheckOnboardingStatusUseCase(sl<OnboardingRepository>()),
+  );
+
+  sl.registerFactory<OnboardingCubit>(
+        () => OnboardingCubit(
+      completeOnboardingUseCase: sl<CompleteOnboardingUseCase>(),
+      checkOnboardingStatusUseCase: sl<CheckOnboardingStatusUseCase>(),
     ),
   );
-  sl.registerLazySingleton(
-    () => CompleteOnboardingUseCase(sl<OnboardingRepository>()),
-  );
-  sl.registerFactory(() => OnboardingCubit(sl<CompleteOnboardingUseCase>()));
 }
