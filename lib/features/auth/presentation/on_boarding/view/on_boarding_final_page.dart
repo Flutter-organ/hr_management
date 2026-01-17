@@ -1,9 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/core/design_system/components/custom_primary_button.dart';
 import 'package:hr_management/core/design_system/theme/helper/app_assets.dart';
 import 'package:hr_management/core/design_system/theme/helper/extention_colors.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
+
+import '../../../../../core/di/injection_container.dart';
+import '../../sign_up_screan/logic/sign_up_cubit.dart';
+import '../../sign_up_screan/view/sign_up_screen.dart';
 
 class OnBoardingFinalPage extends StatelessWidget {
   const OnBoardingFinalPage({super.key});
@@ -61,7 +66,16 @@ class OnBoardingFinalPage extends StatelessWidget {
                   textStyle: context.textTheme.labelLargeFont.copyWith(
                     color: ExtensionColors.kButtonBackgroundPrimary,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) =>
+                            BlocProvider(
+                              create: (context) => sl<SignUpCubit>(),
+                              child: SignUpScreen(),
+                            )
+
+                        ));
+                  },
                 ),
               ],
             ),

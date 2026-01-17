@@ -134,5 +134,4 @@
   "password_too_short": "Password too short (min 8 chars)",
   "password_complexity": "Password must contain uppercase, lowercase, number and special character",
   "passwords_not_match": "Passwords do not match"
-  "password_created_description": "To log in to your account, click the Sign in button and enter your email along with your new password."
 }

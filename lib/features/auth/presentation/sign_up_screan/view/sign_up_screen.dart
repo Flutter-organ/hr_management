@@ -16,6 +16,8 @@ import '../widgets/build_signup_form.dart';
 import '../widgets/build_terms_and_conditions.dart';
 
 class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class SignUpScreen extends StatelessWidget {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        padding: const EdgeInsets.fromLTRB(32, 44, 32,0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
