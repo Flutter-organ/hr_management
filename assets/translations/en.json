@@ -72,8 +72,6 @@
   "i_agree":"I Agree",
   "decline":"Decline",
 
-
-
   "forgot_password_description": "Reset password code will be sent to your email to reset your password.",
   "enter_your_email": "Enter your email",
   "email_required": "Email is required",
@@ -95,4 +93,5 @@
   "passwords_do_not_match": "Passwords do not match",
   "password_created": "Password Has Been Created",
   "password_created_description": "To log in to your account, click the Sign in button and enter your email along with your new password."
+
 }
