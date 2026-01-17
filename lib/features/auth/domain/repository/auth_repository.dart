@@ -5,7 +5,6 @@ import '../../data/data_source/remote/dto/AuthDto.dart';
 import '../enitites/Register.dart';
 import '../enitites/User.dart';
 import '../failures/failure.dart';
-import '../usecase/RegisterUseCase.dart';
 
 abstract class AuthRepository {
   Future<Either<Failure, String?>> getToken();

@@ -50,6 +50,7 @@
   "no_meetings": "No Meeting Available",
   "no_meet_des": "It looks like you don’t have any meetings scheduled at the moment.\nThis space will be updated as new meetings are added!",
   "verification_code_title": "Verification Code",
+  "verification_code_desc": "Enter the 6-digit verification code sent to your phone number",
   "Haven't_received_the_verification_code?": "Haven't received the verification code?",
   "Resend_it": "Resend it.",
   "sign_in_different_method": "Sign in with a different method",
@@ -69,8 +70,19 @@
   "cancel":"Cancel",
   "select":"Select",
   "i_agree":"I Agree",
-
-
+  "decline":"Decline",
+  "on_boarding_title_one":"Welcome to Workmate!",
+  "on_boarding_subtitle_one":"Make Smart Decisions! Set clear timelines for \nprojects and celebrate your achievements!",
+  "on_boarding_title_two":"Manage Stress Effectively",
+  "on_boarding_subtitle_two":"Stay Balanced! Track your workload and maintain a \nhealthy stress level with ease.",
+  "on_boarding_title_three":"Plan for Success",
+  "on_boarding_subtitle_three":"Your Journey Starts Here! Earn achievement badges \nas you conquer your tasks. Let’s get started!",
+  "onboarding_final_title": "Navigate Your Work Journey Efficient & Easy",
+  "onboarding_final_subtitle": "Increase your work management & career \ndevelopment radically",
+  "sign_up": "Sign Up",
+  "next": "Next",
+  "skip": "Skip",
+  "get_started": "Get Started",
   "forgot_password_description": "Reset password code will be sent to your email to reset your password.",
   "enter_your_email": "Enter your email",
   "email_required": "Email is required",
@@ -122,4 +134,5 @@
   "password_too_short": "Password too short (min 8 chars)",
   "password_complexity": "Password must contain uppercase, lowercase, number and special character",
   "passwords_not_match": "Passwords do not match"
+  "password_created_description": "To log in to your account, click the Sign in button and enter your email along with your new password."
 }

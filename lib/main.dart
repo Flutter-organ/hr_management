@@ -11,6 +11,7 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await AppConfig.init();
   await setupDependencies();
+  //await _debugCheckOnboardingStatus();
   runApp(
     ToastificationWrapper(
       child: EasyLocalization(
@@ -21,6 +22,21 @@ void main() async {
     ),
   );
 }
+
+// Future<void> _debugCheckOnboardingStatus() async {
+//   final checkOnboardingUseCase = sl<CheckOnboardingStatusUseCase>();
+//   final result = await checkOnboardingUseCase.call();
+//
+//   debugPrint('═══════════════════════════════════════════');
+//   debugPrint('🚀 APP STARTED');
+//
+//   result.fold(
+//         (failure) => debugPrint('❌ Error checking onboarding: $failure'),
+//         (isCompleted) => debugPrint('📋 onboarding_completed = $isCompleted'),
+//   );
+//
+//   debugPrint('═══════════════════════════════════════════');
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

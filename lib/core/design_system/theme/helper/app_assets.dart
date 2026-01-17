@@ -15,7 +15,10 @@ class AppAssets {
   static const noMeetings = "assets/images/noMeeting.png";
   static const noLeaveSupmitted = "assets/images/noLeaveSupmitted.png";
   static const noTasksAssigned = "assets/images/noTasksAssigned.png";
-  static const  checkMark = 'assets/svgs/check_mark.svg';
+  static const checkMark = 'assets/svgs/check_mark.svg';
   static const kDefaultImageProfile = 'assets/images/default_image_profile.png';
-
+  static const kOnBoargingOne = 'assets/images/on_boarding_one.png';
+  static const kOnBoargingTwo = 'assets/images/on_boarding_two.png';
+  static const kOnBoargingThree = 'assets/images/on_boarding_three.png';
+  static const kOnBoargingFinal = 'assets/images/on_boarding_final.png';
 }

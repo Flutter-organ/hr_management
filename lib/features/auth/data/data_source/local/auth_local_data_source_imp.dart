@@ -6,27 +6,31 @@ import 'auth_local_data_source.dart';
 class AuthLocalDataSourceImp implements AuthLocalDataSource {
   final SecureStorageService _secureStorageService;
 
-  const AuthLocalDataSourceImp ({required SecureStorageService secureStorageService})
-      : _secureStorageService = secureStorageService;
+  const AuthLocalDataSourceImp({
+    required SecureStorageService secureStorageService,
+  }) : _secureStorageService = secureStorageService;
 
   @override
   Future<String?> getToken() async {
-      try {
-        return await _secureStorageService.read(key: ApiConstants.tokenKey);
-      } catch (e) {
-        throw CacheException(message: 'Failed to read token: $e');
-      }
+    try {
+      return await _secureStorageService.read(key: ApiConstants.tokenKey);
+    } catch (e) {
+      throw CacheException(message: 'Failed to read token: $e');
+    }
   }
 
   @override
   Future<void> saveToken(String token) async {
     if (token.isEmpty) {
-      throw const CacheException(message:'Token cannot be empty');
+      throw const CacheException(message: 'Token cannot be empty');
     }
     try {
-      await _secureStorageService.write(key: ApiConstants.tokenKey, value: token);
+      await _secureStorageService.write(
+        key: ApiConstants.tokenKey,
+        value: token,
+      );
     } catch (e) {
-      throw CacheException(message:'Failed to save token: $e');
+      throw CacheException(message: 'Failed to save token: $e');
     }
   }
 
@@ -48,5 +52,4 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
       return false;
     }
   }
-
 }
