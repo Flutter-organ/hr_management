@@ -10,11 +10,19 @@ class OnboardingPageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.zero,
+    return Column(
       children: [
-        Image.asset(item.image, fit: BoxFit.cover),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.60,
+          width: double.infinity,
+          child: Image.asset(
+            item.image,
+            fit: BoxFit.cover,
+          ),
+        ),
+
         const SizedBox(height: 33),
+
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(

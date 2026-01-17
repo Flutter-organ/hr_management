@@ -46,8 +46,17 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   void initState() {
     super.initState();
     _pageController = PageController();
-  }
 
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      for (final item in _items) {
+        precacheImage(AssetImage(item.image), context);
+      }
+      precacheImage(
+        const AssetImage(AppAssets.kOnBoargingFinal),
+        context,
+      );
+    });
+  }
   @override
   void dispose() {
     _pageController.dispose();
@@ -90,6 +99,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     );
   }
 
+
   void _onPageIndexChanged(BuildContext context, OnboardingState state) {
     if (_pageController.page?.round() != state.currentIndex) {
       _pageController.animateToPage(
@@ -109,17 +119,15 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
 
   Widget _buildPageView(BuildContext context) {
     return Expanded(
-      child: PageView.builder(
+      child: PageView(
         controller: _pageController,
         onPageChanged: context.read<OnboardingCubit>().onPageChanged,
-        itemCount: _items.length,
-        itemBuilder: (context, index) {
-          return OnboardingPageContent(item: _items[index]);
-        },
+        children: _items
+            .map((item) => OnboardingPageContent(item: item))
+            .toList(),
       ),
     );
   }
-
   Widget _buildButtons(BuildContext context, OnboardingState state) {
     final cubit = context.read<OnboardingCubit>();
     final isLoading = state.status == OnboardingStatus.loading;

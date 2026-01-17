@@ -11,44 +11,54 @@ class OnBoardingFinalPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        padding: EdgeInsets.zero,
+      body: Column(
         children: [
-          Image.asset(AppAssets.kOnBoargingFinal, fit: BoxFit.cover),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 34),
-            child: Column(
-              children: [
-                Text(
-                  "onboarding_final_title".tr(),
-                  textAlign: TextAlign.center,
-                  style: context.textTheme.headLineSmallFont.copyWith(
-                    fontWeight: FontWeight.w700,
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.60,
+            width: double.infinity,
+            child: Image.asset(
+              AppAssets.kOnBoargingFinal,
+              fit: BoxFit.cover,
+            ),
+          ),
+
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 34),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "onboarding_final_title".tr(),
+                    textAlign: TextAlign.center,
+                    style: context.textTheme.headLineSmallFont.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  "onboarding_final_subtitle".tr(),
-                  textAlign: TextAlign.center,
-                  style: context.textTheme.popupBodyFont.copyWith(
-                    color: context.colors.textSecondary,
+                  const SizedBox(height: 8),
+                  Text(
+                    "onboarding_final_subtitle".tr(),
+                    textAlign: TextAlign.center,
+                    style: context.textTheme.popupBodyFont.copyWith(
+                      color: context.colors.textSecondary,
+                    ),
                   ),
-                ),
-                SizedBox(height: 35),
-                CustomPrimaryButton.gradient(
-                  buttonText: "sign_in".tr(),
-                  textStyle: context.textTheme.labelLargeFont,
-                  onPressed: () {},
-                ),
-                SizedBox(height: 16),
-                CustomPrimaryButton.outlined(
-                  buttonText: "sign_up".tr(),
-                  textStyle: context.textTheme.labelLargeFont.copyWith(
-                    color: ExtensionColors.kButtonBackgroundPrimary,
+                  const SizedBox(height: 35),
+                  CustomPrimaryButton.gradient(
+                    buttonText: "sign_in".tr(),
+                    textStyle: context.textTheme.labelLargeFont,
+                    onPressed: () {},
                   ),
-                  onPressed: () {},
-                ),
-              ],
+                  const SizedBox(height: 16),
+                  CustomPrimaryButton.outlined(
+                    buttonText: "sign_up".tr(),
+                    textStyle: context.textTheme.labelLargeFont.copyWith(
+                      color: ExtensionColors.kButtonBackgroundPrimary,
+                    ),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
             ),
           ),
         ],

@@ -39,25 +39,6 @@ class OnboardingCubit extends BaseCubit<OnboardingState> {
           (currentState) => currentState.copyWith(shouldNavigateToFinal: false),
     );
   }
-
-  Future<void> checkOnboardingStatus() async {
-    await execute<bool>(
-      onLoading: () => updateState(
-            (currentState) => currentState.copyWith(status: OnboardingStatus.loading),
-      ),
-      call: _checkOnboardingStatusUseCase.call,
-      onSuccess: (isCompleted) => updateState(
-            (currentState) => currentState.copyWith(
-          status: OnboardingStatus.initial,
-          shouldNavigateToFinal: isCompleted,
-        ),
-      ),
-      onError: (error) => updateState(
-            (currentState) => currentState.copyWith(status: OnboardingStatus.error),
-      ),
-    );
-  }
-
   Future<void> _completeAndNavigate() async {
     await execute<Unit>(
       onLoading: () => updateState(
@@ -83,4 +64,5 @@ class OnboardingCubit extends BaseCubit<OnboardingState> {
       ),
     );
   }
+
 }
