@@ -90,7 +90,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   currentIndex: state.currentIndex,
                   itemCount: _items.length,
                 ),
-                const SizedBox(height: 23),
+                const SizedBox(height: 24),
                 _buildButtons(context, state),
               ],
             );
@@ -134,7 +134,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     final isLoading = state.status == OnboardingStatus.loading;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(34, 0, 34, 30),
+      padding: const EdgeInsets.fromLTRB(34, 0, 34, 24),
       child: Column(
         children: [
           CustomPrimaryButton.gradient(
@@ -142,7 +142,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             textStyle: context.textTheme.labelLargeFont,
             onPressed: isLoading ? null : cubit.onNextPressed,
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 16),
           CustomPrimaryButton.outlined(
             buttonText: 'skip'.tr(),
             textStyle: context.textTheme.labelLargeFont.copyWith(
@@ -150,7 +150,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             ),
             onPressed: isLoading ? null : cubit.onSkipPressed,
           ),
-          const SizedBox(height: 30),
         ],
       ),
     );
