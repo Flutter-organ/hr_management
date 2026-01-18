@@ -4,7 +4,9 @@ import 'package:hr_management/core/design_system/components/custom_primary_butto
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 
 class TermsPopup extends StatelessWidget {
-  const TermsPopup({super.key});
+  final VoidCallback onAgree;
+
+  const TermsPopup({super.key, required this.onAgree});
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +65,10 @@ class TermsPopup extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
+              onPressed: (){
+                Navigator.of(context).pop();
+                onAgree();
+              }
             ),
             const SizedBox(height: 20),
             CustomPrimaryButton(
@@ -73,7 +79,9 @@ class TermsPopup extends StatelessWidget {
               borderColor: context.colors.purple900,
               foregroundColor: context.colors.purple900,
               textStyle: context.textTheme.labelLargeFont,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
             SizedBox(height: 10),
           ],

@@ -12,22 +12,19 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await AppConfig.init();
   await setupDependencies();
-
-  final hasToken = await sl<AuthRepository>().hasToken();
   runApp(
     ToastificationWrapper(
       child: EasyLocalization(
         supportedLocales: const [Locale('ar'), Locale('en')],
         path: 'assets/translations',
-        child: MyApp(isLoggedIn: hasToken.fold((l) => false, (r) => r)),
+        child: MyApp(),
       ),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  final bool isLoggedIn;
-  const MyApp({super.key, required this.isLoggedIn});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

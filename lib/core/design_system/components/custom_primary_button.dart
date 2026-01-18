@@ -105,7 +105,7 @@ class CustomPrimaryButton extends StatelessWidget {
     VoidCallback? onPressed,
     double? width,
     double? height,
-    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(  horizontal: 24, vertical: 14),
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
     Color? borderColor,
     Color? foregroundColor,
     double borderWidth = 1.5,

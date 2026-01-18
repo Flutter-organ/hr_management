@@ -1,6 +1,10 @@
 import 'package:fpdart/fpdart.dart';
 import '../enitites/User.dart';
 import '../enitites/login_type.dart';
+import 'package:hr_management/features/auth/domain/enitites/verify_otp.dart';
+import '../../data/data_source/remote/dto/AuthDto.dart';
+import '../enitites/Register.dart';
+import '../enitites/User.dart';
 import '../failures/failure.dart';
 
 abstract class AuthRepository {
@@ -8,6 +12,12 @@ abstract class AuthRepository {
   Future<Either<Failure, Unit>> saveToken(String token);
   Future<Either<Failure, Unit>> clearToken();
   Future<Either<Failure, bool>> hasToken();
+  Future<Either<Failure, bool>> register({
+   required Register register ,
+  });
+  Future<Either<Failure, User>> verifyOTP({
+   required VerifyOTP verifyOtp
+  });
 
   Future<Either<Failure, String>> forgotPassword({
     required String identifier,

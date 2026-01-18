@@ -6,7 +6,8 @@ class RouteNames {
 
   // UTILITY ROUTES
   static const String splash = '/';
-  static const String onboarding = '/onboarding';
   static const String notFound = '/404';
-
+  static const String onboarding = '/';
+  static const String onboardingFinal = '/onboarding-final';
+  //static const String login = '/LoginScreen';
 }

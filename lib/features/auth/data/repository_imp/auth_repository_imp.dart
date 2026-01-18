@@ -1,13 +1,22 @@
 import 'package:fpdart/fpdart.dart';
 import '../../domain/enitites/User.dart';
 import '../../domain/enitites/login_type.dart';
+import 'package:hr_management/features/auth/data/data_source/remote/dto/CurrentUser.dart';
+import 'package:hr_management/features/auth/domain/enitites/User.dart';
+import '../../domain/enitites/Register.dart';
+import '../../domain/enitites/User.dart';
+import '../../domain/enitites/verify_otp.dart';
 import '../../domain/failures/failure.dart';
 import '../../domain/repository/auth_repository.dart';
+import '../../domain/usecase/RegisterUseCase.dart';
 import '../data_source/local/auth_local_data_source.dart';
 import '../data_source/remote/AuthRemoteDataSource.dart';
 import '../data_source/remote/dto/ForgotPasswordRequest.dart';
 import '../data_source/remote/dto/ResetPasswordRequest.dart';
 import '../data_source/remote/dto/loginRequest.dart';
+import '../data_source/remote/AuthRemoteDataSource.dart';
+import '../data_source/remote/dto/UserDto.dart';
+import '../mappers/AuthMapper.dart';
 import '../mappers/auth_failure_mapper.dart';
 
 class AuthRepositoryImp implements AuthRepository {
@@ -158,6 +167,41 @@ class AuthRepositoryImp implements AuthRepository {
       await _localDataSource.clearIdentifier();
       return Right(unit);
     } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
+  }
+  @override
+  Future<Either<Failure, bool>> register({
+    required Register register,
+  }) async {
+    try {
+      final registerDtoRequest = AuthMapper.toRegisterDtoRequest(register);
+      final response = await _remoteDataSource.register(
+        registerDtoRequest: registerDtoRequest,
+      );
+      return Right(response);
+
+    }catch(e){
+      return Left(AuthFailureMapper.mapException(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> verifyOTP({
+    required VerifyOTP verifyOtp,
+  }) async {
+    try {
+      final verifyOtpDto = AuthMapper.toVerifyOtpDto(verifyOtp);
+      final otpVerifyResponse = await _remoteDataSource.verifyOTP(
+        verifyOtpDto: verifyOtpDto,
+      );
+      if (otpVerifyResponse.accessToken != null) {
+        await saveToken(otpVerifyResponse.accessToken);
+      }
+      print("CurrentUser is ${otpVerifyResponse.user}");
+      final user = AuthMapper.toUser(otpVerifyResponse.user!);
+      return Right(user);
+    }catch(e){
       return Left(AuthFailureMapper.mapException(e));
     }
   }
