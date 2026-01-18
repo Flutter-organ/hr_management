@@ -1,4 +1,5 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:hr_management/features/auth/data/data_source/remote/dto/CurrentUser.dart';
 import '../../domain/enitites/User.dart';
 import '../../domain/enitites/login_type.dart';
 import '../../domain/failures/failure.dart';
@@ -9,7 +10,7 @@ import '../data_source/remote/dto/ForgotPasswordRequest.dart';
 import '../data_source/remote/dto/ResetPasswordRequest.dart';
 import '../mappers/auth_failure_mapper.dart';
 
-class AuthRepositoryImp implements AuthRepository{
+class AuthRepositoryImp implements AuthRepository {
   final AuthLocalDataSource _localDataSource;
   final AuthRemoteDataSource _remoteDataSource;
 
@@ -19,6 +20,37 @@ class AuthRepositoryImp implements AuthRepository{
     required AuthRemoteDataSource remoteDataSource,
   })  : _localDataSource = localDataSource,
         _remoteDataSource = remoteDataSource;
+
+  Future<Either<Failure, User>> login({
+    required String identifier,
+    required String password,
+    required String loginType,
+    required bool isRememberd,
+  }) async {
+    try {
+      final response = await _remoteDataSource.login(
+        identifier: identifier,
+        password: password,
+        loginType: loginType,
+      );
+      if (response.success && response.data != null) {
+        if (isRememberd) {
+          await _localDataSource.saveIdentifier(identifier);
+        } else {
+          await _localDataSource.clearIdentifier();
+        }
+        final currentUser = CurrentUser.fromJson(response.data);
+        await _localDataSource.saveToken(currentUser.accessToken!);
+        final user = currentUser.user!.toDomain();
+        return Right(user);
+      } else {
+        return Left(AuthFailureMapper.mapException(response.message));
+      }
+    } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
+  }
+
 
   @override
   Future<Either<Failure, String?>> getToken() async {
@@ -103,4 +135,35 @@ class AuthRepositoryImp implements AuthRepository{
     }
   }
 
+  @override
+  Future<Either<Failure, String?>> getIdentifier() async {
+    try {
+      final mail = await _localDataSource.getIdentifier();
+      return Right(mail);
+    } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
+  }
+
+
+
+  @override
+  Future<Either<Failure, Unit>> saveIdentifier(String mail) async {
+    try {
+      await _localDataSource.saveIdentifier(mail);
+      return Right(unit);
+    } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> clearIdentifier() async {
+    try {
+      await _localDataSource.clearIdentifier();
+      return Right(unit);
+    } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
+  }
 }

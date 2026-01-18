@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
-  final int id;
+  final int? id;
   final String? email;
   final String? phone;
   final bool isActive;
   final String? role;
 
   const User({
-    required this.id,
+     this.id,
     this.email,
     this.phone,
     this.isActive = false,

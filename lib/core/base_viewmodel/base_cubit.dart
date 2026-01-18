@@ -6,7 +6,6 @@ import '../exceptions/ui_errors.dart';
 abstract class BaseCubit<STATE> extends Cubit<STATE> {
   BaseCubit(super.initialState);
 
-
   Future<void> execute<T>({
     required Future<Either<Failure, T>> Function() call,
     required void Function(T result) onSuccess,
@@ -17,24 +16,23 @@ abstract class BaseCubit<STATE> extends Cubit<STATE> {
 
     final result = await call();
 
-    result.fold(
-          (failure) {
-        final uiError = _mapFailureToUiError(failure);
-        onError(uiError);
+    result.fold((failure) {
+      final uiError = _mapFailureToUiError(failure);
+      onError(uiError);
 
-        if (failure is SessionExpiredFailure || failure is InvalidCredentialsFailure) {
-          if (failure is SessionExpiredFailure) {
-            _handleUnauthorized();
-          }
+      if (failure is SessionExpiredFailure ||
+          failure is InvalidCredentialsFailure) {
+        if (failure is SessionExpiredFailure) {
+          _handleUnauthorized();
         }
-      },
-          (data) => onSuccess(data),
-    );
+      }
+    }, (data) => onSuccess(data));
   }
 
   void updateState(STATE Function(STATE currentState) updater) {
     emit(updater(state));
   }
+
 
   UiError _mapFailureToUiError(Failure failure) {
     return switch (failure) {

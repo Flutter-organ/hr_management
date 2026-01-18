@@ -1,5 +1,12 @@
 import 'package:get_it/get_it.dart';
+import 'package:hr_management/features/auth/data/repository_imp/auth_repository_imp.dart';
+import 'package:hr_management/features/auth/domain/repository/auth_repository.dart';
+import 'package:hr_management/features/auth/domain/use_cases/load_identifier_use_case.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hr_management/features/auth/data/data_source/remote/auth_remote_data_source/auth_remote_data_source.dart';
+import 'package:hr_management/features/auth/data/data_source/remote/auth_remote_data_source/auth_remote_data_source_imp.dart';
+import 'package:hr_management/features/auth/domain/use_cases/login_use_case.dart';
+import 'package:hr_management/features/auth/presentation/login_feature/cubit/login_cubit.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source_imp.dart';
 import '../../features/auth/data/data_source/remote/AuthRemoteDataSource.dart';
@@ -24,14 +31,14 @@ Future<void> setupDependencies() async {
 
 Future<void> _initCore() async {
   sl.registerLazySingleton<SecureStorageService>(
-        () => SecureStorageServiceImpl(),
+    () => SecureStorageServiceImpl(),
   );
 
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerSingleton<SharedPreferences>(sharedPreferences);
 
   sl.registerLazySingleton<PreferencesService>(
-        () => SharedPreferencesServiceImpl(sl<SharedPreferences>()),
+    () => SharedPreferencesServiceImpl(sl<SharedPreferences>()),
   );
 
 }
@@ -43,7 +50,7 @@ Future<void> _initAuth() async {
     ),
   );
   sl.registerLazySingleton<DioClient>(
-        () => DioClient(sl<AuthLocalDataSource>()),
+    () => DioClient(sl<AuthLocalDataSource>()),
   );
   sl.registerLazySingleton<AuthRemoteDataSource>(
         () => AuthRemoteDataSourceImp(dioClient: sl<DioClient>()),
@@ -70,10 +77,11 @@ Future<void> _initAuth() async {
         () => ResetPasswordCubit(sl<ResetPasswordUseCase>()),
   );
 
-  sl.registerFactory<LoginCubit>(
-        () => LoginCubit(
-      // sl<LoginUseCase>(),  // Uncomment when use case is ready
-    ),
-  );
+  sl.registerLazySingleton(() => LoginUseCase(sl<AuthRepository>()));
 
+  sl.registerLazySingleton(() => LoadIdentifierUseCase(sl<AuthRepository>()));
+
+  sl.registerFactory(
+        () => LoginCubit(sl<LoginUseCase>(), sl<LoadIdentifierUseCase>()),
+  );
 }

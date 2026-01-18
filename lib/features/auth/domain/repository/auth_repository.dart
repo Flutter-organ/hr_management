@@ -3,7 +3,7 @@ import '../enitites/User.dart';
 import '../enitites/login_type.dart';
 import '../failures/failure.dart';
 
-abstract class AuthRepository{
+abstract class AuthRepository {
   Future<Either<Failure, String?>> getToken();
   Future<Either<Failure, Unit>> saveToken(String token);
   Future<Either<Failure, Unit>> clearToken();
@@ -20,4 +20,15 @@ abstract class AuthRepository{
     required String password,
     required String passwordConfirmation,
   });
+
+  Future<Either<Failure, User>> login({
+    required String identifier,
+    required String password,
+    required String loginType,
+    required bool isRememberd,
+  });
+
+  Future<Either<Failure, Unit>> saveIdentifier(String mail);
+  Future<Either<Failure, String?>> getIdentifier();
+  Future<Either<Failure, Unit>> clearIdentifier();
 }
