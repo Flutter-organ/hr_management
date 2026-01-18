@@ -2,11 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hr_management/core/config/app_config.dart';
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
+import 'package:hr_management/core/routes/route_generator.dart';
 import 'package:toastification/toastification.dart';
-import 'package:hr_management/core/routes/route_names.dart';
 import 'package:hr_management/features/auth/domain/repository/auth_repository.dart';
 import 'core/di/injection_container.dart';
-import 'core/routes/route_generator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,9 +31,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String intialLocation = isLoggedIn
-        ? RouteNames.homeScreen
-        : RouteNames.loginRoute;
     return MaterialApp.router(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
@@ -44,7 +40,7 @@ class MyApp extends StatelessWidget {
       theme: HrManagementTheme.light(),
       darkTheme: HrManagementTheme.dark(),
       themeMode: ThemeMode.light,
-      routerConfig: createRouter(intialLocation),
+      routerConfig: router,
     );
   }
 }

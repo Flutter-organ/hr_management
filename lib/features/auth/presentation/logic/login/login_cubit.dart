@@ -1,36 +1,65 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/base_viewmodel/base_cubit.dart';
+import '../../../domain/enitites/login_type.dart';
+import '../../../domain/use_cases/load_identifier_use_case.dart';
+import '../../../domain/use_cases/login_use_case.dart';
 import 'login_state.dart';
 
-class LoginCubit extends BaseCubit<LoginState>  {
-  // TODO: Add LoginUseCase when implemented
-  // final LoginUseCase _loginUseCase;
+class LoginCubit extends BaseCubit<LoginState> {
+  final LoginUseCase _loginUseCase;
+  final LoadIdentifierUseCase _loadIdentifierUseCase;
 
-  LoginCubit() : super(const LoginState());
+  LoginCubit(
+      this._loginUseCase,
+      this._loadIdentifierUseCase,
+      ) : super(const LoginState()) {
+    _loadSavedIdentifier();
+  }
 
-  Future<void> submit() async {
-    if (!_validate()) return;
+  void onIdentifierChanged(String value) {
+    updateState((s) => s.copyWith(
+      identifier: value,
+      clearIdentifierError: true,
+      clearApiError: true,
+    ));
+  }
 
-    // TODO: Replace with actual use case call when ready
-    await _submitDummy();
+  void onCountryCodeChanged(String value) {
+    updateState((s) => s.copyWith(countryCode: "+$value"));
+  }
 
-    // When LoginUseCase is ready, replace _submitDummy() with this:
-    /*
+
+  void onPasswordChanged(String value) {
+    updateState((s) => s.copyWith(
+      password: value,
+      clearPasswordError: true,
+      clearApiError: true,
+    ));
+  }
+
+  void onRememberMeChanged(bool value) {
+    updateState((s) => s.copyWith(rememberMe: value));
+  }
+
+  Future<void> submit(LoginType loginType) async {
+    if (!_validate(loginType)) return;
+
     await execute(
       onLoading: () => updateState((s) => s.copyWith(
         isLoading: true,
         clearApiError: true,
       )),
       call: () => _loginUseCase(
-        identifier: state.email.trim(),
+        identifier: loginType.value == 'email'
+            ? state.identifier.trim() : state.countryCode + state.identifier.trim(),
         password: state.password,
-        loginType: LoginType.email,
+        loginType: loginType,
+        isRemembered: state.rememberMe,
       ),
       onSuccess: (user) {
         updateState((s) => s.copyWith(
           isLoading: false,
           isSuccess: true,
-          user: user,  // Add user to LoginState if needed
+          user: user,
         ));
       },
       onError: (failure) {
@@ -41,66 +70,63 @@ class LoginCubit extends BaseCubit<LoginState>  {
         ));
       },
     );
-    */
-  }
-
-  void onEmailChanged(String value) {
-    updateState((s) => s.copyWith(
-      email: value,
-      clearEmailError: true,
-      clearApiError: true,
-    ));
-  }
-
-  void onPasswordChanged(String value) {
-    updateState((s) => s.copyWith(
-      password: value,
-      clearPasswordError: true,
-      clearApiError: true,
-    ));
   }
 
   void clearError() {
     updateState((s) => s.copyWith(
-      clearEmailError: true,
-      clearPasswordError: true,
       clearApiError: true,
+      clearIdentifierError: true,
+      clearPasswordError: true,
     ));
   }
 
-  Future<void> _submitDummy() async {
-    updateState((s) => s.copyWith(isLoading: true, clearApiError: true));
+  Future<void> _loadSavedIdentifier() async {
+    final result = await _loadIdentifierUseCase();
 
-    // Simulate API call
-    await Future.delayed(const Duration(seconds: 2));
-
-    // Simulate success
-    updateState((s) => s.copyWith(
-      isLoading: false,
-      isSuccess: true,
-    ));
-
-    // To simulate error, uncomment this instead:
-    // updateState((s) => s.copyWith(
-    //   isLoading: false,
-    //   apiError: 'Invalid credentials',
-    // ));
+    result.fold(
+          (failure) {
+        // Silently fail - not critical
+      },
+          (identifier) {
+        if (identifier != null && identifier.isNotEmpty) {
+          updateState((s) => s.copyWith(
+            savedIdentifier: identifier,
+            identifier: identifier,
+            rememberMe: true,
+          ));
+        }
+      },
+    );
   }
 
-  bool _validate() {
+  bool _validate(LoginType loginType) {
     bool isValid = true;
 
-    final email = state.email.trim();
-    if (email.isEmpty) {
-      updateState((s) => s.copyWith(emailError: 'Email is required'));
+    final identifier = state.identifier.trim();
+
+    if (identifier.isEmpty) {
+      updateState((s) => s.copyWith(
+        identifierError: loginType == LoginType.email
+            ? 'Email is required'
+            : 'Phone number is required',
+      ));
       isValid = false;
-    } else if (!_isValidEmail(email)) {
-      updateState((s) => s.copyWith(emailError: 'Please enter a valid email'));
+    } else if (loginType == LoginType.email && !_isValidEmail(identifier)) {
+      updateState((s) => s.copyWith(
+        identifierError: 'Please enter a valid email',
+      ));
+      isValid = false;
+    } else if (loginType == LoginType.phone && !_isValidPhone(identifier)) {
+      updateState((s) => s.copyWith(
+        identifierError: 'Please enter a valid phone number',
+      ));
       isValid = false;
     }
 
     if (state.password.isEmpty) {
-      updateState((s) => s.copyWith(passwordError: 'Password is required'));
+      updateState((s) => s.copyWith(
+        passwordError: 'Password is required',
+      ));
       isValid = false;
     } else if (state.password.length < 8) {
       updateState((s) => s.copyWith(
@@ -116,4 +142,7 @@ class LoginCubit extends BaseCubit<LoginState>  {
     return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
   }
 
+  bool _isValidPhone(String phone) {
+    return RegExp(r'^\d{10,15}$').hasMatch(phone);
+  }
 }

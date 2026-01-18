@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hr_management/core/di/injection_container.dart';
-import 'package:hr_management/core/routes/route_names.dart';
 import 'package:hr_management/features/auth/domain/repository/auth_repository.dart';
+import '../../../../core/routes/route_names.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -41,7 +41,7 @@ class HomeScreen extends StatelessWidget {
               await sl<AuthRepository>().clearToken();
 
               if (context.mounted) {
-                context.go(RouteNames.loginRoute);
+                context.go(RouteNames.login);
               }
             },
             child: const Text("Logout", style: TextStyle(color: Colors.red)),

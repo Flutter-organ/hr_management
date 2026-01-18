@@ -20,7 +20,7 @@ class UserDto {
       id: json['id'] as int? ?? 0,
       email: json['email'] as String?,
       phone: json['phone'] as String?,
-      isActive: json['is_active'] as bool? ?? false,
+      isActive: _parseIsActive(json['is_active']),
       role: json['role'] as String?,
     );
   }
@@ -43,5 +43,25 @@ class UserDto {
       isActive: isActive,
       role: role,
     );
+  }
+
+  static bool _parseIsActive(dynamic value) {
+    if (value == null) return false;
+
+    if (value is bool) {
+      return value;
+
+    }
+
+    if (value is int) {
+      return value == 1 ? true : false;
+    }
+
+    if (value is String) {
+      if (value.toLowerCase() == 'true') return true;
+      if (value.toLowerCase() == 'false') return false;
+      return false;
+    }
+    return false;
   }
 }

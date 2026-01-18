@@ -5,6 +5,8 @@ import 'dto/AuthResponse.dart';
 import 'dto/ForgotPasswordRequest.dart';
 import 'dto/ForgotPasswordResponse.dart';
 import 'dto/ResetPasswordRequest.dart';
+import 'dto/loginRequest.dart';
+import 'dto/loginResponse.dart';
 
 class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
   final DioClient _dioClient;
@@ -34,5 +36,18 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
 
     final data = response.data['data'] as Map<String, dynamic>;
     return AuthResponse.fromJson(data);
+  }
+
+  @override
+  Future<LoginResponse> login(
+    LoginRequest request,
+  ) async {
+    final response = await _dioClient.post(
+      ApiConstants.login,
+      data: request.toJson(),
+    );
+
+    final data = response.data['data'] as Map<String, dynamic>;
+    return LoginResponse.fromJson(data);
   }
 }
