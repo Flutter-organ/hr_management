@@ -10,7 +10,7 @@ import '../logic/sign_up_state.dart';
 
 Widget buildPassword(
     BuildContext context,
-    TextEditingController _passwordController,
+    TextEditingController passwordController,
     String label) {
   final cubit = context.read<SignUpCubit>();
   return BlocBuilder<SignUpCubit, SignUpUiState>(
@@ -19,7 +19,7 @@ Widget buildPassword(
       return CustomInputField(
           label: label,
           labelColor: context.colors.textPrimary,
-          controller: _passwordController,
+          controller: passwordController,
           borderColor: context.colors.gray400,
           filledColor: context.colors.white,
           keyboardType: TextInputType.visiblePassword,
@@ -38,7 +38,7 @@ Widget buildPassword(
             ),
             color: context.colors.purple500,
           ),
-          prefixIcon: Icon(Iconsax.scan, color: context.colors.purple500),
+          prefixIcon: Icon(Iconsax.lock, color: context.colors.purple500),
           validator: cubit.validatePassword
       );
     },

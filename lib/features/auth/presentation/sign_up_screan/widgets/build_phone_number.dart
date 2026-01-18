@@ -88,7 +88,7 @@ Widget buildPhoneNumber(BuildContext context, TextEditingController _phoneContro
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    cubit.state.countryCode,
+                    "+${cubit.state.countryCode}",
                     style: context.textTheme.titleSmallFont.copyWith(
                       color: context.colors.textPrimary,
                       fontWeight: FontWeight.w600,

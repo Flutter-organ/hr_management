@@ -120,7 +120,7 @@ class SignUpScreen extends StatelessWidget {
           ),
         ],
       ),
-      child: Icon(Iconsax.login, color: AppConstantColors.white, size: 40),
+      child: Icon(Iconsax.login4, color: AppConstantColors.white, size: 40),
     );
   }
 }

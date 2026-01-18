@@ -17,7 +17,7 @@ class SignUpUiState extends Equatable {
     this.phone = '',
     this.password = '',
     this.confirmPassword = '',
-    this.countryCode = '+20',
+    this.countryCode = '20',
     this.isCheckedTermAndConditions = false,
     this.isEnableSignUpButton = false,
     this.isObscurePassWord = true,

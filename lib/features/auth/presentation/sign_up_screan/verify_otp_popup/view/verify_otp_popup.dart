@@ -42,7 +42,7 @@ class VerifyOtpPopUp extends StatelessWidget {
         }
 
         if (state.errorMessage != null) {
-          SnackBarHelper.showError(context, state.errorMessage!);
+          SnackBarHelper.showError(context,"failed_to_verify");
         }
       },
       builder: (context, state) {

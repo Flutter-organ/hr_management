@@ -17,16 +17,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   AuthRemoteDataSourceImpl(this._dioClient);
 
+  @override
   Future<bool> register({
     required RegisterDtoRequest registerDtoRequest,
   }) async {
-    print("registerParams is ${'email' + registerDtoRequest.email}");
-    print("registerParams is ${'phone' + registerDtoRequest.phone}");
-    print("registerParams is ${'password' + registerDtoRequest.password}");
-    print(
-      "registerParams is ${'password_confirmation' +
-          registerDtoRequest.passwordConfirmation}",
-    );
     final response = await _dioClient.post(
       ApiConstants.register,
       data: {
@@ -37,7 +31,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         "login_type": "email",
       },
     );
-    print("respose data is ${response}");
     return response.data['success'];
   }
 
@@ -45,9 +38,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<OtpVerifyResponse> verifyOTP({
     required VerifyOtpDto verifyOtpDto,
   }) async {
-    print("email is ${verifyOtpDto.identifier}");
-    print("code is ${verifyOtpDto.code}");
-    print("type is ${verifyOtpDto.type}");
     final response = await _dioClient.post(
       ApiConstants.verifyOtp,
       data: {
@@ -56,9 +46,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         "type": verifyOtpDto.type,
       },
     );
-    final data = response.data['data'];
-    print("data is ${data}");
-    print(OtpVerifyResponse.fromJson(data));
-    return OtpVerifyResponse.fromJson(data);
+    return OtpVerifyResponse.fromJson(response.data['data']);
   }
 }

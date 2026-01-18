@@ -59,7 +59,7 @@ class SignUpCubit extends BaseCubit<SignUpUiState> {
     }
 
     final fullPhoneNumber =
-        '${state.countryCode}${phoneController.text.trim()}';
+        '+${state.countryCode}${phoneController.text.trim()}';
     execute(
       call: () {
         final isRegistered = _registerUseCase.call(
@@ -95,7 +95,7 @@ class SignUpCubit extends BaseCubit<SignUpUiState> {
   }
 
   void setCountryCode(String code) {
-    SignUpUiState(countryCode: code);
+    updateState((currentState) => currentState.copyWith(countryCode: code));
   }
 
   String? validateEmail(String? value) {
