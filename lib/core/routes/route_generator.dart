@@ -17,12 +17,10 @@ final GoRouter router = GoRouter(
     final location = state.matchedLocation;
 
     final isOnboarding = location == RouteNames.onboarding;
-    final isLogin = location == RouteNames.login;
 
     if (!onboardingCompleted && !isOnboarding) {
       return RouteNames.onboarding;
     }
-
     if (onboardingCompleted && isOnboarding) {
       return RouteNames.login;
     }

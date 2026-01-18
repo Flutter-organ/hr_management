@@ -114,7 +114,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   void _onNavigationTriggered(BuildContext context, OnboardingState state) {
     if (state.shouldNavigateToFinal) {
       context.read<OnboardingCubit>().onNavigationHandled();
-      context.replaceNamed(RouteNames.onboardingFinal);
+      context.go(RouteNames.onboardingFinal);
     }
   }
 
