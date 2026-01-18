@@ -1,7 +1,5 @@
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
-import '../../../../../core/base_viewmodel/base_cubit.dart';
+import '../../../../../../core/base_viewmodel/base_cubit.dart';
 
 part 'welocom_to_work_mate_popup_state.dart';
 

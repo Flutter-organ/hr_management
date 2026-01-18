@@ -1,8 +1,8 @@
-import 'package:hr_management/features/auth/presentation/verify_otp/logic/verify_otp_state.dart';
+import 'package:hr_management/features/auth/presentation/sign_up_screan/verify_otp_popup/logic/verify_otp_state.dart';
 
-import '../../../../../core/base_viewmodel/base_cubit.dart';
-import '../../../domain/enitites/verify_otp.dart';
-import '../../../domain/usecase/OtpUseCase.dart';
+import '../../../../../../core/base_viewmodel/base_cubit.dart';
+import '../../../../domain/enitites/verify_otp.dart';
+import '../../../../domain/usecase/OtpUseCase.dart';
 
 class VerifyOtpCubit extends BaseCubit<VerifyOtpUiState> {
   VerifyOtpCubit(this._OTPUseCase) : super(VerifyOtpUiState());
@@ -29,15 +29,11 @@ class VerifyOtpCubit extends BaseCubit<VerifyOtpUiState> {
             type: type,
           )
         );
-        print(user);
         return user;
       },
         onSuccess: (_) {
-          print('success');
           updateState((currentState) => currentState.copyWith(isVerified: true));
-
-          print("isVerified after update: ${state.isVerified}");
-        },
+          },
 
         onError: (error) {
         updateState((currentState) => currentState.copyWith(errorMessage: error.message));

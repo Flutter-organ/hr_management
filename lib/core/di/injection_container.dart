@@ -16,7 +16,7 @@ import '../../features/auth/data/repository_imp/auth_repository_imp.dart';
 import '../../features/auth/domain/repository/auth_repository.dart';
 import '../../features/auth/domain/usecase/OtpUseCase.dart';
 import '../../features/auth/presentation/sign_up_screan/logic/sign_up_cubit.dart';
-import '../../features/auth/presentation/verify_otp/logic/verify_otp_cubit.dart';
+import '../../features/auth/presentation/sign_up_screan/verify_otp_popup/logic/verify_otp_cubit.dart';
 import '../cache/secure_storage_data_source.dart';
 import '../cache/shared_preferences_service.dart';
 import '../network/dio_client.dart';

@@ -6,10 +6,10 @@ import '../../../../../core/design_system/theme/color/app_constant_colors.dart';
 import '../../../../../core/design_system/theme/helper/PopupHelper.dart';
 import '../../../../../core/design_system/theme/helper/theme_extention.dart';
 import '../../../../../core/di/injection_container.dart';
-import '../../verify_otp/logic/verify_otp_cubit.dart';
-import '../../verify_otp/view/verify_otp_popup.dart';
 import '../logic/sign_up_cubit.dart';
 import '../logic/sign_up_state.dart';
+import '../verify_otp_popup/logic/verify_otp_cubit.dart';
+import '../verify_otp_popup/view/verify_otp_popup.dart';
 import '../widgets/build_already_have_account.dart';
 import '../widgets/build_signup_button.dart';
 import '../widgets/build_signup_form.dart';
@@ -34,7 +34,6 @@ class SignUpScreen extends StatelessWidget {
                   email: state.email,
                   type: 'registration'.tr(),
                 ),
-                // VerifyOtpPopUp._(),
               ),
             );
           }
@@ -121,7 +120,7 @@ class SignUpScreen extends StatelessWidget {
           ),
         ],
       ),
-      child: Icon(Iconsax.sms, color: AppConstantColors.white, size: 40),
+      child: Icon(Iconsax.login, color: AppConstantColors.white, size: 40),
     );
   }
 }
