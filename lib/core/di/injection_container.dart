@@ -20,6 +20,7 @@ import '../../features/auth/presentation/verify_otp/logic/verify_otp_cubit.dart'
 import '../cache/secure_storage_data_source.dart';
 import '../cache/shared_preferences_service.dart';
 import '../network/dio_client.dart';
+import '../routes/AppStartupService.dart';
 
 final sl = GetIt.instance;
 
@@ -39,6 +40,9 @@ Future<void> _initCore() async {
 
   sl.registerLazySingleton<PreferencesService>(
         () => SharedPreferencesServiceImpl(sl<SharedPreferences>()),
+  );
+  sl.registerLazySingleton<AppStartupService>(
+        () => AppStartupServiceImpl(sl<PreferencesService>()),
   );
 
 }

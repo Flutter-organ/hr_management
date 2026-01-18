@@ -6,8 +6,8 @@ import 'package:hr_management/features/auth/presentation/sign_up_screan/view/sig
 
 import '../../../core/di/injection_container.dart';
 
-class OnBoardingScreen extends StatelessWidget {
-  const OnBoardingScreen({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,21 +17,9 @@ class OnBoardingScreen extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) =>
-                        BlocProvider(
-                          create: (context) => sl<SignUpCubit>(),
-                          child: SignUpScreen(),
-                        )
-
-                    ));
               },
-              child: Text("Sign Up"),
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              child: Text("Sign In"),
-            ),
+              child: Text("login")
+            )
           ],
         ),
       ),
