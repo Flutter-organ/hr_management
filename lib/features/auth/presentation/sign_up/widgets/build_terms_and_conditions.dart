@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/features/auth/presentation/sign_up_screan/widgets/show_terms_popup.dart';
-
+import 'package:hr_management/features/auth/presentation/sign_up/widgets/show_terms_popup.dart';
 import '../../../../../core/design_system/components/check_box.dart';
 import '../../../../../core/design_system/theme/color/app_constant_colors.dart';
 import '../../../../../core/design_system/theme/helper/theme_extention.dart';
 import 'package:easy_localization/easy_localization.dart';
-
 import '../logic/sign_up_cubit.dart';
 import '../logic/sign_up_state.dart';
 

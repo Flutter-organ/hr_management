@@ -4,12 +4,12 @@ import 'package:hr_management/core/design_system/theme/helper/snackbar_helper.da
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:hr_management/core/di/injection_container.dart';
 import 'package:hr_management/features/auth/domain/enitites/login_type.dart';
-import 'package:hr_management/features/auth/presentation/logic/forget_password/forgot_password_cubit.dart';
-import 'package:hr_management/features/auth/presentation/logic/forget_password/forgot_password_state.dart';
-import 'package:hr_management/features/auth/presentation/view/popups/verify_otp_popup.dart';
+import 'package:hr_management/features/auth/presentation/forget_password/logic/forgot_password_cubit.dart';
+import 'package:hr_management/features/auth/presentation/forget_password/logic/forgot_password_state.dart';
+import 'package:hr_management/features/auth/presentation/reset_password/view/screen/popup/verify_otp_popup.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../../core/design_system/components/popups/custom_popup.dart';
-import '../../../../../core/design_system/theme/helper/popup_helper.dart';
+import '../../../../../../../core/design_system/components/popups/custom_popup.dart';
+import '../../../../../../../core/design_system/theme/helper/popup_helper.dart';
 
 class ForgotPasswordPopup extends StatelessWidget {
   const ForgotPasswordPopup._();

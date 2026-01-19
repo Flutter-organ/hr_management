@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../../core/design_system/components/popups/custom_popup.dart';
-import '../../../../../core/design_system/theme/helper/popup_helper.dart';
+import '../../../../../../../core/design_system/components/popups/custom_popup.dart';
+import '../../../../../../../core/design_system/theme/helper/popup_helper.dart';
 
 class PasswordResetSuccessPopup extends StatelessWidget {
   const PasswordResetSuccessPopup._();

@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/core/design_system/theme/helper/snackbar_helper.dart';
-import 'package:hr_management/features/auth/presentation/view/popups/password_reset_success_popup.dart';
+import 'package:hr_management/features/auth/presentation/reset_password/view/screen/popup/password_reset_success_popup.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../../core/design_system/components/popups/custom_popup.dart';
-import '../../../../../core/di/injection_container.dart';
-import '../../logic/reset_password/reset_password_cubit.dart';
-import '../../logic/reset_password/reset_password_state.dart';
-import '../../../../../core/design_system/theme/helper/popup_helper.dart';
+import '../../../../../../../core/design_system/components/popups/custom_popup.dart';
+import '../../../../../../../core/di/injection_container.dart';
+import '../../../logic/reset_password_cubit.dart';
+import '../../../logic/reset_password_state.dart';
+import '../../../../../../../core/design_system/theme/helper/popup_helper.dart';
 
 class ResetPasswordPopup extends StatelessWidget {
   const ResetPasswordPopup._({

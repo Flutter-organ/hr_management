@@ -1,33 +1,30 @@
 import 'package:get_it/get_it.dart';
-import 'package:hr_management/features/auth/domain/repository/auth_repository.dart';
-import 'package:hr_management/features/auth/domain/use_cases/load_identifier_use_case.dart';
 import 'package:hr_management/features/auth/data/data_source/local/onboarding_local_data_source%20.dart';
 import 'package:hr_management/features/auth/data/data_source/local/onboarding_local_data_source_impl.dart';
 import 'package:hr_management/features/auth/data/repository_imp/on_boarding_repository_imp.dart';
+import 'package:hr_management/features/auth/domain/repository/auth_repository.dart';
 import 'package:hr_management/features/auth/domain/repository/on_boarding_repository.dart';
-import 'package:hr_management/features/auth/domain/usecase/RegisterUseCase.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hr_management/features/auth/domain/use_cases/load_identifier_use_case.dart';
 import 'package:hr_management/features/auth/domain/use_cases/login_use_case.dart';
-import 'package:hr_management/features/auth/presentation/logic/login/login_cubit.dart';
+import 'package:hr_management/features/auth/domain/usecase/RegisterUseCase.dart';
+import 'package:hr_management/features/auth/presentation/login/logic/login_cubit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../features/auth/data/data_source/local/auth_local_data_source.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source_imp.dart';
 import '../../features/auth/data/data_source/remote/AuthRemoteDataSource.dart';
 import '../../features/auth/data/data_source/remote/AuthRemoteDataSourceImpl.dart';
 import '../../features/auth/data/repository_imp/auth_repository_imp.dart';
-import '../../features/auth/domain/usecases/ForgotPasswordUseCase.dart';
-import '../../features/auth/domain/usecases/ResetPasswordUseCase.dart';
-import '../../features/auth/presentation/logic/forget_password/forgot_password_cubit.dart';
-import '../../features/auth/presentation/logic/reset_password/reset_password_cubit.dart';
 import '../../features/auth/domain/use_cases/check_onboarding_status_use_case.dart';
 import '../../features/auth/domain/use_cases/complete_onboarding_use_case.dart';
-import '../../features/auth/presentation/on_boarding/logic/cubit/on_boarding_cubit.dart';
-import '../../features/auth/data/data_source/remote/AuthRemoteDataSource.dart';
-import '../../features/auth/data/data_source/remote/AuthRemoteDataSourceImp.dart';
-import '../../features/auth/data/repository_imp/auth_repository_imp.dart';
-import '../../features/auth/domain/repository/auth_repository.dart';
 import '../../features/auth/domain/usecase/OtpUseCase.dart';
-import '../../features/auth/presentation/sign_up_screan/logic/sign_up_cubit.dart';
-import '../../features/auth/presentation/sign_up_screan/verify_otp_popup/logic/verify_otp_cubit.dart';
+import '../../features/auth/domain/usecases/ForgotPasswordUseCase.dart';
+import '../../features/auth/domain/usecases/ResetPasswordUseCase.dart';
+import '../../features/auth/presentation/forget_password/logic/forgot_password_cubit.dart';
+import '../../features/auth/presentation/on_boarding/logic/cubit/on_boarding_cubit.dart';
+import '../../features/auth/presentation/reset_password/logic/reset_password_cubit.dart';
+import '../../features/auth/presentation/sign_up/logic/sign_up_cubit.dart';
+import '../../features/auth/presentation/sign_up/verify_otp_popup/logic/verify_otp_cubit.dart';
 import '../cache/secure_storage_data_source.dart';
 import '../cache/shared_preferences_service.dart';
 import '../network/dio_client.dart';
@@ -53,9 +50,8 @@ Future<void> _initCore() async {
     () => SharedPreferencesServiceImpl(sl<SharedPreferences>()),
   );
   sl.registerLazySingleton<AppStartupService>(
-        () => AppStartupServiceImpl(sl<PreferencesService>()),
+    () => AppStartupServiceImpl(sl<PreferencesService>(), sl<SecureStorageService>()),
   );
-
 }
 
 Future<void> _initAuth() async {
@@ -63,17 +59,17 @@ Future<void> _initAuth() async {
   sl.registerLazySingleton<AuthLocalDataSource>(
     () => AuthLocalDataSourceImp(
       secureStorageService: sl<SecureStorageService>(),
-          preferencesService: sl<PreferencesService>() ,
+      preferencesService: sl<PreferencesService>(),
     ),
   );
   sl.registerLazySingleton<DioClient>(
     () => DioClient(sl<AuthLocalDataSource>()),
   );
   sl.registerLazySingleton<AuthRemoteDataSource>(
-        () => AuthRemoteDataSourceImp(dioClient: sl<DioClient>()),
+    () => AuthRemoteDataSourceImp(dioClient: sl<DioClient>()),
   );
   sl.registerLazySingleton<AuthRepository>(
-        () => AuthRepositoryImp(
+    () => AuthRepositoryImp(
       localDataSource: sl<AuthLocalDataSource>(),
       remoteDataSource: sl<AuthRemoteDataSource>(),
     ),
@@ -81,77 +77,59 @@ Future<void> _initAuth() async {
 
   //domain
   sl.registerLazySingleton<ForgotPasswordUseCase>(
-        () => ForgotPasswordUseCase(sl<AuthRepository>()),
+    () => ForgotPasswordUseCase(sl<AuthRepository>()),
   );
   sl.registerLazySingleton<ResetPasswordUseCase>(
-        () => ResetPasswordUseCase(sl<AuthRepository>()),
+    () => ResetPasswordUseCase(sl<AuthRepository>()),
   );
   sl.registerLazySingleton(() => LoginUseCase(sl<AuthRepository>()));
   sl.registerLazySingleton(() => LoadIdentifierUseCase(sl<AuthRepository>()));
+  sl.registerLazySingleton<RegisterUseCase>(
+        () => RegisterUseCase(sl<AuthRepository>()),
+  );
+  sl.registerLazySingleton<verifyOTPUseCase>(
+        () => verifyOTPUseCase(sl<AuthRepository>()),
+  );
 
   //presentation
   sl.registerFactory<ForgotPasswordCubit>(
-        () => ForgotPasswordCubit(sl<ForgotPasswordUseCase>()),
+    () => ForgotPasswordCubit(sl<ForgotPasswordUseCase>()),
   );
   sl.registerFactory<ResetPasswordCubit>(
-        () => ResetPasswordCubit(sl<ResetPasswordUseCase>()),
+    () => ResetPasswordCubit(sl<ResetPasswordUseCase>()),
   );
-  sl.registerFactory(() => LoginCubit(sl<LoginUseCase>(), sl<LoadIdentifierUseCase>()),
+  sl.registerFactory(
+    () => LoginCubit(sl<LoginUseCase>(), sl<LoadIdentifierUseCase>()),
+  );
+  sl.registerFactory<SignUpCubit>(
+          () => SignUpCubit(sl<RegisterUseCase>()));
+  sl.registerFactory<VerifyOtpCubit>(
+        () => VerifyOtpCubit(sl<verifyOTPUseCase>()),
   );
 }
 
 Future<void> _initOnboarding() async {
+  //data
   sl.registerLazySingleton<OnboardingLocalDataSource>(
-        () => OnboardingLocalDataSourceImpl(sl<PreferencesService>()),
+    () => OnboardingLocalDataSourceImpl(sl<PreferencesService>()),
   );
-
   sl.registerLazySingleton<OnboardingRepository>(
-        () => OnboardingRepositoryImpl(sl<OnboardingLocalDataSource>()),
+    () => OnboardingRepositoryImpl(sl<OnboardingLocalDataSource>()),
   );
 
+  //domain
   sl.registerLazySingleton<CompleteOnboardingUseCase>(
-        () => CompleteOnboardingUseCase(sl<OnboardingRepository>()),
+    () => CompleteOnboardingUseCase(sl<OnboardingRepository>()),
   );
-
   sl.registerLazySingleton<CheckOnboardingStatusUseCase>(
-        () => CheckOnboardingStatusUseCase(sl<OnboardingRepository>()),
+    () => CheckOnboardingStatusUseCase(sl<OnboardingRepository>()),
   );
 
+  //presentation
   sl.registerFactory<OnboardingCubit>(
-        () => OnboardingCubit(
+    () => OnboardingCubit(
       completeOnboardingUseCase: sl<CompleteOnboardingUseCase>(),
       checkOnboardingStatusUseCase: sl<CheckOnboardingStatusUseCase>(),
     ),
   );
-  sl.registerLazySingleton<AuthRemoteDataSource>(
-        () => AuthRemoteDataSourceImpl(sl<DioClient>()),
-  );
-
-  sl.registerLazySingleton<AuthRepository>(
-        () => AuthRepositoryImp(
-        localDataSource: sl<AuthLocalDataSource>(),
-        remoteDataSource: sl<AuthRemoteDataSource>()
-    ),
-  );
-  sl.registerLazySingleton<RegisterUseCase>(
-        () => RegisterUseCase(
-      sl<AuthRepository>(),
-    ),
-  );
-  sl.registerLazySingleton<verifyOTPUseCase>(
-        () => verifyOTPUseCase(
-      sl<AuthRepository>(),
-    ),
-  );
-  sl.registerFactory<SignUpCubit>(
-        () => SignUpCubit(
-      sl<RegisterUseCase>()
-        ),
-  );
-  sl.registerFactory<VerifyOtpCubit>(
-          () => VerifyOtpCubit(
-        sl<verifyOTPUseCase>(),
-      )
-  );
-
 }

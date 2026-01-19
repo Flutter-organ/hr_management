@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../core/design_system/components/popups/terms_popup.dart';
+import 'terms_popup.dart';
 import '../logic/sign_up_cubit.dart';
 
 void showTermsPopup(BuildContext context, VoidCallback onAgree) {

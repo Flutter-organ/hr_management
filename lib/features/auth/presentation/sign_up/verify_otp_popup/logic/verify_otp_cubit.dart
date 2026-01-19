@@ -1,4 +1,4 @@
-import 'package:hr_management/features/auth/presentation/sign_up_screan/verify_otp_popup/logic/verify_otp_state.dart';
+import 'package:hr_management/features/auth/presentation/sign_up/verify_otp_popup/logic/verify_otp_state.dart';
 
 import '../../../../../../core/base_viewmodel/base_cubit.dart';
 import '../../../../domain/enitites/verify_otp.dart';

@@ -4,7 +4,6 @@ import 'package:hr_management/core/config/app_config.dart';
 import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
 import 'package:hr_management/core/routes/route_generator.dart';
 import 'package:toastification/toastification.dart';
-import 'package:hr_management/features/auth/domain/repository/auth_repository.dart';
 import 'core/di/injection_container.dart';
 
 void main() async {
@@ -12,6 +11,7 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await AppConfig.init();
   await setupDependencies();
+
   runApp(
     ToastificationWrapper(
       child: EasyLocalization(

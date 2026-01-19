@@ -1,4 +1,4 @@
-import 'package:hr_management/features/auth/presentation/logic/reset_password/reset_password_state.dart';
+import 'package:hr_management/features/auth/presentation/reset_password/logic/reset_password_state.dart';
 import '../../../../../core/base_viewmodel/base_cubit.dart';
 import '../../../domain/usecases/ResetPasswordUseCase.dart';
 

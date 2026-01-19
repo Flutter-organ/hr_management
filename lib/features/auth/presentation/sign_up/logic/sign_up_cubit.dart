@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:hr_management/features/auth/presentation/sign_up_screan/logic/sign_up_state.dart';
-
+import 'package:hr_management/features/auth/presentation/sign_up/logic/sign_up_state.dart';
 import '../../../../../core/base_viewmodel/base_cubit.dart';
 import '../../../domain/enitites/Register.dart';
 import '../../../domain/usecase/RegisterUseCase.dart';
