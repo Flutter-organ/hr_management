@@ -6,6 +6,7 @@ import 'package:hr_management/core/routes/route_generator.dart';
 import 'package:toastification/toastification.dart';
 import 'core/di/injection_container.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
