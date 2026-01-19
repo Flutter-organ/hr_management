@@ -1,7 +1,14 @@
 class RouteNames {
-  // ───────────────────── Future / Commented Routes ─────────────────────
-  // Uncomment when ready to implement:
-  // static const String namePageRoute = "namePage";
-  // static const String loginHomePageRoute = "/LoginHomePage";
+  RouteNames._();
 
+  static const String login = '/auth/login';
+  static const String register = '/auth/register';
+  static const String homeScreen = "/home";
+
+  // UTILITY ROUTES
+  //static const String splash = '/';
+  static const String notFound = '/404';
+  static const String onboarding = '/';
+  static const String onboardingFinal = '/onboarding-final';
+  //static const String login = '/LoginScreen';
 }

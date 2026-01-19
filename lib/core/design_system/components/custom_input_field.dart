@@ -88,20 +88,20 @@ class CustomInputField extends StatelessWidget {
       children: [
         label != null
             ? Column(
-          children: [
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Text(
-                label!,
-                style: context.textTheme.bodySmallFont.copyWith(
-                  color: labelColor!,
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ),
-            const SizedBox(height: 4),
-          ],
-        )
+                children: [
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Text(
+                      label!,
+                      style: context.textTheme.bodySmallFont.copyWith(
+                        color: labelColor!,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                ],
+              )
             : const SizedBox(height: 0),
         TextFormField(
           controller: controller,
@@ -155,6 +155,13 @@ class CustomInputField extends StatelessWidget {
               borderRadius: BorderRadius.circular(radius ?? 4.00),
               borderSide: BorderSide(
                 color: enabledColor ?? context.colors.gray400,
+              ),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(radius ?? 4.00),
+              borderSide: BorderSide(
+                color: enabledColor ?? context.colors.gray300,
+                width: 1,
               ),
             ),
             border: border ?? InputBorder.none,

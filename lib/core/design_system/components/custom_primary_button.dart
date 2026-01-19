@@ -105,7 +105,7 @@ class CustomPrimaryButton extends StatelessWidget {
     VoidCallback? onPressed,
     double? width,
     double? height,
-    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(  horizontal: 24, vertical: 14),
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
     Color? borderColor,
     Color? foregroundColor,
     double borderWidth = 1.5,
@@ -332,7 +332,7 @@ class CustomPrimaryButton extends StatelessWidget {
         context.colors.purple500,
         context.colors.purple600,
         context.colors.purple700,
-      ],
+        ],
     );
     final effectiveDisabledGradient = disabledGradient ??
         LinearGradient(colors: [context.colors.gray300, context.colors.gray400]);

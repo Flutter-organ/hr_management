@@ -316,35 +316,35 @@ class CustomPopup extends StatelessWidget {
           ),
         ),
         if (icon != null)
-          Positioned(
-            top: -50,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: AppConstantColors.purple500,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppConstantColors.purple500.withOpacity(0.4),
-                      blurRadius: 16,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(
-                    icon,
-                    color: Colors.white,
-                    size: 48,
+        Positioned(
+          top: -50,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                color: AppConstantColors.purple500,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppConstantColors.purple500.withOpacity(0.4),
+                    blurRadius: 16,
+                    offset: const Offset(0, 8),
                   ),
+                ],
+              ),
+              child: Center(
+                child: Icon(
+                  icon,
+                  color: Colors.white,
+                  size: 48,
                 ),
               ),
             ),
           ),
+        ),
       ],
     );
   }

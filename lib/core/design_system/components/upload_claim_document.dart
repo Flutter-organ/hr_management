@@ -195,7 +195,7 @@ class _UploadClaimDocumentState extends State<UploadClaimDocument> {
                 onPressed: () => _clearSelection(),
                 padding: EdgeInsets.all(4),
                 constraints: BoxConstraints(),
-                icon: Icon(Iconsax.close_square5, color: color.error),
+                icon: Icon(Iconsax.close_square5, color: color.apiError),
               ),
 
               if (isImage) ...[
@@ -262,7 +262,7 @@ class _UploadClaimDocumentState extends State<UploadClaimDocument> {
         ),
         IconButton(
           onPressed: () => _clearSelection(),
-          icon: Icon(Iconsax.close_square5, color: color.error),
+          icon: Icon(Iconsax.close_square5, color: color.apiError),
         ),
       ],
     );
