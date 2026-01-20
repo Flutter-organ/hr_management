@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../../domain/enitites/User.dart';
+import '../../../domain/enitites/user.dart';
 
 class LoginState extends Equatable {
   final String identifier;

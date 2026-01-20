@@ -1,4 +1,4 @@
-import '../../features/auth/domain/enitites/login_type.dart';
+import '../../features/auth/domain/enitites/auth_type.dart';
 
 abstract class RouteArgument {
   const RouteArgument();
@@ -6,7 +6,7 @@ abstract class RouteArgument {
 
 class VerifyOtpArgument extends RouteArgument {
   final String identifier;
-  final LoginType loginType;
+  final AuthType loginType;
 
   const VerifyOtpArgument({
     required this.identifier,

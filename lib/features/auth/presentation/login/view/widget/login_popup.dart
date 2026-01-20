@@ -11,7 +11,7 @@ import '../../../../../../core/design_system/theme/helper/extention_colors.dart'
 import '../../../../../../core/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../../core/design_system/theme/helper/theme_extention.dart';
 import '../../../../../../core/routes/route_names.dart';
-import '../../../../domain/enitites/login_type.dart';
+import '../../../../domain/enitites/auth_type.dart';
 import '../../logic/login_cubit.dart';
 import '../../logic/login_state.dart';
 import '../../../forget_password/view/screen/popup/forgot_password_popup.dart';
@@ -24,7 +24,7 @@ class LoginCard extends StatefulWidget {
 }
 
 class _LoginCardState extends State<LoginCard> {
-  LoginType _loginType = LoginType.email;
+  AuthType _loginType = AuthType.email;
   bool _obscurePassword = true;
 
   final List<String> _countryFilter = const [
@@ -82,7 +82,7 @@ class _LoginCardState extends State<LoginCard> {
 
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
-                  child: _loginType == LoginType.email
+                  child: _loginType == AuthType.email
                       ? _buildEmailField(context, cubit, state)
                       : _buildPhoneField(context, cubit, state),
                 ),
@@ -167,20 +167,20 @@ class _LoginCardState extends State<LoginCard> {
 
                 CustomPrimaryButton.outlined(
                   borderColor: context.colors.purple500,
-                  buttonText: _loginType == LoginType.email
+                  buttonText: _loginType == AuthType.email
                       ? 'sign_with_phone'.tr()
                       : 'sign_with_email'.tr(),
                   icon: Icon(
-                    _loginType == LoginType.email ? Iconsax.call5 : Iconsax.sms,
+                    _loginType == AuthType.email ? Iconsax.call5 : Iconsax.sms,
                     color: context.colors.purple500,
                   ),
                   onPressed: () {
                     FocusScope.of(context).unfocus();
                     cubit.onIdentifierChanged('');
                     setState(() {
-                      _loginType = _loginType == LoginType.email
-                          ? LoginType.phone
-                          : LoginType.email;
+                      _loginType = _loginType == AuthType.email
+                          ? AuthType.phone
+                          : AuthType.email;
                     });
                   },
                 ),
@@ -203,11 +203,7 @@ class _LoginCardState extends State<LoginCard> {
                         alignment: PlaceholderAlignment.middle,
                         child: GestureDetector(
                           onTap: () {
-                            // TODO: Navigate to sign up
-                            SnackBarHelper.showInfo(
-                              context,
-                              'Sign up not implemented yet',
-                            );
+                            context.go(RouteNames.register);
                           },
                           child: Text(
                             'sign_up_here'.tr(),

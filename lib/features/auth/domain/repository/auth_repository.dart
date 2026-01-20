@@ -1,10 +1,8 @@
 import 'package:fpdart/fpdart.dart';
-import '../enitites/User.dart';
-import '../enitites/login_type.dart';
+import '../enitites/user.dart';
+import '../enitites/auth_type.dart';
 import 'package:hr_management/features/auth/domain/enitites/verify_otp.dart';
-import '../../data/data_source/remote/dto/AuthDto.dart';
-import '../enitites/Register.dart';
-import '../enitites/User.dart';
+import '../enitites/register.dart';
 import '../failures/failure.dart';
 
 abstract class AuthRepository {
@@ -21,7 +19,7 @@ abstract class AuthRepository {
 
   Future<Either<Failure, String>> forgotPassword({
     required String identifier,
-    required LoginType loginType,
+    required AuthType loginType,
   });
 
   Future<Either<Failure, User>> resetPassword({
@@ -34,8 +32,7 @@ abstract class AuthRepository {
   Future<Either<Failure, User>> login({
     required String identifier,
     required String password,
-    required LoginType loginType,
-    //required bool isRememberd,
+    required AuthType loginType,
   });
 
   Future<Either<Failure, Unit>> saveIdentifier(String mail);

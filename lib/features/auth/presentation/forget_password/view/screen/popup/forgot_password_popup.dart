@@ -1,9 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hr_management/core/design_system/theme/helper/snackbar_helper.dart';
 import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:hr_management/core/di/injection_container.dart';
-import 'package:hr_management/features/auth/domain/enitites/login_type.dart';
+import 'package:hr_management/features/auth/domain/enitites/auth_type.dart';
 import 'package:hr_management/features/auth/presentation/forget_password/logic/forgot_password_cubit.dart';
 import 'package:hr_management/features/auth/presentation/forget_password/logic/forgot_password_state.dart';
 import 'package:hr_management/features/auth/presentation/reset_password/view/screen/popup/verify_otp_popup.dart';
@@ -38,7 +39,7 @@ class ForgotPasswordPopup extends StatelessWidget {
           VerifyOtpPopup.show(
             context,
             identifier: state.successIdentifier!,
-            loginType: LoginType.email,
+            loginType: AuthType.email,
           );
         }
 
@@ -51,10 +52,10 @@ class ForgotPasswordPopup extends StatelessWidget {
 
         return CustomPopup.singleInputPopup(
           icon: Iconsax.security_safe4,
-          title: 'Forgot Password',
-          description: 'Reset password code will be sent to your email to reset your password.',
-          inputLabel: 'Email',
-          inputHint: 'Enter your email',
+          title: "forgot_password".tr(),
+          description: "forgot_password_title".tr(args: [state.email]),
+          inputLabel: 'email_label'.tr(),
+          inputHint: "enter_your_email".tr(),
           onInputChanged: cubit.onEmailChanged,
           errorText: state.emailError,
           keyboardType: TextInputType.emailAddress,
@@ -64,7 +65,7 @@ class ForgotPasswordPopup extends StatelessWidget {
             size: 20,
           ),
           enabled: !state.isLoading,
-          primaryButtonText: 'Send Verification Code',
+          primaryButtonText: "send_verification_code".tr(),
           isPrimaryButtonLoading: state.isLoading,
           isPrimaryButtonEnabled: !state.isLoading,
           primaryButtonOnPressed: cubit.submit,

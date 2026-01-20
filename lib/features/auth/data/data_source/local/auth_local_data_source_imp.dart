@@ -57,6 +57,7 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
     }
   }
 
+  @override
   Future<void> saveIdentifier(String email) async {
     try {
       await _preferencesService.setString(key: "mail", value: email);
@@ -65,6 +66,7 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
     }
   }
 
+  @override
   Future<String?> getIdentifier() async {
     try {
       return await _preferencesService.getString(key: "mail");
@@ -75,6 +77,7 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
 
 
 
+  @override
   Future<void> clearIdentifier() async {
     try {
       return await _preferencesService.remove(key: 'mail');

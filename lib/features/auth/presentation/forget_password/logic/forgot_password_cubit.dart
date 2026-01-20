@@ -1,6 +1,6 @@
 import '../../../../../core/base_viewmodel/base_cubit.dart';
-import '../../../domain/enitites/login_type.dart';
-import '../../../domain/usecases/ForgotPasswordUseCase.dart';
+import '../../../domain/enitites/auth_type.dart';
+import '../../../domain/use_cases/forgot_password_use_case.dart';
 import 'forgot_password_state.dart';
 
 class ForgotPasswordCubit extends BaseCubit<ForgotPasswordState> {
@@ -20,7 +20,7 @@ class ForgotPasswordCubit extends BaseCubit<ForgotPasswordState> {
           clearApiError: true)),
       call: () => _forgotPasswordUseCase(
         identifier: state.email.trim(),
-        loginType: LoginType.email,
+        loginType: AuthType.email,
       ),
       onSuccess: (identifier) {
         updateState((s) => s.copyWith(isLoading: false, isSuccess: true, successIdentifier: identifier));

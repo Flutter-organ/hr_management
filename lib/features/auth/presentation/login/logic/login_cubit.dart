@@ -1,5 +1,5 @@
 import '../../../../../core/base_viewmodel/base_cubit.dart';
-import '../../../domain/enitites/login_type.dart';
+import '../../../domain/enitites/auth_type.dart';
 import '../../../domain/use_cases/load_identifier_use_case.dart';
 import '../../../domain/use_cases/login_use_case.dart';
 import 'login_state.dart';
@@ -40,7 +40,7 @@ class LoginCubit extends BaseCubit<LoginState> {
     updateState((s) => s.copyWith(rememberMe: value));
   }
 
-  Future<void> submit(LoginType loginType) async {
+  Future<void> submit(AuthType loginType) async {
     if (!_validate(loginType)) return;
 
     await execute(
@@ -99,24 +99,24 @@ class LoginCubit extends BaseCubit<LoginState> {
     );
   }
 
-  bool _validate(LoginType loginType) {
+  bool _validate(AuthType loginType) {
     bool isValid = true;
 
     final identifier = state.identifier.trim();
 
     if (identifier.isEmpty) {
       updateState((s) => s.copyWith(
-        identifierError: loginType == LoginType.email
+        identifierError: loginType == AuthType.email
             ? 'Email is required'
             : 'Phone number is required',
       ));
       isValid = false;
-    } else if (loginType == LoginType.email && !_isValidEmail(identifier)) {
+    } else if (loginType == AuthType.email && !_isValidEmail(identifier)) {
       updateState((s) => s.copyWith(
         identifierError: 'Please enter a valid email',
       ));
       isValid = false;
-    } else if (loginType == LoginType.phone && !_isValidPhone(identifier)) {
+    } else if (loginType == AuthType.phone && !_isValidPhone(identifier)) {
       updateState((s) => s.copyWith(
         identifierError: 'Please enter a valid phone number',
       ));

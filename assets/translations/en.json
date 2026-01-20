@@ -131,5 +131,6 @@
   "explore_app_first": "Explore the App First",
   "password_too_short": "Password too short (min 8 chars)",
   "password_complexity": "Password must contain uppercase, lowercase, number and special character",
-  "passwords_not_match": "Passwords do not match"
+  "passwords_not_match": "Passwords do not match",
+  "forgot_password_title": "Reset password code will be sent to your {} to reset your password."
 }

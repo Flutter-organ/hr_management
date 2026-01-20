@@ -1,9 +1,11 @@
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hr_management/features/auth/presentation/sign_up/logic/sign_up_state.dart';
+
 import '../../../../../core/base_viewmodel/base_cubit.dart';
-import '../../../domain/enitites/Register.dart';
-import '../../../domain/usecase/RegisterUseCase.dart';
+import '../../../domain/enitites/register.dart';
+import '../../../domain/use_cases/register_use_case.dart';
 
 class SignUpCubit extends BaseCubit<SignUpUiState> {
   SignUpCubit(this._registerUseCase) : super(SignUpUiState());
@@ -67,7 +69,7 @@ class SignUpCubit extends BaseCubit<SignUpUiState> {
             phone: fullPhoneNumber,
             password: passwordController.text.trim(),
             passwordConfirmation: confirmPasswordController.text.trim(),
-            registerType: registerType,
+              registerType: registerType
           ),
         );
         return isRegistered;

@@ -1,6 +1,8 @@
+
 import 'package:hr_management/features/auth/presentation/reset_password/logic/reset_password_state.dart';
+
 import '../../../../../core/base_viewmodel/base_cubit.dart';
-import '../../../domain/usecases/ResetPasswordUseCase.dart';
+import '../../../domain/use_cases/reset_password_use_case.dart';
 
 class ResetPasswordCubit extends BaseCubit<ResetPasswordState> {
   final ResetPasswordUseCase _resetPasswordUseCase;

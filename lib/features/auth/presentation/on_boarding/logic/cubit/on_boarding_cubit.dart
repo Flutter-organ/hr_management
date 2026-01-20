@@ -7,17 +7,16 @@ import 'on_boarding_state.dart';
 
 class OnboardingCubit extends BaseCubit<OnboardingState> {
   final CompleteOnboardingUseCase _completeOnboardingUseCase;
-  final CheckOnboardingStatusUseCase _checkOnboardingStatusUseCase;
 
   OnboardingCubit({
     required CompleteOnboardingUseCase completeOnboardingUseCase,
     required CheckOnboardingStatusUseCase checkOnboardingStatusUseCase,
   })  : _completeOnboardingUseCase = completeOnboardingUseCase,
-        _checkOnboardingStatusUseCase = checkOnboardingStatusUseCase,
         super(const OnboardingState());
 
   Future<void> onNextPressed() async {
     if (state.isLastPage) {
+      print("objyyyyyyyyyyyyyyyyyyyyyect${state.currentIndex}");
       await _completeAndNavigate();
     } else {
       _goToNextPage();

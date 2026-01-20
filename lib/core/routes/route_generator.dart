@@ -10,7 +10,7 @@ import '../../features/auth/presentation/on_boarding/logic/cubit/on_boarding_cub
 import '../../features/auth/presentation/on_boarding/view/on_boarding_final_page.dart';
 import '../../features/auth/presentation/on_boarding/view/on_boarding_page.dart';
 import '../../features/auth/presentation/sign_up/logic/sign_up_cubit.dart';
-import '../../features/auth/presentation/sign_up/view/sign_up_screen.dart';
+import '../../features/auth/presentation/sign_up/view/screen/sign_up_screen.dart';
 import 'AppStartupService.dart';
 
 final GoRouter router = GoRouter(
@@ -21,7 +21,6 @@ final GoRouter router = GoRouter(
       final location = state.matchedLocation;
 
       if (isLoggedIn) {
-        // Prevent redirect loop
         if (location == RouteNames.login ||
             location == RouteNames.onboarding ||
             location == RouteNames.register) {
@@ -36,9 +35,11 @@ final GoRouter router = GoRouter(
 
       if (onboardingCompleted &&
           location != RouteNames.login &&
-          location != RouteNames.register) {
+          location != RouteNames.register &&
+          location != RouteNames.onboardingFinal) {
         return RouteNames.login;
       }
+
 
       return null;
     },

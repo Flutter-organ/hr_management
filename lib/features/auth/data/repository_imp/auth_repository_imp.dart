@@ -1,16 +1,16 @@
 import 'package:fpdart/fpdart.dart';
-import '../../domain/enitites/User.dart';
-import '../../domain/enitites/login_type.dart';
-import '../../domain/enitites/Register.dart';
+import '../../domain/enitites/user.dart';
+import '../../domain/enitites/auth_type.dart';
+import '../../domain/enitites/register.dart';
 import '../../domain/enitites/verify_otp.dart';
 import '../../domain/failures/failure.dart';
 import '../../domain/repository/auth_repository.dart';
 import '../data_source/local/auth_local_data_source.dart';
-import '../data_source/remote/AuthRemoteDataSource.dart';
-import '../data_source/remote/dto/ForgotPasswordRequest.dart';
-import '../data_source/remote/dto/ResetPasswordRequest.dart';
-import '../data_source/remote/dto/loginRequest.dart';
-import '../mappers/AuthMapper.dart';
+import '../data_source/remote/auth_remote_data_source.dart';
+import '../data_source/remote/dto/request/forgot_password_request.dart';
+import '../data_source/remote/dto/request/login_request.dart';
+import '../data_source/remote/dto/request/reset_password_request.dart';
+import '../mappers/auth_mapper.dart';
 import '../mappers/auth_failure_mapper.dart';
 
 class AuthRepositoryImp implements AuthRepository {
@@ -28,7 +28,7 @@ class AuthRepositoryImp implements AuthRepository {
   Future<Either<Failure, User>> login({
     required String identifier,
     required String password,
-    required LoginType loginType,
+    required AuthType loginType,
   }) async {
     try {
       final request = LoginRequest(
@@ -41,9 +41,9 @@ class AuthRepositoryImp implements AuthRepository {
         request
       );
 
-      await _localDataSource.saveToken(response.accessToken);
+      await _localDataSource.saveToken(response.accessToken??"");
 
-      return Right(response.user.toDomain());
+      return Right(AuthMapper.toDomain(response.user));
     } catch (e) {
       return Left(AuthFailureMapper.mapException(e));
     }
@@ -93,7 +93,7 @@ class AuthRepositoryImp implements AuthRepository {
   @override
   Future<Either<Failure, String>> forgotPassword({
     required String identifier,
-    required LoginType loginType,
+    required AuthType loginType,
   }) async {
     try {
       final request = ForgotPasswordRequest(
@@ -102,7 +102,14 @@ class AuthRepositoryImp implements AuthRepository {
       );
 
       final response = await _remoteDataSource.forgotPassword(request);
-      return Right(response.identifier);
+      if (response.identifier == null || response.identifier?.isEmpty == true ) {
+        return Left(
+          ServerFailure(
+            'identifier is null or empty',
+          ),
+        );
+      }
+      return Right(response.identifier ?? '');
     } catch (e) {
       return Left(AuthFailureMapper.mapException(e));
     }
@@ -125,9 +132,15 @@ class AuthRepositoryImp implements AuthRepository {
 
       final response = await _remoteDataSource.resetPassword(request);
 
-      await _localDataSource.saveToken(response.accessToken);
+      if (response.accessToken == null || response.accessToken?.isEmpty == true) {
+        return Left(
+          ServerFailure( 'Access token is missing'),
+        );
+      }
 
-      return Right(response.user.toDomain());
+      await _localDataSource.saveToken(response.accessToken??'');
+
+      return Right(AuthMapper.toDomain(response.user));
     } catch (e) {
       return Left(AuthFailureMapper.mapException(e));
     }
@@ -190,10 +203,9 @@ class AuthRepositoryImp implements AuthRepository {
         verifyOtpDto: verifyOtpDto,
       );
       if (otpVerifyResponse.accessToken != null) {
-        await saveToken(otpVerifyResponse.accessToken);
+        await saveToken(otpVerifyResponse.accessToken!);
       }
-      print("CurrentUser is ${otpVerifyResponse.user}");
-      final user = AuthMapper.toUser(otpVerifyResponse.user);
+      final user = AuthMapper.toDomain(otpVerifyResponse.user);
       return Right(user);
     }catch(e){
       return Left(AuthFailureMapper.mapException(e));

@@ -1,12 +1,13 @@
+import 'package:hr_management/features/auth/domain/enitites/verification_type.dart';
 import 'package:hr_management/features/auth/presentation/sign_up/verify_otp_popup/logic/verify_otp_state.dart';
 
 import '../../../../../../core/base_viewmodel/base_cubit.dart';
 import '../../../../domain/enitites/verify_otp.dart';
-import '../../../../domain/usecase/OtpUseCase.dart';
+import '../../../../domain/use_cases/otp_use_case.dart';
 
 class VerifyOtpCubit extends BaseCubit<VerifyOtpUiState> {
   VerifyOtpCubit(this._OTPUseCase) : super(VerifyOtpUiState());
-  final verifyOTPUseCase _OTPUseCase;
+  final VerifyOTPUseCase _OTPUseCase;
 
   String otpCode = '';
 
@@ -26,7 +27,7 @@ class VerifyOtpCubit extends BaseCubit<VerifyOtpUiState> {
           verifyOtp: VerifyOTP(
             identifier: email,
             code: state.code,
-            type: type,
+            type: VerificationType.registration,
           )
         );
         return user;

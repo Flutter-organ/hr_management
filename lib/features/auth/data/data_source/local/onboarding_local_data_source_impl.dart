@@ -4,17 +4,17 @@ import 'package:hr_management/features/auth/data/data_source/local/onboarding_lo
 import '../../../../../core/config/preferences_keys.dart';
 
 class OnboardingLocalDataSourceImpl implements OnboardingLocalDataSource {
-  final PreferencesService _prefs;
+  final PreferencesService _preferencesService;
 
-  OnboardingLocalDataSourceImpl(this._prefs);
+  OnboardingLocalDataSourceImpl(this._preferencesService);
 
   @override
   Future<void> saveOnboardingCompleted() async {
-    await _prefs.setBool(key: PreferencesKeys.onboardingCompleted, value: true);
+    await _preferencesService.setBool(key: PreferencesKeys.onboardingCompleted, value: true);
   }
 
   @override
   bool isOnboardingCompleted() {
-    return _prefs.getBool(key: PreferencesKeys.onboardingCompleted) ?? false;
+    return _preferencesService.getBool(key: PreferencesKeys.onboardingCompleted) ?? false;
   }
 }

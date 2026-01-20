@@ -138,7 +138,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       child: Column(
         children: [
           CustomPrimaryButton.gradient(
-            buttonText: state.isLastPage ? 'get_started'.tr() : 'next'.tr(),
+            buttonText: state.isLastPage ? 'next'.tr() :  'next'.tr(),
             textStyle: context.textTheme.labelLargeFont,
             onPressed: isLoading ? null : cubit.onNextPressed,
           ),

@@ -1,3 +1,5 @@
+import 'package:hr_management/features/auth/domain/enitites/verification_type.dart';
+
 class VerifyOTP {
     VerifyOTP({
         required this.identifier,
@@ -7,5 +9,5 @@ class VerifyOTP {
 
     String identifier;
     String code;
-    String type;
+    VerificationType type;
 }

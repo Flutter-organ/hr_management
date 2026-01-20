@@ -1,0 +1,13 @@
+import '../../../../../domain/enitites/verification_type.dart';
+
+class VerifyOtpRequest {
+  VerifyOtpRequest({
+    required this.identifier,
+    required this.code,
+    required this.type,
+  });
+
+  String identifier;
+  String code;
+  VerificationType type;
+}

@@ -4,7 +4,7 @@ import 'package:hr_management/core/design_system/theme/helper/snackbar_helper.da
 import 'package:iconsax/iconsax.dart';
 import '../../../../../../../core/design_system/components/popups/custom_popup.dart';
 import '../../../../../../../core/di/injection_container.dart';
-import '../../../../../domain/enitites/login_type.dart';
+import '../../../../../domain/enitites/auth_type.dart';
 import '../../../../forget_password/logic/forgot_password_cubit.dart';
 import '../../../../forget_password/logic/forgot_password_state.dart';
 import '../../../../../../../core/design_system/theme/helper/popup_helper.dart';
@@ -17,12 +17,12 @@ class VerifyOtpPopup extends StatefulWidget {
   });
 
   final String identifier;
-  final LoginType loginType;
+  final AuthType loginType;
 
   static Future<void> show(
       BuildContext context, {
         required String identifier,
-        required LoginType loginType,
+        required AuthType loginType,
       }) {
     return PopupHelper.show(
       isDismissible: false,
