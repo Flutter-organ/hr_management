@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../../core/design_system/theme/color/app_constant_colors.dart';
 import '../../../../../../core/design_system/theme/helper/theme_extention.dart';
+import '../../../../../../core/routes/route_names.dart';
 Widget buildAlreadyHaveAnAccount(BuildContext context) {
   return Text.rich(
     TextSpan(
@@ -15,7 +17,9 @@ Widget buildAlreadyHaveAnAccount(BuildContext context) {
         WidgetSpan(
           alignment: PlaceholderAlignment.middle,
           child: GestureDetector(
-            onTap: (){},
+            onTap: (){
+              context.go(RouteNames.login);
+            },
             child: Text(
               "sign_in_here".tr(),
               style: context.textTheme.labelMediumFont.copyWith(
