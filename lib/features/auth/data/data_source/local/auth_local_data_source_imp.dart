@@ -20,14 +20,14 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
     try {
       return await _secureStorageService.read(key: ApiConstants.tokenKey);
     } catch (e) {
-      throw CacheException(message: 'Failed to read token: $e');
+      throw CacheException.read(ApiConstants.tokenKey, e);
     }
   }
 
   @override
   Future<void> saveToken(String token) async {
     if (token.isEmpty) {
-      throw const CacheException(message: 'Token cannot be empty');
+      throw CacheException.invalidData(ApiConstants.tokenKey, 'Token cannot be empty');
     }
     try {
       await _secureStorageService.write(
@@ -35,7 +35,7 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
         value: token,
       );
     } catch (e) {
-      throw CacheException(message: 'Failed to save token: $e');
+      throw CacheException.write(ApiConstants.tokenKey, e);
     }
   }
 
@@ -44,7 +44,7 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
     try {
       await _secureStorageService.delete(key: ApiConstants.tokenKey);
     } catch (e) {
-      throw CacheException(message: 'Failed to delete token: $e');
+      throw CacheException.delete(ApiConstants.tokenKey, e);
     }
   }
 
@@ -52,7 +52,7 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
   Future<bool> hasToken() async {
     try {
       final token = await getToken();
-      return token != null && token.isNotEmpty;
+      return token?.isNotEmpty ?? false;
     } catch (e) {
       return false;
     }
@@ -61,29 +61,30 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
   @override
   Future<void> saveIdentifier(String email) async {
     try {
-      await _preferencesService.setString(key: PreferencesKeys.userIdentifier, value: email);
+      await _preferencesService.setString(
+        key: PreferencesKeys.userIdentifier,
+        value: email,
+      );
     } catch (e) {
-      throw CacheException(message: "Failed to save email : $e");
+      throw CacheException.write(PreferencesKeys.userIdentifier, e);
     }
   }
 
   @override
   Future<String?> getIdentifier() async {
     try {
-      return await _preferencesService.getString(key: "mail");
+      return _preferencesService.getString(key: PreferencesKeys.userIdentifier);
     } catch (e) {
-      throw CacheException(message: "Failed to read mail:$e");
+      throw CacheException.read(PreferencesKeys.userIdentifier, e);
     }
   }
-
-
 
   @override
   Future<void> clearIdentifier() async {
     try {
-      return await _preferencesService.remove(key: 'mail');
+      await _preferencesService.remove(key: PreferencesKeys.userIdentifier);
     } catch (e) {
-      throw CacheException(message: "Failed To Remove Mail:$e");
+      throw CacheException.delete(PreferencesKeys.userIdentifier, e);
     }
   }
 }

@@ -1,6 +1,6 @@
 enum VerificationType {
   registration('registration'),
-  forgetPassword('forget_password');
+  passwordReset('password_reset');
 
   final String value;
 

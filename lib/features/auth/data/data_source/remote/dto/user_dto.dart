@@ -1,3 +1,4 @@
+import '../../../../../../core/data/exception/app_exception.dart';
 import '../../../mappers/auth_mapper.dart';
 
 class UserDto {
@@ -16,12 +17,40 @@ class UserDto {
   });
 
   factory UserDto.fromJson(Map<String, dynamic> json) {
+    final id = json['id'] as int?;
+    final email = json['email'] as String?;
+    final phone = json['phone'] as String?;
+    final role = json['role'] as String?;
+
+    if (id == null) {
+      throw const ServerException(
+        message: 'Invalid response: missing id',
+        code: 'PARSE_ERROR',
+        statusCode: 200,
+      );
+    }
+    if (email == null || email.isEmpty || phone == null || phone.isEmpty) {
+      throw const ServerException(
+        message: 'Invalid response: missing email or phone',
+        code: 'PARSE_ERROR',
+        statusCode: 200,
+      );
+    }
+
+      if (role == null || role.isEmpty) {
+        throw const ServerException(
+          message: 'Invalid response: missing role',
+          code: 'PARSE_ERROR',
+          statusCode: 200,
+        );
+      };
+
     return UserDto(
-      id: json['id'] as int? ?? 0,
-      email: json['email'] as String?,
-      phone: json['phone'] as String?,
+      id: id,
+      email: email,
+      phone: phone,
       isActive: AuthMapper.parseIsActive(json['is_active']),
-      role: json['role'] as String?,
+      role: role,
     );
   }
 

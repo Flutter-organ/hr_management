@@ -57,11 +57,40 @@ class UnauthorizedException extends AppException {
 }
 
 class CacheException extends AppException {
-  const CacheException({String message = 'Failed to access local storage'})
-      : super(
-    message: message,
-    code: 'CACHE_ERROR',
-  );
+  const CacheException({
+    required super.message,
+    super.code = 'CACHE_ERROR',
+    super.statusCode,
+    super.isUnauthorized = false,
+  });
+
+  factory CacheException.read(String key, [Object? error]) {
+    return CacheException(
+      message: 'Failed to read $key${error != null ? ': $error' : ''}',
+      code: 'CACHE_READ_ERROR',
+    );
+  }
+
+  factory CacheException.write(String key, [Object? error]) {
+    return CacheException(
+      message: 'Failed to write $key${error != null ? ': $error' : ''}',
+      code: 'CACHE_WRITE_ERROR',
+    );
+  }
+
+  factory CacheException.delete(String key, [Object? error]) {
+    return CacheException(
+      message: 'Failed to delete $key${error != null ? ': $error' : ''}',
+      code: 'CACHE_DELETE_ERROR',
+    );
+  }
+
+  factory CacheException.invalidData(String key, String reason) {
+    return CacheException(
+      message: 'Invalid data for $key: $reason',
+      code: 'CACHE_INVALID_DATA',
+    );
+  }
 }
 
 class ValidationException extends AppException {

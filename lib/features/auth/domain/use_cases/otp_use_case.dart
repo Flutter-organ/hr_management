@@ -9,9 +9,7 @@ import '../enitites/verify_otp.dart';
 class VerifyOTPUseCase {
   final AuthRepository _authRepository;
 
-
-
-  VerifyOTPUseCase(this._authRepository);
+  const VerifyOTPUseCase(this._authRepository);
 
   Future<Either<Failure, User>> call({
     required VerifyOTP verifyOtp,

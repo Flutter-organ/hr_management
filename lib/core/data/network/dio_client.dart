@@ -200,7 +200,7 @@ class DioClient {
         );
 
       case 401:
-        return const UnauthorizedException(
+        return const ServerException(
           message: 'Unauthorized',
           code: 'UNAUTHORIZED',
           statusCode: 401,

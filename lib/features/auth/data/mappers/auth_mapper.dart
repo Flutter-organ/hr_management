@@ -12,7 +12,7 @@ class AuthMapper {
       password: register.password,
       passwordConfirmation: register.passwordConfirmation,
       phone: register.phone,
-      loginType: register.registerType,
+      loginType: register.authType.value,
     );
   }
 
