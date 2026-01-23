@@ -1,7 +1,7 @@
 import 'package:fpdart/fpdart.dart';
-import '../../../../../../core/presentation/base_viewmodel/base_cubit.dart';
-import '../../../../domain/use_cases/check_onboarding_status_use_case.dart';
-import '../../../../domain/use_cases/complete_onboarding_use_case.dart';
+import '../../../../../core/presentation/base_viewmodel/base_cubit.dart';
+import '../../../domain/use_cases/check_onboarding_status_use_case.dart';
+import '../../../domain/use_cases/complete_onboarding_use_case.dart';
 import 'on_boarding_state.dart';
 
 
@@ -16,7 +16,6 @@ class OnboardingCubit extends BaseCubit<OnboardingState> {
 
   Future<void> onNextPressed() async {
     if (state.isLastPage) {
-      print("objyyyyyyyyyyyyyyyyyyyyyect${state.currentIndex}");
       await _completeAndNavigate();
     } else {
       _goToNextPage();

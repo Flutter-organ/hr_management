@@ -5,7 +5,7 @@ import '../../../../../../../core/di/injection_container.dart';
 import '../../../../../../../core/presentation/design_system/components/popups/custom_popup.dart';
 import '../../../../../../../core/presentation/design_system/theme/helper/popup_helper.dart';
 import '../../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
-import '../../../../../domain/enitites/auth_type.dart';
+import '../../../../../domain/entity/auth_type.dart';
 import '../../../../forget_password/logic/forgot_password_cubit.dart';
 import '../../../../forget_password/logic/forgot_password_state.dart';
 import 'reset_password_popup.dart';

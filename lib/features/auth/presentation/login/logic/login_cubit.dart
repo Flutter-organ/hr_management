@@ -1,5 +1,6 @@
 import '../../../../../core/presentation/base_viewmodel/base_cubit.dart';
-import '../../../domain/enitites/auth_type.dart';
+import '../../../../../core/presentation/util/validator.dart';
+import '../../../domain/entity/auth_type.dart';
 import '../../../domain/use_cases/load_identifier_use_case.dart';
 import '../../../domain/use_cases/login_use_case.dart';
 import 'login_state.dart';
@@ -24,9 +25,8 @@ class LoginCubit extends BaseCubit<LoginState> {
   }
 
   void onCountryCodeChanged(String value) {
-    updateState((s) => s.copyWith(countryCode: "+$value"));
+    updateState((s) => s.copyWith(countryCode: value));
   }
-
 
   void onPasswordChanged(String value) {
     updateState((s) => s.copyWith(
@@ -43,14 +43,17 @@ class LoginCubit extends BaseCubit<LoginState> {
   Future<void> submit(AuthType loginType) async {
     if (!_validate(loginType)) return;
 
+    final identifier = loginType == AuthType.email
+        ? state.identifier.trim()
+        : state.fullPhoneNumber;
+
     await execute(
       onLoading: () => updateState((s) => s.copyWith(
         isLoading: true,
         clearApiError: true,
       )),
       call: () => _loginUseCase(
-        identifier: loginType.value == 'email'
-            ? state.identifier.trim() : state.countryCode + state.identifier.trim(),
+        identifier: identifier,
         password: state.password,
         loginType: loginType,
         isRemembered: state.rememberMe,
@@ -102,47 +105,23 @@ class LoginCubit extends BaseCubit<LoginState> {
   bool _validate(AuthType loginType) {
     bool isValid = true;
 
-    final identifier = state.identifier.trim();
+    final identifierError = Validators.validateIdentifier(
+      state.identifier.trim(),
+      isEmail: loginType == AuthType.email,
+    );
 
-    if (identifier.isEmpty) {
-      updateState((s) => s.copyWith(
-        identifierError: loginType == AuthType.email
-            ? 'Email is required'
-            : 'Phone number is required',
-      ));
-      isValid = false;
-    } else if (loginType == AuthType.email && !_isValidEmail(identifier)) {
-      updateState((s) => s.copyWith(
-        identifierError: 'Please enter a valid email',
-      ));
-      isValid = false;
-    } else if (loginType == AuthType.phone && !_isValidPhone(identifier)) {
-      updateState((s) => s.copyWith(
-        identifierError: 'Please enter a valid phone number',
-      ));
+    if (identifierError != null) {
+      updateState((s) => s.copyWith(identifierError: identifierError));
       isValid = false;
     }
 
-    if (state.password.isEmpty) {
-      updateState((s) => s.copyWith(
-        passwordError: 'Password is required',
-      ));
-      isValid = false;
-    } else if (state.password.length < 8) {
-      updateState((s) => s.copyWith(
-        passwordError: 'Password must be at least 8 characters',
-      ));
+    final passwordError = Validators.validatePassword(state.password);
+
+    if (passwordError != null) {
+      updateState((s) => s.copyWith(passwordError: passwordError));
       isValid = false;
     }
 
     return isValid;
-  }
-
-  bool _isValidEmail(String email) {
-    return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
-  }
-
-  bool _isValidPhone(String phone) {
-    return RegExp(r'^\d{10,15}$').hasMatch(phone);
   }
 }

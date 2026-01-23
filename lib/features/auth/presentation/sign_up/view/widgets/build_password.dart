@@ -1,45 +1,119 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../../core/presentation/design_system/components/custom_input_field.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
 import '../../logic/sign_up_cubit.dart';
 import '../../logic/sign_up_state.dart';
 
-Widget buildPassword(
+Widget buildPasswordField(
     BuildContext context,
-    TextEditingController passwordController,
-    String label) {
-  final cubit = context.read<SignUpCubit>();
-  return BlocBuilder<SignUpCubit, SignUpUiState>(
-    buildWhen: (previous, current) => current.isObscurePassWord!=previous.isObscurePassWord,
-    builder: (context, state) {
-      return CustomInputField(
-          label: label,
-          labelColor: context.colors.textPrimary,
-          controller: passwordController,
-          borderColor: context.colors.gray400,
-          filledColor: context.colors.white,
-          keyboardType: TextInputType.visiblePassword,
-          hintKey: "password_hint".tr(),
-          isObscureText: cubit.state.isObscurePassWord,
-          labelHintStyle: context.colors.gray400,
-          hintFontSize: 4,
-          enabledColor: context.colors.gray400,
-          radius: 8,
-          suffixIcon: IconButton(
-            onPressed: () {
-             cubit.toggleObscurePassword();
-            },
-            icon: Icon(
-              cubit.state.isObscurePassWord ? Iconsax.eye_slash : Iconsax.eye,
-            ),
+    SignUpState state,
+    SignUpCubit cubit,
+    ) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        'password'.tr(),
+        style: context.textTheme.bodySmallFont.copyWith(
+          color: context.colors.textPrimary,
+        ),
+      ),
+      const SizedBox(height: 4),
+      CustomInputField(
+        initialValue: state.password,
+        onChanged: cubit.onPasswordChanged,
+        enabled: !state.isLoading,
+        keyboardType: TextInputType.visiblePassword,
+        isObscureText: state.isObscurePassword,
+        hintKey: 'password_hint'.tr(),
+        borderColor: state.passwordError != null
+            ? context.colors.error
+            : context.colors.gray400,
+        filledColor: context.colors.white,
+        labelHintStyle: context.colors.gray400,
+        enabledColor: context.colors.gray400,
+        radius: 8,
+        contentPaddingHorizontal: 16,
+        contentPaddingVertical: 16,
+        prefixIcon: Icon(
+          Iconsax.lock,
+          color: context.colors.purple500,
+        ),
+        suffixIcon: IconButton(
+          onPressed: cubit.togglePasswordVisibility,
+          icon: Icon(
+            state.isObscurePassword ? Iconsax.eye_slash : Iconsax.eye,
             color: context.colors.purple500,
           ),
-          prefixIcon: Icon(Iconsax.lock, color: context.colors.purple500),
-          validator: cubit.validatePassword
-      );
-    },
+        ),
+      ),
+      if (state.passwordError != null) ...[
+        const SizedBox(height: 8),
+        Text(
+          state.passwordError!,
+          style: context.textTheme.bodySmallFont.copyWith(
+            color: context.colors.error,
+          ),
+        ),
+      ],
+    ],
+  );
+}
+
+Widget buildConfirmPasswordField(
+    BuildContext context,
+    SignUpState state,
+    SignUpCubit cubit,
+    ) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        'confirm_password'.tr(),
+        style: context.textTheme.bodySmallFont.copyWith(
+          color: context.colors.textPrimary,
+        ),
+      ),
+      const SizedBox(height: 4),
+      CustomInputField(
+        initialValue: state.confirmPassword,
+        onChanged: cubit.onConfirmPasswordChanged,
+        enabled: !state.isLoading,
+        keyboardType: TextInputType.visiblePassword,
+        isObscureText: state.isObscureConfirmPassword,
+        hintKey: 'password_hint'.tr(),
+        borderColor: state.confirmPasswordError != null
+            ? context.colors.error
+            : context.colors.gray400,
+        filledColor: context.colors.white,
+        labelHintStyle: context.colors.gray400,
+        enabledColor: context.colors.gray400,
+        radius: 8,
+        contentPaddingHorizontal: 16,
+        contentPaddingVertical: 16,
+        prefixIcon: Icon(
+          Iconsax.lock,
+          color: context.colors.purple500,
+        ),
+        suffixIcon: IconButton(
+          onPressed: cubit.toggleConfirmPasswordVisibility,
+          icon: Icon(
+            state.isObscureConfirmPassword ? Iconsax.eye_slash : Iconsax.eye,
+            color: context.colors.purple500,
+          ),
+        ),
+      ),
+      if (state.confirmPasswordError != null) ...[
+        const SizedBox(height: 8),
+        Text(
+          state.confirmPasswordError!,
+          style: context.textTheme.bodySmallFont.copyWith(
+            color: context.colors.error,
+          ),
+        ),
+      ],
+    ],
   );
 }

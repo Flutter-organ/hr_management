@@ -1,6 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-
-import '../enitites/auth_type.dart';
+import '../entity/auth_type.dart';
 import '../failures/failure.dart';
 import '../repository/auth_repository.dart';
 

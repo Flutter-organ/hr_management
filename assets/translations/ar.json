@@ -127,5 +127,26 @@
   "password_too_short": "كلمة المرور قصيرة جدًا (8 أحرف على الأقل)",
   "password_complexity": "يجب أن تحتوي كلمة المرور على حرف كبير وصغير ورقم ورمز خاص",
   "passwords_not_match": "كلمات المرور غير متطابقة",
-  "forgot_password_title": "سيتم إرسال رمز إعادة تعيين كلمة المرور إلى {method}."
+  "forgot_password_title": "سيتم إرسال رمز إعادة تعيين كلمة المرور إلى {method}.",
+
+  "app_name": "HR Management",
+  "register_subtitle": "Register Using Your Credentials",
+  "verification_success": "Verification successful!",
+  "code_resent": "Verification code has been resent",
+  "verify": "Verify",
+  "reset_code_sent_description": "A reset code has been sent to {}. Enter it below to continue.",
+  "set_new_password_title": "Set a New Password",
+  "confirm_password_hint": "Re-enter your password",
+  "close": "Close",
+  "otp_required": "Please enter the verification code",
+  "verify_email_title": "Verify Your Email",
+  "verify_email_description": "We've sent a verification code to {}. Please enter it below.",
+  "resend": "Resend",
+  "didnt_receive_code": "Didn't receive the code?",
+  "failed_to_verify": "Failed to verify. Please try again.",
+  "otp_invalid": "Invalid or expired OTP code",
+  "otp_length_error": "Please enter 6-digit code",
+  "field_required": "This field is required",
+  "min_length_error": "Must be at least {} characters",
+  "max_length_error": "Must be at most {} characters"
 }

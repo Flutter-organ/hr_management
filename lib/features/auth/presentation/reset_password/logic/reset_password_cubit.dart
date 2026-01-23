@@ -1,5 +1,6 @@
 import 'package:hr_management/features/auth/presentation/reset_password/logic/reset_password_state.dart';
 import '../../../../../core/presentation/base_viewmodel/base_cubit.dart';
+import '../../../../../core/presentation/util/validator.dart';
 import '../../../domain/use_cases/reset_password_use_case.dart';
 
 class ResetPasswordCubit extends BaseCubit<ResetPasswordState> {
@@ -77,27 +78,24 @@ class ResetPasswordCubit extends BaseCubit<ResetPasswordState> {
   bool _validate() {
     bool isValid = true;
 
-    if (state.otp.isEmpty) {
-      updateState((s) => s.copyWith(otpError: 'OTP is required'));
-      isValid = false;
-    } else if (state.otp.length != 6) {
-      updateState((s) => s.copyWith(otpError: 'OTP must be 6 digits'));
+    final otpError = Validators.validateOtp(state.otp);
+    if (otpError != null) {
+      updateState((s) => s.copyWith(otpError: otpError));
       isValid = false;
     }
 
-    if (state.password.isEmpty) {
-      updateState((s) => s.copyWith(passwordError: 'Password is required'));
-      isValid = false;
-    } else if (state.password.length < 8) {
-      updateState((s) => s.copyWith(passwordError: 'Password must be at least 8 characters'));
+    final passwordError = Validators.validatePassword(state.password);
+    if (passwordError != null) {
+      updateState((s) => s.copyWith(passwordError: passwordError));
       isValid = false;
     }
 
-    if (state.confirmPassword.isEmpty) {
-      updateState((s) => s.copyWith(confirmPasswordError: 'Please confirm your password'));
-      isValid = false;
-    } else if (state.confirmPassword != state.password) {
-      updateState((s) => s.copyWith(confirmPasswordError: 'Passwords do not match'));
+    final confirmPasswordError = Validators.validateConfirmPassword(
+      state.confirmPassword,
+      state.password,
+    );
+    if (confirmPasswordError != null) {
+      updateState((s) => s.copyWith(confirmPasswordError: confirmPasswordError));
       isValid = false;
     }
 

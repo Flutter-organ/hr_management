@@ -1,4 +1,4 @@
-import '../../../../../domain/enitites/verification_type.dart';
+import '../../../../../domain/entity/verification_type.dart';
 
 class VerifyOtpRequest {
   VerifyOtpRequest({

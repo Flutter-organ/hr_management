@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hr_management/core/presentation/routes/route_names.dart';
-import 'package:hr_management/features/auth/presentation/on_boarding/logic/cubit/on_boarding_cubit.dart';
+import 'package:hr_management/features/auth/presentation/on_boarding/logic/on_boarding_cubit.dart';
 import 'package:hr_management/features/home/presentation/view/home_screen.dart';
 import 'package:hr_management/core/di/injection_container.dart';
 import '../../../features/auth/presentation/login/logic/login_cubit.dart';

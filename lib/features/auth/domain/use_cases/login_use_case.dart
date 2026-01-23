@@ -1,9 +1,10 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:hr_management/features/auth/domain/enitites/user.dart';
+import 'package:hr_management/features/auth/domain/entity/user.dart';
 import 'package:hr_management/features/auth/domain/failures/failure.dart';
 import 'package:hr_management/features/auth/domain/repository/auth_repository.dart';
 
-import '../enitites/auth_type.dart';
+import '../entity/auth_type.dart';
+
 
 class LoginUseCase {
   final AuthRepository _repository;

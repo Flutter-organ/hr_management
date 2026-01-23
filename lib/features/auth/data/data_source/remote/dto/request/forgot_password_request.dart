@@ -1,4 +1,4 @@
-import '../../../../../domain/enitites/auth_type.dart';
+import '../../../../../domain/entity/auth_type.dart';
 
 class ForgotPasswordRequest {
   final String identifier;

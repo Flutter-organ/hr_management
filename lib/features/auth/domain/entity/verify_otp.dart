@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:hr_management/features/auth/domain/enitites/verification_type.dart';
+import 'package:hr_management/features/auth/domain/entity/verification_type.dart';
 
 class VerifyOTP extends Equatable {
     const VerifyOTP({

@@ -7,8 +7,8 @@ import '../../../../../core/presentation/design_system/theme/helper/app_assets.d
 import '../../../../../core/presentation/design_system/theme/helper/extention_colors.dart';
 import '../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
 import '../../../../../core/presentation/routes/route_names.dart';
-import '../logic/cubit/on_boarding_cubit.dart';
-import '../logic/cubit/on_boarding_state.dart';
+import '../logic/on_boarding_cubit.dart';
+import '../logic/on_boarding_state.dart';
 import '../model/on_boarding.dart';
 import '../widget/OnboardingDotsIndicator.dart';
 import '../widget/onboarding_page_content.dart';

@@ -11,7 +11,8 @@ import '../../../../../../core/presentation/design_system/theme/helper/extention
 import '../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
 import '../../../../../../core/presentation/routes/route_names.dart';
-import '../../../../domain/enitites/auth_type.dart';
+import '../../../../domain/entity/auth_type.dart';
+import '../../../shared/model/country_filter.dart';
 import '../../logic/login_cubit.dart';
 import '../../logic/login_state.dart';
 import '../../../forget_password/view/screen/popup/forgot_password_popup.dart';
@@ -27,14 +28,13 @@ class _LoginCardState extends State<LoginCard> {
   AuthType _loginType = AuthType.email;
   bool _obscurePassword = true;
 
-  final List<String> _countryFilter = const [
-    'EG', 'PS', 'SA', 'AE', 'KW', 'QA', 'JO', 'LB',
-    'SY', 'IQ', 'OM', 'BH', 'LY', 'MA', 'DZ', 'TN', 'SD', 'YE',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoginCubit, LoginState>(
+      listenWhen: (previous, current) {
+        return (current.isSuccess && !previous.isSuccess) ||
+            (current.apiError != null && current.apiError != previous.apiError);
+      },
       listener: (context, state) {
         if (state.isSuccess) {
           SnackBarHelper.showSuccess(context, 'Logged in successfully!');
@@ -45,6 +45,7 @@ class _LoginCardState extends State<LoginCard> {
           SnackBarHelper.showError(context, state.apiError!);
         }
       },
+
       builder: (context, state) {
         final cubit = context.read<LoginCubit>();
 
@@ -242,10 +243,7 @@ class _LoginCardState extends State<LoginCard> {
         ),
         const SizedBox(height: 4),
         CustomInputField(
-          controller: TextEditingController(text: state.identifier)
-            ..selection = TextSelection.collapsed(
-              offset: state.identifier.length,
-            ),
+          initialValue: state.identifier,
           onChanged: cubit.onIdentifierChanged,
           enabled: !state.isLoading,
           keyboardType: TextInputType.emailAddress,
@@ -295,14 +293,8 @@ class _LoginCardState extends State<LoginCard> {
         ),
         const SizedBox(height: 4),
         CustomInputField(
-          controller: TextEditingController(text: state.identifier)
-            ..selection = TextSelection.collapsed(
-              offset: state.identifier.length,
-            ),
-          onChanged: (value) {
-            //final fullPhone = '+$_countryCode$value';
-            cubit.onIdentifierChanged(value);
-          },
+          initialValue: state.identifier,
+          onChanged: cubit.onIdentifierChanged,
           enabled: !state.isLoading,
           keyboardType: TextInputType.phone,
           hintKey: '01*********',
@@ -316,16 +308,16 @@ class _LoginCardState extends State<LoginCard> {
           contentPaddingHorizontal: 16,
           contentPaddingVertical: 16,
           prefixIcon: InkWell(
-            onTap: () {
-              _showCountryPicker(context, cubit, state);
-            },
+            onTap: state.isLoading
+                ? null
+                : () => _showCountryPicker(context, cubit, state),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    state.countryCode,
+                    '+${state.countryCode}',
                     style: context.textTheme.titleSmallFont.copyWith(
                       color: context.colors.textPrimary,
                       fontWeight: FontWeight.w600,
@@ -370,10 +362,7 @@ class _LoginCardState extends State<LoginCard> {
         ),
         const SizedBox(height: 4),
         CustomInputField(
-          controller: TextEditingController(text: state.password)
-            ..selection = TextSelection.collapsed(
-              offset: state.password.length,
-            ),
+          initialValue: state.password,
           onChanged: cubit.onPasswordChanged,
           enabled: !state.isLoading,
           keyboardType: TextInputType.visiblePassword,
@@ -423,7 +412,7 @@ class _LoginCardState extends State<LoginCard> {
       context: context,
       moveAlongWithKeyboard: true,
       showPhoneCode: true,
-      countryFilter: _countryFilter,
+      countryFilter: CountryFilter.countryFilter,
       favorite: const ['PS', 'EG', 'SA'],
       countryListTheme: CountryListThemeData(
         borderRadius: const BorderRadius.only(

@@ -1,10 +1,9 @@
-
 import 'package:fpdart/fpdart.dart';
-import 'package:hr_management/features/auth/domain/enitites/user.dart';
 import 'package:hr_management/features/auth/domain/failures/failure.dart';
 import 'package:hr_management/features/auth/domain/repository/auth_repository.dart';
+import '../entity/user.dart';
+import '../entity/verify_otp.dart';
 
-import '../enitites/verify_otp.dart';
 
 class VerifyOTPUseCase {
   final AuthRepository _authRepository;

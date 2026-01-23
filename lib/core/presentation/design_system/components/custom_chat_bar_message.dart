@@ -68,7 +68,7 @@ class CustomChatBarMessage extends StatelessWidget {
         filledColor: context.colors.gray50,
         contentPaddingHorizontal: 16,
         contentPaddingVertical: 12,
-        focuseAndErrorColor: Colors.transparent,
+        focusAndErrorColor: Colors.transparent,
         borderColor: Colors.transparent,
         evaluation: false,
       ),

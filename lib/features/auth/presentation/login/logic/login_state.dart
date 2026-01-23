@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../../domain/enitites/user.dart';
+import '../../../domain/entity/user.dart';
 
 class LoginState extends Equatable {
   final String identifier;
@@ -7,23 +7,17 @@ class LoginState extends Equatable {
   final String countryCode;
   final String? identifierError;
   final String? passwordError;
-
   final bool isLoading;
   final bool isSuccess;
   final User? user;
   final String? apiError;
-  final bool clearIdentifierError;
-  final bool clearPasswordError;
-  final bool clearApiError;
-
   final bool rememberMe;
-
   final String? savedIdentifier;
 
   const LoginState({
     this.identifier = '',
     this.password = '',
-    this.countryCode = '+20',
+    this.countryCode = '20',
     this.identifierError,
     this.passwordError,
     this.isLoading = false,
@@ -32,14 +26,12 @@ class LoginState extends Equatable {
     this.apiError,
     this.rememberMe = false,
     this.savedIdentifier,
-    this.clearIdentifierError = false,
-    this.clearPasswordError = false,
-    this.clearApiError = false,
   });
 
   bool get isFormValid =>
-      identifier.trim().isNotEmpty &&
-          password.isNotEmpty;
+      identifier.trim().isNotEmpty && password.isNotEmpty;
+
+  String get fullPhoneNumber => '+$countryCode$identifier';
 
   LoginState copyWith({
     String? identifier,
@@ -73,9 +65,6 @@ class LoginState extends Equatable {
       apiError: clearApiError ? null : (apiError ?? this.apiError),
       rememberMe: rememberMe ?? this.rememberMe,
       savedIdentifier: savedIdentifier ?? this.savedIdentifier,
-      clearIdentifierError: clearIdentifierError,
-      clearPasswordError: clearPasswordError,
-      clearApiError: clearApiError,
     );
   }
 
@@ -92,8 +81,5 @@ class LoginState extends Equatable {
     apiError,
     rememberMe,
     savedIdentifier,
-    clearIdentifierError,
-    clearPasswordError,
-    clearApiError,
   ];
 }

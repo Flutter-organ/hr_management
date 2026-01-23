@@ -1,5 +1,6 @@
 import '../../../../../core/presentation/base_viewmodel/base_cubit.dart';
-import '../../../domain/enitites/auth_type.dart';
+import '../../../../../core/presentation/util/validator.dart';
+import '../../../domain/entity/auth_type.dart';
 import '../../../domain/use_cases/forgot_password_use_case.dart';
 import 'forgot_password_state.dart';
 
@@ -10,7 +11,7 @@ class ForgotPasswordCubit extends BaseCubit<ForgotPasswordState> {
       : super(const ForgotPasswordState());
 
   Future<void> submit() async {
-    if (!_validateEmail()) return;
+    if (!_validate()) return;
 
     await execute(
       onLoading: () => updateState((s) => s.copyWith(
@@ -36,7 +37,7 @@ class ForgotPasswordCubit extends BaseCubit<ForgotPasswordState> {
   }
 
   Future<void> resendOtp() async {
-    if (!_validateEmail()) return;
+    if (!_validate()) return;
     updateState((s) => s.copyWith(
       clearApiError: true,
       isSuccess: false,
@@ -70,23 +71,14 @@ class ForgotPasswordCubit extends BaseCubit<ForgotPasswordState> {
   }
 
 
-  bool _validateEmail() {
-    final email = state.email.trim();
+  bool _validate() {
+    final emailError = Validators.validateEmail(state.email.trim());
 
-    if (email.isEmpty) {
-      updateState((currentState) => currentState.copyWith(emailError: 'Email is required'));
-      return false;
-    }
-
-    if (!_isValidEmail(email)) {
-      updateState((s) => s.copyWith(emailError: 'Please enter a valid email'));
+    if (emailError != null) {
+      updateState((s) => s.copyWith(emailError: emailError));
       return false;
     }
 
     return true;
-  }
-
-  bool _isValidEmail(String email) {
-    return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
   }
 }

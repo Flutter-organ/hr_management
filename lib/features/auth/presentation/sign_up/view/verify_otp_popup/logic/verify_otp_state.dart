@@ -1,40 +1,45 @@
 import 'package:equatable/equatable.dart';
 
-class VerifyOtpUiState extends Equatable {
+class VerifyOtpState extends Equatable {
   final String identifier;
   final String code;
-  final String type;
   final bool isLoading;
   final bool isVerified;
   final String? errorMessage;
 
-  VerifyOtpUiState({
+  const VerifyOtpState({
     this.identifier = '',
     this.code = '',
-    this.type = '',
     this.isLoading = false,
     this.isVerified = false,
     this.errorMessage,
   });
 
-  @override
-  List<Object?> get props => [identifier, code, type, isLoading, isVerified, errorMessage];
+  bool get isOtpComplete => code.length == 6;
 
-  VerifyOtpUiState copyWith({
+  VerifyOtpState copyWith({
     String? identifier,
     String? code,
-    String? type,
     bool? isLoading,
     bool? isVerified,
     String? errorMessage,
+    bool clearError = false,
   }) {
-    return VerifyOtpUiState(
+    return VerifyOtpState(
       identifier: identifier ?? this.identifier,
       code: code ?? this.code,
-      type: type ?? this.type,
-      isVerified: isVerified ?? this.isVerified,
       isLoading: isLoading ?? this.isLoading,
-      errorMessage: errorMessage ?? this.errorMessage,
+      isVerified: isVerified ?? this.isVerified,
+      errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
     );
   }
+
+  @override
+  List<Object?> get props => [
+    identifier,
+    code,
+    isLoading,
+    isVerified,
+    errorMessage,
+  ];
 }

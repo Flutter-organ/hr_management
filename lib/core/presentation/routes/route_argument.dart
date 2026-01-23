@@ -1,5 +1,4 @@
-
-import '../../../features/auth/domain/enitites/auth_type.dart';
+import '../../../features/auth/domain/entity/auth_type.dart';
 
 abstract class RouteArgument {
   const RouteArgument();

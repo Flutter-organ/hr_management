@@ -1,8 +1,8 @@
 import 'package:fpdart/fpdart.dart';
-import '../enitites/user.dart';
-import '../enitites/auth_type.dart';
-import 'package:hr_management/features/auth/domain/enitites/verify_otp.dart';
-import '../enitites/register.dart';
+import '../entity/auth_type.dart';
+import '../entity/register.dart';
+import '../entity/user.dart';
+import '../entity/verify_otp.dart';
 import '../failures/failure.dart';
 
 abstract class AuthRepository {

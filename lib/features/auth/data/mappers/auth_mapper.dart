@@ -1,6 +1,6 @@
-import '../../domain/enitites/register.dart';
-import '../../domain/enitites/user.dart';
-import '../../domain/enitites/verify_otp.dart';
+import '../../domain/entity/register.dart';
+import '../../domain/entity/user.dart';
+import '../../domain/entity/verify_otp.dart';
 import '../data_source/remote/dto/request/register_dto_request.dart';
 import '../data_source/remote/dto/request/verify_otp_request.dart';
 import '../data_source/remote/dto/user_dto.dart';

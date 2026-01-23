@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import '../../../domain/enitites/user.dart';
+
+import '../../../domain/entity/user.dart';
 
 class ResetPasswordState extends Equatable {
   final String identifier;

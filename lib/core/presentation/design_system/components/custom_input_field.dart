@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 
 import '../theme/helper/theme_extention.dart';
 
-class CustomInputField extends StatelessWidget {
+class CustomInputField extends StatefulWidget {
+  final String? initialValue;
   final String? hintKey;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
@@ -36,7 +37,7 @@ class CustomInputField extends StatelessWidget {
   final double? contentPaddingHorizontal;
   final double? contentPaddingVertical;
   final double? hintFontSize;
-  final Color? focuseAndErrorColor;
+  final Color? focusAndErrorColor;
   final Color? enabledColor;
   final InputBorder? border;
   final String? label;
@@ -44,6 +45,7 @@ class CustomInputField extends StatelessWidget {
 
   const CustomInputField({
     Key? key,
+    this.initialValue,
     this.hintKey,
     this.controller,
     this.keyboardType,
@@ -75,7 +77,7 @@ class CustomInputField extends StatelessWidget {
     this.shadowOffset,
     this.contentPaddingHorizontal,
     this.contentPaddingVertical,
-    this.focuseAndErrorColor,
+    this.focusAndErrorColor,
     this.hintFontSize,
     this.border,
     this.enabledColor,
@@ -84,18 +86,37 @@ class CustomInputField extends StatelessWidget {
   });
 
   @override
+  State<CustomInputField> createState() => _CustomInputFieldState();
+}
+
+class _CustomInputFieldState extends State<CustomInputField> {
+  late TextEditingController _controller;
+  bool _isInternalController = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.controller != null) {
+      _controller = widget.controller!;
+    } else {
+      _controller = TextEditingController(text: widget.initialValue ?? '');
+      _isInternalController = true;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        label != null
+        widget.label != null
             ? Column(
                 children: [
                   Align(
                     alignment: AlignmentDirectional.centerStart,
                     child: Text(
-                      label!,
+                      widget.label!,
                       style: context.textTheme.bodySmallFont.copyWith(
-                        color: labelColor!,
+                        color: widget.labelColor!,
                       ),
                       textAlign: TextAlign.left,
                     ),
@@ -105,82 +126,90 @@ class CustomInputField extends StatelessWidget {
               )
             : const SizedBox(height: 0),
         TextFormField(
-          controller: controller,
-          keyboardType: keyboardType,
+          controller: widget.controller,
+          keyboardType: widget.keyboardType,
           style: context.textTheme.bodyMediumFont.copyWith(
-            color: textInputColor ?? context.colors.textPrimary,
+            color: widget.textInputColor ?? context.colors.textPrimary,
           ),
-          onTap: onTap,
-          enabled: enabled,
-          obscureText: isObscureText,
-          readOnly: isReadOnly ?? false,
+          onTap: widget.onTap,
+          enabled: widget.enabled,
+          obscureText: widget.isObscureText,
+          readOnly: widget.isReadOnly ?? false,
           decoration: InputDecoration(
-            hintText: hintKey,
+            hintText: widget.hintKey,
             hintStyle: context.textTheme.bodyMediumFont.apply(
-              color: labelHintStyle ?? context.colors.gray400,
+              color: widget.labelHintStyle ?? context.colors.gray400,
             ),
-            suffixIcon: suffixIcon,
-            prefixIcon: prefixIcon,
+            suffixIcon: widget.suffixIcon,
+            prefixIcon: widget.prefixIcon,
             contentPadding: EdgeInsets.symmetric(
-              horizontal: contentPaddingHorizontal ?? 0.0,
-              vertical: contentPaddingVertical ?? 0.0,
+              horizontal: widget.contentPaddingHorizontal ?? 0.0,
+              vertical: widget.contentPaddingVertical ?? 0.0,
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(radius ?? 0),
+              borderRadius: BorderRadius.circular(widget.radius ?? 0),
               borderSide: BorderSide(
-                color: focuseAndErrorColor ?? context.colors.purple500,
+                color: widget.focusAndErrorColor ?? context.colors.purple500,
               ),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(radius ?? 8),
+              borderRadius: BorderRadius.circular(widget.radius ?? 8),
               borderSide: BorderSide(color: context.colors.error500, width: 2),
             ),
 
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(radius ?? 4.00),
+              borderRadius: BorderRadius.circular(widget.radius ?? 4.00),
               borderSide: BorderSide(
-                color: focuseAndErrorColor ?? context.colors.error500,
+                color: widget.focusAndErrorColor ?? context.colors.error500,
               ),
             ),
             errorStyle: context.textTheme.bodySmallFont.copyWith(
-              color: labelErrorStyle,
+              color: widget.labelErrorStyle,
             ),
             errorMaxLines: 2,
-            fillColor: filledColor,
+            fillColor: widget.filledColor,
             filled: true,
             isDense: true,
             labelStyle: context.textTheme.bodyMediumFont.copyWith(
-              color: labelHintStyle ?? context.colors.gray600,
+              color: widget.labelHintStyle ?? context.colors.gray600,
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(radius ?? 4.00),
+              borderRadius: BorderRadius.circular(widget.radius ?? 4.00),
               borderSide: BorderSide(
-                color: enabledColor ?? context.colors.gray400,
+                color: widget.enabledColor ?? context.colors.gray400,
               ),
             ),
             disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(radius ?? 4.00),
+              borderRadius: BorderRadius.circular(widget.radius ?? 4.00),
               borderSide: BorderSide(
-                color: enabledColor ?? context.colors.gray300,
+                color: widget.enabledColor ?? context.colors.gray300,
                 width: 1,
               ),
             ),
-            border: border ?? InputBorder.none,
+            border: widget.border ?? InputBorder.none,
           ),
-          validator: validator,
-          minLines: minLines,
-          maxLines: maxLines,
-          onChanged: onChanged,
+          validator: widget.validator,
+          minLines: widget.minLines,
+          maxLines: widget.maxLines,
+          onChanged: widget.onChanged,
           inputFormatters: [
-            if (isDigitOnly)
+            if (widget.isDigitOnly)
               FilteringTextInputFormatter.digitsOnly
             else
-              ...inputFormatter ?? [],
+              ...widget.inputFormatter ?? [],
           ],
-          focusNode: fieldFocusNode,
-          textInputAction: action,
+          focusNode: widget.fieldFocusNode,
+          textInputAction: widget.action,
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    if (_isInternalController) {
+      _controller.dispose();
+    }
+    super.dispose();
   }
 }
