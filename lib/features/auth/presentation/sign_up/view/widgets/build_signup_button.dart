@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../../core/design_system/components/custom_primary_button.dart';
-import '../../../../../../core/design_system/theme/helper/extention_colors.dart';
-import '../../../../../../core/design_system/theme/helper/theme_extention.dart';
+import '../../../../../../core/presentation/design_system/components/custom_primary_button.dart';
+import '../../../../../../core/presentation/design_system/theme/helper/extention_colors.dart';
+import '../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
 import '../../logic/sign_up_cubit.dart';
 
 

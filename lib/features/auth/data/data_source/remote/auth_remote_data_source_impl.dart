@@ -1,5 +1,6 @@
-import '../../../../../core/network/api_constants.dart';
-import '../../../../../core/network/dio_client.dart';
+
+import '../../../../../core/data/network/api_constants.dart';
+import '../../../../../core/data/network/dio_client.dart';
 import 'auth_remote_data_source.dart';
 import 'dto/request/login_request.dart';
 import 'dto/request/register_dto_request.dart';
@@ -60,15 +61,9 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
   }) async {
     final response = await _dioClient.post(
       ApiConstants.register,
-      data: {
-        "email": registerDtoRequest.email,
-        "phone": registerDtoRequest.phone,
-        "password": registerDtoRequest.password,
-        "password_confirmation": registerDtoRequest.passwordConfirmation,
-        "login_type": "email",
-      },
+      data: registerDtoRequest.toJson(),
     );
-    return response.data['success'];
+    return response.data['success'] as bool;
   }
 
   @override
@@ -77,11 +72,7 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
   }) async {
     final response = await _dioClient.post(
       ApiConstants.verifyOtp,
-      data: {
-        "identifier": verifyOtpDto.identifier,
-        "code": verifyOtpDto.code,
-        "type": verifyOtpDto.type,
-      },
+      data: verifyOtpDto.toJson(),
     );
     return OtpVerifyResponse.fromJson(response.data['data']);
   }

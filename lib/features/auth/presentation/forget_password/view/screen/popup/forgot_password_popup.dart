@@ -1,16 +1,18 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/core/design_system/theme/helper/snackbar_helper.dart';
-import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
 import 'package:hr_management/core/di/injection_container.dart';
 import 'package:hr_management/features/auth/domain/enitites/auth_type.dart';
 import 'package:hr_management/features/auth/presentation/forget_password/logic/forgot_password_cubit.dart';
 import 'package:hr_management/features/auth/presentation/forget_password/logic/forgot_password_state.dart';
 import 'package:hr_management/features/auth/presentation/reset_password/view/screen/popup/verify_otp_popup.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../../../../core/design_system/components/popups/custom_popup.dart';
-import '../../../../../../../core/design_system/theme/helper/popup_helper.dart';
+
+import '../../../../../../../core/presentation/design_system/components/popups/custom_popup.dart';
+import '../../../../../../../core/presentation/design_system/theme/helper/popup_helper.dart';
+import '../../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
+import '../../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
+
 
 class ForgotPasswordPopup extends StatelessWidget {
   const ForgotPasswordPopup._();

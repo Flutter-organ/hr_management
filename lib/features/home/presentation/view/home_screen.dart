@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hr_management/core/di/injection_container.dart';
 import 'package:hr_management/features/auth/domain/repository/auth_repository.dart';
-import '../../../../core/routes/route_names.dart';
+
+import '../../../../core/presentation/routes/route_names.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
+
+import '../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
 
 class OnboardingDotsIndicator extends StatelessWidget {
   final int currentIndex;

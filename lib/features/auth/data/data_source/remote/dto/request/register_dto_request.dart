@@ -7,6 +7,12 @@ String registerDtoRequestToJson(RegisterDtoRequest data) =>
     json.encode(data.toJson());
 
 class RegisterDtoRequest {
+  final String password;
+  final String passwordConfirmation;
+  final String phone;
+  final String loginType;
+  final String email;
+
   RegisterDtoRequest({
     required this.password,
     required this.passwordConfirmation,
@@ -15,13 +21,7 @@ class RegisterDtoRequest {
     required this.email,
   });
 
-  String password;
-  String passwordConfirmation;
-  String phone;
-  String loginType;
-  String email;
-
-  factory RegisterDtoRequest.fromJson(Map<dynamic, dynamic> json) =>
+  factory RegisterDtoRequest.fromJson(Map<String, dynamic> json) =>
       RegisterDtoRequest(
         password: json["password"],
         passwordConfirmation: json["password_confirmation"],
@@ -31,10 +31,10 @@ class RegisterDtoRequest {
       );
 
   Map<dynamic, dynamic> toJson() => {
+    "email": email,
     "password": password,
     "password_confirmation": passwordConfirmation,
     "phone": phone,
     "login_type": loginType,
-    "email": email,
   };
 }

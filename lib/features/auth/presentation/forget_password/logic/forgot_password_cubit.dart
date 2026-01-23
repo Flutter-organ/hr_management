@@ -1,4 +1,4 @@
-import '../../../../../core/base_viewmodel/base_cubit.dart';
+import '../../../../../core/presentation/base_viewmodel/base_cubit.dart';
 import '../../../domain/enitites/auth_type.dart';
 import '../../../domain/use_cases/forgot_password_use_case.dart';
 import 'forgot_password_state.dart';

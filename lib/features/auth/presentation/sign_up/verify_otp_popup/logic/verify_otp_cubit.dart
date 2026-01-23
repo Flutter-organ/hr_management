@@ -1,7 +1,6 @@
 import 'package:hr_management/features/auth/domain/enitites/verification_type.dart';
 import 'package:hr_management/features/auth/presentation/sign_up/verify_otp_popup/logic/verify_otp_state.dart';
-
-import '../../../../../../core/base_viewmodel/base_cubit.dart';
+import '../../../../../../core/presentation/base_viewmodel/base_cubit.dart';
 import '../../../../domain/enitites/verify_otp.dart';
 import '../../../../domain/use_cases/otp_use_case.dart';
 

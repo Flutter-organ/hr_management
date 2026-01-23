@@ -1,7 +1,8 @@
-import 'package:hr_management/core/cache/shared_preferences_service.dart';
-import '../../../../../core/cache/secure_storage_data_source.dart';
-import '../../../../../core/exceptions/app_exception.dart';
-import '../../../../../core/network/api_constants.dart';
+import '../../../../../core/data/cache/preferences_keys.dart';
+import '../../../../../core/data/cache/secure_storage_data_source.dart';
+import '../../../../../core/data/cache/shared_preferences_service.dart';
+import '../../../../../core/data/exception/app_exception.dart';
+import '../../../../../core/data/network/api_constants.dart';
 import 'auth_local_data_source.dart';
 
 class AuthLocalDataSourceImp implements AuthLocalDataSource {
@@ -60,7 +61,7 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
   @override
   Future<void> saveIdentifier(String email) async {
     try {
-      await _preferencesService.setString(key: "mail", value: email);
+      await _preferencesService.setString(key: PreferencesKeys.userIdentifier, value: email);
     } catch (e) {
       throw CacheException(message: "Failed to save email : $e");
     }

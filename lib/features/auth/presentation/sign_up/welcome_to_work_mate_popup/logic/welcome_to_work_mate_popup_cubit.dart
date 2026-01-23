@@ -1,5 +1,5 @@
 
-import '../../../../../../core/base_viewmodel/base_cubit.dart';
+import '../../../../../../core/presentation/base_viewmodel/base_cubit.dart';
 
 part 'welocom_to_work_mate_popup_state.dart';
 

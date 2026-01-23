@@ -10,4 +10,12 @@ class VerifyOtpRequest {
   String identifier;
   String code;
   VerificationType type;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'identifier': identifier,
+      'code': code,
+      'type': type.name,
+    };
+  }
 }

@@ -1,4 +1,4 @@
-import '../../../../core/exceptions/app_exception.dart';
+import '../../../../core/data/exception/app_exception.dart';
 import '../../domain/failures/failure.dart';
 
 class AuthFailureMapper {

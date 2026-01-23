@@ -1,5 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:hr_management/core/base_viewmodel/base_cubit.dart';
+import '../../../../../../core/presentation/base_viewmodel/base_cubit.dart';
 import '../../../../domain/use_cases/check_onboarding_status_use_case.dart';
 import '../../../../domain/use_cases/complete_onboarding_use_case.dart';
 import 'on_boarding_state.dart';

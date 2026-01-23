@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/core/design_system/theme/helper/snackbar_helper.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../../../../core/design_system/components/popups/custom_popup.dart';
 import '../../../../../../../core/di/injection_container.dart';
+import '../../../../../../../core/presentation/design_system/components/popups/custom_popup.dart';
+import '../../../../../../../core/presentation/design_system/theme/helper/popup_helper.dart';
+import '../../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../domain/enitites/auth_type.dart';
 import '../../../../forget_password/logic/forgot_password_cubit.dart';
 import '../../../../forget_password/logic/forgot_password_state.dart';
-import '../../../../../../../core/design_system/theme/helper/popup_helper.dart';
 import 'reset_password_popup.dart';
 
 class VerifyOtpPopup extends StatefulWidget {

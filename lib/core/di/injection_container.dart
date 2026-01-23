@@ -9,7 +9,6 @@ import 'package:hr_management/features/auth/domain/use_cases/login_use_case.dart
 import 'package:hr_management/features/auth/domain/use_cases/register_use_case.dart';
 import 'package:hr_management/features/auth/presentation/login/logic/login_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../features/auth/data/data_source/local/auth_local_data_source.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source_imp.dart';
 import '../../features/auth/data/data_source/remote/auth_remote_data_source.dart';
@@ -25,10 +24,10 @@ import '../../features/auth/presentation/on_boarding/logic/cubit/on_boarding_cub
 import '../../features/auth/presentation/reset_password/logic/reset_password_cubit.dart';
 import '../../features/auth/presentation/sign_up/logic/sign_up_cubit.dart';
 import '../../features/auth/presentation/sign_up/verify_otp_popup/logic/verify_otp_cubit.dart';
-import '../cache/secure_storage_data_source.dart';
-import '../cache/shared_preferences_service.dart';
-import '../network/dio_client.dart';
-import '../routes/AppStartupService.dart';
+import '../data/cache/secure_storage_data_source.dart';
+import '../data/cache/shared_preferences_service.dart';
+import '../data/network/dio_client.dart';
+import '../presentation/routes/app_startup_service.dart';
 
 final sl = GetIt.instance;
 

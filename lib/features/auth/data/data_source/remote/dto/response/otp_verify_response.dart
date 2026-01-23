@@ -18,4 +18,6 @@ class OtpVerifyResponse {
       tokenType: json['token_type'],
     );
   }
+
+
 }

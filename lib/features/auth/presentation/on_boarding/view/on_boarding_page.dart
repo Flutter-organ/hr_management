@@ -2,12 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hr_management/core/design_system/components/custom_primary_button.dart';
-import 'package:hr_management/core/design_system/theme/helper/app_assets.dart';
-import 'package:hr_management/core/design_system/theme/helper/extention_colors.dart';
-import 'package:hr_management/core/design_system/theme/helper/theme_extention.dart';
-import 'package:hr_management/core/routes/route_names.dart';
-
+import '../../../../../core/presentation/design_system/components/custom_primary_button.dart';
+import '../../../../../core/presentation/design_system/theme/helper/app_assets.dart';
+import '../../../../../core/presentation/design_system/theme/helper/extention_colors.dart';
+import '../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
+import '../../../../../core/presentation/routes/route_names.dart';
 import '../logic/cubit/on_boarding_cubit.dart';
 import '../logic/cubit/on_boarding_state.dart';
 import '../model/on_boarding.dart';

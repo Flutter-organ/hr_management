@@ -41,7 +41,11 @@ class AuthRepositoryImp implements AuthRepository {
         request
       );
 
-      await _localDataSource.saveToken(response.accessToken??"");
+      if (response.accessToken != null && response.accessToken!.isNotEmpty) {
+        await _localDataSource.saveToken(response.accessToken!);
+      } else {
+        return Left(const ServerFailure('Access token is missing'));
+      }
 
       return Right(AuthMapper.toDomain(response.user));
     } catch (e) {
