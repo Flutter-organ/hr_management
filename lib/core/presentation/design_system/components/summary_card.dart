@@ -4,13 +4,13 @@ import 'package:flutter/widget_previews.dart';
 import '../theme/helper/theme_extention.dart';
 
 
-class StatItemModel {
+class StateItemModel {
   final String label;
   final String value;
   final Widget? icon;
   final Color? indicatorColor;
 
-  const StatItemModel({
+  const StateItemModel({
     required this.label,
     required this.value,
     this.icon,
@@ -21,7 +21,7 @@ class StatItemModel {
 class SummaryCard extends StatelessWidget {
   final String title;
   final String? subtitle;
-  final List<StatItemModel> items;
+  final List<StateItemModel> items;
   final double indicatorSize;
 
   final Color? backgroundColor;
@@ -42,6 +42,7 @@ class SummaryCard extends StatelessWidget {
   final EdgeInsetsGeometry itemPadding;
   final BorderRadiusGeometry itemBorderRadius;
   final Color? itemBackgroundColor;
+  final Color? itemBorderColor;
 
   final double headerSpacing;
 
@@ -70,6 +71,7 @@ class SummaryCard extends StatelessWidget {
     this.itemPadding = const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
     this.itemBorderRadius = const BorderRadius.all(Radius.circular(8)),
     this.itemBackgroundColor,
+    this.itemBorderColor,
     this.indicatorSize = 10,
     this.headerSpacing = 12,
     this.expandItems = true,
@@ -190,13 +192,13 @@ class SummaryCard extends StatelessWidget {
     );
   }
 
-  Widget _buildStatItem(StatItemModel item, BuildContext context) {
+  Widget _buildStatItem(StateItemModel item, BuildContext context) {
     return Container(
       padding: itemPadding,
       decoration: BoxDecoration(
         color: itemBackgroundColor ?? context.colors.cardBackground,
         borderRadius: itemBorderRadius,
-        border: Border.all(color: context.colors.gray50),
+        border: Border.all(color: itemBorderColor ?? context.colors.gray200, width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
