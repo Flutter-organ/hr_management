@@ -21,7 +21,7 @@
 //         ExtensionColors.purpleGradient2,
 //       ],
 //     ),
-//     buttonText: "sign_up".tr(),
+//     buttonText: "register".tr(),
 //     borderRadius: 100,
 //     onPressed:  cubit.state.isEnableSignUpButton ? onSignUpPressed : null,
 //     isEnabled:  cubit.state.isEnableSignUpButton,

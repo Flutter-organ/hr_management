@@ -62,7 +62,7 @@ class OnBoardingFinalPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 CustomPrimaryButton.outlined(
-                  buttonText: "sign_up".tr(),
+                  buttonText: "register".tr(),
                   textStyle: context.textTheme.labelLargeFont.copyWith(
                     color: ExtensionColors.kButtonBackgroundPrimary,
                   ),

@@ -2,9 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../../../core/presentation/design_system/theme/color/app_constant_colors.dart';
-import '../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
-import '../../../../../../core/presentation/routes/route_names.dart';
+import '../../../../../../../core/presentation/design_system/theme/color/app_constant_colors.dart';
+import '../../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
+import '../../../../../../../core/presentation/routes/route_names.dart';
+
 
 Widget buildAlreadyHaveAnAccount(BuildContext context) {
   return Text.rich(

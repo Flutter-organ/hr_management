@@ -1,4 +1,5 @@
 import '../../../../../core/presentation/base_viewmodel/base_cubit.dart';
+import '../../../../../core/presentation/routes/config/app_state_notifier.dart';
 import '../../../../../core/presentation/util/validator.dart';
 import '../../../domain/entity/auth_type.dart';
 import '../../../domain/use_cases/load_identifier_use_case.dart';
@@ -59,6 +60,8 @@ class LoginCubit extends BaseCubit<LoginState> {
         isRemembered: state.rememberMe,
       ),
       onSuccess: (user) {
+        AuthStateNotifier.instance.setLoggedIn();
+
         updateState((s) => s.copyWith(
           isLoading: false,
           isSuccess: true,

@@ -1,8 +1,9 @@
-import '../../../../../core/presentation/base_viewmodel/base_cubit.dart';
-import '../../../../../core/presentation/util/validator.dart';
-import '../../../domain/entity/auth_type.dart';
-import '../../../domain/entity/register.dart';
-import '../../../domain/use_cases/register_use_case.dart';
+import '../../../../../../core/presentation/base_viewmodel/base_cubit.dart';
+import '../../../../../../core/presentation/routes/config/app_state_notifier.dart';
+import '../../../../../../core/presentation/util/validator.dart';
+import '../../../../domain/entity/auth_type.dart';
+import '../../../../domain/entity/register.dart';
+import '../../../../domain/use_cases/register_use_case.dart';
 import 'sign_up_state.dart';
 
 class SignUpCubit extends BaseCubit<SignUpState> {
@@ -77,6 +78,8 @@ class SignUpCubit extends BaseCubit<SignUpState> {
         ),
       ),
       onSuccess: (_) {
+        AuthStateNotifier.instance.setLoggedIn();
+
         updateState((s) => s.copyWith(
           isLoading: false,
           isRegistered: true,

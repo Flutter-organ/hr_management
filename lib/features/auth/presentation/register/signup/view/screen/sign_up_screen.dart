@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
-import '../../../../../../core/presentation/design_system/components/custom_primary_button.dart';
-import '../../../../../../core/presentation/design_system/theme/color/app_constant_colors.dart';
-import '../../../../../../core/presentation/design_system/theme/helper/extention_colors.dart';
-import '../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
-import '../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
-import '../../../../../../core/presentation/routes/route_names.dart';
+import '../../../../../../../core/presentation/design_system/components/custom_primary_button.dart';
+import '../../../../../../../core/presentation/design_system/theme/color/app_constant_colors.dart';
+import '../../../../../../../core/presentation/design_system/theme/helper/extention_colors.dart';
+import '../../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
+import '../../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
+import '../../../../../../../core/presentation/routes/route_names.dart';
+import '../../../verify_otp_popup/view/verify_otp_popup.dart';
 import '../../logic/sign_up_cubit.dart';
 import '../../logic/sign_up_state.dart';
-import '../verify_otp_popup/view/verify_otp_popup.dart';
-import '../widgets/build_email.dart';
-import '../widgets/build_password.dart';
+import '../../view/widgets/build_email.dart';
+import '../../view/widgets/build_password.dart';
 import '../widgets/build_phone_number.dart';
 import '../widgets/build_terms_and_conditions.dart';
 
@@ -151,7 +151,7 @@ class SignUpScreen extends StatelessWidget {
           ExtensionColors.purpleGradient2,
         ],
       ),
-      buttonText: 'sign_up'.tr(),
+      buttonText: 'register'.tr(),
       borderRadius: 100,
       isLoading: state.isLoading,
       isEnabled: state.isFormValid && !state.isLoading,

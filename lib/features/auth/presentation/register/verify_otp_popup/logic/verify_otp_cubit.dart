@@ -1,9 +1,10 @@
-import 'package:hr_management/features/auth/presentation/sign_up/view/verify_otp_popup/logic/verify_otp_state.dart';
+import 'package:hr_management/features/auth/presentation/register/verify_otp_popup/logic/verify_otp_state.dart';
 import '../../../../../../../core/presentation/base_viewmodel/base_cubit.dart';
 import '../../../../../../../core/presentation/util/validator.dart';
-import '../../../../../domain/entity/verification_type.dart';
-import '../../../../../domain/entity/verify_otp.dart';
-import '../../../../../domain/use_cases/otp_use_case.dart';
+import '../../../../../../core/presentation/routes/config/app_state_notifier.dart';
+import '../../../../domain/entity/verification_type.dart';
+import '../../../../domain/entity/verify_otp.dart';
+import '../../../../domain/use_cases/otp_use_case.dart';
 
 class VerifyOtpCubit extends BaseCubit<VerifyOtpState> {
   final VerifyOTPUseCase _verifyOtpUseCase;
@@ -47,6 +48,7 @@ class VerifyOtpCubit extends BaseCubit<VerifyOtpState> {
         ),
       ),
       onSuccess: (user) {
+        AuthStateNotifier.instance.setLoggedIn();
         updateState((s) => s.copyWith(
           isLoading: false,
           isVerified: true,

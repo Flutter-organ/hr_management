@@ -1,14 +1,19 @@
 class RouteNames {
   RouteNames._();
-
-  static const String login = '/auth/login';
-  static const String register = '/auth/register';
-  static const String homeScreen = "/home";
-
-  // UTILITY ROUTES
+  // Initial/Loading
   //static const String splash = '/';
-  static const String notFound = '/404';
+
+  // Auth
+  static const String login = '/auth/login';
+  static const String register = '/auth/signup';
+
+  // Onboarding
   static const String onboarding = '/';
   static const String onboardingFinal = '/onboarding-final';
-  //static const String login = '/LoginScreen';
+
+  // Main App
+  static const String homeScreen = '/home';
+
+  // Error
+  static const String notFound = '/404';
 }

@@ -1,5 +1,6 @@
 import 'package:hr_management/features/auth/presentation/reset_password/logic/reset_password_state.dart';
 import '../../../../../core/presentation/base_viewmodel/base_cubit.dart';
+import '../../../../../core/presentation/routes/config/app_state_notifier.dart';
 import '../../../../../core/presentation/util/validator.dart';
 import '../../../domain/use_cases/reset_password_use_case.dart';
 
@@ -26,6 +27,8 @@ class ResetPasswordCubit extends BaseCubit<ResetPasswordState> {
         passwordConfirmation: state.confirmPassword,
       ),
       onSuccess: (user) {
+        AuthStateNotifier.instance.setLoggedIn();
+
         updateState((s) => s.copyWith(isLoading: false, isSuccess: true, user: user));
       },
       onError: (failure) {

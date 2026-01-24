@@ -6,7 +6,7 @@ class ApiConstants {
   static const String apiKeyHeader = 'x-api-key';
   static const String authorizationHeader = 'Authorization';
 
-  static const String register = '/api/auth/register';
+  static const String register = '/api/auth/signup';
   static const String verifyOtp = '/api/auth/verify-otp';
   static const String login = '/api/auth/login';
   static const String forgotPassword = '/api/auth/forgot-password';

@@ -21,13 +21,13 @@ import '../../features/auth/domain/use_cases/otp_use_case.dart';
 import '../../features/auth/domain/use_cases/forgot_password_use_case.dart';
 import '../../features/auth/presentation/forget_password/logic/forgot_password_cubit.dart';
 import '../../features/auth/presentation/on_boarding/logic/on_boarding_cubit.dart';
+import '../../features/auth/presentation/register/signup/logic/sign_up_cubit.dart';
+import '../../features/auth/presentation/register/verify_otp_popup/logic/verify_otp_cubit.dart';
 import '../../features/auth/presentation/reset_password/logic/reset_password_cubit.dart';
-import '../../features/auth/presentation/sign_up/logic/sign_up_cubit.dart';
-import '../../features/auth/presentation/sign_up/view/verify_otp_popup/logic/verify_otp_cubit.dart';
 import '../data/cache/secure_storage_data_source.dart';
 import '../data/cache/shared_preferences_service.dart';
 import '../data/network/dio_client.dart';
-import '../presentation/routes/app_startup_service.dart';
+import '../presentation/routes/config/app_startup_service.dart';
 
 final sl = GetIt.instance;
 
@@ -51,6 +51,7 @@ Future<void> _initCore() async {
   sl.registerLazySingleton<AppStartupService>(
     () => AppStartupServiceImpl(sl<PreferencesService>(), sl<SecureStorageService>()),
   );
+
 }
 
 Future<void> _initAuth() async {

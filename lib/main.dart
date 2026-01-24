@@ -1,17 +1,23 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hr_management/core/config/app_config.dart';
 import 'package:toastification/toastification.dart';
 import 'core/di/injection_container.dart';
 import 'core/presentation/design_system/theme/hr_management_theme.dart';
+import 'core/presentation/routes/config/app_startup_service.dart';
 import 'core/presentation/routes/route_generator.dart';
 
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  //WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await EasyLocalization.ensureInitialized();
   await AppConfig.init();
   await setupDependencies();
+  await sl<AppStartupService>().initialize();
+  FlutterNativeSplash.remove();
 
   runApp(
     ToastificationWrapper(

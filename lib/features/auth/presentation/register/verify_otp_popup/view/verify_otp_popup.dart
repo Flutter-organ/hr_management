@@ -6,7 +6,7 @@ import '../../../../../../../core/di/injection_container.dart';
 import '../../../../../../../core/presentation/design_system/components/popups/custom_popup.dart';
 import '../../../../../../../core/presentation/design_system/theme/helper/popup_helper.dart';
 import '../../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
-import '../../../../../domain/entity/verification_type.dart';
+import '../../../../domain/entity/verification_type.dart';
 import '../../welcome_to_work_mate_popup/logic/welcome_to_work_mate_popup_cubit.dart';
 import '../../welcome_to_work_mate_popup/view/welcome_to_work_mate_popup.dart';
 import '../logic/verify_otp_cubit.dart';
