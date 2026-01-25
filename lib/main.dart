@@ -1,17 +1,31 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/design_system/theme/hr_management_theme.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:hr_management/core/config/app_config.dart';
+import 'package:toastification/toastification.dart';
+import 'core/di/injection_container.dart';
+import 'core/presentation/design_system/theme/hr_management_theme.dart';
+import 'core/presentation/routes/config/app_startup_service.dart';
+import 'core/presentation/routes/route_generator.dart';
 
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  //WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await EasyLocalization.ensureInitialized();
+  await AppConfig.init();
+  await setupDependencies();
+  await sl<AppStartupService>().initialize();
+  FlutterNativeSplash.remove();
 
   runApp(
-    EasyLocalization(
-      supportedLocales: const [Locale('ar'), Locale('en')],
-      path: 'assets/translations',
-      child: MyApp(),
+    ToastificationWrapper(
+      child: EasyLocalization(
+        supportedLocales: const [Locale('ar'), Locale('en')],
+        path: 'assets/translations',
+        child: MyApp(),
+      ),
     ),
   );
 }
@@ -21,7 +35,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
@@ -30,29 +44,7 @@ class MyApp extends StatelessWidget {
       theme: HrManagementTheme.light(),
       darkTheme: HrManagementTheme.dark(),
       themeMode: ThemeMode.light,
-      home: const MyHomePage(title: 'HR Management Home Page'),
+      routerConfig: router,
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-        ],
-      ),
-     );
   }
 }

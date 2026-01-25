@@ -1,0 +1,38 @@
+import 'package:fpdart/fpdart.dart';
+import 'package:hr_management/features/auth/domain/entity/user.dart';
+import 'package:hr_management/features/auth/domain/failures/failure.dart';
+import 'package:hr_management/features/auth/domain/repository/auth_repository.dart';
+
+import '../entity/auth_type.dart';
+
+
+class LoginUseCase {
+  final AuthRepository _repository;
+
+  LoginUseCase(this._repository);
+
+  Future<Either<Failure, User>> call({
+    required String identifier,
+    required String password,
+    required AuthType loginType,
+    required bool isRemembered
+  }) async {
+    final result = await _repository.login(
+      identifier: identifier,
+      password: password,
+      loginType: loginType,
+    );
+
+    return result.fold(
+          (failure) => Left(failure),
+          (user) async {
+        if (isRemembered) {
+          await _repository.saveIdentifier(identifier);
+        } else {
+          await _repository.clearIdentifier();
+        }
+        return Right(user);
+      },
+    );
+  }
+}
