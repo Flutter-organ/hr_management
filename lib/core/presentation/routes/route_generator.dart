@@ -15,59 +15,17 @@ import 'config/app_state_notifier.dart';
 
 final GoRouter router = GoRouter(
   refreshListenable: AuthStateNotifier.instance,
-
-  redirect: (context, state) {
-    final authState = AuthStateNotifier.instance;
-    final isLoggedIn = authState.isLoggedIn;
-    final onboardingCompleted = authState.isOnboardingCompleted;
-    final location = state.matchedLocation;
-
-    final isAuthRoute = location == RouteNames.login ||
-        location == RouteNames.register;
-    final isOnboardingRoute = location == RouteNames.onboarding ||
-        location == RouteNames.onboardingFinal;
-
-    if (isLoggedIn) {
-      if (isAuthRoute || isOnboardingRoute) {
-        return RouteNames.homeScreen;
-      }
-      return null;
-    }
-
-
-    if (!onboardingCompleted) {
-      if (isOnboardingRoute) {
-        return null;
-      }
-      return RouteNames.onboarding;
-    }
-
-
-    if (isAuthRoute || location == RouteNames.onboardingFinal) {
-      return null;
-    }
-
-    return RouteNames.login;
-  },
-
+  redirect: _handleRedirect,
   initialLocation: RouteNames.onboarding,
   debugLogDiagnostics: true,
-
   errorBuilder: (context, state) => _ErrorScreen(
     error: state.error?.toString() ?? 'Page not found',
     path: state.uri.toString(),
   ),
-
-  routes: <RouteBase>[
-    // HOME
-    GoRoute(
-      path: RouteNames.homeScreen,
-      builder: (context, state) => const HomeScreen(),
-    ),
-
-    // ONBOARDING
+  routes: [
     GoRoute(
       path: RouteNames.onboarding,
+      name: 'onboarding',
       builder: (context, state) => BlocProvider(
         create: (_) => sl<OnboardingCubit>(),
         child: const OnBoardingPage(),
@@ -75,16 +33,19 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: RouteNames.onboardingFinal,
+      name: 'onboarding-final',
       builder: (context, state) => BlocProvider(
         create: (_) => sl<OnboardingCubit>(),
         child: const OnBoardingFinalPage(),
       ),
     ),
 
-
-    // Authentication
+    // ═══════════════════════════════════════════
+    // AUTH ROUTES
+    // ═══════════════════════════════════════════
     GoRoute(
       path: RouteNames.login,
+      name: 'login',
       builder: (context, state) => BlocProvider(
         create: (_) => sl<LoginCubit>(),
         child: const LoginScreen(),
@@ -92,20 +53,146 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: RouteNames.register,
+      name: 'register',
       builder: (context, state) => BlocProvider(
         create: (_) => sl<SignUpCubit>(),
         child: const SignUpScreen(),
       ),
     ),
+
+    // ═══════════════════════════════════════════
+    // MAIN APP ROUTES
+    // ═══════════════════════════════════════════
+    GoRoute(
+      path: RouteNames.homeScreen,
+      name: 'home',
+      builder: (context, state) => const HomeScreen(),
+    ),
   ],
 );
 
+String? _handleRedirect(BuildContext context, GoRouterState state) {
+  final authState = AuthStateNotifier.instance;
+  final isLoggedIn = authState.isLoggedIn;
+  final onboardingCompleted = authState.isOnboardingCompleted;
+  final location = state.matchedLocation;
+
+  final isAuthRoute =
+      location == RouteNames.login || location == RouteNames.register;
+  final isOnboardingRoute =
+      location == RouteNames.onboarding ||
+      location == RouteNames.onboardingFinal;
+
+  if (isLoggedIn) {
+    if (isAuthRoute || isOnboardingRoute) {
+      return RouteNames.homeScreen;
+    }
+    return null;
+  }
+
+  if (!onboardingCompleted) {
+    if (isOnboardingRoute) {
+      return null;
+    }
+    return RouteNames.onboarding;
+  }
+
+  if (isAuthRoute || location == RouteNames.onboardingFinal) {
+    return null;
+  }
+
+  return RouteNames.login;
+}
+
+// final GoRouter router = GoRouter(
+//   refreshListenable: AuthStateNotifier.instance,
+//
+//   redirect: (context, state) {
+//     final authState = AuthStateNotifier.instance;
+//     final isLoggedIn = authState.isLoggedIn;
+//     final onboardingCompleted = authState.isOnboardingCompleted;
+//     final location = state.matchedLocation;
+//
+//     final isAuthRoute = location == RouteNames.login ||
+//         location == RouteNames.register;
+//     final isOnboardingRoute = location == RouteNames.onboarding ||
+//         location == RouteNames.onboardingFinal;
+//
+//     if (isLoggedIn) {
+//       if (isAuthRoute || isOnboardingRoute) {
+//         return RouteNames.homeScreen;
+//       }
+//       return null;
+//     }
+//
+//
+//     if (!onboardingCompleted) {
+//       if (isOnboardingRoute) {
+//         return null;
+//       }
+//       return RouteNames.onboarding;
+//     }
+//
+//
+//     if (isAuthRoute || location == RouteNames.onboardingFinal) {
+//       return null;
+//     }
+//
+//     return RouteNames.login;
+//   },
+//
+//   initialLocation: RouteNames.onboarding,
+//   debugLogDiagnostics: true,
+//
+//   errorBuilder: (context, state) => _ErrorScreen(
+//     error: state.error?.toString() ?? 'Page not found',
+//     path: state.uri.toString(),
+//   ),
+//
+//   routes: <RouteBase>[
+//     // HOME
+//     GoRoute(
+//       path: RouteNames.homeScreen,
+//       builder: (context, state) => const HomeScreen(),
+//     ),
+//
+//     // ONBOARDING
+//     GoRoute(
+//       path: RouteNames.onboarding,
+//       builder: (context, state) => BlocProvider(
+//         create: (_) => sl<OnboardingCubit>(),
+//         child: const OnBoardingPage(),
+//       ),
+//     ),
+//     GoRoute(
+//       path: RouteNames.onboardingFinal,
+//       builder: (context, state) => BlocProvider(
+//         create: (_) => sl<OnboardingCubit>(),
+//         child: const OnBoardingFinalPage(),
+//       ),
+//     ),
+//
+//
+//     // Authentication
+//     GoRoute(
+//       path: RouteNames.login,
+//       builder: (context, state) => BlocProvider(
+//         create: (_) => sl<LoginCubit>(),
+//         child: const LoginScreen(),
+//       ),
+//     ),
+//     GoRoute(
+//       path: RouteNames.register,
+//       builder: (context, state) => BlocProvider(
+//         create: (_) => sl<SignUpCubit>(),
+//         child: const SignUpScreen(),
+//       ),
+//     ),
+//   ],
+// );
 
 class _ErrorScreen extends StatelessWidget {
-  const _ErrorScreen({
-    required this.error,
-    required this.path,
-  });
+  const _ErrorScreen({required this.error, required this.path});
 
   final String error;
   final String path;
@@ -119,11 +206,7 @@ class _ErrorScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
-                Icons.error_outline,
-                size: 80,
-                color: Colors.red,
-              ),
+              const Icon(Icons.error_outline, size: 80, color: Colors.red),
               const SizedBox(height: 24),
               Text(
                 '404',
@@ -140,9 +223,9 @@ class _ErrorScreen extends StatelessWidget {
               const SizedBox(height: 16),
               Text(
                 'The page "$path" does not exist.',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey,
-                ),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),

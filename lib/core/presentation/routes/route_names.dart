@@ -1,7 +1,5 @@
 class RouteNames {
   RouteNames._();
-  // Initial/Loading
-  //static const String splash = '/';
 
   // Auth
   static const String login = '/auth/login';
@@ -16,4 +14,6 @@ class RouteNames {
 
   // Error
   static const String notFound = '/404';
+
+
 }
