@@ -8,12 +8,7 @@ class RegisterUseCase {
 
   RegisterUseCase(this.repository);
 
-  Future<Either<Failure, bool>> call({
-   required Register register,
-  }) async {
-
-  return await repository.register(
-    register: register,
-    );
+  Future<Either<Failure, bool>> call({required Register register}) async {
+    return await repository.register(register: register);
   }
 }

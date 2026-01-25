@@ -27,7 +27,10 @@ class AuthLocalDataSourceImp implements AuthLocalDataSource {
   @override
   Future<void> saveToken(String token) async {
     if (token.isEmpty) {
-      throw CacheException.invalidData(ApiConstants.tokenKey, 'Token cannot be empty');
+      throw CacheException.invalidData(
+        ApiConstants.tokenKey,
+        'Token cannot be empty',
+      );
     }
     try {
       await _secureStorageService.write(

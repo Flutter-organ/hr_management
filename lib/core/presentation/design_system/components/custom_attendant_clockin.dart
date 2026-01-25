@@ -9,6 +9,7 @@ import '../theme/helper/theme_extention.dart';
 class CustomAttendantClockin extends StatelessWidget {
   final String imageUrl;
   final String? title, dateTitle, locationTitle;
+
   const CustomAttendantClockin({
     super.key,
     required this.imageUrl,

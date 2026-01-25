@@ -26,14 +26,12 @@ class SignUpScreen extends StatelessWidget {
       body: BlocConsumer<SignUpCubit, SignUpState>(
         listenWhen: (previous, current) {
           return (current.isRegistered && !previous.isRegistered) ||
-              (current.apiError != null && current.apiError != previous.apiError);
+              (current.apiError != null &&
+                  current.apiError != previous.apiError);
         },
         listener: (context, state) {
           if (state.isRegistered) {
-            VerifyOtpPopUp.show(
-              context,
-              email: state.email,
-            );
+            VerifyOtpPopUp.show(context, email: state.email);
           }
 
           if (state.apiError != null) {

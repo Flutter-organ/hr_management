@@ -6,7 +6,9 @@ sealed class Failure {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is Failure && runtimeType == other.runtimeType && message == other.message;
+      other is Failure &&
+          runtimeType == other.runtimeType &&
+          message == other.message;
 
   @override
   int get hashCode => message.hashCode;
@@ -19,14 +21,14 @@ sealed class AuthFailure extends Failure {
   const AuthFailure(super.message);
 }
 
-
-
 class NetworkFailure extends Failure {
   const NetworkFailure([super.message = 'No internet connection']);
 }
 
 class TimeoutFailure extends Failure {
-  const TimeoutFailure([super.message = 'Connection timed out. Please try again']);
+  const TimeoutFailure([
+    super.message = 'Connection timed out. Please try again',
+  ]);
 }
 
 class ServerFailure extends Failure {
@@ -42,11 +44,15 @@ class UnknownFailure extends Failure {
 }
 
 class InvalidCredentialsFailure extends AuthFailure {
-  const InvalidCredentialsFailure([super.message = 'Invalid email or password']);
+  const InvalidCredentialsFailure([
+    super.message = 'Invalid email or password',
+  ]);
 }
 
 class SessionExpiredFailure extends AuthFailure {
-  const SessionExpiredFailure([super.message = 'Session expired. Please sign in again']);
+  const SessionExpiredFailure([
+    super.message = 'Session expired. Please sign in again',
+  ]);
 }
 
 class UserNotFoundFailure extends AuthFailure {
@@ -58,27 +64,39 @@ class InvalidOtpFailure extends AuthFailure {
 }
 
 class OtpExpiredFailure extends AuthFailure {
-  const OtpExpiredFailure([super.message = 'OTP code has expired. Please request a new one']);
+  const OtpExpiredFailure([
+    super.message = 'OTP code has expired. Please request a new one',
+  ]);
 }
 
 class EmailAlreadyExistsFailure extends AuthFailure {
-  const EmailAlreadyExistsFailure([super.message = 'An account with this email already exists']);
+  const EmailAlreadyExistsFailure([
+    super.message = 'An account with this email already exists',
+  ]);
 }
 
 class PhoneAlreadyExistsFailure extends AuthFailure {
-  const PhoneAlreadyExistsFailure([super.message = 'An account with this phone already exists']);
+  const PhoneAlreadyExistsFailure([
+    super.message = 'An account with this phone already exists',
+  ]);
 }
 
 class AccountNotVerifiedFailure extends AuthFailure {
-  const AccountNotVerifiedFailure([super.message = 'Please verify your account first']);
+  const AccountNotVerifiedFailure([
+    super.message = 'Please verify your account first',
+  ]);
 }
 
 class AccountDisabledFailure extends AuthFailure {
-  const AccountDisabledFailure([super.message = 'Your account has been disabled']);
+  const AccountDisabledFailure([
+    super.message = 'Your account has been disabled',
+  ]);
 }
 
 class TooManyAttemptsFailure extends AuthFailure {
-  const TooManyAttemptsFailure([super.message = 'Too many attempts. Please try again later']);
+  const TooManyAttemptsFailure([
+    super.message = 'Too many attempts. Please try again later',
+  ]);
 }
 
 class ValidationFailure extends AuthFailure {
@@ -87,16 +105,19 @@ class ValidationFailure extends AuthFailure {
   const ValidationFailure({
     String message = 'Please check your input',
     this.fieldErrors,
-  }): super(message);
+  }) : super(message);
 
   String? getFieldError(String field) => fieldErrors?[field]?.firstOrNull;
 
-  String get allErrors => fieldErrors?.values.expand((e) => e).join('\n') ?? message;
+  String get allErrors =>
+      fieldErrors?.values.expand((e) => e).join('\n') ?? message;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          super == other && other is ValidationFailure && fieldErrors == other.fieldErrors;
+      super == other &&
+          other is ValidationFailure &&
+          fieldErrors == other.fieldErrors;
 
   @override
   int get hashCode => Object.hash(super.hashCode, fieldErrors);

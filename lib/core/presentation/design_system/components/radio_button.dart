@@ -47,6 +47,7 @@ class CustomRadioButton<T> extends StatelessWidget {
   });
 
   bool get _isSelected => value == groupValue;
+
   bool get _isInteractive => isEnabled && onChanged != null;
 
   @override
@@ -65,37 +66,40 @@ class CustomRadioButton<T> extends StatelessWidget {
     final disabledDot = disabledDotColor ?? themeColors.gray300;
 
     final effectiveBgColor = isEnabled ? enabledBgColor : disabledBgColor;
-    final effectiveBorderColor = isEnabled ? enabledBorderColor : disabledBorder;
-    final effectiveShadowColor = isEnabled ? enabledShadowColor : disabledShadow;
+    final effectiveBorderColor = isEnabled
+        ? enabledBorderColor
+        : disabledBorder;
+    final effectiveShadowColor = isEnabled
+        ? enabledShadowColor
+        : disabledShadow;
     final effectiveDotColor = isEnabled ? enabledDotColor : disabledDot;
 
     return Opacity(
       opacity: isEnabled ? 1.0 : disabledOpacity,
       child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            InkWell(
-                onTap: _isInteractive ? () => onChanged!(value) : null,
-                child: _buildRadioButton(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          InkWell(
+            onTap: _isInteractive ? () => onChanged!(value) : null,
+            child: _buildRadioButton(
               bgColor: effectiveBgColor,
               borderColor: effectiveBorderColor,
               dotColor: effectiveDotColor,
               shadowColor: effectiveShadowColor,
-            )
             ),
+          ),
 
-            if (isLabelEnabled && label != null) ...[
-              SizedBox(width: spacing),
-              Text(
-                label!,
-                style: labelStyle ??
-                    themeText.labelMediumFont.copyWith(
-                      color: themeColors.black,
-                    ),
-              ),
-            ],
+          if (isLabelEnabled && label != null) ...[
+            SizedBox(width: spacing),
+            Text(
+              label!,
+              style:
+                  labelStyle ??
+                  themeText.labelMediumFont.copyWith(color: themeColors.black),
+            ),
           ],
-        ),
+        ],
+      ),
     );
   }
 
@@ -117,10 +121,7 @@ class CustomRadioButton<T> extends StatelessWidget {
         border: Border.all(color: borderColor, width: 1.5),
         boxShadow: [
           if (shadowColor != null)
-          BoxShadow(
-            color: shadowColor.withAlpha(200),
-            blurRadius: 4,
-          ),
+            BoxShadow(color: shadowColor.withAlpha(200), blurRadius: 4),
         ],
       ),
       child: Center(
@@ -128,10 +129,7 @@ class CustomRadioButton<T> extends StatelessWidget {
           duration: const Duration(milliseconds: 150),
           width: _isSelected ? dotSize : 0,
           height: _isSelected ? dotSize : 0,
-          decoration: BoxDecoration(
-            color: dotColor,
-            shape: BoxShape.circle,
-          ),
+          decoration: BoxDecoration(color: dotColor, shape: BoxShape.circle),
         ),
       ),
     );

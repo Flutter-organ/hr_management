@@ -10,18 +10,24 @@ class OnboardingLocalDataSourceImpl implements OnboardingLocalDataSource {
 
   @override
   Future<void> saveOnboardingCompleted() async {
-    try{
-      await _preferencesService.setBool(key: PreferencesKeys.onboardingCompleted, value: true);
-    }catch(e){
+    try {
+      await _preferencesService.setBool(
+        key: PreferencesKeys.onboardingCompleted,
+        value: true,
+      );
+    } catch (e) {
       throw CacheException.write(PreferencesKeys.onboardingCompleted, e);
     }
   }
 
   @override
   bool isOnboardingCompleted() {
-    try{
-      return _preferencesService.getBool(key: PreferencesKeys.onboardingCompleted) ?? false;
-    }catch(e){
+    try {
+      return _preferencesService.getBool(
+            key: PreferencesKeys.onboardingCompleted,
+          ) ??
+          false;
+    } catch (e) {
       throw CacheException.read(PreferencesKeys.onboardingCompleted, e);
     }
   }

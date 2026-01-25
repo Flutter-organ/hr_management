@@ -23,15 +23,17 @@ class AuthMapper {
       type: verifyOtp.type,
     ));
   }
+
   static User toDomain(UserDto? userDto) {
     return User(
-      id: userDto?.id ,
+      id: userDto?.id,
       email: userDto?.email,
       phone: userDto?.phone,
       isActive: parseIsActive(userDto?.isActive),
       role: userDto?.role,
     );
   }
+
   static bool parseIsActive(dynamic value) {
     if (value == null) return false;
 
@@ -50,5 +52,4 @@ class AuthMapper {
     }
     return false;
   }
-
 }

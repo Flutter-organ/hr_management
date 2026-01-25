@@ -34,10 +34,10 @@ class DioClient {
   }
 
   Future<Response> get(
-      String path, {
-        Map<String, dynamic>? queryParameters,
-        Options? options,
-      }) async {
+    String path, {
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  }) async {
     try {
       return await _dio.get(
         path,
@@ -50,14 +50,14 @@ class DioClient {
   }
 
   Future<Response> post(
-      String path, {
-        dynamic data,
-        Map<String, dynamic>? queryParameters,
-        Options? options,
-        CancelToken? cancelToken,
-        ProgressCallback? onSendProgress,
-        ProgressCallback? onReceiveProgress,
-      }) async {
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
     try {
       return await _dio.post(
         path,
@@ -74,11 +74,11 @@ class DioClient {
   }
 
   Future<Response> put(
-      String path, {
-        dynamic data,
-        Map<String, dynamic>? queryParameters,
-        Options? options,
-      }) async {
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  }) async {
     try {
       return await _dio.put(
         path,
@@ -92,11 +92,11 @@ class DioClient {
   }
 
   Future<Response> patch(
-      String path, {
-        dynamic data,
-        Map<String, dynamic>? queryParameters,
-        Options? options,
-      }) async {
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  }) async {
     try {
       return await _dio.patch(
         path,
@@ -110,11 +110,11 @@ class DioClient {
   }
 
   Future<Response> delete(
-      String path, {
-        dynamic data,
-        Map<String, dynamic>? queryParameters,
-        Options? options,
-      }) async {
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  }) async {
     try {
       return await _dio.delete(
         path,
@@ -128,13 +128,13 @@ class DioClient {
   }
 
   Future<Response> uploadFiles(
-      String path, {
-        required Map<String, MultipartFile> files,
-        Map<String, dynamic>? extraFields,
-        Map<String, dynamic>? queryParameters,
-        CancelToken? cancelToken,
-        ProgressCallback? onProgress,
-      }) async {
+    String path, {
+    required Map<String, MultipartFile> files,
+    Map<String, dynamic>? extraFields,
+    Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken,
+    ProgressCallback? onProgress,
+  }) async {
     if (files.isEmpty) {
       throw const ValidationException(message: 'At least one file is required');
     }
@@ -150,9 +150,7 @@ class DioClient {
         data: formData,
         queryParameters: queryParameters,
         cancelToken: cancelToken,
-        options: Options(
-          contentType: ApiConstants.multipartContentType,
-        ),
+        options: Options(contentType: ApiConstants.multipartContentType),
         onSendProgress: onProgress != null
             ? (sent, total) => onProgress(sent, total)
             : null,
@@ -203,7 +201,7 @@ class DioClient {
       final errors = data['errors'];
       if (errors is Map<String, dynamic>) {
         validationErrors = errors.map(
-              (key, value) => MapEntry(
+          (key, value) => MapEntry(
             key,
             value is List
                 ? value.map((e) => e.toString()).toList()
@@ -250,10 +248,7 @@ class DioClient {
         );
 
       case 422:
-        return ValidationException(
-          message: message,
-          errors: validationErrors,
-        );
+        return ValidationException(message: message, errors: validationErrors);
 
       case 429:
         return ServerException(
@@ -293,9 +288,6 @@ class DioClient {
         msg.contains('credentials');
   }
 }
-
-
-
 
 //   AppException _handleBadResponse(int? statusCode) {
 //     switch (statusCode) {
@@ -367,9 +359,9 @@ class _AuthInterceptor extends Interceptor {
 
   @override
   void onRequest(
-      RequestOptions options,
-      RequestInterceptorHandler handler,
-      ) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     try {
       final token = await _localDataSource.getToken();
       if (token != null && token.isNotEmpty) {
@@ -380,7 +372,6 @@ class _AuthInterceptor extends Interceptor {
     }
     handler.next(options);
   }
-
 }
 
 class _LoggingInterceptor extends Interceptor {

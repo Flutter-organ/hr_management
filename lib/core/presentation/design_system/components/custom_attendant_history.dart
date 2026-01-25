@@ -6,6 +6,7 @@ import '../theme/helper/theme_extention.dart';
 
 class CustomAttendantHistory extends StatelessWidget {
   final String? attendanceDate, clockInOut, totalHours;
+
   const CustomAttendantHistory({
     super.key,
     this.attendanceDate,

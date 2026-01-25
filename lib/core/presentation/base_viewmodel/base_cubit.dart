@@ -33,7 +33,6 @@ abstract class BaseCubit<STATE> extends Cubit<STATE> {
     emit(updater(state));
   }
 
-
   UiError _mapFailureToUiError(Failure failure) {
     return switch (failure) {
       NetworkFailure() => const NetworkUiError(),
@@ -41,25 +40,30 @@ abstract class BaseCubit<STATE> extends Cubit<STATE> {
       ServerFailure(:final message) => ServerUiError(message),
       CacheFailure(:final message) => CacheUiError(message),
 
-      InvalidCredentialsFailure(:final message) => InvalidCredentialsUiError(message),
+      InvalidCredentialsFailure(:final message) => InvalidCredentialsUiError(
+        message,
+      ),
       SessionExpiredFailure(:final message) => UnauthorizedUiError(message),
       UserNotFoundFailure(:final message) => NotFoundUiError(message),
       InvalidOtpFailure(:final message) => InvalidOtpUiError(message),
       OtpExpiredFailure(:final message) => InvalidOtpUiError(message),
-      EmailAlreadyExistsFailure(:final message) => AccountExistsUiError(message),
-      PhoneAlreadyExistsFailure(:final message) => AccountExistsUiError(message),
-      AccountNotVerifiedFailure(:final message) => AccountNotVerifiedUiError(message),
+      EmailAlreadyExistsFailure(:final message) => AccountExistsUiError(
+        message,
+      ),
+      PhoneAlreadyExistsFailure(:final message) => AccountExistsUiError(
+        message,
+      ),
+      AccountNotVerifiedFailure(:final message) => AccountNotVerifiedUiError(
+        message,
+      ),
       AccountDisabledFailure(:final message) => AccountDisabledUiError(message),
       TooManyAttemptsFailure(:final message) => TooManyAttemptsUiError(message),
 
-      ValidationFailure(:final message, :final fieldErrors) => ValidationUiError(
-        message: message,
-        fieldErrors: fieldErrors,
-      ),
+      ValidationFailure(:final message, :final fieldErrors) =>
+        ValidationUiError(message: message, fieldErrors: fieldErrors),
 
       UnknownFailure(:final message) => UnknownUiError(message),
       AuthFailure(:final message) => GenericUiError(message),
-
     };
   }
 

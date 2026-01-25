@@ -6,6 +6,7 @@ class EmptyStateCard extends StatelessWidget {
   final String imgPath;
   final String imgtitle;
   final String imgDescription;
+
   const EmptyStateCard({
     super.key,
     required this.imgPath,

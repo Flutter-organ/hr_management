@@ -22,11 +22,11 @@ class CardHeader extends StatelessWidget {
         Row(
           children: [
             Text(
-                title,
-                style: context.textTheme.titleLargeFontSemiBold.copyWith(
-                  fontSize: 14,
-                  color: context.colors.textPrimary,
-                ),
+              title,
+              style: context.textTheme.titleLargeFontSemiBold.copyWith(
+                fontSize: 14,
+                color: context.colors.textPrimary,
+              ),
             ),
             const SizedBox(width: 4),
             if (count != null)

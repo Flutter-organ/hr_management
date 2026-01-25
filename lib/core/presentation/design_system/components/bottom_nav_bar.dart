@@ -6,6 +6,7 @@ import '../theme/helper/theme_extention.dart';
 
 class BottomNavBar extends StatelessWidget {
   BottomNavBar({super.key, required this.index, required this.onTap});
+
   final Function(int) onTap;
   final int index;
   static final List<IconModel> icons = [
@@ -72,5 +73,6 @@ class BottomNavBar extends StatelessWidget {
 
 class IconModel {
   IconData icon, activeIcon;
+
   IconModel({required this.icon, required this.activeIcon});
 }

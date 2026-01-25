@@ -44,7 +44,7 @@ class SelectableCheckChip extends StatelessWidget {
             Text(
               label,
               style: context.textTheme.bodyMediumFont.copyWith(
-                color:ExtensionColors.grayText,
+                color: ExtensionColors.grayText,
               ),
             ),
             Container(
@@ -52,18 +52,18 @@ class SelectableCheckChip extends StatelessWidget {
               height: 20,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: isSelected ? effectiveSelectedColor : context.colors.white,
+                color: isSelected
+                    ? effectiveSelectedColor
+                    : context.colors.white,
                 border: Border.all(
-                  color: isSelected ? effectiveSelectedColor : context.colors.gray400  ,
+                  color: isSelected
+                      ? effectiveSelectedColor
+                      : context.colors.gray400,
                   width: 2,
                 ),
               ),
               child: isSelected
-                  ? const Icon(
-                Icons.check,
-                size: 14,
-                color: Colors.white,
-              )
+                  ? const Icon(Icons.check, size: 14, color: Colors.white)
                   : null,
             ),
           ],

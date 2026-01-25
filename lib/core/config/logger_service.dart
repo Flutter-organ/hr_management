@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 
 class LoggerService {
   static final LoggerService _instance = LoggerService._internal();
+
   factory LoggerService() => _instance;
 
   late final Logger _logger;
@@ -23,7 +24,9 @@ class LoggerService {
   }
 
   void d(dynamic message) => _logger.d(message);
+
   void i(dynamic message) => _logger.i(message);
+
   void w(dynamic message) => _logger.w(message);
 
   void e(dynamic message, [dynamic error, StackTrace? stackTrace]) {
@@ -41,10 +44,10 @@ class LoggerService {
 
     _logger.i(
       '🚀 REQUEST\n'
-          '├── Method: $method\n'
-          '├── Path: $path\n'
-          '${sanitizedHeaders != null ? '├── Headers: $sanitizedHeaders\n' : ''}'
-          '└── Data: $sanitizedData',
+      '├── Method: $method\n'
+      '├── Path: $path\n'
+      '${sanitizedHeaders != null ? '├── Headers: $sanitizedHeaders\n' : ''}'
+      '└── Data: $sanitizedData',
     );
   }
 
@@ -58,9 +61,9 @@ class LoggerService {
 
     _logger.i(
       '✅ RESPONSE\n'
-          '├── Status: $statusCode\n'
-          '├── Path: $path\n'
-          '└── Data: $truncatedData',
+      '├── Status: $statusCode\n'
+      '├── Path: $path\n'
+      '└── Data: $truncatedData',
     );
   }
 
@@ -76,13 +79,12 @@ class LoggerService {
 
     _logger.e(
       '❌ ERROR\n'
-          '├── Status: $statusCode\n'
-          '├── Path: $path\n'
-          '├── Error: $error\n'
-          '${sanitizedResponse != null ? '└── Response: $sanitizedResponse' : ''}',
+      '├── Status: $statusCode\n'
+      '├── Path: $path\n'
+      '├── Error: $error\n'
+      '${sanitizedResponse != null ? '└── Response: $sanitizedResponse' : ''}',
     );
   }
-
 
   static const _sensitiveKeys = <String>{
     'password',
@@ -185,7 +187,9 @@ class LoggerService {
 
   bool _looksLikeToken(String value) {
     // JWT pattern: xxxxx.xxxxx.xxxxx
-    if (RegExp(r'^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$').hasMatch(value)) {
+    if (RegExp(
+      r'^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$',
+    ).hasMatch(value)) {
       return true;
     }
 

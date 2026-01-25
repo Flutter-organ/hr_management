@@ -7,6 +7,7 @@ enum StatusBarEnum { review, approved, rejected }
 
 class CustomStatusBar extends StatefulWidget {
   final num reviewCount, approveCount, rejectedCount;
+
   const CustomStatusBar({
     super.key,
     required this.reviewCount,

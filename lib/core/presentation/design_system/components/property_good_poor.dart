@@ -34,6 +34,7 @@ enum BurnoutStatus {
 
 class PropertyGoodPoor extends StatelessWidget {
   final BurnoutStatus status;
+
   const PropertyGoodPoor({super.key, required this.status});
 
   @override

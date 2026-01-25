@@ -12,11 +12,12 @@ class CustomChips extends StatelessWidget {
   final Gradient? gradient;
   final BorderRadius? borderRadius;
   final EdgeInsetsGeometry? padding, margin;
+
   const CustomChips({
     super.key,
     this.color = Colors.indigo,
     required this.title,
-    this.padding= const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+    this.padding = const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
     this.margin,
     this.borderRadius = const BorderRadius.all(Radius.circular(100)),
     this.style,

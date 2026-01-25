@@ -17,12 +17,11 @@ class AuthRepositoryImp implements AuthRepository {
   final AuthLocalDataSource _localDataSource;
   final AuthRemoteDataSource _remoteDataSource;
 
-
   const AuthRepositoryImp({
     required AuthLocalDataSource localDataSource,
     required AuthRemoteDataSource remoteDataSource,
-  })  : _localDataSource = localDataSource,
-        _remoteDataSource = remoteDataSource;
+  }) : _localDataSource = localDataSource,
+       _remoteDataSource = remoteDataSource;
 
   @override
   Future<Either<Failure, User>> login({
@@ -37,9 +36,7 @@ class AuthRepositoryImp implements AuthRepository {
         loginType: loginType,
       );
 
-      final response = await _remoteDataSource.login(
-        request
-      );
+      final response = await _remoteDataSource.login(request);
 
       if (response.accessToken != null && response.accessToken!.isNotEmpty) {
         await _localDataSource.saveToken(response.accessToken!);
@@ -52,7 +49,6 @@ class AuthRepositoryImp implements AuthRepository {
       return Left(AuthFailureMapper.mapException(e));
     }
   }
-
 
   @override
   Future<Either<Failure, String?>> getToken() async {
@@ -106,12 +102,8 @@ class AuthRepositoryImp implements AuthRepository {
       );
 
       final response = await _remoteDataSource.forgotPassword(request);
-      if (response.identifier == null || response.identifier?.isEmpty == true ) {
-        return Left(
-          ServerFailure(
-            'identifier is null or empty',
-          ),
-        );
+      if (response.identifier == null || response.identifier?.isEmpty == true) {
+        return Left(ServerFailure('identifier is null or empty'));
       }
       return Right(response.identifier ?? '');
     } catch (e) {
@@ -136,13 +128,12 @@ class AuthRepositoryImp implements AuthRepository {
 
       final response = await _remoteDataSource.resetPassword(request);
 
-      if (response.accessToken == null || response.accessToken?.isEmpty == true) {
-        return Left(
-          ServerFailure( 'Access token is missing'),
-        );
+      if (response.accessToken == null ||
+          response.accessToken?.isEmpty == true) {
+        return Left(ServerFailure('Access token is missing'));
       }
 
-      await _localDataSource.saveToken(response.accessToken??'');
+      await _localDataSource.saveToken(response.accessToken ?? '');
 
       return Right(AuthMapper.toDomain(response.user));
     } catch (e) {
@@ -159,8 +150,6 @@ class AuthRepositoryImp implements AuthRepository {
       return Left(AuthFailureMapper.mapException(e));
     }
   }
-
-
 
   @override
   Future<Either<Failure, Unit>> saveIdentifier(String mail) async {
@@ -181,18 +170,16 @@ class AuthRepositoryImp implements AuthRepository {
       return Left(AuthFailureMapper.mapException(e));
     }
   }
+
   @override
-  Future<Either<Failure, bool>> register({
-    required Register register,
-  }) async {
+  Future<Either<Failure, bool>> register({required Register register}) async {
     try {
       final registerDtoRequest = AuthMapper.toRegisterDtoRequest(register);
       final response = await _remoteDataSource.register(
         registerDtoRequest: registerDtoRequest,
       );
       return Right(response);
-
-    }catch(e){
+    } catch (e) {
       return Left(AuthFailureMapper.mapException(e));
     }
   }
@@ -211,7 +198,7 @@ class AuthRepositoryImp implements AuthRepository {
       }
       final user = AuthMapper.toDomain(otpVerifyResponse.user);
       return Right(user);
-    }catch(e){
+    } catch (e) {
       return Left(AuthFailureMapper.mapException(e));
     }
   }

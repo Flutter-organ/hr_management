@@ -5,11 +5,11 @@ import '../theme/helper/app_assets.dart';
 import '../theme/helper/extention_colors.dart';
 import '../theme/helper/theme_extention.dart';
 
-
 class CustomUserChatTile extends StatelessWidget {
   final void Function()? onTap;
   final String imageUrl, title, subtitle, timeMessage;
   final num messageCount;
+
   const CustomUserChatTile({
     super.key,
     this.onTap,

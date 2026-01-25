@@ -5,7 +5,6 @@ import '../../theme/helper/theme_extention.dart';
 import '../custom_primary_button.dart';
 import '../selectable_chip.dart';
 
-
 class CustomPopupList extends StatefulWidget {
   const CustomPopupList({
     super.key,
@@ -15,16 +14,19 @@ class CustomPopupList extends StatefulWidget {
     this.onCancel,
     this.onConfirm,
   });
+
   final String title;
   final String subtitle;
   final List<String> options;
   final Function? onCancel, onConfirm;
+
   @override
   State<CustomPopupList> createState() => _CustomPopupListState();
 }
 
 class _CustomPopupListState extends State<CustomPopupList> {
   int? selectedIndex;
+
   @override
   Widget build(BuildContext context) {
     return Padding(

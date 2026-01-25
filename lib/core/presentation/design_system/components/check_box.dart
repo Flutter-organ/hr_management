@@ -59,44 +59,50 @@ class CustomCheckbox extends StatelessWidget {
     final enabledCheckColors = this.checkColor ?? themeColors.primary;
     final enabledShadowColors = this.shadowColor;
 
-    final disabledBackgroundColors = disabledBackgroundColor ?? themeColors.white;
+    final disabledBackgroundColors =
+        disabledBackgroundColor ?? themeColors.white;
     final disabledBorderColors = disabledBorderColor ?? themeColors.gray300;
     final disabledCheckColors = disabledCheckColor ?? themeColors.gray300;
     final disabledShadowColors = disabledShadowColor;
 
-    final effectiveBackgroundColor = isEnabled ? enabledBackgroundColors : disabledBackgroundColors;
-    final effectiveBorderColor = isEnabled ? enabledBorderColors : disabledBorderColors;
-    final effectiveCheckColor = isEnabled ? enabledCheckColors : disabledCheckColors;
-    final effectiveShadowColor = isEnabled ? enabledShadowColors : disabledShadowColors;
-
-
-
+    final effectiveBackgroundColor = isEnabled
+        ? enabledBackgroundColors
+        : disabledBackgroundColors;
+    final effectiveBorderColor = isEnabled
+        ? enabledBorderColors
+        : disabledBorderColors;
+    final effectiveCheckColor = isEnabled
+        ? enabledCheckColors
+        : disabledCheckColors;
+    final effectiveShadowColor = isEnabled
+        ? enabledShadowColors
+        : disabledShadowColors;
 
     return Opacity(
       opacity: isEnabled ? 1.0 : disabledOpacity,
       child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            InkWell(
-              onTap: _isInteractive ? () => onChanged!(!isChecked) : null,
-              child: _buildCheckbox(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          InkWell(
+            onTap: _isInteractive ? () => onChanged!(!isChecked) : null,
+            child: _buildCheckbox(
               activeColor: effectiveBackgroundColor,
               borderColor: effectiveBorderColor,
               checkColor: effectiveCheckColor,
               shadowColor: effectiveShadowColor,
-            )
             ),
-            if (isLabelEnabled && label != null) ...[
-              SizedBox(width: spacing),
-              Text(
-                label!,
-                style:
-                    labelStyle ??
-                    themeText.labelMediumFont.copyWith(color: themeColors.black),
-              ),
-            ],
+          ),
+          if (isLabelEnabled && label != null) ...[
+            SizedBox(width: spacing),
+            Text(
+              label!,
+              style:
+                  labelStyle ??
+                  themeText.labelMediumFont.copyWith(color: themeColors.black),
+            ),
           ],
-        ),
+        ],
+      ),
     );
   }
 
@@ -106,7 +112,6 @@ class CustomCheckbox extends StatelessWidget {
     required Color checkColor,
     Color? shadowColor,
   }) {
-
     return AnimatedContainer(
       duration: const Duration(milliseconds: 150),
       width: size,
@@ -116,10 +121,7 @@ class CustomCheckbox extends StatelessWidget {
         color: activeColor,
         boxShadow: [
           if (shadowColor != null)
-            BoxShadow(
-            color: shadowColor.withAlpha(200),
-            blurRadius: 4,
-          ),
+            BoxShadow(color: shadowColor.withAlpha(200), blurRadius: 4),
         ],
         borderRadius: BorderRadius.circular(borderRadius),
         border: Border.all(color: borderColor, width: 1),

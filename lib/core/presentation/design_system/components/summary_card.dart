@@ -3,7 +3,6 @@ import 'package:flutter/widget_previews.dart';
 
 import '../theme/helper/theme_extention.dart';
 
-
 class StateItemModel {
   final String label;
   final String value;
@@ -51,7 +50,6 @@ class SummaryCard extends StatelessWidget {
 
   final List<Widget>? buttons;
 
-
   const SummaryCard({
     super.key,
     required this.title,
@@ -93,12 +91,12 @@ class SummaryCard extends StatelessWidget {
         border: border,
         boxShadow: elevation > 0
             ? [
-          BoxShadow(
-            color: shadowColor ?? themeColors.gray50,
-            blurRadius: elevation * 2,
-            offset: Offset(0, elevation),
-          ),
-        ]
+                BoxShadow(
+                  color: shadowColor ?? themeColors.gray50,
+                  blurRadius: elevation * 2,
+                  offset: Offset(0, elevation),
+                ),
+              ]
             : null,
       ),
       child: Padding(
@@ -112,13 +110,14 @@ class SummaryCard extends StatelessWidget {
             _buildStatsRow(context),
             if (_hasActions) ...[
               SizedBox(height: headerSpacing),
-              _buildActions()
-            ]
+              _buildActions(),
+            ],
           ],
         ),
       ),
     );
   }
+
   Widget _buildActions() {
     return Row(
       children: [
@@ -152,7 +151,8 @@ class SummaryCard extends StatelessWidget {
       children: [
         Text(
           title,
-          style: titleTextStyle ??
+          style:
+              titleTextStyle ??
               themeText.titleSmallFont.copyWith(
                 color: themeColors.textPrimary,
                 fontWeight: FontWeight.w600,
@@ -162,10 +162,9 @@ class SummaryCard extends StatelessWidget {
           const SizedBox(height: 2),
           Text(
             subtitle!,
-            style: subtitleTextStyle ??
-                themeText.bodySmallFont.copyWith(
-                  color: themeColors.gray500,
-                ),
+            style:
+                subtitleTextStyle ??
+                themeText.bodySmallFont.copyWith(color: themeColors.gray500),
           ),
         ],
       ],
@@ -179,13 +178,17 @@ class SummaryCard extends StatelessWidget {
           if (expandItems)
             Expanded(
               child: Padding(
-                padding: EdgeInsets.only(right: i == items.length - 1 ? 0 : itemSpacing),
+                padding: EdgeInsets.only(
+                  right: i == items.length - 1 ? 0 : itemSpacing,
+                ),
                 child: _buildStatItem(items[i], context),
               ),
             )
           else
             Padding(
-              padding: EdgeInsets.only(right: i == items.length - 1 ? 0 : itemSpacing),
+              padding: EdgeInsets.only(
+                right: i == items.length - 1 ? 0 : itemSpacing,
+              ),
               child: _buildStatItem(items[i], context),
             ),
       ],
@@ -198,7 +201,10 @@ class SummaryCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: itemBackgroundColor ?? context.colors.cardBackground,
         borderRadius: itemBorderRadius,
-        border: Border.all(color: itemBorderColor ?? context.colors.gray200, width: 1),
+        border: Border.all(
+          color: itemBorderColor ?? context.colors.gray200,
+          width: 1,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,7 +233,8 @@ class SummaryCard extends StatelessWidget {
               Flexible(
                 child: Text(
                   item.label,
-                  style: itemLabelTextStyle ??
+                  style:
+                      itemLabelTextStyle ??
                       context.textTheme.labelMediumFont.copyWith(
                         color: context.colors.textSecondary,
                       ),
@@ -239,7 +246,8 @@ class SummaryCard extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             item.value,
-            style: itemValueTextStyle ??
+            style:
+                itemValueTextStyle ??
                 context.textTheme.titleLargeFont.copyWith(
                   color: context.colors.textPrimary,
                 ),
@@ -250,11 +258,7 @@ class SummaryCard extends StatelessWidget {
   }
 }
 
-
 @Preview(name: 'Summary Card')
 Widget summaryCardPreview() {
-  return const ElevatedButton(
-    onPressed: null,
-    child: Text('Click Me'),
-  );
+  return const ElevatedButton(onPressed: null, child: Text('Click Me'));
 }

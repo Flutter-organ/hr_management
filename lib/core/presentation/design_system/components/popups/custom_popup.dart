@@ -8,7 +8,6 @@ import '../custom_input_field.dart';
 import '../custom_primary_button.dart';
 
 class CustomPopup extends StatelessWidget {
-
   final IconData? icon;
   final String title;
   final String description;
@@ -295,10 +294,7 @@ class CustomPopup extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
 
-                if (content != null) ...[
-                  content!,
-                  const SizedBox(height: 24),
-                ],
+                if (content != null) ...[content!, const SizedBox(height: 24)],
 
                 _buildPrimaryButton(context),
 
@@ -316,35 +312,29 @@ class CustomPopup extends StatelessWidget {
           ),
         ),
         if (icon != null)
-        Positioned(
-          top: -50,
-          left: 0,
-          right: 0,
-          child: Center(
-            child: Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                color: AppConstantColors.purple500,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppConstantColors.purple500.withOpacity(0.4),
-                    blurRadius: 16,
-                    offset: const Offset(0, 8),
-                  ),
-                ],
-              ),
-              child: Center(
-                child: Icon(
-                  icon,
-                  color: Colors.white,
-                  size: 48,
+          Positioned(
+            top: -50,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: AppConstantColors.purple500,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppConstantColors.purple500.withOpacity(0.4),
+                      blurRadius: 16,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
                 ),
+                child: Center(child: Icon(icon, color: Colors.white, size: 48)),
               ),
             ),
           ),
-        ),
       ],
     );
   }
@@ -657,14 +647,14 @@ class _PasswordResetContentState extends State<_PasswordResetContent> {
   }
 
   Widget _buildPasswordField(
-      BuildContext context, {
-        required String label,
-        required String hint,
-        required ValueChanged<String> onChanged,
-        String? errorText,
-        required bool obscure,
-        required VoidCallback onToggleObscure,
-      }) {
+    BuildContext context, {
+    required String label,
+    required String hint,
+    required ValueChanged<String> onChanged,
+    String? errorText,
+    required bool obscure,
+    required VoidCallback onToggleObscure,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -787,12 +777,9 @@ class _LoginContentState extends State<_LoginContent> {
           radius: 12,
           contentPaddingHorizontal: 16,
           contentPaddingVertical: 16,
-          prefixIcon: widget.identifierPrefixIcon ??
-              Icon(
-                Iconsax.sms,
-                color: context.colors.purple400,
-                size: 20,
-              ),
+          prefixIcon:
+              widget.identifierPrefixIcon ??
+              Icon(Iconsax.sms, color: context.colors.purple400, size: 20),
         ),
         if (widget.identifierErrorText != null) ...[
           const SizedBox(height: 8),

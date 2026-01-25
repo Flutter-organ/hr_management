@@ -9,6 +9,7 @@ class CustomClockinAreaMapUser extends StatelessWidget {
   final Color? circularColor;
   final EdgeInsets? padding;
   final void Function()? onTap;
+
   const CustomClockinAreaMapUser({
     super.key,
     required this.imageUrl,

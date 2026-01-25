@@ -73,9 +73,7 @@ class AuthFailureMapper {
       }
 
       if (_containsError(errors, 'code', ['invalid', 'incorrect', 'wrong'])) {
-        return InvalidOtpFailure(
-          errors['code']?.first ?? 'Invalid OTP code',
-        );
+        return InvalidOtpFailure(errors['code']?.first ?? 'Invalid OTP code');
       }
 
       if (_containsError(errors, 'code', ['expired'])) {
@@ -85,17 +83,14 @@ class AuthFailureMapper {
       }
     }
 
-    return ValidationFailure(
-      message: message,
-      fieldErrors: errors,
-    );
+    return ValidationFailure(message: message, fieldErrors: errors);
   }
 
   static bool _containsError(
-      Map<String, List<String>> errors,
-      String field,
-      List<String> keywords,
-      ) {
+    Map<String, List<String>> errors,
+    String field,
+    List<String> keywords,
+  ) {
     final fieldErrors = errors[field];
     if (fieldErrors == null || fieldErrors.isEmpty) return false;
 
@@ -144,5 +139,4 @@ class AuthFailureMapper {
         return ServerFailure(message);
     }
   }
-
 }

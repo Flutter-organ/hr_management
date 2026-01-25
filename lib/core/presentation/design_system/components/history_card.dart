@@ -9,11 +9,7 @@ import '../theme/helper/theme_extention.dart';
 class HistoryCard extends StatelessWidget {
   final HistoryCardModel historyCardModel;
 
-
-  const HistoryCard({
-    super.key,
-    required this.historyCardModel,
-  });
+  const HistoryCard({super.key, required this.historyCardModel});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +27,11 @@ class HistoryCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(historyCardModel.headerIcon, color: historyCardModel.headerIconColor, size: 20),
+              Icon(
+                historyCardModel.headerIcon,
+                color: historyCardModel.headerIconColor,
+                size: 20,
+              ),
               const SizedBox(width: 8),
               Text(
                 DateFormat(
@@ -56,9 +56,13 @@ class HistoryCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-               Expanded(child: InfoColumn(item:historyCardModel.infoItems[0])),
-               Spacer(),
-               Expanded(child: InfoColumn(item: historyCardModel.infoItems[1]))
+                Expanded(
+                  child: InfoColumn(item: historyCardModel.infoItems[0]),
+                ),
+                Spacer(),
+                Expanded(
+                  child: InfoColumn(item: historyCardModel.infoItems[1]),
+                ),
               ],
             ),
           ),
@@ -85,10 +89,7 @@ class HistoryCard extends StatelessWidget {
 class InfoColumn extends StatelessWidget {
   final InfoItem item;
 
-  const InfoColumn({
-    super.key,
-    required this.item,
-  });
+  const InfoColumn({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -122,12 +123,12 @@ class InfoColumn extends StatelessWidget {
 }
 
 Widget historyStatusCard(
-    BuildContext context,
-    DateTime dateAddStatus,
-    StatusCard cardStatus,
-    String? profileImage,
-    String userName,
-    ) {
+  BuildContext context,
+  DateTime dateAddStatus,
+  StatusCard cardStatus,
+  String? profileImage,
+  String userName,
+) {
   final textTheme = context.textTheme;
   final color = context.colors;
   String formattedDate = DateFormat(
@@ -138,7 +139,9 @@ Widget historyStatusCard(
     children: [
       Icon(
         Iconsax.tick_circle5,
-        color: cardStatus == StatusCard.approved ? color.success500 : color.error,
+        color: cardStatus == StatusCard.approved
+            ? color.success500
+            : color.error,
         size: 16,
       ),
       SizedBox(width: 12),

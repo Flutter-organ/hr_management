@@ -69,7 +69,10 @@ class CustomPrimaryButton extends StatelessWidget {
     VoidCallback? onPressed,
     double? width,
     double? height,
-    EdgeInsetsGeometry padding = const EdgeInsets.symmetric( horizontal: 24, vertical: 14),
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(
+      horizontal: 24,
+      vertical: 14,
+    ),
     Color? backgroundColor,
     Color? foregroundColor,
     double borderRadius = 100,
@@ -106,7 +109,10 @@ class CustomPrimaryButton extends StatelessWidget {
     VoidCallback? onPressed,
     double? width,
     double? height,
-    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(
+      horizontal: 24,
+      vertical: 14,
+    ),
     Color? borderColor,
     Color? foregroundColor,
     double borderWidth = 1.5,
@@ -143,7 +149,10 @@ class CustomPrimaryButton extends StatelessWidget {
     VoidCallback? onPressed,
     double? width,
     double? height,
-    EdgeInsetsGeometry padding = const EdgeInsets.symmetric( horizontal: 16, vertical: 8),
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(
+      horizontal: 16,
+      vertical: 8,
+    ),
     Color? foregroundColor,
     double borderRadius = 100,
     Widget? icon,
@@ -177,7 +186,10 @@ class CustomPrimaryButton extends StatelessWidget {
     VoidCallback? onPressed,
     double? width,
     double? height,
-    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+    EdgeInsetsGeometry padding = const EdgeInsets.symmetric(
+      horizontal: 24,
+      vertical: 14,
+    ),
     Color? foregroundColor,
     Gradient? disabledGradient,
     double borderRadius = 100,
@@ -243,8 +255,10 @@ class CustomPrimaryButton extends StatelessWidget {
   Widget _buildFilledButton(BuildContext context) {
     final effectiveBackgroundColor = backgroundColor ?? context.colors.primary;
     final effectiveForegroundColor = foregroundColor ?? context.colors.white;
-    final effectiveDisabledBgColor = disabledBackgroundColor ?? context.colors.gray300;
-    final effectiveDisabledFgColor = disabledForegroundColor ?? context.colors.gray500;
+    final effectiveDisabledBgColor =
+        disabledBackgroundColor ?? context.colors.gray300;
+    final effectiveDisabledFgColor =
+        disabledForegroundColor ?? context.colors.gray500;
 
     return ElevatedButton(
       onPressed: _isInteractive ? onPressed : null,
@@ -274,7 +288,8 @@ class CustomPrimaryButton extends StatelessWidget {
   Widget _buildOutlinedButton(BuildContext context) {
     final effectiveBorderColor = borderColor ?? context.colors.primary;
     final effectiveForegroundColor = foregroundColor ?? context.colors.primary;
-    final effectiveDisabledFgColor = disabledForegroundColor ?? context.colors.gray400;
+    final effectiveDisabledFgColor =
+        disabledForegroundColor ?? context.colors.gray400;
 
     return OutlinedButton(
       onPressed: _isInteractive ? onPressed : null,
@@ -302,7 +317,8 @@ class CustomPrimaryButton extends StatelessWidget {
 
   Widget _buildTextButton(BuildContext context) {
     final effectiveForegroundColor = foregroundColor ?? context.colors.primary;
-    final effectiveDisabledFgColor = disabledForegroundColor ?? context.colors.gray400;
+    final effectiveDisabledFgColor =
+        disabledForegroundColor ?? context.colors.gray400;
 
     return TextButton(
       onPressed: _isInteractive ? onPressed : null,
@@ -333,10 +349,13 @@ class CustomPrimaryButton extends StatelessWidget {
         context.colors.purple500,
         context.colors.purple600,
         context.colors.purple700,
-        ],
+      ],
     );
-    final effectiveDisabledGradient = disabledGradient ??
-        LinearGradient(colors: [context.colors.gray300, context.colors.gray400]);
+    final effectiveDisabledGradient =
+        disabledGradient ??
+        LinearGradient(
+          colors: [context.colors.gray300, context.colors.gray400],
+        );
 
     final isDisabledState = !isEnabled && !isLoading;
     final effectiveGradient = isDisabledState
@@ -349,14 +368,24 @@ class CustomPrimaryButton extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: effectiveGradient,
           borderRadius: BorderRadius.circular(borderRadius),
-          boxShadow: elevation > 0?[BoxShadow( color: shadowColor ?? Colors.black.withAlpha(100), blurRadius: elevation * 2,offset: Offset(0, elevation) ),]: null,
+          boxShadow: elevation > 0
+              ? [
+                  BoxShadow(
+                    color: shadowColor ?? Colors.black.withAlpha(100),
+                    blurRadius: elevation * 2,
+                    offset: Offset(0, elevation),
+                  ),
+                ]
+              : null,
         ),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             onTap: _isInteractive ? onPressed : null,
             borderRadius: BorderRadius.circular(borderRadius),
-            child: Padding(padding: padding, child: Center(child: _buildContent(effectiveForegroundColor)),
+            child: Padding(
+              padding: padding,
+              child: Center(child: _buildContent(effectiveForegroundColor)),
             ),
           ),
         ),
@@ -372,7 +401,9 @@ class CustomPrimaryButton extends StatelessWidget {
   }
 
   Widget _buildNormalContent(Color foregroundColor) {
-    final effectiveTextStyle = textStyle?.copyWith(color: textStyle?.color ?? foregroundColor) ??TextStyle(color: foregroundColor);
+    final effectiveTextStyle =
+        textStyle?.copyWith(color: textStyle?.color ?? foregroundColor) ??
+        TextStyle(color: foregroundColor);
 
     if (icon == null) {
       return Text(
@@ -402,7 +433,9 @@ class CustomPrimaryButton extends StatelessWidget {
   }
 
   Widget _buildLoadingContent(Color foregroundColor) {
-    final effectiveTextStyle = textStyle?.copyWith(color: textStyle?.color ?? foregroundColor)??TextStyle(color: foregroundColor);
+    final effectiveTextStyle =
+        textStyle?.copyWith(color: textStyle?.color ?? foregroundColor) ??
+        TextStyle(color: foregroundColor);
 
     return Row(
       mainAxisSize: MainAxisSize.min,
