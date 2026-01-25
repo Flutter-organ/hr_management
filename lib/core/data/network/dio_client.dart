@@ -173,7 +173,7 @@ class DioClient {
         return const NetworkException();
 
       case DioExceptionType.badResponse:
-        return _handleBadResponse(e.response?.statusCode);
+        return _parseErrorResponse(e.response);
 
       case DioExceptionType.cancel:
         return const ServerException(message: 'Request was cancelled');
@@ -189,48 +189,76 @@ class DioClient {
     }
   }
 
+  AppException _parseErrorResponse(Response? response) {
+    final statusCode = response?.statusCode;
+    final data = response?.data;
+    String message = 'An error occurred';
+    String? errorCode;
+    Map<String, List<String>>? validationErrors;
 
-  AppException _handleBadResponse(int? statusCode) {
+    if (data is Map<String, dynamic>) {
+      message = data['message'] as String? ?? message;
+      errorCode = data['error_code'] as String?;
+
+      final errors = data['errors'];
+      if (errors is Map<String, dynamic>) {
+        validationErrors = errors.map(
+              (key, value) => MapEntry(
+            key,
+            value is List
+                ? value.map((e) => e.toString()).toList()
+                : [value.toString()],
+          ),
+        );
+      }
+    }
+
     switch (statusCode) {
       case 400:
-        return const ServerException(
-          message: 'Bad request',
-          code: 'BAD_REQUEST',
+        return ServerException(
+          message: message,
+          code: errorCode ?? 'BAD_REQUEST',
           statusCode: 400,
         );
 
       case 401:
-        return const ServerException(
-          message: 'Unauthorized',
-          code: 'UNAUTHORIZED',
+        if (_isInvalidCredentials(errorCode, message)) {
+          return ServerException(
+            message: message,
+            code: errorCode ?? 'INVALID_CREDENTIALS',
+            statusCode: 401,
+          );
+        }
+        return UnauthorizedException(
+          message: message,
+          code: errorCode ?? 'UNAUTHENTICATED',
           statusCode: 401,
         );
 
       case 403:
-        return const ServerException(
-          message: 'Access forbidden',
-          code: 'FORBIDDEN',
+        return ServerException(
+          message: message,
+          code: errorCode ?? 'FORBIDDEN',
           statusCode: 403,
         );
 
       case 404:
-        return const ServerException(
-          message: 'Resource not found',
-          code: 'NOT_FOUND',
+        return ServerException(
+          message: message,
+          code: errorCode ?? 'NOT_FOUND',
           statusCode: 404,
         );
 
       case 422:
-        return const ServerException(
-          message: 'Validation error',
-          code: 'VALIDATION_ERROR',
-          statusCode: 422,
+        return ValidationException(
+          message: message,
+          errors: validationErrors,
         );
 
       case 429:
-        return const ServerException(
-          message: 'Too many requests. Please try again later.',
-          code: 'TOO_MANY_REQUESTS',
+        return ServerException(
+          message: message,
+          code: errorCode ?? 'TOO_MANY_REQUESTS',
           statusCode: 429,
         );
 
@@ -238,20 +266,99 @@ class DioClient {
       case 502:
       case 503:
       case 504:
-        return const ServerException(
-          message: 'Server error. Please try again later.',
-          code: 'SERVER_ERROR',
-          statusCode: 500,
+        return ServerException(
+          message: message,
+          code: errorCode ?? 'SERVER_ERROR',
+          statusCode: statusCode,
         );
 
       default:
         return ServerException(
-          message: 'Error: ${statusCode ?? 'unknown'}',
+          message: message,
+          code: errorCode,
           statusCode: statusCode,
         );
     }
   }
+
+  bool _isInvalidCredentials(String? errorCode, String message) {
+    final code = errorCode?.toUpperCase() ?? '';
+    final msg = message.toLowerCase();
+
+    if (code == 'INVALID_CREDENTIALS') return true;
+
+    return msg.contains('invalid') ||
+        msg.contains('incorrect') ||
+        msg.contains('wrong password') ||
+        msg.contains('credentials');
+  }
 }
+
+
+
+
+//   AppException _handleBadResponse(int? statusCode) {
+//     switch (statusCode) {
+//       case 400:
+//         return const ServerException(
+//           message: 'Bad request',
+//           code: 'BAD_REQUEST',
+//           statusCode: 400,
+//         );
+//
+//       case 401:
+//         return const ServerException(
+//           message: 'Unauthorized',
+//           code: 'UNAUTHORIZED',
+//           statusCode: 401,
+//         );
+//
+//       case 403:
+//         return const ServerException(
+//           message: 'Access forbidden',
+//           code: 'FORBIDDEN',
+//           statusCode: 403,
+//         );
+//
+//       case 404:
+//         return const ServerException(
+//           message: 'Resource not found',
+//           code: 'NOT_FOUND',
+//           statusCode: 404,
+//         );
+//
+//       case 422:
+//         return const ServerException(
+//           message: 'Validation error',
+//           code: 'VALIDATION_ERROR',
+//           statusCode: 422,
+//         );
+//
+//       case 429:
+//         return const ServerException(
+//           message: 'Too many requests. Please try again later.',
+//           code: 'TOO_MANY_REQUESTS',
+//           statusCode: 429,
+//         );
+//
+//       case 500:
+//       case 502:
+//       case 503:
+//       case 504:
+//         return const ServerException(
+//           message: 'Server error. Please try again later.',
+//           code: 'SERVER_ERROR',
+//           statusCode: 500,
+//         );
+//
+//       default:
+//         return ServerException(
+//           message: 'Error: ${statusCode ?? 'unknown'}',
+//           statusCode: statusCode,
+//         );
+//     }
+//   }
+// }
 
 class _AuthInterceptor extends Interceptor {
   final AuthLocalDataSource _localDataSource;
@@ -303,6 +410,7 @@ class _LoggingInterceptor extends Interceptor {
       statusCode: err.response?.statusCode,
       path: err.requestOptions.path,
       error: err.message,
+      responseData: err.response?.data,
     );
     handler.next(err);
   }

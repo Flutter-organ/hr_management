@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hr_management/core/di/injection_container.dart';
-import 'package:hr_management/features/auth/domain/repository/auth_repository.dart';
-
-import '../../../../core/presentation/routes/route_names.dart';
+import 'package:hr_management/features/auth/domain/use_cases/logout_use_case.dart';
+import '../../../../core/presentation/routes/config/app_state_notifier.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -39,11 +37,14 @@ class HomeScreen extends StatelessWidget {
           ),
           TextButton(
             onPressed: () async {
-              await sl<AuthRepository>().clearToken();
+              final result = await sl<LogoutUseCase>().call();
+              result.fold((failure) => print(failure.message),
+                  (_){
 
-              if (context.mounted) {
-                context.go(RouteNames.login);
-              }
+                    AuthStateNotifier.instance.setLoggedOut();
+                  }
+
+              );
             },
             child: const Text("Logout", style: TextStyle(color: Colors.red)),
           ),

@@ -22,7 +22,6 @@ class VerifyOtpCubit extends BaseCubit<VerifyOtpState> {
     updateState((s) => s.copyWith(identifier: identifier));
   }
 
-  //bool get isOtpComplete => state.code.length == 6;
   bool get isOtpComplete => Validators.isOtpComplete(state.code);
 
   Future<void> verifyOtp({

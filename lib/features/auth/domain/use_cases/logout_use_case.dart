@@ -1,0 +1,14 @@
+import 'package:fpdart/fpdart.dart';
+
+import '../failures/failure.dart';
+import '../repository/auth_repository.dart';
+
+class LogoutUseCase {
+  final AuthRepository _repository;
+
+  const LogoutUseCase(this._repository);
+
+  Future<Either<Failure, Unit>> call() async {
+    return await _repository.clearToken();
+  }
+}

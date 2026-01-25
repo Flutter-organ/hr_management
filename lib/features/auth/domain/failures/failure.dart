@@ -15,6 +15,10 @@ sealed class Failure {
   String toString() => '$runtimeType: $message';
 }
 
+sealed class AuthFailure extends Failure {
+  const AuthFailure(super.message);
+}
+
 
 
 class NetworkFailure extends Failure {
@@ -35,10 +39,6 @@ class CacheFailure extends Failure {
 
 class UnknownFailure extends Failure {
   const UnknownFailure([super.message = 'An unexpected error occurred']);
-}
-
-sealed class AuthFailure extends Failure {
-  const AuthFailure(super.message);
 }
 
 class InvalidCredentialsFailure extends AuthFailure {

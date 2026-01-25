@@ -38,23 +38,28 @@ abstract class BaseCubit<STATE> extends Cubit<STATE> {
     return switch (failure) {
       NetworkFailure() => const NetworkUiError(),
       TimeoutFailure() => const TimeoutUiError(),
-      ServerFailure() => ServerUiError(failure.message),
-      CacheFailure() => CacheUiError(failure.message),
-      InvalidCredentialsFailure() => const InvalidCredentialsUiError(),
-      SessionExpiredFailure() => const UnauthorizedUiError(),
-      UserNotFoundFailure() => const NotFoundUiError(),
-      InvalidOtpFailure() => const InvalidOtpUiError(),
-      OtpExpiredFailure() => const InvalidOtpUiError(),
-      EmailAlreadyExistsFailure() => const AccountExistsUiError(),
-      PhoneAlreadyExistsFailure() => const AccountExistsUiError(),
-      AccountNotVerifiedFailure() => const AccountNotVerifiedUiError(),
-      AccountDisabledFailure() => const AccountDisabledUiError(),
-      TooManyAttemptsFailure() => const TooManyAttemptsUiError(),
-      ValidationFailure(:final fieldErrors) => ValidationUiError(
-        message: failure.message,
+      ServerFailure(:final message) => ServerUiError(message),
+      CacheFailure(:final message) => CacheUiError(message),
+
+      InvalidCredentialsFailure(:final message) => InvalidCredentialsUiError(message),
+      SessionExpiredFailure(:final message) => UnauthorizedUiError(message),
+      UserNotFoundFailure(:final message) => NotFoundUiError(message),
+      InvalidOtpFailure(:final message) => InvalidOtpUiError(message),
+      OtpExpiredFailure(:final message) => InvalidOtpUiError(message),
+      EmailAlreadyExistsFailure(:final message) => AccountExistsUiError(message),
+      PhoneAlreadyExistsFailure(:final message) => AccountExistsUiError(message),
+      AccountNotVerifiedFailure(:final message) => AccountNotVerifiedUiError(message),
+      AccountDisabledFailure(:final message) => AccountDisabledUiError(message),
+      TooManyAttemptsFailure(:final message) => TooManyAttemptsUiError(message),
+
+      ValidationFailure(:final message, :final fieldErrors) => ValidationUiError(
+        message: message,
         fieldErrors: fieldErrors,
       ),
-      UnknownFailure() => const UnknownUiError(),
+
+      UnknownFailure(:final message) => UnknownUiError(message),
+      AuthFailure(:final message) => GenericUiError(message),
+
     };
   }
 

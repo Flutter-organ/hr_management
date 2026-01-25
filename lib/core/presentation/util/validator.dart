@@ -7,6 +7,8 @@ class Validators {
     r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
   );
 
+  static final RegExp _phoneRegex = RegExp(r'^\d{10,15}$');
+
   static String? validateEmail(
       String? value, {
         bool required = true,
@@ -31,14 +33,12 @@ class Validators {
   static bool isValidEmail(String email) {
     return _emailRegex.hasMatch(email.trim());
   }
-
-  static final RegExp _phoneRegex = RegExp(r'^\d{10,15}$');
-
+  
   static String? validatePhone(
       String? value, {
         bool required = true,
-        int minLength = 10,
-        int maxLength = 15,
+        int minDigits = 10,
+        int maxDigits = 15,
         String? requiredMessage,
         String? invalidMessage,
       }) {
@@ -51,17 +51,30 @@ class Validators {
       return null;
     }
 
-    if (!RegExp(r'^\d{' + minLength.toString() + ',' + maxLength.toString() + r'}$').hasMatch(phone)) {
+    if (!_phoneRegex.hasMatch(phone)) {
+      return invalidMessage ?? 'invalid_phone'.tr();
+    }
+
+    final digitCount = phone.replaceAll('+', '').length;
+
+    if (digitCount < minDigits || digitCount > maxDigits) {
       return invalidMessage ?? 'invalid_phone'.tr();
     }
 
     return null;
   }
 
-  static bool isValidPhone(String phone, {int minLength = 10, int maxLength = 15}) {
-    return RegExp(r'^\d{' + minLength.toString() + ',' + maxLength.toString() + r'}$')
-        .hasMatch(phone.trim());
+  static bool isValidPhone(String phone, {int minDigits = 10, int maxDigits = 15}) {
+    final trimmed = phone.trim();
+
+    if (!_phoneRegex.hasMatch(trimmed)) {
+      return false;
+    }
+
+    final digitCount = trimmed.replaceAll('+', '').length;
+    return digitCount >= minDigits && digitCount <= maxDigits;
   }
+
 
   static String? validatePassword(
       String? value, {

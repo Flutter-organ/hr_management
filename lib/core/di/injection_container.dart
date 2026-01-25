@@ -14,6 +14,7 @@ import '../../features/auth/data/data_source/local/auth_local_data_source_imp.da
 import '../../features/auth/data/data_source/remote/auth_remote_data_source.dart';
 import '../../features/auth/data/data_source/remote/auth_remote_data_source_impl.dart';
 import '../../features/auth/data/repository_imp/auth_repository_imp.dart';
+import '../../features/auth/domain/use_cases/logout_use_case.dart';
 import '../../features/auth/domain/use_cases/reset_password_use_case.dart';
 import '../../features/auth/domain/use_cases/check_onboarding_status_use_case.dart';
 import '../../features/auth/domain/use_cases/complete_onboarding_use_case.dart';
@@ -90,6 +91,7 @@ Future<void> _initAuth() async {
   sl.registerLazySingleton<VerifyOTPUseCase>(
         () => VerifyOTPUseCase(sl<AuthRepository>()),
   );
+  sl.registerLazySingleton(() => LogoutUseCase(sl<AuthRepository>()));
 
   //presentation
   sl.registerFactory<ForgotPasswordCubit>(

@@ -1,5 +1,4 @@
 import '../../../../../../core/presentation/base_viewmodel/base_cubit.dart';
-import '../../../../../../core/presentation/routes/config/app_state_notifier.dart';
 import '../../../../../../core/presentation/util/validator.dart';
 import '../../../../domain/entity/auth_type.dart';
 import '../../../../domain/entity/register.dart';
@@ -78,8 +77,6 @@ class SignUpCubit extends BaseCubit<SignUpState> {
         ),
       ),
       onSuccess: (_) {
-        AuthStateNotifier.instance.setLoggedIn();
-
         updateState((s) => s.copyWith(
           isLoading: false,
           isRegistered: true,
