@@ -13,6 +13,7 @@ class AuthStateNotifier extends ChangeNotifier {
   bool get isLoggedIn => _isLoggedIn;
   bool get isOnboardingCompleted => _isOnboardingCompleted;
 
+
   Future<void> initialize({
     required Future<bool> Function() checkIsLoggedIn,
     required bool Function() checkOnboardingCompleted,

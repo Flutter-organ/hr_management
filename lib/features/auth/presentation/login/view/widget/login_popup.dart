@@ -7,7 +7,6 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../../../core/presentation/design_system/components/check_box.dart';
 import '../../../../../../core/presentation/design_system/components/custom_input_field.dart';
 import '../../../../../../core/presentation/design_system/components/custom_primary_button.dart';
-import '../../../../../../core/presentation/design_system/theme/helper/extention_colors.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
 import '../../../../../../core/presentation/routes/route_names.dart';
@@ -119,13 +118,6 @@ class _LoginCardState extends State<LoginCard> {
 
                 CustomPrimaryButton.gradient(
                   buttonText: 'sign_in'.tr(),
-                  gradient: LinearGradient(
-                    colors: [
-                      ExtensionColors.purpleGradient0,
-                      ExtensionColors.purpleGradient1,
-                      ExtensionColors.purpleGradient2,
-                    ],
-                  ),
                   textStyle: context.textTheme.labelLargeFont.copyWith(
                     color: context.colors.pureWhite,
                   ),

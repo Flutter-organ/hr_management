@@ -42,6 +42,14 @@ Widget buildTermsAndConditions(BuildContext context, SignUpState state) {
                 recognizer: TapGestureRecognizer()
                   ..onTap = () => _showTermsPopup(context, cubit),
               ),
+              TextSpan(text: 'and'.tr()),
+              TextSpan(
+                text: 'privacy_policy'.tr(),
+                style: linkStyle,
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () => _showTermsPopup(context, cubit),
+              )
+
             ],
           ),
           maxLines: 2,

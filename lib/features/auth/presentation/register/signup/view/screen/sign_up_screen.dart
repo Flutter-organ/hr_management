@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../../../core/presentation/design_system/components/custom_primary_button.dart';
 import '../../../../../../../core/presentation/design_system/theme/color/app_constant_colors.dart';
-import '../../../../../../../core/presentation/design_system/theme/helper/extention_colors.dart';
 import '../../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
 import '../../../../../../../core/presentation/routes/route_names.dart';
@@ -90,7 +89,7 @@ class SignUpScreen extends StatelessWidget {
         ],
       ),
       child: const Icon(
-        Iconsax.login4,
+        Iconsax.finger_scan5,
         color: AppConstantColors.white,
         size: 40,
       ),
@@ -143,13 +142,6 @@ class SignUpScreen extends StatelessWidget {
       height: 48,
       textStyle: context.textTheme.labelLargeFont.copyWith(
         color: context.colors.white,
-      ),
-      gradient: LinearGradient(
-        colors: [
-          ExtensionColors.purpleGradient0,
-          ExtensionColors.purpleGradient1,
-          ExtensionColors.purpleGradient2,
-        ],
       ),
       buttonText: 'register'.tr(),
       borderRadius: 100,

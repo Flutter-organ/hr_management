@@ -1,4 +1,3 @@
-import '../../../../../../core/data/exception/app_exception.dart';
 import '../../../mappers/auth_mapper.dart';
 
 class UserDto {
@@ -22,28 +21,29 @@ class UserDto {
     final phone = json['phone'] as String?;
     final role = json['role'] as String?;
 
-    if (id == null) {
-      throw const ServerException(
-        message: 'Invalid response: missing id',
-        code: 'PARSE_ERROR',
-        statusCode: 200,
-      );
-    }
-    if (email == null || email.isEmpty || phone == null || phone.isEmpty) {
-      throw const ServerException(
-        message: 'Invalid response: missing email or phone',
-        code: 'PARSE_ERROR',
-        statusCode: 200,
-      );
-    }
+    // if (id == null) {
+    //   throw const ServerException(
+    //     message: 'Invalid response: missing id',
+    //     code: 'PARSE_ERROR',
+    //     statusCode: 200,
+    //   );
+    // }
 
-      if (role == null || role.isEmpty) {
-        throw const ServerException(
-          message: 'Invalid response: missing role',
-          code: 'PARSE_ERROR',
-          statusCode: 200,
-        );
-      };
+    // if (email == null || email.isEmpty || phone == null || phone.isEmpty) {
+    //   throw const ServerException(
+    //     message: 'Invalid response: missing email or phone',
+    //     code: 'PARSE_ERROR',
+    //     statusCode: 200,
+    //   );
+    // }
+    //
+    //   if (role == null || role.isEmpty) {
+    //     throw const ServerException(
+    //       message: 'Invalid response: missing role',
+    //       code: 'PARSE_ERROR',
+    //       statusCode: 200,
+    //     );
+    //   };
 
     return UserDto(
       id: id,

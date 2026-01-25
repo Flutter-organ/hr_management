@@ -3,7 +3,7 @@ import '../theme/helper/app_assets.dart';
 import '../theme/helper/extention_colors.dart';
 import '../theme/helper/theme_extention.dart';
 import '../model/task_model.dart';
-import 'custom_btn_low_high_medium.dart';
+import 'custom_chips.dart';
 import 'horizontal_stacked_avatars.dart';
 
 class TaskCardItem extends StatelessWidget {
@@ -57,7 +57,7 @@ class TaskCardItem extends StatelessWidget {
           ),
           Row(
             children: [
-              CustomBtnLowHighMedium(
+              CustomChips(
                 title:taskState.status.name,
                 color: taskState.status.colorStatus(context),
                 style: context.textTheme.labelMediumFont
@@ -67,7 +67,7 @@ class TaskCardItem extends StatelessWidget {
                 image:taskState.status.iconStatus,
               ),
               const SizedBox(width: 8),
-              CustomBtnLowHighMedium(
+              CustomChips(
                 title: taskState.priority.name,
                 color: taskState.priority.colorTaskPriority(context),
                 style: context.textTheme.labelMediumFont
@@ -97,7 +97,7 @@ class TaskCardItem extends StatelessWidget {
               ),
               Row(
                 children: [
-                  CustomBtnLowHighMedium(
+                  CustomChips(
                     title: taskState.date,
                     color: context.colors.white,
                     style: context.textTheme.labelSmallFont
@@ -107,7 +107,7 @@ class TaskCardItem extends StatelessWidget {
                     image: AppAssets.calendar,
                   ),
                   const SizedBox(width: 6),
-                  CustomBtnLowHighMedium(
+                  CustomChips(
                     title: taskState.comments.length.toString(),
                     color: context.colors.white,
                     style: context.textTheme.labelSmallFont
