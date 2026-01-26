@@ -8,7 +8,6 @@ import 'package:hr_management/core/di/injection_container.dart';
 import 'package:hr_management/features/task/presentation/view/task_screen.dart';
 import '../../../features/auth/presentation/login/logic/login_cubit.dart';
 import '../../../features/auth/presentation/login/view/screen/login_screen.dart';
-import '../../../features/auth/presentation/on_boarding/view/on_boarding_final_page.dart';
 import '../../../features/auth/presentation/on_boarding/view/on_boarding_page.dart';
 import '../../../features/auth/presentation/register/signup/logic/sign_up_cubit.dart';
 import '../../../features/auth/presentation/register/signup/view/screen/sign_up_screen.dart';
@@ -25,20 +24,15 @@ final GoRouter router = GoRouter(
     path: state.uri.toString(),
   ),
   routes: [
+    // ═══════════════════════════════════════════
+    // ONBOARDING (Single Route - 4 Pages in Pager)
+    // ═══════════════════════════════════════════
     GoRoute(
       path: RouteNames.onboarding,
       name: 'onboarding',
       builder: (context, state) => BlocProvider(
         create: (_) => sl<OnboardingCubit>(),
         child: const OnBoardingPage(),
-      ),
-    ),
-    GoRoute(
-      path: RouteNames.onboardingFinal,
-      name: 'onboarding-final',
-      builder: (context, state) => BlocProvider(
-        create: (_) => sl<OnboardingCubit>(),
-        child: const OnBoardingFinalPage(),
       ),
     ),
 
@@ -132,12 +126,11 @@ String? _handleRedirect(BuildContext context, GoRouterState state) {
   final onboardingCompleted = authState.isOnboardingCompleted;
   final location = state.matchedLocation;
 
-  final isAuthRoute =
-      location == RouteNames.login || location == RouteNames.register;
-  final isOnboardingRoute =
-      location == RouteNames.onboarding ||
-      location == RouteNames.onboardingFinal;
+  final isAuthRoute = RouteNames.isAuthRoute(location);
+  final isOnboardingRoute = RouteNames.isOnboardingRoute(location);
+  final isProtectedRoute = RouteNames.isProtectedRoute(location);
 
+  // CASE 1: User is LOGGED IN
   if (isLoggedIn) {
     if (isAuthRoute || isOnboardingRoute) {
       return RouteNames.homeScreen;
@@ -145,6 +138,15 @@ String? _handleRedirect(BuildContext context, GoRouterState state) {
     return null;
   }
 
+  // CASE 2: NOT logged in, trying to access PROTECTED route
+  if (isProtectedRoute) {
+    if (!onboardingCompleted) {
+      return RouteNames.onboarding;
+    }
+    return RouteNames.login;
+  }
+
+  // CASE 3: NOT logged in, Onboarding NOT complete
   if (!onboardingCompleted) {
     if (isOnboardingRoute) {
       return null;
@@ -152,7 +154,12 @@ String? _handleRedirect(BuildContext context, GoRouterState state) {
     return RouteNames.onboarding;
   }
 
-  if (isAuthRoute || location == RouteNames.onboardingFinal) {
+  // CASE 4: NOT logged in, Onboarding COMPLETE
+  if (isOnboardingRoute) {
+    return RouteNames.login;
+  }
+
+  if (isAuthRoute) {
     return null;
   }
 
