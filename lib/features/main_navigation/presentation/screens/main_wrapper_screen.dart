@@ -20,7 +20,7 @@ class MainWrapperScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: navigationShell, // 👈 ده بقى كل screens
+      body: navigationShell,
       bottomNavigationBar: BottomNavBar(
         currentIndex: navigationShell.currentIndex,
         onTap: _onTabTapped,
