@@ -11,6 +11,7 @@ import '../../../features/auth/presentation/on_boarding/view/on_boarding_final_p
 import '../../../features/auth/presentation/on_boarding/view/on_boarding_page.dart';
 import '../../../features/auth/presentation/register/signup/logic/sign_up_cubit.dart';
 import '../../../features/auth/presentation/register/signup/view/screen/sign_up_screen.dart';
+import '../../../features/main_navigation/presentation/screens/main_wrapper_screen.dart';
 import 'config/app_state_notifier.dart';
 
 final GoRouter router = GoRouter(
@@ -63,12 +64,59 @@ final GoRouter router = GoRouter(
     // ═══════════════════════════════════════════
     // MAIN APP ROUTES
     // ═══════════════════════════════════════════
-    GoRoute(
-      path: RouteNames.homeScreen,
-      name: 'home',
-      builder: (context, state) => const HomeScreen(),
-    ),
-  ],
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return MainWrapperScreen(
+          navigationShell: navigationShell,
+        );
+      },
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: RouteNames.homeScreen,
+              builder: (context, state) => const HomeScreen(),
+            ),
+          ],
+        ),
+
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: RouteNames.attendant,
+              builder: (context, state) => const HomeScreen(),
+            ),
+          ],
+        ),
+
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: RouteNames.task,
+              builder: (context, state) => const HomeScreen(),
+            ),
+          ],
+        ),
+
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: RouteNames.expense,
+              builder: (context, state) => const HomeScreen(),
+            ),
+          ],
+        ),
+
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: RouteNames.leave,
+              builder: (context, state) => const HomeScreen(),
+            ),
+          ],
+        ),
+      ],
+    ),  ],
 );
 
 String? _handleRedirect(BuildContext context, GoRouterState state) {

@@ -11,6 +11,10 @@ class RouteNames {
 
   // Main App
   static const String homeScreen = '/home';
+  static const String attendant = '/attendant';
+  static const String task = '/task';
+  static const String expense = '/expense';
+  static const String leave = '/leave';
 
   // Error
   static const String notFound = '/404';
