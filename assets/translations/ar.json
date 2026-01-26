@@ -154,5 +154,26 @@
   "attendant": "الحضور",
   "task": "المهام",
   "expense": "المصروفات",
-  "leave": "الإجازات"
+  "leave": "الإجازات",
+
+  "expense_summary": "ملخص المصروفات",
+  "claim_your_expenses_here": "طالب بمصروفاتك من هنا.",
+  "total_expense": "إجمالي المصروفات",
+  "period_1_jan_2024_30_dec_2024": "الفترة 1 يناير 2024 - 30 ديسمبر 2024",
+  "total": "الإجمالي",
+  "review": "مراجعة",
+  "approved": "مقبول",
+  "rejected": "مرفوض",
+  "expense": "المصروفات",
+  "expense_submitted": "تم تقديم المصروفات",
+  "expense_approved": "تم قبول المصروفات",
+  "expense_rejected": "تم رفض المصروفات",
+  "no_expense_submitted": "لا توجد مصروفات مقدمة",
+  "no_expense_approved": "لا توجد مصروفات مقبولة",
+  "no_expense_rejected": "لا توجد مصروفات مرفوضة",
+  "it_looks_like_you_dont_have_any_expense_submitted_dont_worry_this_space_will_be_updated_as_new_expense_submitted": "يبدو أنه ليس لديك أي مصروفات مقدمة. لا تقلق، سيتم تحديث هذه المساحة عند تقديم مصروفات جديدة.",
+  "it_looks_like_you_dont_have_any_expense_approved_dont_worry_this_space_will_be_updated_as_new_expense_approved": "يبدو أنه ليس لديك أي مصروفات مقبولة. لا تقلق، سيتم تحديث هذه المساحة عند قبول مصروفات جديدة.",
+  "it_looks_like_you_dont_have_any_expense_rejected_dont_worry_this_space_will_be_updated_as_new_expense_rejected": "يبدو أنه ليس لديك أي مصروفات مرفوضة. لا تقلق، سيتم تحديث هذه المساحة عند رفض أي مصروفات.",
+  "submit_expense": "تقديم مصروفات"
+
 }

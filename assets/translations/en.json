@@ -168,5 +168,25 @@
   "attendant": "Attendant",
   "task": "Task",
   "expense": "Expense",
-  "leave": "Leave"
+  "leave": "Leave",
+
+  "expense_summary": "Expense Summary",
+  "claim_your_expenses_here": "Claim your expenses here.",
+  "total_expense": "Total Expense",
+  "period_1_jan_2024_30_dec_2024": "Period 1 Jan 2024 - 30 Dec 2024",
+  "total": "Total",
+  "review": "Review",
+  "approved": "Approved",
+  "rejected": "Rejected",
+  "expense": "Expense",
+  "expense_submitted": "Expense submitted",
+  "expense_approved": "Expense Approved",
+  "expense_rejected": "Expense Rejected",
+  "no_expense_submitted": "No Expense Submitted",
+  "no_expense_approved": "No Expense Approved",
+  "no_expense_rejected": "No Expense Rejected",
+  "it_looks_like_you_dont_have_any_expense_submitted_dont_worry_this_space_will_be_updated_as_new_expense_submitted": "It looks like you don't have any expense submitted. Don't worry, this space will be updated as new expense submitted.",
+  "it_looks_like_you_dont_have_any_expense_approved_dont_worry_this_space_will_be_updated_as_new_expense_approved": "It looks like you don't have any expense approved. Don't worry, this space will be updated as new expense approved.",
+  "it_looks_like_you_dont_have_any_expense_rejected_dont_worry_this_space_will_be_updated_as_new_expense_rejected": "It looks like you don't have any expense rejected. Don't worry, this space will be updated as new expense rejected.",
+  "submit_expense": "Submit Expense"
 }
