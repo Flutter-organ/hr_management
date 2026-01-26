@@ -5,6 +5,7 @@ import 'package:hr_management/core/presentation/routes/route_names.dart';
 import 'package:hr_management/features/auth/presentation/on_boarding/logic/on_boarding_cubit.dart';
 import 'package:hr_management/features/home/presentation/view/home_screen.dart';
 import 'package:hr_management/core/di/injection_container.dart';
+import 'package:hr_management/features/task/presentation/view/task_screen.dart';
 import '../../../features/auth/presentation/login/logic/login_cubit.dart';
 import '../../../features/auth/presentation/login/view/screen/login_screen.dart';
 import '../../../features/auth/presentation/on_boarding/view/on_boarding_final_page.dart';
@@ -96,7 +97,7 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: RouteNames.taskScreen,
               name: 'task',
-              builder: (context, state) => const HomeScreen(),
+              builder: (context, state) => const TaskScreen(),
             ),
           ],
         ),
