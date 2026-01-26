@@ -75,6 +75,7 @@ final GoRouter router = GoRouter(
           routes: [
             GoRoute(
               path: RouteNames.homeScreen,
+              name: 'home',
               builder: (context, state) => const HomeScreen(),
             ),
           ],
@@ -84,6 +85,7 @@ final GoRouter router = GoRouter(
           routes: [
             GoRoute(
               path: RouteNames.attendantScreen,
+              name: 'attendant',
               builder: (context, state) => const HomeScreen(),
             ),
           ],
@@ -93,6 +95,7 @@ final GoRouter router = GoRouter(
           routes: [
             GoRoute(
               path: RouteNames.taskScreen,
+              name: 'task',
               builder: (context, state) => const HomeScreen(),
             ),
           ],
@@ -102,6 +105,7 @@ final GoRouter router = GoRouter(
           routes: [
             GoRoute(
               path: RouteNames.expenseScreen,
+              name: 'expense',
               builder: (context, state) => const HomeScreen(),
             ),
           ],
@@ -111,6 +115,7 @@ final GoRouter router = GoRouter(
           routes: [
             GoRoute(
               path: RouteNames.leaveScreen,
+              name: 'leave',
               builder: (context, state) => const HomeScreen(),
             ),
           ],
