@@ -2,40 +2,46 @@ import 'package:equatable/equatable.dart';
 
 enum OnboardingStatus { initial, loading, completed, error }
 
+enum AuthDestination { login, register }
+
 class OnboardingState extends Equatable {
-  final OnboardingStatus status;
   final int currentIndex;
-  final int totalPages;
-  final bool shouldNavigateToFinal;
+  final OnboardingStatus status;
+  final AuthDestination? destination;
+  final String? errorMessage;
 
   const OnboardingState({
-    this.status = OnboardingStatus.initial,
     this.currentIndex = 0,
-    this.totalPages = 3,
-    this.shouldNavigateToFinal = false,
+    this.status = OnboardingStatus.initial,
+    this.destination,
+    this.errorMessage,
   });
 
-  bool get isLastPage => currentIndex == totalPages - 1;
+  static const int totalPages = 4;
 
-  @override
-  List<Object?> get props => [
-    status,
-    currentIndex,
-    totalPages,
-    shouldNavigateToFinal,
-  ];
+  bool get isFinalPage => currentIndex == totalPages - 1;
+
+  bool get isLoading => status == OnboardingStatus.loading;
+
+  bool get shouldNavigate =>
+      status == OnboardingStatus.completed && destination != null;
 
   OnboardingState copyWith({
-    OnboardingStatus? status,
     int? currentIndex,
-    int? totalPages,
-    bool? shouldNavigateToFinal,
+    OnboardingStatus? status,
+    AuthDestination? destination,
+    String? errorMessage,
+    bool clearDestination = false,
+    bool clearError = false,
   }) {
     return OnboardingState(
-      status: status ?? this.status,
       currentIndex: currentIndex ?? this.currentIndex,
-      totalPages: totalPages ?? this.totalPages,
-      shouldNavigateToFinal: shouldNavigateToFinal ?? this.shouldNavigateToFinal,
+      status: status ?? this.status,
+      destination: clearDestination ? null : (destination ?? this.destination),
+      errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
     );
   }
+
+  @override
+  List<Object?> get props => [currentIndex, status, destination, errorMessage];
 }

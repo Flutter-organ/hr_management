@@ -131,7 +131,6 @@ Future<void> _initOnboarding() async {
   sl.registerFactory<OnboardingCubit>(
     () => OnboardingCubit(
       completeOnboardingUseCase: sl<CompleteOnboardingUseCase>(),
-      checkOnboardingStatusUseCase: sl<CheckOnboardingStatusUseCase>(),
     ),
   );
 }

@@ -7,7 +7,6 @@ class RouteNames {
 
   // Onboarding
   static const String onboarding = '/';
-  static const String onboardingFinal = '/onboarding-final';
 
   // Main App
   static const String homeScreen = '/home';
@@ -18,6 +17,27 @@ class RouteNames {
 
   // Error
   static const String notFound = '/404';
+
+
+  static const List<String> _protectedRoutes = [
+    homeScreen,
+    attendantScreen,
+    taskScreen,
+    expenseScreen,
+    leaveScreen,
+  ];
+
+  static bool isProtectedRoute(String location) {
+    return _protectedRoutes.any((route) => location.startsWith(route));
+  }
+
+  static bool isAuthRoute(String location) {
+    return location == login || location == register;
+  }
+
+  static bool isOnboardingRoute(String location) {
+    return location == onboarding;
+  }
 
 
 }
