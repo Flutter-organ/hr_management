@@ -83,7 +83,7 @@ final GoRouter router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: RouteNames.attendant,
+              path: RouteNames.attendantScreen,
               builder: (context, state) => const HomeScreen(),
             ),
           ],
@@ -92,7 +92,7 @@ final GoRouter router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: RouteNames.task,
+              path: RouteNames.taskScreen,
               builder: (context, state) => const HomeScreen(),
             ),
           ],
@@ -101,7 +101,7 @@ final GoRouter router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: RouteNames.expense,
+              path: RouteNames.expenseScreen,
               builder: (context, state) => const HomeScreen(),
             ),
           ],
@@ -110,13 +110,14 @@ final GoRouter router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: RouteNames.leave,
+              path: RouteNames.leaveScreen,
               builder: (context, state) => const HomeScreen(),
             ),
           ],
         ),
       ],
-    ),  ],
+    ),
+  ],
 );
 
 String? _handleRedirect(BuildContext context, GoRouterState state) {
