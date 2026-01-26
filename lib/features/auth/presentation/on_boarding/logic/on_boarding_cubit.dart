@@ -1,7 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import '../../../../../core/presentation/base_viewmodel/base_cubit.dart';
 import '../../../../../core/presentation/routes/config/app_state_notifier.dart';
-import '../../../domain/use_cases/check_onboarding_status_use_case.dart';
 import '../../../domain/use_cases/complete_onboarding_use_case.dart';
 import 'on_boarding_state.dart';
 
@@ -11,60 +10,55 @@ class OnboardingCubit extends BaseCubit<OnboardingState> {
 
   OnboardingCubit({
     required CompleteOnboardingUseCase completeOnboardingUseCase,
-    required CheckOnboardingStatusUseCase checkOnboardingStatusUseCase,
   })  : _completeOnboardingUseCase = completeOnboardingUseCase,
         super(const OnboardingState());
 
-  Future<void> onNextPressed() async {
-    if (state.isLastPage) {
-      await _completeAndNavigate();
-    } else {
-      _goToNextPage();
+  void onNextPressed() {
+    if (!state.isFinalPage) {
+      updateState((s) => s.copyWith(currentIndex: s.currentIndex + 1));
     }
   }
 
-  Future<void> onSkipPressed() async {
-    await _completeAndNavigate();
+  void onSkipPressed() {
+    updateState((s) => s.copyWith(
+      currentIndex: OnboardingState.totalPages - 1,
+    ));
   }
 
   void onPageChanged(int index) {
-    updateState(
-          (currentState) => currentState.copyWith(currentIndex: index),
+    updateState((s) => s.copyWith(currentIndex: index));
+  }
+
+  Future<void> onSignInPressed() async {
+    await _completeAndNavigate(AuthDestination.login);
+  }
+
+  Future<void> onRegisterPressed() async {
+    await _completeAndNavigate(AuthDestination.register);
+  }
+
+  Future<void> _completeAndNavigate(AuthDestination destination) async {
+    await execute<Unit>(
+      onLoading: () => updateState((s) => s.copyWith(
+        status: OnboardingStatus.loading,
+        clearError: true,
+      )),
+      call: _completeOnboardingUseCase.call,
+      onSuccess: (_) {
+        updateState((s) => s.copyWith(
+          status: OnboardingStatus.completed,
+          destination: destination,
+        ));
+        AuthStateNotifier.instance.setOnboardingCompleted();
+      },
+      onError: (error) => updateState((s) => s.copyWith(
+        status: OnboardingStatus.error,
+        errorMessage: error.message,
+      )),
     );
   }
 
   void onNavigationHandled() {
-    updateState(
-          (currentState) => currentState.copyWith(shouldNavigateToFinal: false),
-    );
+    updateState((s) => s.copyWith(clearDestination: true));
   }
-  Future<void> _completeAndNavigate() async {
-    await execute<Unit>(
-      onLoading: () => updateState(
-            (currentState) => currentState.copyWith(status: OnboardingStatus.loading),
-      ),
-      call: _completeOnboardingUseCase.call,
-      onSuccess: (_) {
-        AuthStateNotifier.instance.setOnboardingCompleted();
-        updateState(
-            (currentState) => currentState.copyWith(
-          status: OnboardingStatus.completed,
-          shouldNavigateToFinal: true,
-        ),
-      );
-        },
-      onError: (error) => updateState(
-            (currentState) => currentState.copyWith(status: OnboardingStatus.error),
-      ),
-    );
-  }
-
-  void _goToNextPage() {
-    updateState(
-          (currentState) => currentState.copyWith(
-        currentIndex: currentState.currentIndex + 1,
-      ),
-    );
-  }
-
 }
