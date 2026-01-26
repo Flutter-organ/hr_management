@@ -163,5 +163,10 @@
   "otp_length_error": "Please enter 6-digit code",
   "field_required": "This field is required",
   "min_length_error": "Must be at least {} characters",
-  "max_length_error": "Must be at most {} characters"
+  "max_length_error": "Must be at most {} characters",
+  "home": "Home",
+  "attendant": "Attendant",
+  "task": "Task",
+  "expense": "Expense",
+  "leave": "Leave"
 }

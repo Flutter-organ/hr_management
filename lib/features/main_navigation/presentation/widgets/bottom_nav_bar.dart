@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../core/presentation/design_system/theme/helper/extention_colors.dart';
@@ -13,31 +14,31 @@ class BottomNavBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
 
-  static const List<_NavItem> _items = [
+  static final List<_NavItem> _items = [
     _NavItem(
       icon: Iconsax.home,
       activeIcon: Iconsax.home_15,
-      label: 'Home',
+      label: "home".tr(),
     ),
     _NavItem(
       icon: Iconsax.calendar_2,
       activeIcon: Iconsax.calendar_25,
-      label: 'Attendant',
+      label: "attendant".tr(),
     ),
-    _NavItem(
+     _NavItem(
       icon: Iconsax.note_text,
       activeIcon: Iconsax.note_text5,
-      label: 'Task'
+      label: "task".tr()
     ),
-    _NavItem(
+     _NavItem(
       icon: Iconsax.receipt_2,
       activeIcon: Iconsax.receipt_25,
-      label: 'Expense'
+      label: "expense".tr()
     ),
-    _NavItem(
+     _NavItem(
       icon: Iconsax.layer,
       activeIcon: Iconsax.layer5,
-      label: 'Leave'
+      label: "leave".tr()
     )
   ];
 
