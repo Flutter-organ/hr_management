@@ -221,7 +221,7 @@ flutter:
     - assets/images/
     - assets/translations/
     - assets/svgs/
-    #- .env
+    - .env
 
   fonts:
     - family: Inter
