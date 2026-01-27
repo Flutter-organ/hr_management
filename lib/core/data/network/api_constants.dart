@@ -19,4 +19,8 @@ class ApiConstants {
 
   static const String tokenKey = 'token';
   static const String multipartContentType = 'multipart/form-data';
+
+  static const String getProfile = '/api/profile';
+  static const String completeProfile = '/api/profile/complete';
+  static const String updateProfile = '/api/profile';
 }

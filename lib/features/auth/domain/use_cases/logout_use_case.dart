@@ -1,6 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-
-import '../failures/failure.dart';
+import '../../../../core/domain/failure/domain_failure.dart';
 import '../repository/auth_repository.dart';
 
 class LogoutUseCase {

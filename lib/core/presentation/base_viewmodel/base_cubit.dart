@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:hr_management/core/domain/failure/domain_failure.dart';
 import '../../../features/auth/domain/failures/failure.dart';
 import '../exception/ui_errors.dart';
 
@@ -61,9 +62,11 @@ abstract class BaseCubit<STATE> extends Cubit<STATE> {
 
       ValidationFailure(:final message, :final fieldErrors) =>
         ValidationUiError(message: message, fieldErrors: fieldErrors),
+      //AuthFailure(:final message) => GenericUiError(message),
 
       UnknownFailure(:final message) => UnknownUiError(message),
-      AuthFailure(:final message) => GenericUiError(message),
+
+      _ => UnknownUiError("Unknown error occurred"),
     };
   }
 

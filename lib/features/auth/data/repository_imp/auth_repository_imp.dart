@@ -1,9 +1,9 @@
 import 'package:fpdart/fpdart.dart';
+import '../../../../core/domain/failure/domain_failure.dart';
 import '../../domain/entity/auth_type.dart';
 import '../../domain/entity/register.dart';
 import '../../domain/entity/user.dart';
 import '../../domain/entity/verify_otp.dart';
-import '../../domain/failures/failure.dart';
 import '../../domain/repository/auth_repository.dart';
 import '../data_source/local/auth_local_data_source.dart';
 import '../data_source/remote/auth_remote_data_source.dart';
