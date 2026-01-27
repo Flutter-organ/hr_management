@@ -1,11 +1,9 @@
 import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../theme/helper/dashed_border_painter.dart';
 import '../theme/helper/extention_colors.dart';
 import '../theme/helper/running_border_painter.dart';
@@ -114,7 +112,7 @@ class _UploadTaskState extends State<UploadTask> {
   }
 
   void _pickFile(int index) async {
-    final result = await FilePicker.platform.pickFiles(
+    final result = await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf', 'jpg', 'png'],
     );

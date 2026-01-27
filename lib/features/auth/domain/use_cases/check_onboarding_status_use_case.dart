@@ -1,5 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import '../failures/failure.dart';
+import '../../../../core/domain/failure/domain_failure.dart';
 import '../repository/on_boarding_repository.dart';
 
 class CheckOnboardingStatusUseCase {

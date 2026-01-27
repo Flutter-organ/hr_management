@@ -140,7 +140,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
 
   Widget _buildDotsIndicator(OnboardingState state) {
     if (state.isFinalPage) {
-      return const SizedBox.shrink();
+      return const SizedBox(height: 28);
     }
 
     return Padding(
