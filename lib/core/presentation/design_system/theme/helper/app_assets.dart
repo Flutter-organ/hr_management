@@ -18,9 +18,11 @@ class AppAssets {
   static const checkMark = 'assets/svgs/check_mark.svg';
   static const secureShield = 'assets/svgs/secure_shield.svg';
   static const kDefaultImageProfile = 'assets/images/default_image_profile.png';
-  static const registrationBackground = 'assets/images/registration_background.png';
+  static const registrationBackground =
+      'assets/images/registration_background.png';
   static const kOnBoargingOne = 'assets/images/on_boarding_one.png';
   static const kOnBoargingTwo = 'assets/images/on_boarding_two.png';
   static const kOnBoargingThree = 'assets/images/on_boarding_three.png';
   static const kOnBoargingFinal = 'assets/images/on_boarding_final.png';
+  static const expenseBannerImage = 'assets/images/expense_banner_image.png';
 }
