@@ -22,7 +22,7 @@ class _UploadClaimDocumentState extends State<UploadClaimDocument> {
   double uploadProgress = 0.0;
   bool _isCanceled = false;
   void pickFile() async {
-    final result = await FilePicker.pickFiles(
+    final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf', 'jpg', 'png'],
     );
