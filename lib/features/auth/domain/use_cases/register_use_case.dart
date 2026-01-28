@@ -1,6 +1,6 @@
 import 'package:fpdart/fpdart.dart';
+import '../../../../core/domain/failure/domain_failure.dart';
 import '../entity/register.dart';
-import '../failures/failure.dart';
 import '../repository/auth_repository.dart';
 
 class RegisterUseCase {
