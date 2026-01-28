@@ -16,7 +16,7 @@ import 'config/app_state_notifier.dart';
 final GoRouter router = GoRouter(
   refreshListenable: AuthStateNotifier.instance,
   redirect: _handleRedirect,
-  initialLocation: RouteNames.onboarding,
+  initialLocation: RouteNames.expenseScreen,
   debugLogDiagnostics: true,
   errorBuilder: (context, state) => _ErrorScreen(
     error: state.error?.toString() ?? 'Page not found',
@@ -60,9 +60,7 @@ final GoRouter router = GoRouter(
     // ═══════════════════════════════════════════
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
-        return MainWrapperScreen(
-          navigationShell: navigationShell,
-        );
+        return MainWrapperScreen(navigationShell: navigationShell);
       },
       branches: [
         StatefulShellBranch(

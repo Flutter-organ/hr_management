@@ -25,4 +25,8 @@ class AppAssets {
   static const kOnBoargingThree = 'assets/images/on_boarding_three.png';
   static const kOnBoargingFinal = 'assets/images/on_boarding_final.png';
   static const expenseBannerImage = 'assets/images/expense_banner_image.png';
+  static const emptyExpense = 'assets/images/empety_expense.png';
+  static const reviewIc = 'assets/svgs/review_ic.svg';
+  static const approvedIc = 'assets/svgs/approved_ic.svg';
+  static const cardPosIc = 'assets/svgs/card_pos_ic.svg';
 }

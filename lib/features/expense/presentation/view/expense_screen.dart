@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hr_management/core/presentation/design_system/components/card_header.dart';
 import 'package:hr_management/core/presentation/design_system/components/custom_primary_button.dart';
 import 'package:hr_management/core/presentation/design_system/components/custom_status_bar.dart';
@@ -14,85 +15,103 @@ class ExpenseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    double designWidth = 390;
+    double designHeight = 844;
     return Scaffold(
       backgroundColor: context.colors.gray200,
-      body: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            child: HeaderBanner(
-              title: "Expenses Overview".tr(),
-              subtitle: "Claim your expenses here.".tr(),
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Container(
+        height: 50 / designHeight * height,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16 / designWidth * width),
+          child: CustomPrimaryButton.gradient(
+            buttonText: "submit_expense".tr(),
+            onPressed: () {},
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            HeaderBanner(
+              title: "expense_summary".tr(),
+              subtitle: "claim_your_expenses_here".tr(),
               image: AppAssets.expenseBannerImage,
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 12, right: 12, bottom: 60),
-            child: Column(
-              children: [
-                SizedBox(height: 150),
-                SummaryCard(
-                  title: "Total Expenses".tr(),
-                  items: [
-                    StateItemModel(label: "Total", value: "\$0"),
-                    StateItemModel(label: "Reimbursed", value: "\$0"),
-                    StateItemModel(label: "Pending", value: "\$0"),
+
+            Padding(
+              padding:  EdgeInsets.fromLTRB(
+               12 / designWidth * width,
+               150 / designHeight * height,
+               12 / designWidth * width,
+               90 / designHeight * height,
+               ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SummaryCard(
+                      title: "total_expense".tr(),
+                      subtitle: "period_1_jan_2024_30_dec_2024".tr(),
+                      items: [
+                        StateItemModel(
+                          label: "total".tr(),
+                          value: "\$0",
+                          icon: SvgPicture.asset(AppAssets.cardPosIc),
+                        ),
+                        StateItemModel(
+                          label: "review".tr(),
+                          value: "\$0",
+                          icon: SvgPicture.asset(AppAssets.reviewIc),
+                        ),
+                        StateItemModel(
+                          label:  "approved".tr(),
+                          value: "\$0",
+                          icon: SvgPicture.asset(AppAssets.approvedIc),
+                        ),
+                      ],
+                    ),
+
+                     SizedBox(height: 16 / designHeight * height),
+
+                    const CustomStatusBar(
+                      reviewCount: 0,
+                      approveCount: 0,
+                      rejectedCount: 0,
+                    ),
+
+                     SizedBox(height: 16 / designHeight * height),
+
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: context.colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        children: [
+                          CardHeader(
+                            title: "expense".tr(),
+                            subtitle: "expense_submitted".tr(),
+                          ),
+                           SizedBox(height: 24 / designHeight * height),
+                          EmptyStateCard(
+                            imgPath: AppAssets.emptyExpense,
+                            imgtitle: "no_expense_submitted".tr(),
+                            imgDescription:
+"it_looks_like_you_dont_have_any_expense_submitted_dont_worry_this_space_will_be_updated_as_new_expense_submitted": "It looks like you don't have any expense submitted. Don't worry, this space will be updated as new expense submitted.".tr(),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-                SizedBox(height: 16),
-                CustomStatusBar(
-                  reviewCount: 0,
-                  approveCount: 0,
-                  rejectedCount: 0,
-                ),
-                SizedBox(height: 16),
-                Container(
-                  padding: EdgeInsets.only(left: 12, right: 12, top: 12),
-                  decoration: BoxDecoration(
-                    color: context.colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Column(
-                    children: [
-                      CardHeader(
-                        title: "My Expenses".tr(),
-                        subtitle: "You have no expenses yet.".tr(),
-                      ),
-                      SizedBox(height: 16),
-                      SizedBox(
-                        height: 150,
-                        child: SingleChildScrollView(
-                          child: EmptyStateCard(
-                            imgPath: AppAssets.expenseBannerImage,
-                            imgtitle: "No Expenses Found".tr(),
-                            imgDescription:
-                                "You haven't claimed any expenses yet. Start by adding a new expense."
-                                    .tr(),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 16),
-                      Container(
-                        height: 55,
-                        width: double.infinity,
-                        color: context.colors.white,
-                        child: Padding(
-                          padding: EdgeInsetsGeometry.symmetric(
-                            horizontal: 24,
-                            vertical: 14,
-                          ),
-                          child: CustomPrimaryButton.gradient(
-                            buttonText: "Submit",
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
