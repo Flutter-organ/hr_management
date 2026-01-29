@@ -1,5 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:hr_management/features/auth/domain/failures/failure.dart';
+import '../../../../core/domain/failure/domain_failure.dart';
 
 abstract class OnboardingRepository {
   Future<Either<Failure, Unit>> saveOnboardingCompleted();

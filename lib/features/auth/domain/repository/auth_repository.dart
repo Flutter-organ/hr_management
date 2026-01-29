@@ -1,9 +1,9 @@
 import 'package:fpdart/fpdart.dart';
+import '../../../../core/domain/failure/domain_failure.dart';
 import '../entity/auth_type.dart';
 import '../entity/register.dart';
 import '../entity/user.dart';
 import '../entity/verify_otp.dart';
-import '../failures/failure.dart';
 
 abstract class AuthRepository {
   Future<Either<Failure, String?>> getToken();
