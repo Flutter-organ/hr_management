@@ -2,6 +2,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:hr_management/features/auth/data/data_source/local/onboarding_local_data_source%20.dart';
 import 'package:hr_management/features/auth/data/mappers/auth_failure_mapper.dart';
 import 'package:hr_management/features/auth/domain/repository/on_boarding_repository.dart';
+import '../../../../core/domain/failure/domain_failure.dart';
 
 import '../../../../core/domain/failure/domain_failure.dart';
 

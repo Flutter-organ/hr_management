@@ -65,8 +65,7 @@ abstract class BaseCubit<STATE> extends Cubit<STATE> {
       //AuthFailure(:final message) => GenericUiError(message),
 
       UnknownFailure(:final message) => UnknownUiError(message),
-
-      _ => UnknownUiError("Unknown error occurred"),
+      _ => const UnknownUiError("Unknown error occurred")
     };
   }
 

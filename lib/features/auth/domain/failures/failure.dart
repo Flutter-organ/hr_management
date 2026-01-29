@@ -1,5 +1,3 @@
-
-
 import '../../../../core/domain/failure/domain_failure.dart';
 
 sealed class AuthFailure extends Failure {
