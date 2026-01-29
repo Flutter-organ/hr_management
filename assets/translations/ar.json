@@ -154,5 +154,17 @@
   "attendant": "الحضور",
   "task": "المهام",
   "expense": "المصروفات",
-  "leave": "الإجازات"
+  "leave": "الإجازات",
+  "good_des":"أنت تقوم بعمل رائع! حافظ على هذا الزخم!",
+  "challenges_awaiting": "التحديات المنتظرة",
+  "let_tackle_your_todo_list": "دعنا نتناول قائمة المهام الخاصة بك",
+  "summary_of_your_work": "ملخص عملك",
+  "your_current_task_progress": "تقدم مهامك الحالي",
+  "no_tasks_assigned": "لا توجد مهام مخصصة",
+  "no_tasks_assigned_description": "يبدو أنه ليس لديك أي مهام مخصصة لك في الوقت الحالي. لا تقلق، سيتم تحديث هذه المساحة بمجرد توفر مهام جديدة!",
+  "todo": "المهام",
+  "in_progress": "قيد التنفيذ",
+  "done": "تم"
+  
+  
 }

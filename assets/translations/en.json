@@ -168,5 +168,18 @@
   "attendant": "Attendant",
   "task": "Task",
   "expense": "Expense",
-  "leave": "Leave"
+  "leave": "Leave",
+  "challenges_awaiting": "Challenges Awaiting",
+  "let_tackle_your_todo_list": "Let’s tackle your to do list",
+  "summary_of_your_work": "Summary of your work",
+  "your_current_task_progress": "Your current task progress",
+  "no_tasks_assigned": "No Tasks Assigned",
+  "no_tasks_assigned_description": "It looks like you don’t have any tasks assigned to you right now. Don’t worry, this space will be updated as new tasks become available.",
+  "todo": "To Do",
+  "in_progress": "In Progress",
+  "done": "Done",
+  "property_good_des": "You've maintain your task at the right pace! keep it up!",
+  "property_okay_des": "You've maintain your task okay, try to improve a bit.",
+  "property_poor_des": "You've maintain your task poorly, try to improve a bit.",
+  "property_bad_des": "You've maintain your task very poorly, try to improve a lot."
 }

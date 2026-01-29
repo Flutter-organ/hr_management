@@ -30,6 +30,13 @@ enum BurnoutStatus {
     poor => 0.85,
     bad => 1.0,
   };
+
+  String get des => switch (this) {
+    good => "property_good_des".tr(),
+    okay => "property_okay_des".tr(),
+    poor => "property_poor_des".tr(),
+    bad => "property_bad_des".tr(),
+  };
 }
 
 class PropertyGoodPoor extends StatelessWidget {
@@ -78,29 +85,11 @@ class PropertyGoodPoor extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 4, bottom: 12),
-            child: Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: "property_des1".tr(),
-                    style: textStyle.bodySmallFont.copyWith(
-                      color: color.textSecondary,
-                    ),
-                  ),
-                  TextSpan(
-                    text: "property_des2".tr(),
-                    style: textStyle.bodySmallFont.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: color.textSecondary,
-                    ),
-                  ),
-                  TextSpan(
-                    text: "property_des3".tr(),
-                    style: textStyle.bodySmallFont.copyWith(
-                      color: color.textSecondary,
-                    ),
-                  ),
-                ],
+            child: Text(
+              status.des,
+              style: textStyle.bodySmallFont.copyWith(
+                fontWeight: FontWeight.w600,
+                color: color.textSecondary,
               ),
             ),
           ),

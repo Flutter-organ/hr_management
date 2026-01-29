@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hr_management/core/presentation/design_system/components/custom_status_bar.dart';
@@ -33,8 +34,8 @@ class TaskScreen extends StatelessWidget {
                   ),
                 ),
                 HeaderBanner(
-                  title: "Challenges Awaiting",
-                  subtitle: "Let’s tackle your to do list",
+                  title: "challenges_awaiting".tr(),
+                  subtitle: "let_tackle_your_todo_list".tr(),
                   image: AppAssets.kTaskScreenBanner,
                   paddingRight: 24,
                 ),
@@ -45,25 +46,25 @@ class TaskScreen extends StatelessWidget {
 
                   child: SummaryCard(
                     cardMargin: EdgeInsets.symmetric(horizontal: 12),
-                    title: "Summary of your work",
+                    title: "summary_of_your_work".tr(),
                     items: [
                       StateItemModel(
-                        label: "To Do",
+                        label: "todo".tr(),
                         value: "0",
                         icon: SvgPicture.asset(AppAssets.todo),
                       ),
                       StateItemModel(
-                        label: "In Progress",
+                        label: "in_progress".tr(),
                         value: "0",
                         icon: SvgPicture.asset(AppAssets.inProgress),
                       ),
                       StateItemModel(
-                        label: "Done",
+                        label: "done".tr(),
                         value: "0",
                         icon: SvgPicture.asset(AppAssets.done),
                       ),
                     ],
-                    subtitle: "Your current task progress",
+                    subtitle: "your_current_task_progress".tr(),
                   ),
                 ),
               ],
@@ -85,9 +86,8 @@ class TaskScreen extends StatelessWidget {
                   SizedBox(height: 10),
                   EmptyStateCard(
                     imgPath: AppAssets.noTasksAssigned,
-                    imgtitle: "No Tasks Assigned",
-                    imgDescription:
-                        "It looks like you don’t have any tasks assigned to you right now. Don’t worry, this space will be updated as new tasks become available.",
+                    imgtitle: "no_tasks_assigned".tr(),
+                    imgDescription: "no_tasks_assigned_description".tr(),
                   ),
                 ],
               ),
