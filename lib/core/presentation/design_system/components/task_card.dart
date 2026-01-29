@@ -94,7 +94,7 @@ Widget _buildContentTaskCard(BuildContext context, TaskModel taskState) {
             const SizedBox(width: 6),
 
             Text(
-              taskState?.title ?? '',
+              taskState.title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: context.textTheme.titleSmallFont.copyWith(
@@ -106,19 +106,19 @@ Widget _buildContentTaskCard(BuildContext context, TaskModel taskState) {
         Row(
           children: [
             CustomChips(
-              title: taskState!.status.name,
-              color: taskState!.status.colorStatus(context),
+              title: taskState.status.name,
+              color: taskState.status.colorStatus(context),
               style: context.textTheme.labelMediumFont.copyWith(
                 color: context.colors.gray600,
               ),
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               borderRadius: BorderRadius.circular(100),
-              image: taskState!.status.iconStatus,
+              image: taskState.status.iconStatus,
             ),
             const SizedBox(width: 8),
             CustomChips(
-              title: taskState!.priority.name,
-              color: taskState!.priority.colorTaskPriority(context),
+              title: taskState.priority.name,
+              color: taskState.priority.colorTaskPriority(context),
               style: context.textTheme.labelMediumFont.copyWith(
                 color: context.colors.white,
               ),
@@ -130,7 +130,7 @@ Widget _buildContentTaskCard(BuildContext context, TaskModel taskState) {
         ),
         ProgressBar(
           statusColor: context.colors.purple500,
-          taskStatus: taskState!.status.status,
+          taskStatus: taskState.status.status,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -139,13 +139,13 @@ Widget _buildContentTaskCard(BuildContext context, TaskModel taskState) {
               spacing: 4,
               children: [
                 HorizontalStackedAvatars(
-                  commenterImage: taskState!.comments
+                  commenterImage: taskState.comments
                       .map((commenterImage) => commenterImage.commenterImage)
                       .toList(),
                 ),
                 Text(
-                  taskState!.comments.length > 3
-                      ? "+${taskState!.comments.length - 3}"
+                  taskState.comments.length > 3
+                      ? "+${taskState.comments.length - 3}"
                       : '',
                   style: context.textTheme.bodySmallFont.copyWith(
                     color: context.colors.black,
@@ -156,7 +156,7 @@ Widget _buildContentTaskCard(BuildContext context, TaskModel taskState) {
             Row(
               children: [
                 CustomChips(
-                  title: taskState!.date,
+                  title: taskState.date,
                   color: context.colors.white,
                   style: context.textTheme.labelSmallFont.copyWith(
                     color: context.colors.textPrimary,
@@ -170,7 +170,7 @@ Widget _buildContentTaskCard(BuildContext context, TaskModel taskState) {
                 ),
                 const SizedBox(width: 6),
                 CustomChips(
-                  title: taskState!.comments.length.toString(),
+                  title: taskState.comments.length.toString(),
                   color: context.colors.white,
                   style: context.textTheme.labelSmallFont.copyWith(
                     color: context.colors.textPrimary,
