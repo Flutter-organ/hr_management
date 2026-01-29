@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hr_management/core/di/injection_container.dart';
 import 'package:hr_management/features/auth/domain/use_cases/logout_use_case.dart';
 import '../../../../core/presentation/routes/config/app_state_notifier.dart';
+import '../../../../core/presentation/routes/route_names.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,6 +14,12 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Home Screen"),
         actions: [
+          IconButton(
+            onPressed: () {
+              context.push(RouteNames.profile);
+            },
+            icon: const Icon(Icons.person, color: Colors.purple),
+          ),
           IconButton(
             onPressed: () {
               _showLogoutDialog(context);
@@ -38,12 +46,11 @@ class HomeScreen extends StatelessWidget {
           TextButton(
             onPressed: () async {
               final result = await sl<LogoutUseCase>().call();
-              result.fold((failure) => print(failure.message),
-                  (_){
-
-                    AuthStateNotifier.instance.setLoggedOut();
-                  }
-
+              result.fold(
+                    (failure) => print(failure.message),
+                    (_) {
+                  AuthStateNotifier.instance.setLoggedOut();
+                },
               );
             },
             child: const Text("Logout", style: TextStyle(color: Colors.red)),

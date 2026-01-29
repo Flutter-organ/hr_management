@@ -25,6 +25,18 @@ import '../../features/auth/presentation/on_boarding/logic/on_boarding_cubit.dar
 import '../../features/auth/presentation/register/signup/logic/sign_up_cubit.dart';
 import '../../features/auth/presentation/register/verify_otp_popup/logic/verify_otp_cubit.dart';
 import '../../features/auth/presentation/reset_password/logic/reset_password_cubit.dart';
+import '../../features/profile/data/datasource/local/profile_local_data_source.dart';
+import '../../features/profile/data/datasource/local/profile_local_data_source_impl.dart';
+import '../../features/profile/data/datasource/remote/profile_remote_data_source.dart';
+import '../../features/profile/data/datasource/remote/profile_remote_data_source_impl.dart';
+import '../../features/profile/data/repository_imp/profile_repository_impl.dart';
+import '../../features/profile/domain/repository/profile_repository.dart';
+import '../../features/profile/domain/usecase/complete_profile_usecase.dart';
+import '../../features/profile/domain/usecase/get_profile_usecase.dart';
+import '../../features/profile/domain/usecase/update_profile_usecase.dart';
+import '../../features/profile/domain/usecase/upload_profile_image_usecase.dart';
+import '../../features/profile/presentation/profile/logic/profile_cubit.dart';
+import '../data/cache/cache_manager.dart';
 import '../data/cache/secure_storage_data_source.dart';
 import '../data/cache/shared_preferences_service.dart';
 import '../data/network/dio_client.dart';
@@ -36,6 +48,7 @@ Future<void> setupDependencies() async {
   await _initCore();
   await _initAuth();
   await _initOnboarding();
+  await _initProfile();
 }
 
 Future<void> _initCore() async {
@@ -49,6 +62,14 @@ Future<void> _initCore() async {
   sl.registerLazySingleton<PreferencesService>(
     () => SharedPreferencesServiceImpl(sl<SharedPreferences>()),
   );
+
+  sl.registerLazySingleton<CacheManager>(
+        () => CacheManagerImpl(
+      preferencesService: sl<PreferencesService>(),
+      secureStorageService: sl<SecureStorageService>(),
+    ),
+  );
+
   sl.registerLazySingleton<AppStartupService>(
     () => AppStartupServiceImpl(sl<PreferencesService>(), sl<SecureStorageService>()),
   );
@@ -91,7 +112,10 @@ Future<void> _initAuth() async {
   sl.registerLazySingleton<VerifyOTPUseCase>(
         () => VerifyOTPUseCase(sl<AuthRepository>()),
   );
-  sl.registerLazySingleton(() => LogoutUseCase(sl<AuthRepository>()));
+  sl.registerLazySingleton(() => LogoutUseCase(
+    authRepository: sl<AuthRepository>(),
+    cacheManager: sl<CacheManager>(),)
+  );
 
   //presentation
   sl.registerFactory<ForgotPasswordCubit>(
@@ -131,6 +155,46 @@ Future<void> _initOnboarding() async {
   sl.registerFactory<OnboardingCubit>(
     () => OnboardingCubit(
       completeOnboardingUseCase: sl<CompleteOnboardingUseCase>(),
+    ),
+  );
+}
+
+Future<void> _initProfile() async {
+  //data
+  sl.registerLazySingleton<ProfileLocalDataSource>(
+        () => ProfileLocalDataSourceImpl(preferencesService: sl<PreferencesService>()),
+  );
+  sl.registerLazySingleton<ProfileRemoteDataSource>(
+        () => ProfileRemoteDataSourceImpl(
+      dioClient: sl<DioClient>(),
+    ),
+  );
+  sl.registerLazySingleton<ProfileRepository>(
+        () => ProfileRepositoryImpl(
+      remoteDataSource: sl<ProfileRemoteDataSource>(),
+      localDataSource: sl<ProfileLocalDataSource>(),
+    ),
+  );
+
+  //domain
+  sl.registerLazySingleton<GetProfileUseCase>(
+        () => GetProfileUseCase(sl<ProfileRepository>()),
+    );
+  sl.registerLazySingleton<UploadProfileImageUseCase>(
+        () => UploadProfileImageUseCase(sl<ProfileRepository>()),
+  );
+  sl.registerLazySingleton<CompleteProfileUseCase>(
+        () => CompleteProfileUseCase(sl<ProfileRepository>()),
+  );
+  sl.registerLazySingleton<UpdateProfileUseCase>(
+        () => UpdateProfileUseCase(sl<ProfileRepository>()),
+  );
+
+  //presentation
+  sl.registerFactory<ProfileCubit>(
+        () => ProfileCubit(
+          getProfileUseCase: sl<GetProfileUseCase>(),
+          uploadProfileImageUseCase: sl<UploadProfileImageUseCase>(),
     ),
   );
 }

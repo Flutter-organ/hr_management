@@ -1,6 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 import '../../../../core/domain/failure/domain_failure.dart';
 import '../entity/employee_profile.dart';
+import '../entity/gender.dart';
 import '../repository/profile_repository.dart';
 
 class UpdateProfileUseCase {
@@ -12,7 +13,7 @@ class UpdateProfileUseCase {
     required String firstName,
     required String lastName,
     required DateTime dateOfBirth,
-    required String gender,
+    required Gender gender,
     required String address,
     String? phone,
   }) {

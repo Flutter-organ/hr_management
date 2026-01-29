@@ -15,6 +15,10 @@ class RouteNames {
   static const String expenseScreen = '/expense';
   static const String leaveScreen = '/leave';
 
+  // Profile
+  static const String profile = '/profile';
+
+
   // Error
   static const String notFound = '/404';
 
@@ -25,6 +29,7 @@ class RouteNames {
     taskScreen,
     expenseScreen,
     leaveScreen,
+    profile,
   ];
 
   static bool isProtectedRoute(String location) {

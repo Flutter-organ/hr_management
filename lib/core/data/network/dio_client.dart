@@ -364,6 +364,7 @@ class _AuthInterceptor extends Interceptor {
   ) async {
     try {
       final token = await _localDataSource.getToken();
+      print('Token++++++++++++++++++++++++++++++++++++++++++: $token');
       if (token != null && token.isNotEmpty) {
         options.headers[ApiConstants.authorizationHeader] = 'Bearer $token';
       }

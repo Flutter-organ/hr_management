@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+import 'package:hr_management/features/profile/data/datasource/remote/dto/response/upload_image_response_dto.dart';
 import 'package:hr_management/features/profile/data/datasource/remote/profile_remote_data_source.dart';
 
 import '../../../../../core/data/exception/app_exception.dart';
@@ -53,5 +57,28 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
 
     final data = response.data['data'] as Map<String, dynamic>;
     return EmployeeProfileDto.fromJson(data);
+  }
+
+  @override
+  Future<UploadImageResponseDto> uploadProfileImage(String filePath) async {
+    final file = File(filePath);
+
+    if (!file.existsSync()) {
+      throw const ValidationException(message: 'File does not exist');
+    }
+
+    final fileName = file.path.split('/').last;
+    final multipartFile = await MultipartFile.fromFile(
+      filePath,
+      filename: fileName,
+    );
+
+    final response = await _dioClient.uploadFiles(
+      ApiConstants.uploadProfileImage,
+      files: {'image': multipartFile},
+    );
+
+    final data = response.data['data'] as Map<String, dynamic>;
+    return UploadImageResponseDto.fromJson(data);
   }
 }

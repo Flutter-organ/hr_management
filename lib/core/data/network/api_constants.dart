@@ -23,4 +23,5 @@ class ApiConstants {
   static const String getProfile = '/api/profile';
   static const String completeProfile = '/api/profile/complete';
   static const String updateProfile = '/api/profile';
+  static const String uploadProfileImage = '/api/uploads/profile-image';
 }
