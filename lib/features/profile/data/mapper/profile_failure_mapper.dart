@@ -44,7 +44,6 @@ class ProfileFailureMapper {
   static Failure _mapServerException(ServerException exception) {
     final code = exception.code?.toUpperCase();
     final message = exception.message;
-
     switch (code) {
       case 'PROFILE_NOT_COMPLETED':
         return ProfileNotCompletedFailure(message);
@@ -52,6 +51,8 @@ class ProfileFailureMapper {
         return ProfileFetchFailure(message);
       case 'PROFILE_UPDATE_FAILED':
         return ProfileUpdateFailure(message);
+      case 'PROFILE_IMAGE_UPLOAD_FAILED':
+        return ProfileImageUploadFailure(message);
     }
 
     switch (exception.statusCode) {

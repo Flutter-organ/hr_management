@@ -69,3 +69,17 @@ class CacheUiError extends UiError {
 class UnknownUiError extends UiError {
   const UnknownUiError([super.message = 'An unexpected error occurred']);
 }
+
+class ProfileUpdateUiError extends UiError {
+  const ProfileUpdateUiError([super.message = 'Failed to update profile']);
+}
+class ProfileNotCompletedUiError extends UiError {
+  const ProfileNotCompletedUiError([super.message = 'Profile not completed yet.']);
+}
+class ProfileFetchUiError extends UiError {
+  const ProfileFetchUiError([super.message = 'Failed to fetch profile']);
+}
+class ProfileImageUploadUiError extends UiError {
+  const ProfileImageUploadUiError([super.message = 'Failed to upload profile image']);
+}
+

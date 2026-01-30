@@ -19,8 +19,9 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
 
   @override
   Future<EmployeeProfileDto> getProfile() async {
+
     final response = await _dioClient.get(ApiConstants.getProfile);
-    
+
     final success = response.data['success'] as bool?;
     if (success == false) {
       final errorCode = response.data['error_code'] as String?;

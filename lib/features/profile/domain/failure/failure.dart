@@ -22,3 +22,9 @@ class ProfileFetchFailure extends ProfileFailure {
     super.message = 'Failed to fetch profile',
   ]);
 }
+
+class ProfileImageUploadFailure extends ProfileFailure {
+  const ProfileImageUploadFailure([
+    super.message = 'Failed in image processing',
+  ]);
+}
