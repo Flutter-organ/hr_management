@@ -19,6 +19,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leading;
   final Widget? titleWidget;
   final double? leadingWidth;
+  final Color? leadingBackgroundColor;
+  final Color? leadingIconColor;
 
   final String? profileName;
   final String? profileJobTitle;
@@ -45,6 +47,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.leading,
     this.titleWidget,
     this.leadingWidth,
+    this.leadingBackgroundColor,
+    this.leadingIconColor,
     this.actionsPadding,
 
     this.profileName,
@@ -140,11 +144,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         icon: Icon(
           Icons.arrow_back_ios_new_rounded,
           size: 16,
-          color: context.colors.primary,
+          color: leadingIconColor ?? context.colors.primary,
         ),
         onPressed: onBackPressed ?? () => Navigator.of(context).pop(),
         style: IconButton.styleFrom(
-          backgroundColor: context.colors.white,
+          backgroundColor: leadingBackgroundColor ?? context.colors.white,
           shape: const CircleBorder(),
           padding: const EdgeInsets.all(8),
         ),
