@@ -96,6 +96,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: false,
       foregroundColor: foregroundColor,
       showBackButton: showBackButton,
+      isVerified: isVerified,
     );
   }
 
