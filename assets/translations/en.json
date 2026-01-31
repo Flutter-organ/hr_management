@@ -168,5 +168,8 @@
   "attendant": "Attendant",
   "task": "Task",
   "expense": "Expense",
-  "leave": "Leave"
+  "leave": "Leave",
+
+  "my_profile": "My profile"
+
 }

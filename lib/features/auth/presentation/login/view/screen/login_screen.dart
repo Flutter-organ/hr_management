@@ -1,10 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/core/di/injection_container.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/app_assets.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
-import '../../logic/login_cubit.dart';
 import '../widget/login_popup.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -44,12 +41,9 @@ class LoginScreen extends StatelessWidget {
             SafeArea(
               child: Align(
                 alignment: Alignment.bottomCenter,
-                child: BlocProvider(
-                  create: (_) => sl<LoginCubit>(),
-                  child: const LoginCard(),
+                child: const LoginCard(),
                 ),
               ),
-            ),
           ],
         ),
       ),

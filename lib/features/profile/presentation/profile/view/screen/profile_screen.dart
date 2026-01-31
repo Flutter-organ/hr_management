@@ -1,10 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../../../core/presentation/design_system/components/app_bar.dart';
+import '../../../../../../core/presentation/design_system/components/popups/custom_popup.dart';
+import '../../../../../../core/presentation/design_system/theme/helper/app_assets.dart';
+import '../../../../../../core/presentation/design_system/theme/helper/extention_colors.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
 import '../../logic/profile_cubit.dart';
@@ -17,10 +19,12 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.colors.surface,
+      backgroundColor: context.colors.purple400,
       appBar: CustomAppBar(
         title: 'my_profile'.tr(),
         showBackButton: true,
+        backgroundColor: ExtensionColors.transparentColor,
+        foregroundColor: context.colors.white,
         onBackPressed: () => context.pop(),
       ),
       body: BlocConsumer<ProfileCubit, ProfileState>(
@@ -29,88 +33,32 @@ class ProfileScreen extends StatelessWidget {
             SnackBarHelper.showError(context, state.error!);
           }
 
-          // TODO: Show complete profile popup if not completed
           if (state.isProfileNotCompleted) {
-            // Will implement in next step
+            // TODO: Show complete profile popup
           }
         },
         builder: (context, state) {
           if (state.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return _buildLoadingState(context);
           }
 
           if (state.profile == null) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.error_outline,
-                    size: 64,
-                    color: context.colors.error,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    state.error ?? 'Failed to load profile',
-                    style: context.textTheme.bodyLargeFont,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => context.read<ProfileCubit>().getProfile(),
-                    child: Text('retry'.tr()),
-                  ),
-                ],
-              ),
-            );
+            return _buildErrorState(context, state);
           }
 
           final profile = state.profile!;
 
-          return RefreshIndicator(
-            onRefresh: () => context.read<ProfileCubit>().refreshProfile(),
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Profile Header
-                  ProfileHeader(
-                    profile: profile,
-                    isUploadingImage: state.isUploadingImage,
-                    onImageTap: () {
-                      _showImagePicker(context);
-                    },
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  // Contact Section
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    //child: ProfileContactSection(profile: profile),
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  // Account Section
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    //child: ProfileAccountSection(profile: profile),
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  // Settings Section
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    //child: const ProfileSettingsSection(),
-                  ),
-
-                  const SizedBox(height: 32),
-                ],
+          return SafeArea(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: CustomPopup(
+                iconWidget: _buildAvatarWidget(
+                  context,
+                  profile.profileImage,
+                  state.isUploadingImage,
+                ),
+                customHeader: ProfileHeaderWidget(profile: profile),
+                content: Placeholder(), // Your content sections
               ),
             ),
           );
@@ -119,8 +67,114 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  void _showImagePicker(BuildContext context) {
-    // TODO: Implement image picker
-    SnackBarHelper.showInfo(context, 'Image picker coming soon');
+  Widget _buildAvatarWidget(
+    BuildContext context,
+    String? profileImage,
+    bool isUploadingImage,
+  ) {
+    return GestureDetector(
+      onTap: isUploadingImage ? null : () {
+        SnackBarHelper.showInfo(context, 'Image picker coming soon');
+        },
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            width: 120,
+            height: 120,
+            decoration: BoxDecoration(
+              color: context.colors.purple500,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: context.colors.white,
+                width: 2
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: context.colors.purple500.withOpacity(0.4),
+                  blurRadius: 16,
+                  offset: const Offset(0, 8),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: isUploadingImage
+                  ? const Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    )
+                  : CachedNetworkImage(
+                      imageUrl: profileImage ?? '',
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(color: Colors.white),
+                      ),
+                      errorWidget: (context, url, error) => Image.asset(
+                        AppAssets.avatarPlaceholder,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+            ),
+          ),
+
+          if (!isUploadingImage)
+            Positioned(
+              right: 0,
+              bottom: 0,
+              child: Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: context.colors.white,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: context.colors.purple500,
+                    width: 1,
+                  ),
+                ),
+                child: Icon(
+                  Icons.camera_alt,
+                  color: context.colors.purple500,
+                  size: 16,
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLoadingState(BuildContext context) {
+    return Center(child: CircularProgressIndicator(color: Colors.white));
+  }
+
+  Widget _buildErrorState(BuildContext context, ProfileState state) {
+    return Center(
+      child: Container(
+        margin: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: context.colors.white,
+          borderRadius: BorderRadius.circular(24),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.error_outline, size: 64, color: context.colors.error),
+            const SizedBox(height: 16),
+            Text(
+              state.error ?? 'failed_to_load_profile'.tr(),
+              style: context.textTheme.bodyLargeFont,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () => context.read<ProfileCubit>().getProfile(),
+              child: Text('retry'.tr()),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
