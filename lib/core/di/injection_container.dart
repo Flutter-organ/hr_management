@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:hr_management/features/attendance/domain/use_case/AttendanceHistoryUseCase.dart';
+import 'package:hr_management/features/attendance/presentation/clock_in/view/screen/attendance_screen.dart';
 import 'package:hr_management/features/auth/data/data_source/local/onboarding_local_data_source%20.dart';
 import 'package:hr_management/features/auth/data/data_source/local/onboarding_local_data_source_impl.dart';
 import 'package:hr_management/features/auth/data/repository_imp/on_boarding_repository_imp.dart';
@@ -9,6 +11,11 @@ import 'package:hr_management/features/auth/domain/use_cases/login_use_case.dart
 import 'package:hr_management/features/auth/domain/use_cases/register_use_case.dart';
 import 'package:hr_management/features/auth/presentation/login/logic/login_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../features/attendance/data/data_source/remote/attendance_remote_data_source.dart';
+import '../../features/attendance/data/data_source/remote/attendance_remote_data_source_impl.dart';
+import '../../features/attendance/data/repository_imp/attendance_repository_impl.dart';
+import '../../features/attendance/domain/repository/AttendanceRepository.dart';
+import '../../features/attendance/presentation/clock_in/logic/attendance_screen_cubit.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source_imp.dart';
 import '../../features/auth/data/data_source/remote/auth_remote_data_source.dart';
@@ -36,6 +43,7 @@ Future<void> setupDependencies() async {
   await _initCore();
   await _initAuth();
   await _initOnboarding();
+  await _initAttendance();
 }
 
 Future<void> _initCore() async {
@@ -50,9 +58,11 @@ Future<void> _initCore() async {
     () => SharedPreferencesServiceImpl(sl<SharedPreferences>()),
   );
   sl.registerLazySingleton<AppStartupService>(
-    () => AppStartupServiceImpl(sl<PreferencesService>(), sl<SecureStorageService>()),
+    () => AppStartupServiceImpl(
+      sl<PreferencesService>(),
+      sl<SecureStorageService>(),
+    ),
   );
-
 }
 
 Future<void> _initAuth() async {
@@ -86,10 +96,10 @@ Future<void> _initAuth() async {
   sl.registerLazySingleton(() => LoginUseCase(sl<AuthRepository>()));
   sl.registerLazySingleton(() => LoadIdentifierUseCase(sl<AuthRepository>()));
   sl.registerLazySingleton<RegisterUseCase>(
-        () => RegisterUseCase(sl<AuthRepository>()),
+    () => RegisterUseCase(sl<AuthRepository>()),
   );
   sl.registerLazySingleton<VerifyOTPUseCase>(
-        () => VerifyOTPUseCase(sl<AuthRepository>()),
+    () => VerifyOTPUseCase(sl<AuthRepository>()),
   );
   sl.registerLazySingleton(() => LogoutUseCase(sl<AuthRepository>()));
 
@@ -103,10 +113,9 @@ Future<void> _initAuth() async {
   sl.registerFactory(
     () => LoginCubit(sl<LoginUseCase>(), sl<LoadIdentifierUseCase>()),
   );
-  sl.registerFactory<SignUpCubit>(
-          () => SignUpCubit(sl<RegisterUseCase>()));
+  sl.registerFactory<SignUpCubit>(() => SignUpCubit(sl<RegisterUseCase>()));
   sl.registerFactory<VerifyOtpCubit>(
-        () => VerifyOtpCubit(sl<VerifyOTPUseCase>()),
+    () => VerifyOtpCubit(sl<VerifyOTPUseCase>()),
   );
 }
 
@@ -134,4 +143,27 @@ Future<void> _initOnboarding() async {
       checkOnboardingStatusUseCase: sl<CheckOnboardingStatusUseCase>(),
     ),
   );
+}
+
+Future<void> _initAttendance() async {
+  //data
+  sl.registerLazySingleton<AttendanceRemoteDataSource>(
+    () => AttendanceRemoteDataSourceImpl(dioClient: sl<DioClient>()),
+  );
+  sl.registerLazySingleton<AttendanceRepository>(
+    () => AttendanceRepositoryImpl( attendanceRemoteDataSource: sl<AttendanceRemoteDataSource>()),
+  );
+
+
+
+
+
+  sl.registerLazySingleton<AttendanceHistoryUseCase>(
+    () => AttendanceHistoryUseCase(sl<AttendanceRepository>()),
+  );
+
+  sl.registerFactory<AttendanceScreenCubit>(
+    () => AttendanceScreenCubit(sl<AttendanceHistoryUseCase>()),
+  );
+
 }

@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import '../theme/helper/app_assets.dart';
 import '../theme/helper/theme_extention.dart';
 
-class CustomClockinAreaMapUser extends StatelessWidget {
+class CustomClockInAreaMapUser extends StatelessWidget {
   final String imageUrl;
   final Color? circularColor;
   final EdgeInsets? padding;
   final void Function()? onTap;
 
-  const CustomClockinAreaMapUser({
+  const CustomClockInAreaMapUser({
     super.key,
     required this.imageUrl,
     this.onTap,
@@ -28,11 +28,11 @@ class CustomClockinAreaMapUser extends StatelessWidget {
         border: Border.all(color: context.colors.purple500),
       ),
       child: InkWell(
-        borderRadius: BorderRadius.circular(100),
+        borderRadius: BorderRadius.circular(50),
         onTap: onTap,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
+            borderRadius: BorderRadius.circular(50),
             border: Border.all(color: context.colors.purple500, width: 3),
           ),
           child: CachedNetworkImage(

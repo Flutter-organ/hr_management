@@ -23,4 +23,6 @@ class AppAssets {
   static const kOnBoargingTwo = 'assets/images/on_boarding_two.png';
   static const kOnBoargingThree = 'assets/images/on_boarding_three.png';
   static const kOnBoargingFinal = 'assets/images/on_boarding_final.png';
+  static const clockIn = 'assets/images/clock_in.png';
+
 }

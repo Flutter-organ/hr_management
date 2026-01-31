@@ -16,6 +16,10 @@ class RouteNames {
   static const String expenseScreen = '/expense';
   static const String leaveScreen = '/leave';
 
+  //attendance
+  static const String clockInMap = '/clock-in-map';
+  static const String selfieCamera = '/selfie-camera';
+  static const String confirmationScreen = '/confirmation';
   // Error
   static const String notFound = '/404';
 

@@ -19,4 +19,11 @@ class ApiConstants {
 
   static const String tokenKey = 'token';
   static const String multipartContentType = 'multipart/form-data';
+
+  static const String attendanceHistory = '/api/attendance/history';
+  static const String attendanceCheckIn = '/api/attendance/check-in';
+  static const String attendanceCheckOut = '/api/attendance/check-out';
+  static const String attendanceToday = '/api/attendance/today';
+
+
 }
