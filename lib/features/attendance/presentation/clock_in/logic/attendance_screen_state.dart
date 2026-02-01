@@ -7,10 +7,8 @@ class AttendanceScreenState {
   final String todayWorkingHours;
   final String payPeriodWorkingHours;
 
-  // ✅ دي الحالة المهمة - هل المستخدم مسجل حضور ولا لأ
   final bool isClockedIn;
 
-  // ✅ معلومات آخر تسجيل حضور
   final DateTime? lastClockInTime;
   final String? lastClockInLocation;
 

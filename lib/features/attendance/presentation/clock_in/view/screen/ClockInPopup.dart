@@ -6,7 +6,6 @@ import 'package:hr_management/core/presentation/design_system/theme/helper/app_a
 import '../../../../../../core/presentation/design_system/components/custom_attendant_clockin.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
 
-/// Popup تسجيل الحضور مع البيانات الديناميكية
 class ClockInPopup extends StatelessWidget {
   final String userName;
   final String userImageUrl;
@@ -50,14 +49,12 @@ class ClockInPopup extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // رسالة الترحيب
             _HeaderCard(
               isInClockInArea: isInClockInArea,
               distanceText: distanceText,
             ),
             const SizedBox(height: 16),
 
-            // بطاقة الملف الشخصي
             _ProfileCard(
               userName: userName,
               userImageUrl: userImageUrl,
@@ -66,7 +63,6 @@ class ClockInPopup extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // بطاقات الجدول الزمني
             _ScheduleCards(
               clockInTime: clockInTime,
               clockOutTime: clockOutTime,
@@ -78,7 +74,6 @@ class ClockInPopup extends StatelessWidget {
   }
 }
 
-/// بطاقة الترحيب في الأعلى
 class _HeaderCard extends StatelessWidget {
   final bool isInClockInArea;
   final String distanceText;
@@ -102,7 +97,6 @@ class _HeaderCard extends StatelessWidget {
   }
 }
 
-/// بطاقة الملف الشخصي
 class _ProfileCard extends StatelessWidget {
   final String userName;
   final String userImageUrl;
@@ -140,7 +134,6 @@ class _ProfileCard extends StatelessWidget {
   }
 }
 
-/// بطاقات الجدول الزمني (وقت الحضور والانصراف)
 class _ScheduleCards extends StatelessWidget {
   final String clockInTime;
   final String clockOutTime;
@@ -185,7 +178,6 @@ class _ScheduleCards extends StatelessWidget {
   }
 }
 
-/// بطاقة وقت واحد (حضور أو انصراف)
 class _ScheduleCard extends StatelessWidget {
   final String title;
   final String time;

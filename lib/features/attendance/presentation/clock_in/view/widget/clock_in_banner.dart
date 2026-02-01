@@ -49,51 +49,59 @@ class ClockInBanner extends StatelessWidget {
                 StateItemModel(
                   label: "today",
                   value: "${attendanceScreenState.todayWorkingHours} Hrs".tr(),
-                  icon: Icon(Iconsax.clock5, color: context.colors.gray300, size: 16),
+                  icon: Icon(
+                    Iconsax.clock5,
+                    color: context.colors.gray300,
+                    size: 16,
+                  ),
                 ),
                 StateItemModel(
-                    label: "This Pay Period",
-                    value: "${attendanceScreenState.payPeriodWorkingHours} Hrs".tr(),
-                    icon: Icon(Iconsax.clock5, color: context.colors.gray300, size: 16)
+                  label: "This Pay Period",
+                  value: "${attendanceScreenState.payPeriodWorkingHours} Hrs"
+                      .tr(),
+                  icon: Icon(
+                    Iconsax.clock5,
+                    color: context.colors.gray300,
+                    size: 16,
+                  ),
                 ),
-
               ],
-              buttons: buildAttendanceButtons(
-                state: attendanceScreenState,
-                onClockIn: onClockInPressed,
-                onClockOut: () {},
-                onBreak: () {},
+              buttons: [
+                CustomPrimaryButton.gradient(
+                  buttonText: "Clock In Now".tr(),
+                  onPressed: onClockInPressed,
+                ),
+              ],
             ),
-            )
-          )
-        ]
+          ),
+        ],
       ),
     );
   }
 }
+
 List<Widget> buildAttendanceButtons({
   required AttendanceScreenState state,
   required VoidCallback onClockIn,
   required VoidCallback onClockOut,
   required VoidCallback onBreak,
 }) {
-  if (!state.isClockedIn) {
-    return [
-      CustomPrimaryButton.gradient(
-        buttonText: "Clock In Now".tr(),
-        onPressed: onClockIn,
-      ),
-    ];
-  }
   return [
     CustomPrimaryButton.gradient(
-      buttonText: "Clock Out".tr(),
-      onPressed: onClockOut,
-    ),
-    const SizedBox(height: 12),
-    CustomPrimaryButton.outlined(
-      buttonText: "Break".tr(),
-      onPressed: onBreak,
+      buttonText: "Clock In Now".tr(),
+      onPressed: onClockIn,
     ),
   ];
+
+  // return [
+  //   CustomPrimaryButton.gradient(
+  //     buttonText: "Clock Out".tr(),
+  //     onPressed: onClockOut,
+  //   ),
+  //   const SizedBox(height: 12),
+  //   CustomPrimaryButton.outlined(
+  //     buttonText: "Break".tr(),
+  //     onPressed: onBreak,
+  //   ),
+  // ];
 }

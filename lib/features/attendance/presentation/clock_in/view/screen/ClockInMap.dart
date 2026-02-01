@@ -3,17 +3,18 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../../../../../core/presentation/design_system/components/custom_clockin_area_map_user.dart';
+import '../../../../domain/enitity/UserLocation.dart';
 
 class ClockInMap extends StatefulWidget {
   final bool isPopupVisible;
-  final LatLng userLocation;
+  final Location userLocation;
   final VoidCallback onMarkerTap;
 
   const ClockInMap({
     super.key,
     required this.userLocation,
-    required LatLng officeLocation,
-    this.isPopupVisible = false, required this.onMarkerTap,
+    this.isPopupVisible = false,
+    required this.onMarkerTap,
   });
 
   @override
@@ -24,7 +25,7 @@ class _ClockInMapState extends State<ClockInMap> {
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
-      options: MapOptions(center: widget.userLocation, zoom: 16),
+      options: MapOptions(center: LatLng(widget.userLocation.latitude, widget.userLocation.longitude), zoom: 16),
       children: [
         TileLayer(
           urlTemplate:
@@ -35,7 +36,7 @@ class _ClockInMapState extends State<ClockInMap> {
         CircleLayer(
           circles: [
             CircleMarker(
-              point: widget.userLocation!,
+              point: LatLng(widget.userLocation.latitude, widget.userLocation.longitude),
               radius: 120,
               useRadiusInMeter: true,
               color: Colors.deepPurple.withOpacity(0.15),
@@ -48,7 +49,7 @@ class _ClockInMapState extends State<ClockInMap> {
         MarkerLayer(
           markers: [
             Marker(
-              point: widget.userLocation!,
+              point: LatLng(widget.userLocation.latitude, widget.userLocation.longitude),
               width: 70,
               height: 70,
               child: GestureDetector(

@@ -1,49 +1,68 @@
 part of 'camera_preview_screen_cubit.dart';
 
 class CameraPreviewScreenState extends Equatable {
-  /// حالة الكاميرا الحالية
   final CameraStatus cameraStatus;
 
-  /// controller الكاميرا (يُستخدم في واجهة المستخدم)
   final CameraController? cameraController;
 
-  /// الصورة الملتقطة
   final XFile? capturedImage;
 
-  /// رسالة الخطأ إن وجدت
   final String? errorMessage;
+
+  final bool? isFlashOn;
+
+  final double? currentZoomLevel;
+
+  final double? maxZoomLevel;
 
   const CameraPreviewScreenState({
     this.cameraStatus = CameraStatus.initial,
     this.cameraController,
     this.capturedImage,
     this.errorMessage,
+    this.isFlashOn = false,
+    this.currentZoomLevel = 1.0,
+    this.maxZoomLevel = 1.0,
   });
 
-  /// نسخ الحالة مع تحديث بعض القيم
   CameraPreviewScreenState copyWith({
     CameraStatus? cameraStatus,
     CameraController? cameraController,
     XFile? capturedImage,
     String? errorMessage,
+    bool? isFlashOn,
+    double? currentZoomLevel,
+    double? maxZoomLevel,
   }) {
     return CameraPreviewScreenState(
       cameraStatus: cameraStatus ?? this.cameraStatus,
       cameraController: cameraController ?? this.cameraController,
       capturedImage: capturedImage,
       errorMessage: errorMessage,
+      isFlashOn: isFlashOn ?? this.isFlashOn,
+      currentZoomLevel: currentZoomLevel ?? this.currentZoomLevel,
+      maxZoomLevel: maxZoomLevel ?? this.maxZoomLevel,
     );
   }
 
-  /// التحقق من أن الكاميرا جاهزة
   bool get isCameraReady => cameraStatus == CameraStatus.ready;
 
-  /// التحقق من أن هناك صورة ملتقطة
   bool get hasImage => capturedImage != null;
 
-  /// التحقق من وجود خطأ
   bool get hasError => cameraStatus == CameraStatus.error;
 
+  String get zoomText {
+    return '${(currentZoomLevel ?? 1.0).toStringAsFixed(1)}x';
+  }
+
   @override
-  List<Object?> get props => [cameraStatus, cameraController, capturedImage, errorMessage];
+  List<Object?> get props => [
+    cameraStatus,
+    cameraController,
+    capturedImage,
+    errorMessage,
+    isFlashOn,
+    currentZoomLevel,
+    maxZoomLevel,
+  ];
 }

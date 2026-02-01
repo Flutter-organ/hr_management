@@ -2,13 +2,16 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hr_management/core/presentation/design_system/components/app_bar.dart';
+import 'package:hr_management/core/presentation/design_system/theme/helper/extention_colors.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../../../../../core/presentation/routes/route_names.dart';
 import '../../logic/CameraStatus.dart';
 import '../../logic/camera_preview_screen_cubit.dart';
+import 'CameraControlButtons.dart';
 
-/// ✅ شاشة التقاط الصورة - الشاشة الثالثة في الـ Flow
 class CameraPreviewScreen extends StatelessWidget {
   final LatLng location;
 
@@ -20,14 +23,9 @@ class CameraPreviewScreen extends StatelessWidget {
       create: (context) => CameraPreviewScreenCubit()..initializeCamera(),
       child: Builder(
         builder: (context) {
-          return BlocConsumer<
-              CameraPreviewScreenCubit,
-              CameraPreviewScreenState>(
+          return BlocConsumer<CameraPreviewScreenCubit, CameraPreviewScreenState>(
             listener: (context, state) {
-              // ✅ عند التقاط الصورة بنجاح، الانتقال لشاشة التأكيد
-              if (state.cameraStatus == CameraStatus.captured &&
-                  state.hasImage) {
-                // ✅ استخدام GoRouter مع تمرير البيانات
+              if (state.cameraStatus == CameraStatus.captured && state.hasImage) {
                 context.push(
                   RouteNames.confirmationScreen,
                   extra: {
@@ -38,7 +36,6 @@ class CameraPreviewScreen extends StatelessWidget {
                 );
               }
 
-              // عرض رسالة خطأ إن وجدت
               if (state.hasError && state.errorMessage != null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -50,107 +47,69 @@ class CameraPreviewScreen extends StatelessWidget {
               }
             },
             builder: (context, state) {
-              final cameraPreviewCubit =
-              context.read<CameraPreviewScreenCubit>();
+              final cubit = context.read<CameraPreviewScreenCubit>();
 
-              // حالة التحميل
               if (state.cameraStatus == CameraStatus.initial ||
                   state.cameraStatus == CameraStatus.loading) {
-                return const Scaffold(
-                  body: Center(
+                return Scaffold(
+                  backgroundColor: ExtensionColors.backgroundCamera,
+                  body: const Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CircularProgressIndicator(),
+                        CircularProgressIndicator(color: Colors.white),
                         SizedBox(height: 16),
-                        Text('جاري تحميل الكاميرا...'),
+                        Text(
+                          'loading camera',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ],
                     ),
                   ),
                 );
               }
 
-              // حالة الخطأ
-              if (state.hasError) {
-                return Scaffold(
-                  appBar: AppBar(
-                    title: const Text('خطأ في الكاميرا'),
-                    leading: IconButton(
-                      icon: const Icon(Icons.arrow_back),
+
+              return Scaffold(
+                extendBodyBehindAppBar: true,
+                backgroundColor: ExtensionColors.backgroundCamera,
+
+                appBar: CustomAppBar(
+                  backgroundColor: ExtensionColors.backgroundCamera,
+                  foregroundColor: Colors.white,
+                  title: "Camera",
+
+                  leading: IconButton(
+                    icon: Icon(
+                      state.isFlashOn ?? false
+                          ? Iconsax.flash_1
+                          : Iconsax.flash_slash,
+                      size: 28,
+                    ),
+                    onPressed: () => cubit.toggleFlash(),
+                  ),
+
+                  actions: [
+                    IconButton(
+                      icon: const Icon(Iconsax.close_circle, size: 28),
                       onPressed: () => context.pop(),
                     ),
-                  ),
-                  body: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.error_outline,
-                          size: 64,
-                          color: Colors.red,
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          state.errorMessage ?? 'حدث خطأ غير متوقع',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                        const SizedBox(height: 24),
-                        ElevatedButton.icon(
-                          onPressed: () {
-                            cameraPreviewCubit.initializeCamera();
-                          },
-                          icon: const Icon(Icons.refresh),
-                          label: const Text('إعادة المحاولة'),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }
-
-              // شاشة الكاميرا
-              return Scaffold(
-                backgroundColor: Colors.black,
-                appBar: AppBar(
-                  backgroundColor: Colors.transparent,
-                  title: const Text("Selfie To Clock In"),
-                  leading: IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () => context.pop(),
-                  ),
+                  ],
                 ),
+
                 body: Stack(
                   fit: StackFit.expand,
                   children: [
-                    // معاينة الكاميرا
                     if (state.cameraController != null &&
                         state.cameraController!.value.isInitialized)
                       CameraPreview(state.cameraController!),
 
-                    // زرار التقاط الصورة
-                    Positioned(
-                      bottom: 40,
-                      left: 0,
-                      right: 0,
-                      child: Center(
-                        child: FloatingActionButton(
-                          backgroundColor: Colors.purple,
-                          onPressed: state.cameraStatus == CameraStatus.capturing
-                              ? null
-                              : cameraPreviewCubit.takePicture,
-                          child: state.cameraStatus == CameraStatus.capturing
-                              ? const SizedBox(
-                            width: 24,
-                            height: 24,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2,
-                            ),
-                          )
-                              : const Icon(Icons.camera_alt, size: 36),
-                        ),
-                      ),
+                    CameraControlButtons(
+                      onCapture: () => cubit.takePicture(),
+                      onFlashToggle: () => cubit.toggleFlash(),
+                      onZoom: () => cubit.adjustZoom(),
+                      isCapturing: state.cameraStatus == CameraStatus.capturing,
+                      isFlashOn: state.isFlashOn ?? false,
                     ),
                   ],
                 ),

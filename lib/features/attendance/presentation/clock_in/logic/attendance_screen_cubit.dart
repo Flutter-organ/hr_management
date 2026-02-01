@@ -8,15 +8,12 @@ import '../../../domain/use_case/AttendanceHistoryUseCase.dart';
 import '../mapper/AttendanceHistoryMapper.dart';
 import 'attendance_screen_state.dart';
 
-/// ✅ Cubit بتاع شاشة الحضور مع دعم Stream
 class AttendanceScreenCubit extends BaseCubit<AttendanceScreenState> {
   final AttendanceHistoryUseCase _attendanceHistoryUseCase;
 
-  // ✅ Stream Controller لاستقبال تحديثات الحضور
   final StreamController<ClockInUpdate> _clockInStreamController =
   StreamController<ClockInUpdate>.broadcast();
 
-  // ✅ Stream للاستماع لتحديثات الحضور
   Stream<ClockInUpdate> get clockInStream => _clockInStreamController.stream;
 
   AttendanceScreenCubit(this._attendanceHistoryUseCase)
@@ -25,10 +22,8 @@ class AttendanceScreenCubit extends BaseCubit<AttendanceScreenState> {
     _listenToClockInUpdates();
   }
 
-  /// ✅ الاستماع لتحديثات تسجيل الحضور
   void _listenToClockInUpdates() {
     _clockInStreamController.stream.listen((update) {
-      // تحديث الحالة بناءً على البيانات الجديدة
       updateState((s) => s.copyWith(
         isClockedIn: true,
         lastClockInTime: update.clockInTime,
@@ -36,12 +31,10 @@ class AttendanceScreenCubit extends BaseCubit<AttendanceScreenState> {
         todayWorkingHours: _calculateNewWorkingHours(update),
       ));
 
-      // إعادة تحميل التاريخ لعرض السجل الجديد
       loadAttendanceHistory();
     });
   }
 
-  /// ✅ دالة لإرسال تحديث جديد للحضور (يتم استدعاؤها من ConfirmationScreen)
   void notifyClockInSuccess({
     required DateTime clockInTime,
     required String location,
@@ -57,7 +50,6 @@ class AttendanceScreenCubit extends BaseCubit<AttendanceScreenState> {
   }
 
   String _calculateNewWorkingHours(ClockInUpdate update) {
-    // حساب ساعات العمل الجديدة (يمكن تعديلها حسب المنطق المطلوب)
     final now = DateTime.now();
     final difference = now.difference(update.clockInTime);
     final hours = difference.inHours;
@@ -100,7 +92,6 @@ class AttendanceScreenCubit extends BaseCubit<AttendanceScreenState> {
   }
 }
 
-/// ✅ Model للتحديثات الجديدة
 class ClockInUpdate {
   final DateTime clockInTime;
   final String location;
