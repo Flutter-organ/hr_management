@@ -42,6 +42,8 @@ class CustomInputField extends StatefulWidget {
   final InputBorder? border;
   final String? label;
   final Color? labelColor;
+  final double height;
+
 
   const CustomInputField({
     Key? key,
@@ -83,6 +85,7 @@ class CustomInputField extends StatefulWidget {
     this.enabledColor,
     this.label,
     this.labelColor,
+    this.height = 48,
   });
 
   @override
@@ -126,6 +129,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
               )
             : const SizedBox(height: 0),
         TextFormField(
+          textAlignVertical: TextAlignVertical.top,
           controller: widget.controller,
           keyboardType: widget.keyboardType,
           style: context.textTheme.bodyMediumFont.copyWith(
