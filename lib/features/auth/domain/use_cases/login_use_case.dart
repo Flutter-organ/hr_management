@@ -24,12 +24,13 @@ class LoginUseCase {
 
     return result.fold(
           (failure) => Left(failure),
-          (user) async {
+          (user) {
         if (isRemembered) {
-          await _repository.saveIdentifier(identifier);
-        } else {
-          await _repository.clearIdentifier();
-        }
+          _repository.saveIdentifier(identifier);
+         }
+          // else {
+        //   _repository.clearIdentifier();
+        // }
         return Right(user);
       },
     );

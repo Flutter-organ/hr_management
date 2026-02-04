@@ -16,10 +16,10 @@ class CompleteProfileUseCase {
     required Gender gender,
     required String nationalId,
     required String address,
-    required int departmentId,
-    required String position,
-    required DateTime employmentDate,
-    required double salary,
+    // required int departmentId,
+    // required String position,
+    // required DateTime employmentDate,
+    // required double salary,
   }) {
     return _repository.completeProfile(
       firstName: firstName,
@@ -28,10 +28,10 @@ class CompleteProfileUseCase {
       gender: gender,
       nationalId: nationalId,
       address: address,
-      departmentId: departmentId,
-      position: position,
-      employmentDate: employmentDate,
-      salary: salary,
+      // departmentId: departmentId,
+      // position: position,
+      // employmentDate: employmentDate,
+      // salary: salary,
     );
   }
 }

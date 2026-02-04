@@ -13,10 +13,10 @@ abstract class ProfileRepository {
     required Gender gender,
     required String nationalId,
     required String address,
-    required int departmentId,
-    required String position,
-    required DateTime employmentDate,
-    required double salary,
+    // required int departmentId,
+    // required String position,
+    // required DateTime employmentDate,
+    // required double salary,
   });
 
   Future<Either<Failure, EmployeeProfile>> updateProfile({

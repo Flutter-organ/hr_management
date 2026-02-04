@@ -59,6 +59,8 @@ Future<void> _initCore() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerSingleton<SharedPreferences>(sharedPreferences);
 
+  print('🏗️ [DI] SharedPreferences hashCode: ${sharedPreferences.hashCode}');
+
   sl.registerLazySingleton<PreferencesService>(
     () => SharedPreferencesServiceImpl(sl<SharedPreferences>()),
   );
@@ -195,6 +197,8 @@ Future<void> _initProfile() async {
         () => ProfileCubit(
           getProfileUseCase: sl<GetProfileUseCase>(),
           uploadProfileImageUseCase: sl<UploadProfileImageUseCase>(),
+          loadIdentifierUseCase: sl<LoadIdentifierUseCase>(),
+          completeProfileUseCase: sl<CompleteProfileUseCase>(),
     ),
   );
 }

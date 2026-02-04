@@ -43,10 +43,10 @@ class ProfileMapper {
     required String gender,
     required String nationalId,
     required String address,
-    required int departmentId,
-    required String position,
-    required DateTime employmentDate,
-    required double salary,
+    // required int departmentId,
+    // required String position,
+    // required DateTime employmentDate,
+    // required double salary,
   }) {
     return CompleteProfileRequestDto(
       firstName: firstName,
@@ -55,10 +55,10 @@ class ProfileMapper {
       gender: gender,
       nationalId: nationalId,
       address: address,
-      departmentId: departmentId,
-      position: position,
-      employmentDate: _formatDate(employmentDate),
-      salary: salary,
+      // departmentId: departmentId,
+      // position: position,
+      // employmentDate: _formatDate(employmentDate),
+      // salary: salary,
     );
   }
 

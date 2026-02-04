@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hr_management/features/profile/presentation/profile/view/screen/popup/complete_profile_popup.dart';
 import '../../../../../../core/presentation/design_system/components/app_bar.dart';
 import '../../../../../../core/presentation/design_system/components/popups/custom_popup.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/app_assets.dart';
@@ -11,6 +12,7 @@ import '../../../../../../core/presentation/design_system/theme/helper/snackbar_
 import '../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
 import '../../logic/profile_cubit.dart';
 import '../../logic/profile_state.dart';
+import '../widget/profile_content.dart';
 import '../widget/profile_header.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -28,13 +30,27 @@ class ProfileScreen extends StatelessWidget {
         onBackPressed: () => context.pop(),
       ),
       body: BlocConsumer<ProfileCubit, ProfileState>(
+        listenWhen: (previous, current) {
+          return (current.isProfileNotCompleted &&
+                  !previous.isProfileNotCompleted) ||
+              (current.error != null &&
+                  current.error != previous.error &&
+                  !current.isProfileNotCompleted) ||
+              (current.uploadImageError != null &&
+                  current.uploadImageError != previous.uploadImageError);
+        },
         listener: (context, state) {
+          if (state.isProfileNotCompleted) {
+            CompleteProfilePopup.show(context);
+          }
+
           if (state.error != null && !state.isProfileNotCompleted) {
             SnackBarHelper.showError(context, state.error!);
           }
 
-          if (state.isProfileNotCompleted) {
-            // TODO: Show complete profile popup
+          if (state.uploadImageError != null) {
+            SnackBarHelper.showError(context, state.uploadImageError!);
+            context.read<ProfileCubit>().clearUploadImageError();
           }
         },
         builder: (context, state) {
@@ -57,8 +73,12 @@ class ProfileScreen extends StatelessWidget {
                   profile.profileImage,
                   state.isUploadingImage,
                 ),
+                iconWidgetHeight: 120,
                 customHeader: ProfileHeaderWidget(profile: profile),
-                content: Placeholder(), // Your content sections
+                content: ProfileContent(
+                  profile: profile,
+                  userIdentifier: state.userIdentifier,
+                ),
               ),
             ),
           );
@@ -73,9 +93,11 @@ class ProfileScreen extends StatelessWidget {
     bool isUploadingImage,
   ) {
     return GestureDetector(
-      onTap: isUploadingImage ? null : () {
-        SnackBarHelper.showInfo(context, 'Image picker coming soon');
-        },
+      onTap: isUploadingImage
+          ? null
+          : () {
+              SnackBarHelper.showInfo(context, 'Image picker coming soon');
+            },
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -85,10 +107,7 @@ class ProfileScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: context.colors.purple500,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: context.colors.white,
-                width: 2
-              ),
+              border: Border.all(color: context.colors.white, width: 2),
               boxShadow: [
                 BoxShadow(
                   color: context.colors.purple500.withOpacity(0.4),
@@ -122,15 +141,13 @@ class ProfileScreen extends StatelessWidget {
               right: 0,
               bottom: 0,
               child: Container(
-                width: 36,
-                height: 36,
+                width: 32,
+                height: 32,
+                margin: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   color: context.colors.white,
                   shape: BoxShape.circle,
-                  border: Border.all(
-                    color: context.colors.purple500,
-                    width: 1,
-                  ),
+                  border: Border.all(color: context.colors.purple500, width: 1),
                 ),
                 child: Icon(
                   Icons.camera_alt,

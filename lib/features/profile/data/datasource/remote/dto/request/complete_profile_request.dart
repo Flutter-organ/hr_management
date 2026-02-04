@@ -5,10 +5,10 @@ class CompleteProfileRequestDto {
   final String gender;
   final String nationalId;
   final String address;
-  final int departmentId;
-  final String position;
-  final String employmentDate;
-  final double salary;
+  // final int departmentId;
+  // final String position;
+  // final String employmentDate;
+  // final double salary;
 
   const CompleteProfileRequestDto({
     required this.firstName,
@@ -17,10 +17,10 @@ class CompleteProfileRequestDto {
     required this.gender,
     required this.nationalId,
     required this.address,
-    required this.departmentId,
-    required this.position,
-    required this.employmentDate,
-    required this.salary,
+    // required this.departmentId,
+    // required this.position,
+    // required this.employmentDate,
+    // required this.salary,
   });
 
   Map<String, dynamic> toJson() {
@@ -31,10 +31,10 @@ class CompleteProfileRequestDto {
       'gender': gender,
       'national_id': nationalId,
       'address': address,
-      'department_id': departmentId,
-      'position': position,
-      'employment_date': employmentDate,
-      'salary': salary,
+      // 'department_id': departmentId,
+      // 'position': position,
+      // 'employment_date': employmentDate,
+      // 'salary': salary,
     };
   }
 }

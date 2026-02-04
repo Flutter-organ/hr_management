@@ -35,17 +35,16 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
   @override
   Future<Either<Failure, EmployeeProfile>> completeProfile({
-
     required String firstName,
     required String lastName,
     required DateTime dateOfBirth,
     required Gender gender,
     required String nationalId,
     required String address,
-    required int departmentId,
-    required String position,
-    required DateTime employmentDate,
-    required double salary,
+    // required int departmentId,
+    // required String position,
+    // required DateTime employmentDate,
+    // required double salary,
   }) async {
     try {
       final request = ProfileMapper.toCompleteProfileRequestDto(
@@ -55,10 +54,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
         gender: gender.name,
         nationalId: nationalId,
         address: address,
-        departmentId: departmentId,
-        position: position,
-        employmentDate: employmentDate,
-        salary: salary,
+        // departmentId: departmentId,
+        // position: position,
+        // employmentDate: employmentDate,
+        // salary: salary,
       );
 
       final profileDto = await _remoteDataSource.completeProfile(request);

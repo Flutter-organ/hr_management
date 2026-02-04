@@ -9,7 +9,7 @@ class EmployeeProfile extends Equatable {
   final String firstName;
   final String lastName;
   final String fullName;
-  //final String email;
+  final String? email;
   //final String? nationalId;
   final String? phone;
   final DateTime dateOfBirth;
@@ -36,6 +36,8 @@ class EmployeeProfile extends Equatable {
     required this.firstName,
     required this.lastName,
     required this.fullName,
+    this.email,
+    //this.nationalId,
     this.phone,
     required this.dateOfBirth,
     required this.gender,
@@ -92,6 +94,8 @@ class EmployeeProfile extends Equatable {
     firstName,
     lastName,
     fullName,
+    email,
+    //nationalId,
     dateOfBirth,
     gender,
     address,
@@ -115,6 +119,8 @@ class EmployeeProfile extends Equatable {
     String? lastName,
     String? fullName,
     String? phone,
+    String? email,
+    //String? nationalId,
     DateTime? dateOfBirth,
     Gender? gender,
     String? address,
@@ -139,6 +145,8 @@ class EmployeeProfile extends Equatable {
       lastName: lastName ?? this.lastName,
       fullName: fullName ?? this.fullName,
       phone: phone ?? this.phone,
+      email: email ?? this.email,
+      //nationalId: nationalId ?? this.nationalId,
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       gender: gender ?? this.gender,
       address: address ?? this.address,
