@@ -1,33 +1,38 @@
 class UpdateProfileRequestDto {
-  final String firstName;
-  final String lastName;
-  final String dateOfBirth;
-  final String gender;
-  final String address;
+  final String? firstName;
+  final String? lastName;
   final String? phone;
+  final String? address;
 
   const UpdateProfileRequestDto({
-    required this.firstName,
-    required this.lastName,
-    required this.dateOfBirth,
-    required this.gender,
-    required this.address,
+    this.firstName,
+    this.lastName,
     this.phone,
+    this.address,
   });
 
   Map<String, dynamic> toJson() {
-    final data = {
-      'first_name': firstName,
-      'last_name': lastName,
-      'date_of_birth': dateOfBirth,
-      'gender': gender,
-      'address': address,
-    };
+    final data = <String, dynamic>{};
 
-    if (phone != null) {
-      data['phone'] = phone!;
+    if (firstName != null && firstName!.isNotEmpty) {
+      data['first_name'] = firstName;
+    }
+    if (lastName != null && lastName!.isNotEmpty) {
+      data['last_name'] = lastName;
+    }
+    if (phone != null && phone!.isNotEmpty) {
+      data['phone'] = phone;
+    }
+    if (address != null && address!.isNotEmpty) {
+      data['address'] = address;
     }
 
     return data;
   }
+
+  bool get hasData =>
+      (firstName?.isNotEmpty ?? false) ||
+          (lastName?.isNotEmpty ?? false) ||
+          (phone?.isNotEmpty ?? false) ||
+          (address?.isNotEmpty ?? false);
 }

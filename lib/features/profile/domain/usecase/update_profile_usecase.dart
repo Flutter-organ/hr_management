@@ -10,20 +10,18 @@ class UpdateProfileUseCase {
   const UpdateProfileUseCase(this._repository);
 
   Future<Either<Failure, EmployeeProfile>> call({
-    required String firstName,
-    required String lastName,
-    required DateTime dateOfBirth,
-    required Gender gender,
-    required String address,
+    String? firstName,
+    String? lastName,
     String? phone,
+    String? address,
+    String? avatarPath,
   }) {
     return _repository.updateProfile(
       firstName: firstName,
       lastName: lastName,
-      dateOfBirth: dateOfBirth,
-      gender: gender,
-      address: address,
       phone: phone,
+      address: address,
+      avatarPath: avatarPath,
     );
   }
 }

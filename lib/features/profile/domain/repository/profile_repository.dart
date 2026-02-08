@@ -20,12 +20,11 @@ abstract class ProfileRepository {
   });
 
   Future<Either<Failure, EmployeeProfile>> updateProfile({
-    required String firstName,
-    required String lastName,
-    required DateTime dateOfBirth,
-    required Gender gender,
-    required String address,
+    String? firstName,
+    String? lastName,
     String? phone,
+    String? address,
+    String? avatarPath,
   });
 
   Future<Either<Failure, bool>> isProfileCompleted();

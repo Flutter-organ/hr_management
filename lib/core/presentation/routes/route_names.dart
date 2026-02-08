@@ -17,6 +17,7 @@ class RouteNames {
 
   // Profile
   static const String profile = '/profile';
+  static const String personalData = '/profile/personal-data';
 
 
   // Error

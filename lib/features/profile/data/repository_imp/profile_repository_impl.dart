@@ -74,27 +74,27 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
   @override
   Future<Either<Failure, EmployeeProfile>> updateProfile({
-    required String firstName,
-    required String lastName,
-    required DateTime dateOfBirth,
-    required Gender gender,
-    required String address,
+    String? firstName,
+    String? lastName,
     String? phone,
+    String? address,
+    String? avatarPath,
   }) async {
     try {
       final request = ProfileMapper.toUpdateProfileRequestDto(
         firstName: firstName,
         lastName: lastName,
-        dateOfBirth: dateOfBirth,
-        gender: gender.name,
-        address: address,
         phone: phone,
+        address: address,
       );
 
-      final profileDto = await _remoteDataSource.updateProfile(request);
+      final profileDto = await _remoteDataSource.updateProfile(
+        request: request,
+        avatarPath: avatarPath,
+      );
+
       final profile = ProfileMapper.toDomain(profileDto);
 
-      // Update cache
       await _localDataSource.cacheProfile(profileDto);
 
       return Right(profile);

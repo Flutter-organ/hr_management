@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../../../core/presentation/design_system/components/custom_input_field.dart';
 import '../../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
+import '../../../../../../../core/presentation/design_system/theme/hr_management_theme.dart';
 import '../../../../../domain/entity/gender.dart';
 import '../../../../helper/extention.dart';
 import '../../../logic/profile_cubit.dart';
@@ -22,7 +23,6 @@ class CompleteProfileFormContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            // First Name & Last Name Row
             Row(
               children: [
                 Expanded(
@@ -54,15 +54,12 @@ class CompleteProfileFormContent extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Date of Birth
             _buildDatePicker(context, state, cubit),
             const SizedBox(height: 16),
 
-            // Gender
             _buildGenderSelector(context, state, cubit),
             const SizedBox(height: 16),
 
-            // National ID
             _buildTextField(
               context,
               label: 'national_id'.tr(),
@@ -76,7 +73,6 @@ class CompleteProfileFormContent extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Address
             _buildTextField(
               context,
               label: 'address'.tr(),
@@ -309,11 +305,7 @@ class CompleteProfileFormContent extends StatelessWidget {
       lastDate: DateTime.now(),
       builder: (context, child) {
         return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
-              primary: context.colors.purple500,
-            ),
-          ),
+          data: HrManagementTheme.light(),
           child: child!,
         );
       },

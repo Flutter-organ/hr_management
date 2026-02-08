@@ -6,6 +6,7 @@ import 'dto/response/upload_image_response_dto.dart';
 abstract class ProfileRemoteDataSource {
   Future<EmployeeProfileDto> getProfile();
   Future<EmployeeProfileDto> completeProfile(CompleteProfileRequestDto request);
-  Future<EmployeeProfileDto> updateProfile(UpdateProfileRequestDto request);
+  Future<EmployeeProfileDto> updateProfile({
+    required UpdateProfileRequestDto request, String? avatarPath,});
   Future<UploadImageResponseDto> uploadProfileImage(String filePath);
 }

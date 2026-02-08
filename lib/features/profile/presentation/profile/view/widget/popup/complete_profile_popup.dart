@@ -7,7 +7,7 @@ import '../../../../../../../core/presentation/design_system/theme/helper/popup_
 import '../../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
 import '../../../logic/profile_cubit.dart';
 import '../../../logic/profile_state.dart';
-import 'CompleteProfileFormContent.dart';
+import 'complete_profile_form_content.dart';
 
 class CompleteProfilePopup extends StatelessWidget {
   const CompleteProfilePopup._();

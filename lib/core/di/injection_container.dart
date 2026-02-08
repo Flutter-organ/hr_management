@@ -35,6 +35,7 @@ import '../../features/profile/domain/usecase/complete_profile_usecase.dart';
 import '../../features/profile/domain/usecase/get_profile_usecase.dart';
 import '../../features/profile/domain/usecase/update_profile_usecase.dart';
 import '../../features/profile/domain/usecase/upload_profile_image_usecase.dart';
+import '../../features/profile/presentation/personal_data/logic/personal_data_cubit.dart';
 import '../../features/profile/presentation/profile/logic/profile_cubit.dart';
 import '../data/cache/cache_manager.dart';
 import '../data/cache/secure_storage_data_source.dart';
@@ -199,6 +200,12 @@ Future<void> _initProfile() async {
           uploadProfileImageUseCase: sl<UploadProfileImageUseCase>(),
           loadIdentifierUseCase: sl<LoadIdentifierUseCase>(),
           completeProfileUseCase: sl<CompleteProfileUseCase>(),
+    ),
+  );
+  sl.registerFactory<PersonalDataCubit>(
+        () => PersonalDataCubit(
+      updateProfileUseCase: sl<UpdateProfileUseCase>(),
+      getProfileUseCase: sl<GetProfileUseCase>(),
     ),
   );
 }

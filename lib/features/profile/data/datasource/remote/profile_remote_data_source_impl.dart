@@ -50,22 +50,59 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   }
 
   @override
-  Future<EmployeeProfileDto> updateProfile(UpdateProfileRequestDto request) async {
-    final response = await _dioClient.put(
+  Future<EmployeeProfileDto> updateProfile({
+    required UpdateProfileRequestDto request,
+    String? avatarPath,
+  }) async {
+    if (avatarPath == null || avatarPath.isEmpty) {
+      final response = await _dioClient.put(
+        ApiConstants.updateProfile,
+        data: request.toJson(),
+      );
+
+      final data = response.data['data'] as Map<String, dynamic>;
+      if (data.containsKey('employee')) {
+        return EmployeeProfileDto.fromJson(data['employee'] as Map<String, dynamic>);
+      }
+      return EmployeeProfileDto.fromJson(data);
+    }
+
+    final file = File(avatarPath);
+    if (!file.existsSync()) {
+      throw const ValidationException(message: 'Avatar file does not exist');
+    }
+
+    final fileName = file.path.split('/').last;
+    final multipartFile = await MultipartFile.fromFile(
+      avatarPath,
+      filename: fileName,
+    );
+
+    final formDataMap = <String, dynamic>{
+      ...request.toJson(),
+      'avatar': multipartFile,
+    };
+
+    final response = await _dioClient.uploadFiles(
       ApiConstants.updateProfile,
-      data: request.toJson(),
+      files: {'avatar': multipartFile},
+      extraFields: request.toJson(),
     );
 
     final data = response.data['data'] as Map<String, dynamic>;
+    if (data.containsKey('employee')) {
+      return EmployeeProfileDto.fromJson(data['employee'] as Map<String, dynamic>);
+    }
     return EmployeeProfileDto.fromJson(data);
   }
+
 
   @override
   Future<UploadImageResponseDto> uploadProfileImage(String filePath) async {
     final file = File(filePath);
 
     if (!file.existsSync()) {
-      throw const ValidationException(message: 'File does not exist');
+      throw const ValidationException(message: 'Avatar file does not exist');
     }
 
     final fileName = file.path.split('/').last;

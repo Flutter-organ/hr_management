@@ -63,20 +63,16 @@ class ProfileMapper {
   }
 
   static UpdateProfileRequestDto toUpdateProfileRequestDto({
-    required String firstName,
-    required String lastName,
-    required DateTime dateOfBirth,
-    required String gender,
-    required String address,
+    String? firstName,
+    String? lastName,
     String? phone,
+    String? address,
   }) {
     return UpdateProfileRequestDto(
       firstName: firstName,
       lastName: lastName,
-      dateOfBirth: _formatDate(dateOfBirth),
-      gender: gender,
-      address: address,
       phone: phone,
+      address: address,
     );
   }
 

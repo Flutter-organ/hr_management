@@ -3,15 +3,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hr_management/features/profile/presentation/profile/view/screen/popup/complete_profile_popup.dart';
 import '../../../../../../core/presentation/design_system/components/app_bar.dart';
 import '../../../../../../core/presentation/design_system/components/popups/custom_popup.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/app_assets.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/extention_colors.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
+import '../../../../../../core/presentation/util/image_picker_helper.dart';
 import '../../logic/profile_cubit.dart';
 import '../../logic/profile_state.dart';
+import '../widget/popup/complete_profile_popup.dart';
+import '../widget/popup/image_picker_options_popup.dart';
 import '../widget/profile_content.dart';
 import '../widget/profile_header.dart';
 
@@ -37,7 +39,11 @@ class ProfileScreen extends StatelessWidget {
                   current.error != previous.error &&
                   !current.isProfileNotCompleted) ||
               (current.uploadImageError != null &&
-                  current.uploadImageError != previous.uploadImageError);
+                  current.uploadImageError != previous.uploadImageError) ||
+              (previous.isUploadingImage &&
+                  !current.isUploadingImage &&
+                  current.uploadImageError == null &&
+                  current.profile?.profileImage != previous.profile?.profileImage);
         },
         listener: (context, state) {
           if (state.isProfileNotCompleted) {
@@ -52,6 +58,12 @@ class ProfileScreen extends StatelessWidget {
             SnackBarHelper.showError(context, state.uploadImageError!);
             context.read<ProfileCubit>().clearUploadImageError();
           }
+
+          if (!state.isUploadingImage &&
+              state.uploadImageError == null &&
+              state.profile?.profileImage != null) {
+             SnackBarHelper.showSuccess(context, 'profile_image_updated'.tr());
+          }
         },
         builder: (context, state) {
           if (state.isLoading) {
@@ -61,6 +73,11 @@ class ProfileScreen extends StatelessWidget {
           if (state.profile == null) {
             return _buildErrorState(context, state);
           }
+
+          if (state.isProfileNotCompleted) {
+            return _buildErrorState(context, state);
+          }
+
 
           final profile = state.profile!;
 
@@ -95,9 +112,7 @@ class ProfileScreen extends StatelessWidget {
     return GestureDetector(
       onTap: isUploadingImage
           ? null
-          : () {
-              SnackBarHelper.showInfo(context, 'Image picker coming soon');
-            },
+          : () => _showImagePickerOptions(context),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -105,7 +120,6 @@ class ProfileScreen extends StatelessWidget {
             width: 120,
             height: 120,
             decoration: BoxDecoration(
-              color: context.colors.purple500,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: context.colors.white, width: 2),
               boxShadow: [
@@ -117,7 +131,7 @@ class ProfileScreen extends StatelessWidget {
               ],
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(10),
               child: isUploadingImage
                   ? const Center(
                       child: CircularProgressIndicator(color: Colors.white),
@@ -193,5 +207,45 @@ class ProfileScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _showImagePickerOptions(BuildContext context) {
+    ImagePickerOptionsPopup.show(
+      context,
+      onGalleryTap: () => _pickImageFromGallery(context),
+      onCameraTap: () => SnackBarHelper.showInfo(context, 'Camera image coming soon'),
+    );
+  }
+
+  Future<void> _pickImageFromGallery(BuildContext context) async {
+    final file = await ImagePickerHelper.pickImageFromGallery();
+
+    if (file == null) {
+      return;
+    }
+
+    if (!ImagePickerHelper.isFileSizeValid(file)){
+      if (context.mounted) {
+        SnackBarHelper.showError(
+          context,
+          'file_too_large'.tr(),
+        );
+      }
+      return;
+    }
+
+    if (!ImagePickerHelper.isValidImageExtension(file)) {
+      if (context.mounted) {
+        SnackBarHelper.showError(
+          context,
+          'invalid_image_format'.tr(),
+        );
+      }
+      return;
+    }
+
+    if (context.mounted) {
+      context.read<ProfileCubit>().uploadProfileImage(file.path);
+    }
   }
 }

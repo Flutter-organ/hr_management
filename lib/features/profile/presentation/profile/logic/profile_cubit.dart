@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hr_management/features/profile/presentation/profile/logic/profile_state.dart';
+import '../../../../../core/config/app_constant.dart';
 import '../../../../../core/presentation/base_viewmodel/base_cubit.dart';
 import '../../../../auth/domain/use_cases/load_identifier_use_case.dart';
 import '../../../domain/entity/gender.dart';
@@ -159,6 +161,19 @@ class ProfileCubit extends BaseCubit<ProfileState> {
 
 
   Future<void> uploadProfileImage(String filePath) async {
+    final file = File(filePath);
+
+    if (!file.existsSync()) {
+      updateState((s) => s.copyWith(uploadImageError: 'file_not_found'.tr()));
+      return;
+    }
+
+    final fileSizeInMB = file.lengthSync() / (1024 * 1024);
+    if (fileSizeInMB > AppConstant.maxImageSizeMB) {
+      updateState((s) => s.copyWith(uploadImageError: 'file_too_large'.tr()));
+      return;
+    }
+
     await execute(
       onLoading: () => updateState(
             (s) => s.copyWith(isUploadingImage: true, clearUploadImageError: true),

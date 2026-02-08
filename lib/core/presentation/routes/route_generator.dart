@@ -11,6 +11,8 @@ import '../../../features/auth/presentation/on_boarding/view/on_boarding_page.da
 import '../../../features/auth/presentation/register/signup/logic/sign_up_cubit.dart';
 import '../../../features/auth/presentation/register/signup/view/screen/sign_up_screen.dart';
 import '../../../features/main_navigation/presentation/screens/main_wrapper_screen.dart';
+import '../../../features/profile/presentation/personal_data/logic/personal_data_cubit.dart';
+import '../../../features/profile/presentation/personal_data/view/screen/personal_data_screen.dart';
 import '../../../features/profile/presentation/profile/logic/profile_cubit.dart';
 import '../../../features/profile/presentation/profile/view/screen/profile_screen.dart';
 import 'config/app_state_notifier.dart';
@@ -63,6 +65,15 @@ final GoRouter router = GoRouter(
       builder: (context, state) => BlocProvider(
         create: (_) => sl<ProfileCubit>()..getProfile(),
         child: const ProfileScreen(),
+      ),
+    ),
+
+    GoRoute(
+      path: RouteNames.personalData,
+      name: 'personal_data',
+      builder: (context, state) => BlocProvider(
+        create: (_) => sl<PersonalDataCubit>()..loadProfile(),
+        child: const PersonalDataScreen(),
       ),
     ),
 
