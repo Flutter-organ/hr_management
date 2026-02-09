@@ -8,6 +8,8 @@ import 'api_constants.dart';
 
 typedef ProgressCallback = void Function(int sent, int total);
 
+enum HttpMethod { get, post, put, patch, delete }
+
 class DioClient {
   late final Dio _dio;
   final AuthLocalDataSource _localDataSource;
@@ -134,6 +136,7 @@ class DioClient {
     Map<String, dynamic>? queryParameters,
     CancelToken? cancelToken,
     ProgressCallback? onProgress,
+    HttpMethod method = HttpMethod.post,
   }) async {
     if (files.isEmpty) {
       throw const ValidationException(message: 'At least one file is required');
@@ -145,16 +148,47 @@ class DioClient {
         if (extraFields != null) ...extraFields,
       });
 
-      return await _dio.post(
-        path,
-        data: formData,
-        queryParameters: queryParameters,
-        cancelToken: cancelToken,
-        options: Options(contentType: ApiConstants.multipartContentType),
-        onSendProgress: onProgress != null
-            ? (sent, total) => onProgress(sent, total)
-            : null,
-      );
+      final options = Options(contentType: ApiConstants.multipartContentType);
+
+      switch (method) {
+        case HttpMethod.post:
+          return await _dio.post(
+            path,
+            data: formData,
+            queryParameters: queryParameters,
+            cancelToken: cancelToken,
+            options: options,
+            onSendProgress: onProgress != null
+                ? (sent, total) => onProgress(sent, total)
+                : null,
+          );
+        case HttpMethod.put:
+          return await _dio.put(
+            path,
+            data: formData,
+            queryParameters: queryParameters,
+            cancelToken: cancelToken,
+            options: options,
+            onSendProgress: onProgress != null
+                ? (sent, total) => onProgress(sent, total)
+                : null,
+          );
+        case HttpMethod.patch:
+          return await _dio.patch(
+            path,
+            data: formData,
+            queryParameters: queryParameters,
+            cancelToken: cancelToken,
+            options: options,
+            onSendProgress: onProgress != null
+                ? (sent, total) => onProgress(sent, total)
+                : null,
+          );
+        default:
+          throw ValidationException(
+            message: 'Unsupported HTTP method: $method',
+          );
+      }
     } on DioException catch (e) {
       throw _handleDioException(e);
     }

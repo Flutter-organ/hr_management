@@ -78,15 +78,11 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       filename: fileName,
     );
 
-    final formDataMap = <String, dynamic>{
-      ...request.toJson(),
-      'avatar': multipartFile,
-    };
-
     final response = await _dioClient.uploadFiles(
       ApiConstants.updateProfile,
       files: {'avatar': multipartFile},
       extraFields: request.toJson(),
+      method: HttpMethod.put,
     );
 
     final data = response.data['data'] as Map<String, dynamic>;
