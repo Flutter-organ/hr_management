@@ -10,6 +10,7 @@ import '../custom_primary_button.dart';
 class CustomPopup extends StatelessWidget {
   final IconData? icon;
   final Widget? iconWidget;
+  final double? iconWidgetHeight;
 
   final String? title;
   final String? description;
@@ -28,10 +29,13 @@ class CustomPopup extends StatelessWidget {
 
   final bool showFooter;
 
+  static const double _defaultIconSize = 100.0;
+
   const CustomPopup({
     super.key,
     this.icon,
     this.iconWidget,
+    this.iconWidgetHeight,
     this.title,
     this.description,
     this.content,
@@ -269,25 +273,51 @@ class CustomPopup extends StatelessWidget {
     );
   }
 
-  double get topPadding {
-    if (icon != null)
-      return 60;
-    else if (iconWidget != null)
-      return 70;
-    else
-      return 24;
+  // double get topPadding {
+  //   if (icon != null)
+  //     return 60;
+  //   else if (iconWidget != null)
+  //     return 76;
+  //   else
+  //     return 24;
+  // }
+  //
+  // double get topMargin {
+  //   if (icon != null || iconWidget != null)
+  //     return 50;
+  //   else return 0;
+  // }
+
+
+  bool get _hasTopElement => icon != null || iconWidget != null;
+
+  double get _iconHeight {
+    if (icon != null) return _defaultIconSize;
+    if (iconWidget != null) return iconWidgetHeight ?? 120.0;
+    return 0;
+  }
+
+  double get _overlapAmount => _iconHeight / 2;
+
+  double get _topMargin => _hasTopElement ? _overlapAmount : 0;
+
+  double get _topPadding {
+    if (!_hasTopElement) return 24;
+    return _iconHeight - _overlapAmount + 16;
   }
 
   @override
   Widget build(BuildContext context) {
-    final bool hasTopElement = icon != null || iconWidget != null;
+    //final bool hasTopElement = icon != null || iconWidget != null;
+
     return Stack(
       alignment: Alignment.topCenter,
       clipBehavior: Clip.none,
       children: [
         Container(
           width: double.infinity,
-          padding: EdgeInsets.fromLTRB(24, topPadding, 24, 24),
+          margin: EdgeInsets.only(top: _topMargin),
+          padding: EdgeInsets.fromLTRB(24, _topPadding, 24, 24),
           decoration: BoxDecoration(
             color: context.colors.white,
             borderRadius: const BorderRadius.only(
@@ -354,9 +384,9 @@ class CustomPopup extends StatelessWidget {
           ),
         ),
 
-        if (hasTopElement)
+        if (_hasTopElement)
           Positioned(
-            top: -50,
+            top: 0,
             left: 0,
             right: 0,
             child: Center(
@@ -370,8 +400,8 @@ class CustomPopup extends StatelessWidget {
 
   Widget _buildDefaultIconContainer() {
     return Container(
-      width: 100,
-      height: 100,
+      width: _defaultIconSize,
+      height: _defaultIconSize,
       decoration: BoxDecoration(
         color: AppConstantColors.purple500,
         borderRadius: BorderRadius.circular(20),
