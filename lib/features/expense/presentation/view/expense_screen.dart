@@ -43,12 +43,12 @@ class ExpenseScreen extends StatelessWidget {
             ),
 
             Padding(
-              padding:  EdgeInsets.fromLTRB(
-               12 / designWidth * width,
-               150 / designHeight * height,
-               12 / designWidth * width,
-               90 / designHeight * height,
-               ),
+              padding: EdgeInsets.fromLTRB(
+                12 / designWidth * width,
+                150 / designHeight * height,
+                12 / designWidth * width,
+                90 / designHeight * height,
+              ),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -67,14 +67,14 @@ class ExpenseScreen extends StatelessWidget {
                           icon: SvgPicture.asset(AppAssets.reviewIc),
                         ),
                         StateItemModel(
-                          label:  "approved".tr(),
+                          label: "approved".tr(),
                           value: "\$0",
                           icon: SvgPicture.asset(AppAssets.approvedIc),
                         ),
                       ],
                     ),
 
-                     SizedBox(height: 16 / designHeight * height),
+                    SizedBox(height: 16 / designHeight * height),
 
                     const CustomStatusBar(
                       reviewCount: 0,
@@ -82,7 +82,7 @@ class ExpenseScreen extends StatelessWidget {
                       rejectedCount: 0,
                     ),
 
-                     SizedBox(height: 16 / designHeight * height),
+                    SizedBox(height: 16 / designHeight * height),
 
                     Container(
                       padding: const EdgeInsets.all(12),
@@ -96,12 +96,13 @@ class ExpenseScreen extends StatelessWidget {
                             title: "expense".tr(),
                             subtitle: "expense_submitted".tr(),
                           ),
-                           SizedBox(height: 24 / designHeight * height),
+                          SizedBox(height: 24 / designHeight * height),
                           EmptyStateCard(
                             imgPath: AppAssets.emptyExpense,
                             imgtitle: "no_expense_submitted".tr(),
                             imgDescription:
-"it_looks_like_you_dont_have_any_expense_submitted_dont_worry_this_space_will_be_updated_as_new_expense_submitted": "It looks like you don't have any expense submitted. Don't worry, this space will be updated as new expense submitted.".tr(),
+                                "it_looks_like_you_dont_have_any_expense_submitted_dont_worry_this_space_will_be_updated_as_new_expense_submitted"
+                                    .tr(),
                           ),
                         ],
                       ),

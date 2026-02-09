@@ -29,4 +29,5 @@ class AppAssets {
   static const reviewIc = 'assets/svgs/review_ic.svg';
   static const approvedIc = 'assets/svgs/approved_ic.svg';
   static const cardPosIc = 'assets/svgs/card_pos_ic.svg';
+  static const submitBunner = 'assets/images/submit_bunner.png';
 }
