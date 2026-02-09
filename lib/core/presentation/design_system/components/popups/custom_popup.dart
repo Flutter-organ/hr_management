@@ -9,33 +9,57 @@ import '../custom_primary_button.dart';
 
 class CustomPopup extends StatelessWidget {
   final IconData? icon;
-  final String title;
-  final String description;
+  final Widget? iconWidget;
+  final double? iconWidgetHeight;
+
+  final String? title;
+  final String? description;
+  final Widget? customHeader;
+
   final Widget? content;
-  final String primaryButtonText;
-  final VoidCallback primaryButtonOnPressed;
+
+  final String? primaryButtonText;
+  final VoidCallback? primaryButtonOnPressed;
+  final bool isPrimaryButtonLoading;
+  final bool isPrimaryButtonEnabled;
+
   final String? secondaryButtonText;
   final VoidCallback? secondaryButtonOnPressed;
   final VoidCallback? onTapHere;
+
   final bool showFooter;
-  final bool isPrimaryButtonLoading;
-  final bool isPrimaryButtonEnabled;
+
+  static const double _defaultIconSize = 100.0;
 
   const CustomPopup({
     super.key,
     this.icon,
-    required this.title,
-    required this.description,
+    this.iconWidget,
+    this.iconWidgetHeight,
+    this.title,
+    this.description,
     this.content,
-    required this.primaryButtonText,
-    required this.primaryButtonOnPressed,
+    this.primaryButtonText,
+    this.primaryButtonOnPressed,
     this.secondaryButtonText,
     this.secondaryButtonOnPressed,
     this.onTapHere,
     this.showFooter = false,
     this.isPrimaryButtonLoading = false,
     this.isPrimaryButtonEnabled = true,
-  });
+    this.customHeader,
+  }) : assert(
+  icon == null || iconWidget == null,
+  'Cannot provide both icon and iconWidget',
+  ),
+        assert(
+        customHeader == null || (title == null && description == null),
+        'Cannot provide both customHeader and title/description',
+        ),
+        assert(
+        primaryButtonText == null || primaryButtonOnPressed != null,
+        'primaryButtonOnPressed is required when primaryButtonText is provided',
+        );
 
   factory CustomPopup.primary({
     required IconData icon,
@@ -249,16 +273,51 @@ class CustomPopup extends StatelessWidget {
     );
   }
 
+  // double get topPadding {
+  //   if (icon != null)
+  //     return 60;
+  //   else if (iconWidget != null)
+  //     return 76;
+  //   else
+  //     return 24;
+  // }
+  //
+  // double get topMargin {
+  //   if (icon != null || iconWidget != null)
+  //     return 50;
+  //   else return 0;
+  // }
+
+
+  bool get _hasTopElement => icon != null || iconWidget != null;
+
+  double get _iconHeight {
+    if (icon != null) return _defaultIconSize;
+    if (iconWidget != null) return iconWidgetHeight ?? 120.0;
+    return 0;
+  }
+
+  double get _overlapAmount => _iconHeight / 2;
+
+  double get _topMargin => _hasTopElement ? _overlapAmount : 0;
+
+  double get _topPadding {
+    if (!_hasTopElement) return 24;
+    return _iconHeight - _overlapAmount + 16;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final double topPadding = icon != null ? 60 : 24;
+    //final bool hasTopElement = icon != null || iconWidget != null;
+
     return Stack(
       alignment: Alignment.topCenter,
       clipBehavior: Clip.none,
       children: [
         Container(
           width: double.infinity,
-          padding: EdgeInsets.fromLTRB(24, topPadding, 24, 24),
+          margin: EdgeInsets.only(top: _topMargin),
+          padding: EdgeInsets.fromLTRB(24, _topPadding, 24, 24),
           decoration: BoxDecoration(
             color: context.colors.white,
             borderRadius: const BorderRadius.only(
@@ -272,31 +331,44 @@ class CustomPopup extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  title,
-                  style: context.textTheme.popupTitleFont.copyWith(
-                    color: context.colors.textPrimary,
-                  ),
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 12),
+                if (customHeader != null) ...[
+                  customHeader!,
+                  const SizedBox(height: 24),
+                ] else ...[
+                  if (title != null)
+                    Text(
+                      title!,
+                      style: context.textTheme.popupTitleFont.copyWith(
+                        color: context.colors.textPrimary,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  if (title != null && description != null)
+                    const SizedBox(height: 12),
+                  if (description != null)
+                    Text(
+                      description!,
+                      style: context.textTheme.popupBodyFont.copyWith(
+                        color: context.colors.textSecondary,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  if (title != null || description != null)
+                    const SizedBox(height: 24),
+                ],
 
-                Text(
-                  description,
-                  style: context.textTheme.popupBodyFont.copyWith(
-                    color: context.colors.textSecondary,
-                  ),
-                  textAlign: TextAlign.center,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 24),
+                if (content != null) ...[
+                  content!,
+                  const SizedBox(height: 24),
+                ],
 
-                if (content != null) ...[content!, const SizedBox(height: 24)],
-
-                _buildPrimaryButton(context),
+                if (primaryButtonText != null) ...[
+                  _buildPrimaryButton(context),
+                ],
 
                 if (secondaryButtonText != null) ...[
                   const SizedBox(height: 12),
@@ -311,33 +383,42 @@ class CustomPopup extends StatelessWidget {
             ),
           ),
         ),
-        if (icon != null)
+
+        if (_hasTopElement)
           Positioned(
-            top: -50,
+            top: 0,
             left: 0,
             right: 0,
             child: Center(
-              child: Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: AppConstantColors.purple500,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppConstantColors.purple500.withOpacity(0.4),
-                      blurRadius: 16,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
-                ),
-                child: Center(child: Icon(icon, color: Colors.white, size: 48)),
-              ),
+              child: iconWidget ?? _buildDefaultIconContainer(),
             ),
           ),
       ],
     );
   }
+
+
+  Widget _buildDefaultIconContainer() {
+    return Container(
+      width: _defaultIconSize,
+      height: _defaultIconSize,
+      decoration: BoxDecoration(
+        color: AppConstantColors.purple500,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: AppConstantColors.purple500.withOpacity(0.4),
+            blurRadius: 16,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Center(
+        child: Icon(icon, color: Colors.white, size: 48),
+      ),
+    );
+  }
+
 
   Widget _buildPrimaryButton(BuildContext context) {
     return CustomPrimaryButton.gradient(
@@ -345,7 +426,7 @@ class CustomPopup extends StatelessWidget {
       textStyle: context.textTheme.labelLargeFont.copyWith(
         color: context.colors.white,
       ),
-      buttonText: primaryButtonText,
+      buttonText: primaryButtonText!,
       borderRadius: 100,
       isLoading: isPrimaryButtonLoading,
       isEnabled: isPrimaryButtonEnabled,
@@ -647,14 +728,14 @@ class _PasswordResetContentState extends State<_PasswordResetContent> {
   }
 
   Widget _buildPasswordField(
-    BuildContext context, {
-    required String label,
-    required String hint,
-    required ValueChanged<String> onChanged,
-    String? errorText,
-    required bool obscure,
-    required VoidCallback onToggleObscure,
-  }) {
+      BuildContext context, {
+        required String label,
+        required String hint,
+        required ValueChanged<String> onChanged,
+        String? errorText,
+        required bool obscure,
+        required VoidCallback onToggleObscure,
+      }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -778,7 +859,7 @@ class _LoginContentState extends State<_LoginContent> {
           contentPaddingHorizontal: 16,
           contentPaddingVertical: 16,
           prefixIcon:
-              widget.identifierPrefixIcon ??
+          widget.identifierPrefixIcon ??
               Icon(Iconsax.sms, color: context.colors.purple400, size: 20),
         ),
         if (widget.identifierErrorText != null) ...[

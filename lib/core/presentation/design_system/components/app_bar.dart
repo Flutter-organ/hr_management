@@ -2,83 +2,169 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../theme/helper/app_assets.dart';
-import '../theme/helper/extention_colors.dart';
 import '../theme/helper/theme_extention.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  // Standard mode
   final String? title;
   final bool showBackButton;
   final VoidCallback? onBackPressed;
+  final List<Widget>? actions;
 
-  // Profile mode
+  final Color? backgroundColor;
+  final Color? foregroundColor;
+  final bool centerTitle;
+  final double? elevation;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? actionsPadding;
+  final Widget? leading;
+  final Widget? titleWidget;
+  final double? leadingWidth;
+  final Color? leadingBackgroundColor;
+  final Color? leadingIconColor;
+
   final String? profileName;
   final String? profileJobTitle;
   final String? profileAvatarUrl;
   final VoidCallback? onChatPressed;
   final VoidCallback? onBellPressed;
+  final bool isVerified;
+  final bool safeArea;
+
 
   const CustomAppBar({
     super.key,
+
     this.title,
     this.showBackButton = true,
     this.onBackPressed,
+    this.actions,
+
+    this.backgroundColor,
+    this.foregroundColor,
+    this.centerTitle = true,
+    this.elevation,
+    this.padding,
+    this.leading,
+    this.titleWidget,
+    this.leadingWidth,
+    this.leadingBackgroundColor,
+    this.leadingIconColor,
+    this.actionsPadding,
+
     this.profileName,
     this.profileJobTitle,
     this.profileAvatarUrl,
     this.onChatPressed,
     this.onBellPressed,
+    this.isVerified = false,
+    this.safeArea = false,
   });
+
+  factory CustomAppBar.simple({
+    required String title,
+    bool showBackButton = true,
+    VoidCallback? onBackPressed,
+    List<Widget>? actions,
+    Color? backgroundColor,
+    Color? foregroundColor,
+  }) {
+    return CustomAppBar(
+      title: title,
+      showBackButton: showBackButton,
+      onBackPressed: onBackPressed,
+      actions: actions,
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
+      centerTitle: true,
+    );
+  }
+
+  factory CustomAppBar.profile({
+    required String profileName,
+    required String profileJobTitle,
+    String? profileAvatarUrl,
+    VoidCallback? onChatPressed,
+    VoidCallback? onBellPressed,
+    Color? backgroundColor,
+    bool isVerified = false,
+    Color? foregroundColor,
+    bool showBackButton = false,
+  }) {
+    return CustomAppBar(
+      profileName: profileName,
+      profileJobTitle: profileJobTitle,
+      profileAvatarUrl: profileAvatarUrl,
+      onChatPressed: onChatPressed,
+      onBellPressed: onBellPressed,
+      backgroundColor: backgroundColor,
+      centerTitle: false,
+      foregroundColor: foregroundColor,
+      showBackButton: showBackButton,
+      isVerified: isVerified,
+    );
+  }
 
   bool get isProfileMode => profileName != null;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: isProfileMode ? 12 : 24),
-      child: AppBar(
-        backgroundColor: colors.surface,
-        automaticallyImplyLeading: false,
-        leading: _buildLeading(context),
-        title: _buildTitle(context),
-        centerTitle: !isProfileMode,
-        actions: _buildActions(context),
-      ),
+    final effectiveBackgroundColor = backgroundColor ?? colors.surface;
+    final effectiveForegroundColor = foregroundColor ?? colors.textPrimary;
+
+    return Container(
+        padding: padding ?? EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        //color: effectiveBackgroundColor,
+        child:
+        safeArea ?
+        SafeArea(child: _buildAppBar(context, effectiveBackgroundColor, effectiveForegroundColor))
+            : _buildAppBar(context, effectiveBackgroundColor, effectiveForegroundColor)
+    );
+  }
+
+  Widget _buildAppBar(BuildContext context, Color backgroundColor, Color foregroundColor) {
+    return AppBar(
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
+      elevation: elevation ?? 0,
+      scrolledUnderElevation: 0,
+      centerTitle: centerTitle,
+      leadingWidth: leadingWidth,
+      automaticallyImplyLeading: false,
+      actionsPadding: actionsPadding ?? const EdgeInsets.symmetric(horizontal: 12),
+      leading: leading ?? _buildLeading(context),
+      title: titleWidget ?? _buildTitle(context, foregroundColor),
+      actions: actions ?? _buildActions(context, foregroundColor),
     );
   }
 
   Widget? _buildLeading(BuildContext context) {
-    final colors = context.colors;
-    if (showBackButton && !isProfileMode) {
-      return SizedBox(
-        child: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: 18,
-            color: colors.purple500,
-          ),
-          onPressed: onBackPressed,
-          style: IconButton.styleFrom(
-            backgroundColor: colors.purple50,
-            shape: const CircleBorder(),
-            fixedSize: const Size(32, 32),
-          ),
+    if (showBackButton) {
+      return IconButton(
+        icon: Icon(
+          Icons.arrow_back_ios_new_rounded,
+          size: 18,
+          color: leadingIconColor ?? context.colors.primary,
+        ),
+        onPressed: onBackPressed ?? () => Navigator.of(context).pop(),
+        style: IconButton.styleFrom(
+          backgroundColor: leadingBackgroundColor ?? context.colors.white,
+          shape: const CircleBorder(),
+          padding: const EdgeInsets.all(6),
         ),
       );
     }
     return null;
   }
 
-  Widget? _buildTitle(BuildContext context) {
-    final colors = context.colors;
-
+  Widget? _buildTitle(BuildContext context, Color foregroundColor) {
     if (isProfileMode) {
       return Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           _buildProfileAvatar(),
-          const SizedBox(width: 9),
-          _buildProfileInfo(context),
+          const SizedBox(width: 8),
+          _buildProfileInfo(context, foregroundColor),
         ],
       );
     }
@@ -86,8 +172,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     if (title != null) {
       return Text(
         title!,
-        style: context.textTheme.navbarTitleFont.copyWith(
-          color: colors.textPrimary,
+        style: context.textTheme.popupTitleFont.copyWith(
+          color: foregroundColor,
+          fontWeight: FontWeight.w600,
         ),
       );
     }
@@ -95,74 +182,71 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return null;
   }
 
-  /// Build profile avatar widget
   Widget _buildProfileAvatar() {
     return CircleAvatar(
+      radius: 20,
       child: ClipOval(
         child: CachedNetworkImage(
           imageUrl: profileAvatarUrl ?? '',
           fit: BoxFit.cover,
-          width: double.infinity,
-          height: double.infinity,
-          placeholder: (context, url) => Image.asset(
-            AppAssets.placeHolderProfile,
-            fit: BoxFit.cover,
-          ),
-          errorWidget: (context, url, error) => Image.asset(
-            AppAssets.placeHolderProfile,
-            fit: BoxFit.cover,
-          ),
+          width: 44,
+          height: 44,
+          placeholder: (context, url) =>
+              Image.asset(AppAssets.placeHolderProfile, fit: BoxFit.cover),
+          errorWidget: (context, url, error) =>
+              Image.asset(AppAssets.placeHolderProfile, fit: BoxFit.cover),
         ),
       ),
     );
   }
 
-  Widget _buildProfileInfo(BuildContext context) {
+  Widget _buildProfileInfo(BuildContext context, Color foregroundColor) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               profileName ?? "Username".tr(),
               style: context.textTheme.titleMediumFont.copyWith(
-                color: ExtensionColors.purpleProfile,
+                color: foregroundColor,
+                fontWeight: FontWeight.w600,
               ),
             ),
-            const SizedBox(width: 8),
-            const Icon(
-              Icons.verified,
-              color: ExtensionColors.purpleProfile,
-              size: 20,
-            ),
+            if (isVerified) ...[
+              const SizedBox(width: 8),
+              Icon(Icons.verified, color: context.colors.primary, size: 20),
+            ],
           ],
         ),
         Text(
           profileJobTitle ?? "job_title".tr(),
           style: context.textTheme.labelMediumFont.copyWith(
-            color: ExtensionColors.purpleProfile,
+            color: context.colors.primary,
           ),
         ),
       ],
     );
   }
 
-  List<Widget>? _buildActions(BuildContext context) {
+  List<Widget>? _buildActions(BuildContext context, Color foregroundColor) {
     if (!isProfileMode) return null;
-
-    final colors = context.colors;
 
     return [
       _buildActionButton(
         icon: Icons.chat_bubble_outline,
         onPressed: onChatPressed,
-        backgroundColor: colors.purple50,
+        backgroundColor: context.colors.purple100,
+        iconColor: context.colors.primary,
       ),
       const SizedBox(width: 8),
       _buildActionButton(
-        icon: Icons.notifications,
+        icon: Icons.notifications_outlined,
         onPressed: onBellPressed,
-        backgroundColor: colors.purple50,
+        backgroundColor: context.colors.purple100,
+        iconColor: context.colors.primary,
       ),
     ];
   }
@@ -171,14 +255,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required IconData icon,
     VoidCallback? onPressed,
     required Color backgroundColor,
+    required Color iconColor,
   }) {
     return IconButton(
-      icon: Icon(icon, size: 18, color: Colors.purple),
+      icon: Icon(icon, size: 20, color: iconColor),
       onPressed: onPressed,
       style: IconButton.styleFrom(
         backgroundColor: backgroundColor,
         shape: const CircleBorder(),
-        fixedSize: const Size(44, 44),
+        padding: const EdgeInsets.all(8),
       ),
     );
   }
