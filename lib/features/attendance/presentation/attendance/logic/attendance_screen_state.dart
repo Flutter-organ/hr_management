@@ -7,6 +7,8 @@ class AttendanceScreenState {
   final String todayWorkingHours;
   final String payPeriodWorkingHours;
 
+
+
   final bool isClockedIn;
 
   final DateTime? lastClockInTime;

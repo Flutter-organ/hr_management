@@ -1,32 +1,34 @@
 import 'package:equatable/equatable.dart';
 
-class AttendanceHistoryDays extends Equatable {
-  final num id;
-  final String date;
-  final String checkInTime;
-  final dynamic checkInLocation;
-  final dynamic checkOutTime;
-  final dynamic checkOutLocation;
-  final String hoursWorked;
-  final String overtimeHours;
-  final String status;
-  final String notes;
-  final String createdAt;
-  final String updatedAt;
+class AttendanceDay extends Equatable {
+  final int id;
+  final String? date;
 
-  const AttendanceHistoryDays({
+  final String checkInTime;
+  final String checkOutTime;
+
+  final double hoursWorked;
+  final double overtimeHours;
+
+  final String status;
+  final bool hasActiveBreak;
+
+  final String checkInLocation;
+  final String proofImage;
+  final String notes;
+
+  const AttendanceDay({
     required this.id,
     required this.date,
     required this.checkInTime,
-    required this.checkInLocation,
     required this.checkOutTime,
-    required this.checkOutLocation,
     required this.hoursWorked,
     required this.overtimeHours,
     required this.status,
+    required this.hasActiveBreak,
+    required this.checkInLocation,
+    required this.proofImage,
     required this.notes,
-    required this.createdAt,
-    required this.updatedAt,
   });
 
   @override
@@ -34,14 +36,13 @@ class AttendanceHistoryDays extends Equatable {
     id,
     date,
     checkInTime,
-    checkInLocation,
     checkOutTime,
-    checkOutLocation,
     hoursWorked,
     overtimeHours,
     status,
+    hasActiveBreak,
+    checkInLocation,
+    proofImage,
     notes,
-    createdAt,
-    updatedAt,
   ];
 }

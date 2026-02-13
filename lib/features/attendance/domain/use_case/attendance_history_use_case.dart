@@ -4,10 +4,10 @@ import '../../../auth/domain/failures/failure.dart';
 import '../enitity/AttendanceHistory.dart';
 import '../repository/AttendanceRepository.dart';
 
-class AttendanceHistoryUseCase {
+class GetAttendanceHistoryUseCase {
   final AttendanceRepository _attendanceRepository;
 
-  const AttendanceHistoryUseCase(this._attendanceRepository);
+  const GetAttendanceHistoryUseCase(this._attendanceRepository);
 
   Future<Either<Failure, AttendanceHistory>> call() async {
     return _attendanceRepository.attendanceHistory();

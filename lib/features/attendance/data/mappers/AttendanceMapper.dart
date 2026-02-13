@@ -1,41 +1,42 @@
 import 'package:hr_management/features/attendance/data/data_source/remote/dto/Attendance_history_response.dart';
+import 'package:hr_management/features/attendance/data/data_source/remote/dto/request.dart';
 import 'package:hr_management/features/attendance/domain/enitity/AttendanceHistoryDays.dart';
 import 'package:hr_management/features/attendance/domain/enitity/SummaryHistoryMonth.dart';
 
 import '../../domain/enitity/AttendanceHistory.dart';
+import '../../domain/enitity/attendanceclockIn.dart';
 import '../data_source/remote/dto/SummaryHistoryMonthDto.dart';
-import '../data_source/remote/dto/attendance_history_daysDto.dart';
+import '../data_source/remote/dto/attendance_day.dart';
 
 class AttendanceMapper {
   static AttendanceHistory toDomainAttendanceHistory(
     AttendanceHistoryResponse attendanceHistoryResponse,
   ) {
     return AttendanceHistory(
-      attendanceHistoryDays: attendanceHistoryResponse.attendanceHistoryDaysDto!
-          .map(toDomainAttendanceHistoryDays)
+      attendanceHistoryDays: attendanceHistoryResponse.attendanceDayDto
+          .map(toDomainAttendanceDay)
           .toList(),
-      summaryHistoryMonth: toDomainSummaryHistoryMonth(attendanceHistoryResponse.summaryHistoryMonthDto),
-      month: attendanceHistoryResponse.month ?? 0,
-      year: attendanceHistoryResponse.year ?? 0,
+      summaryHistoryMonth: toDomainSummaryHistoryMonth(
+        attendanceHistoryResponse.summaryHistoryMonthDto,
+      ),
+      month: attendanceHistoryResponse.month,
+      year: attendanceHistoryResponse.year,
     );
   }
 
-  static AttendanceHistoryDays toDomainAttendanceHistoryDays(
-    AttendanceHistoryDaysDto? attendanceHistoryDaysDto,
-  ) {
-    return AttendanceHistoryDays(
-      id: attendanceHistoryDaysDto?.id ?? 0,
-      date: attendanceHistoryDaysDto?.date ?? '',
-      checkInTime: attendanceHistoryDaysDto?.checkInTime ?? '',
-      checkInLocation: attendanceHistoryDaysDto?.checkInLocation ?? '',
-      checkOutTime: attendanceHistoryDaysDto?.checkOutTime ?? '',
-      checkOutLocation: attendanceHistoryDaysDto?.checkOutLocation ?? '',
-      hoursWorked: attendanceHistoryDaysDto?.hoursWorked ?? '',
-      overtimeHours: attendanceHistoryDaysDto?.overtimeHours ?? '',
-      status: attendanceHistoryDaysDto?.status ?? '',
-      notes: attendanceHistoryDaysDto?.notes ?? '',
-      createdAt: attendanceHistoryDaysDto?.createdAt ?? '',
-      updatedAt: attendanceHistoryDaysDto?.updatedAt ?? '',
+  static AttendanceDay toDomainAttendanceDay(AttendanceDayDto? attendanceDay) {
+    return AttendanceDay(
+      id: attendanceDay?.id ?? 0,
+      date: attendanceDay?.date.toString() ??'',
+      checkInTime: attendanceDay?.checkInTime ?? '',
+      checkOutTime: attendanceDay?.checkOutTime ?? '',
+      hoursWorked: attendanceDay?.hoursWorked ?? 0,
+      overtimeHours: attendanceDay?.overtimeHours ?? 0,
+      status: attendanceDay?.status ?? '',
+      hasActiveBreak: attendanceDay?.hasActiveBreak ?? false,
+      checkInLocation: attendanceDay?.checkInLocation ?? '',
+      proofImage: attendanceDay?.proofImage ?? '',
+      notes: attendanceDay?.notes ?? '',
     );
   }
 
@@ -49,6 +50,17 @@ class AttendanceMapper {
       lateDays: summaryHistoryMonthDto?.lateDays ?? 0,
       absentDays: summaryHistoryMonthDto?.absentDays ?? 0,
       overtimeHours: summaryHistoryMonthDto?.overtimeHours ?? 0,
+    );
+  }
+
+  static AttendanceClockInRequest toDtoAttendanceClockInRequest(
+    AttendanceClockIn attendanceClockIn,
+  ) {
+    return AttendanceClockInRequest(
+      latitude: attendanceClockIn.latitude,
+      longitude: attendanceClockIn.longitude,
+      notes: attendanceClockIn.notes ?? '',
+      proofImage: attendanceClockIn.proofImage,
     );
   }
 }

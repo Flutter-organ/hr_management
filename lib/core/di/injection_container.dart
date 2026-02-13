@@ -1,7 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:hr_management/features/attendance/domain/use_case/AttendanceHistoryUseCase.dart';
+import 'package:hr_management/features/attendance/domain/use_case/attendance_history_use_case.dart';
 import 'package:hr_management/features/attendance/domain/use_case/getUserInfoUseCase.dart';
-import 'package:hr_management/features/attendance/presentation/clock_in/view/screen/attendance_screen.dart';
 import 'package:hr_management/features/auth/data/data_source/local/onboarding_local_data_source%20.dart';
 import 'package:hr_management/features/auth/data/data_source/local/onboarding_local_data_source_impl.dart';
 import 'package:hr_management/features/auth/data/repository_imp/on_boarding_repository_imp.dart';
@@ -11,22 +10,20 @@ import 'package:hr_management/features/auth/domain/use_cases/load_identifier_use
 import 'package:hr_management/features/auth/domain/use_cases/login_use_case.dart';
 import 'package:hr_management/features/auth/domain/use_cases/register_use_case.dart';
 import 'package:hr_management/features/auth/presentation/login/logic/login_cubit.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../features/attendance/data/data_source/remote/LocationRemoteDataSourceImpl.dart';
 import '../../features/attendance/data/data_source/remote/attendance_remote_data_source.dart';
 import '../../features/attendance/data/data_source/remote/attendance_remote_data_source_impl.dart';
-import '../../features/attendance/data/data_source/remote/dto/LocationRemoteDataSource.dart';
-import '../../features/attendance/data/data_source/remote/dto/LocationRemoteDataSourceImpl.dart';
+import '../../features/attendance/data/data_source/remote/LocationRemoteDataSource.dart';
 import '../../features/attendance/data/repository_imp/LocationRepositoryImpl.dart';
 import '../../features/attendance/data/repository_imp/attendance_repository_impl.dart';
-import '../../features/attendance/domain/enitity/UserLocation.dart';
 import '../../features/attendance/domain/repository/AttendanceRepository.dart';
 import '../../features/attendance/domain/repository/LocationRepository.dart';
 import '../../features/attendance/domain/use_case/GetCurrentLocationUseCase.dart';
-import '../../features/attendance/domain/use_case/getDistanceBetweenLocationUseCase.dart';
-import '../../features/attendance/domain/use_case/getOfficeLocationUseCase.dart';
-import '../../features/attendance/presentation/clock_in/logic/attendance_screen_cubit.dart';
-import '../../features/attendance/presentation/clock_in/logic/location_screen_cubit.dart';
+import '../../features/attendance/domain/use_case/attendance_clock_in_use_case.dart';
+import '../../features/attendance/domain/use_case/get_attendance_today_use_case.dart';
+import '../../features/attendance/presentation/clock_in/logic/ClockInFlowCubit.dart';
+import '../../features/attendance/presentation/attendance/logic/attendance_screen_cubit.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source_imp.dart';
 import '../../features/auth/data/data_source/remote/auth_remote_data_source.dart';
@@ -162,44 +159,45 @@ Future<void> _initAttendance() async {
     () => AttendanceRemoteDataSourceImpl(dioClient: sl<DioClient>()),
   );
   sl.registerLazySingleton<AttendanceRepository>(
-    () => AttendanceRepositoryImpl( attendanceRemoteDataSource: sl<AttendanceRemoteDataSource>()),
+    () => AttendanceRepositoryImpl(
+      attendanceRemoteDataSource: sl<AttendanceRemoteDataSource>(),
+    ),
   );
-  sl.registerLazySingleton<AttendanceHistoryUseCase>(
-    () => AttendanceHistoryUseCase(sl<AttendanceRepository>()),
+  sl.registerLazySingleton<GetAttendanceHistoryUseCase>(
+    () => GetAttendanceHistoryUseCase(sl<AttendanceRepository>()),
+  );
+  sl.registerLazySingleton<GetTodayAttendanceUseCase>(
+    () => GetTodayAttendanceUseCase(sl<AttendanceRepository>()),
   );
 
   sl.registerFactory<AttendanceScreenCubit>(
-    () => AttendanceScreenCubit(sl<AttendanceHistoryUseCase>()),
+    () => AttendanceScreenCubit(
+        getAttendanceHistoryUseCase: sl<GetAttendanceHistoryUseCase>(),
+     getTodayAttendanceUseCase: sl<GetTodayAttendanceUseCase>()
+    ),
   );
-  sl.registerFactory<ClockInLocationCubit>(() => ClockInLocationCubit(
-    getCurrentLocation: sl<GetCurrentLocationUseCase>(),
-    getDistanceBetweenLocationUseCase: sl<Getdistancebetweenlocationusecase>(),
-    getUserInfo: sl<GetUserInfoUseCase>(),
-    getOfficeLocation: sl<GetOfficeLocationUseCase>(),
-
-  ));
+  // ✅ Register ClockInFlowCubit
+  sl.registerFactory<ClockInFlowCubit>(
+    () => ClockInFlowCubit(
+      getCurrentLocation: sl<GetCurrentLocationUseCase>(),
+      getUserInfo: sl<GetUserInfoUseCase>(),
+      clockInAttendance: sl<ClockInAttendanceUseCase>(),
+    ),
+  );
 
   sl.registerLazySingleton<LocationRemoteDataSource>(
-        () => LocationRemoteDataSourceImpl(),
+    () => LocationRemoteDataSourceImpl(),
   );
   sl.registerLazySingleton<LocationRepository>(
-        () => LocationRepositoryImpl(
-          sl<LocationRemoteDataSource>(),
-        ),
+    () => LocationRepositoryImpl(sl<LocationRemoteDataSource>()),
   );
   sl.registerLazySingleton<GetCurrentLocationUseCase>(
-        () => GetCurrentLocationUseCase(sl<LocationRepository>()),
+    () => GetCurrentLocationUseCase(sl<LocationRepository>()),
   );
-  sl.registerLazySingleton<Getdistancebetweenlocationusecase>(
-        () => Getdistancebetweenlocationusecase(
-          sl<LocationRepository>()),
+  sl.registerLazySingleton<GetUserInfoUseCase>(() => GetUserInfoUseCase());
+  sl.registerLazySingleton<ClockInAttendanceUseCase>(
+    () => ClockInAttendanceUseCase(
+      attendanceRepository: sl<AttendanceRepository>(),
+    ),
   );
-  sl.registerLazySingleton<GetUserInfoUseCase>(
-        () => GetUserInfoUseCase(),
-  );
-  sl.registerLazySingleton<GetOfficeLocationUseCase>(
-        () => GetOfficeLocationUseCase(),
-  );
-
-
 }

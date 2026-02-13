@@ -1,15 +1,14 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hr_management/core/presentation/routes/route_names.dart';
-import 'package:hr_management/features/attendance/presentation/clock_in/logic/attendance_screen_cubit.dart';
+import 'package:hr_management/features/attendance/presentation/attendance/logic/attendance_screen_cubit.dart';
 import 'package:hr_management/features/auth/presentation/on_boarding/logic/on_boarding_cubit.dart';
 import 'package:hr_management/features/home/presentation/view/home_screen.dart';
 import 'package:hr_management/core/di/injection_container.dart';
-import 'package:latlong2/latlong.dart';
+import '../../../features/attendance/presentation/clock_in/logic/ClockInFlowCubit.dart';
 import '../../../features/attendance/presentation/clock_in/view/screen/LocationScreen.dart';
-import '../../../features/attendance/presentation/clock_in/view/screen/attendance_screen.dart';
+import '../../../features/attendance/presentation/attendance/view/screen/attendance_screen.dart';
 import '../../../features/attendance/presentation/clock_in/view/screen/camera_preview_screen.dart';
 import '../../../features/attendance/presentation/clock_in/view/screen/conformation_camera_screen.dart';
 import '../../../features/auth/presentation/login/logic/login_cubit.dart';
@@ -132,65 +131,36 @@ final GoRouter router = GoRouter(
         ),
       ],
     ),
-    // ✅ شاشة خريطة تسجيل الحضور
-    GoRoute(
-      path: RouteNames.clockInMap,
-      name: 'clockInMap',
-      builder: (context, state) => const ClockInScreen(),
-    ),
-
-    // ✅ شاشة الكاميرا مع استقبال البيانات من الخريطة
-    GoRoute(
-      path: RouteNames.selfieCamera,
-      name: 'selfieCamera',
-      builder: (context, state) {
-        // ✅ استقبال البيانات من الشاشة السابقة
-        final extra = state.extra as Map<String, dynamic>?;
-
-        if (extra == null) {
-          // إذا مفيش بيانات، نرجع للشاشة الرئيسية
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.go(RouteNames.attendantScreen);
-          });
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
-
-        final lat = extra['lat'] as double? ?? 0.0;
-        final long = extra['long'] as double? ?? 0.0;
-        final location = LatLng(lat, long);
-
-        return CameraPreviewScreen(location: location);
-      },
-    ),
-
-    // ✅ شاشة التأكيد
-    GoRoute(
-      path: RouteNames.confirmationScreen,
-      name: 'confirmationScreen',
-      builder: (context, state) {
-        final extra = state.extra as Map<String, dynamic>?;
-
-        if (extra == null) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.go(RouteNames.attendantScreen);
-          });
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
-
-        final capturedImage = extra['capturedImage'] as XFile;
-        final lat = extra['lat'] as double;
-        final long = extra['long'] as double;
-        final location = LatLng(lat, long);
-
-        return ConfirmationScreen(
-          capturedImage: capturedImage,
-          location: location,
+    ShellRoute(
+      builder: (context, state, child) {
+        // ✅ الـ Cubit هنا بيفضل حي لكل الـ child routes
+        return BlocProvider<ClockInFlowCubit>(
+          create: (context) => sl<ClockInFlowCubit>(),
+          child: child, // ← الـ child هنا هو أي route من اللي تحت
         );
       },
+      routes: [
+        // 📍 Screen 1: Location
+        GoRoute(
+          path: RouteNames.clockInMap,
+          name: 'clockInMap',
+          builder: (context, state) => const ClockInLocationScreen(),
+        ),
+
+        // 📸 Screen 2: Camera
+        GoRoute(
+          path: RouteNames.selfieCamera,
+          name: 'selfieCamera',
+          builder: (context, state) => const CameraPreviewScreen(),
+        ),
+
+        // ✅ Screen 3: Confirmation
+        GoRoute(
+          path: RouteNames.confirmationScreen,
+          name: 'confirmationScreen',
+          builder: (context, state) => const ConfirmationScreen(),
+        ),
+      ],
     ),
   ],
 );

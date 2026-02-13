@@ -11,7 +11,6 @@ import '../../../../../../core/presentation/design_system/theme/helper/theme_ext
 import '../../logic/attendance_screen_cubit.dart';
 import '../../logic/attendance_screen_state.dart';
 
-/// ✅ Banner تسجيل الحضور مع معلومات الساعات والزرار
 class ClockInBanner extends StatelessWidget {
   final AttendanceScreenCubit attendanceScreenCubit;
   final AttendanceScreenState attendanceScreenState;
@@ -27,7 +26,7 @@ class ClockInBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 333,
+      height: 316,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -93,15 +92,15 @@ List<Widget> buildAttendanceButtons({
     ),
   ];
 
-  // return [
-  //   CustomPrimaryButton.gradient(
-  //     buttonText: "Clock Out".tr(),
-  //     onPressed: onClockOut,
-  //   ),
-  //   const SizedBox(height: 12),
-  //   CustomPrimaryButton.outlined(
-  //     buttonText: "Break".tr(),
-  //     onPressed: onBreak,
-  //   ),
-  // ];
+  return [
+    CustomPrimaryButton.gradient(
+      buttonText: "Clock Out".tr(),
+      onPressed: onClockOut,
+    ),
+    const SizedBox(height: 12),
+    CustomPrimaryButton.outlined(
+      buttonText: "Break".tr(),
+      onPressed: onBreak,
+    ),
+  ];
 }

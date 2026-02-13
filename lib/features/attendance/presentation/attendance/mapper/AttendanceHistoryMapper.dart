@@ -24,17 +24,16 @@ class AttendanceHistoryMapper {
     );
   }
 
-  /// 🔹 Days → HistoryCardModel
   static List<HistoryCardModel> _mapDaysToHistoryCards(
-    List<AttendanceHistoryDays> days,
+    List<AttendanceDay> days,
   ) {
     return days.map((day) {
       return HistoryCardModel(
-        date: DateTime.parse(day.date),
+        date: DateTime.parse(day.date??''),
         infoItems: [
           InfoItem(
             label: 'Total Hours',
-            value: formatTo12Hour(day.hoursWorked ?? '--'),
+            value: formatTo12Hour(day.hoursWorked.toString()),
           ),
           InfoItem(label: 'Clock in & Out', value: _buildClockInOut(day)),
         ],
@@ -43,23 +42,20 @@ class AttendanceHistoryMapper {
     }).toList();
   }
 
-  static String _buildClockInOut(AttendanceHistoryDays day) {
-    if (day.checkInTime == null || day.checkOutTime == null) {
-      return '--';
-    }
+  static String _buildClockInOut(AttendanceDay day) {
     return '${formatTo12Hour(day.checkInTime)} — ${formatTo12Hour(day.checkOutTime)}';
   }
 }
 
 String formatTo12Hour(String? dateTimeString) {
   if (dateTimeString == null || dateTimeString.isEmpty) {
-    return '--';
+    return '00:00';
   }
 
   try {
     final dateTime = DateTime.parse(dateTimeString).toLocal();
     return DateFormat('hh:mm a').format(dateTime);
   } catch (e) {
-    return '--';
+    return '00:00';
   }
 }

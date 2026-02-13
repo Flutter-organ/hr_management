@@ -1,9 +1,8 @@
 import 'package:fpdart/fpdart.dart';
-
 import '../../../auth/domain/failures/failure.dart';
 import '../../domain/enitity/UserLocation.dart';
 import '../../domain/repository/LocationRepository.dart';
-import '../data_source/remote/dto/LocationRemoteDataSource.dart';
+import '../data_source/remote/LocationRemoteDataSource.dart';
 
 class LocationRepositoryImpl implements LocationRepository {
   final LocationRemoteDataSource dataSource;

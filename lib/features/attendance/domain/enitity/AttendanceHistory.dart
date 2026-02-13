@@ -7,7 +7,7 @@ class AttendanceHistory extends Equatable {
   final int month;
   final int year;
   final SummaryHistoryMonth summaryHistoryMonth;
-  final List<AttendanceHistoryDays> attendanceHistoryDays;
+  final List<AttendanceDay> attendanceHistoryDays;
 
   const AttendanceHistory({
     required this.month,

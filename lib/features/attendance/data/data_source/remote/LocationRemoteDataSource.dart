@@ -1,5 +1,5 @@
 
-import '../../../../domain/enitity/UserLocation.dart';
+import '../../../domain/enitity/UserLocation.dart';
 
 abstract class LocationRemoteDataSource {
   Future< Location> getCurrentLocation();

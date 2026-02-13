@@ -1,38 +1,28 @@
 class SummaryHistoryMonthDto {
+  final num totalDays;
+  final num presentDays;
+  final num lateDays;
+  final num absentDays;
+  final num totalHours;
+  final num overtimeHours;
+
   SummaryHistoryMonthDto({
-      num? totalDays, 
-      num? presentDays, 
-      num? lateDays, 
-      num? absentDays, 
-      num? totalHours, 
-      num? overtimeHours,}){
-    _totalDays = totalDays;
-    _presentDays = presentDays;
-    _lateDays = lateDays;
-    _absentDays = absentDays;
-    _totalHours = totalHours;
-    _overtimeHours = overtimeHours;
-}
+    required this.totalDays,
+    required this.presentDays,
+    required this.lateDays,
+    required this.absentDays,
+    required this.totalHours,
+    required this.overtimeHours,
+  });
 
-  SummaryHistoryMonthDto.fromJson(dynamic json) {
-    _totalDays = json['total_days'];
-    _presentDays = json['present_days'];
-    _lateDays = json['late_days'];
-    _absentDays = json['absent_days'];
-    _totalHours = json['total_hours'];
-    _overtimeHours = json['overtime_hours'];
+  factory SummaryHistoryMonthDto.fromJson(Map<String, dynamic> json) {
+    return SummaryHistoryMonthDto(
+      totalDays: json['total_days'],
+      presentDays: json['present_days'],
+      lateDays: json['late_days'],
+      absentDays: json['absent_days'],
+      totalHours: json['total_hours'],
+      overtimeHours: json['overtime_hours'],
+    );
   }
-  num? _totalDays;
-  num? _presentDays;
-  num? _lateDays;
-  num? _absentDays;
-  num? _totalHours;
-  num? _overtimeHours;
-
-  num? get totalDays => _totalDays;
-  num? get presentDays => _presentDays;
-  num? get lateDays => _lateDays;
-  num? get absentDays => _absentDays;
-  num? get totalHours => _totalHours;
-  num? get overtimeHours => _overtimeHours;
 }

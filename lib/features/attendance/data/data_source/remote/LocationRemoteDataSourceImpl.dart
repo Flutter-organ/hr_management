@@ -1,14 +1,11 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:geolocator/geolocator.dart';
-
-import '../../../../../auth/domain/failures/failure.dart';
-import '../../../../domain/enitity/UserLocation.dart';
+import '../../../domain/enitity/UserLocation.dart';
 import 'LocationRemoteDataSource.dart';
 
 class LocationRemoteDataSourceImpl implements LocationRemoteDataSource {
   @override
   Future<Location> getCurrentLocation() async {
-    // ✅ permissions
     final serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       throw Exception("LOCATION_SERVICE_DISABLED");
@@ -27,7 +24,6 @@ class LocationRemoteDataSourceImpl implements LocationRemoteDataSource {
       throw Exception("PERMISSION_DENIED_FOREVER");
     }
 
-    // ✅ position
     final position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
