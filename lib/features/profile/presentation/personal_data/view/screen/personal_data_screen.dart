@@ -25,6 +25,7 @@ class PersonalDataScreen extends StatelessWidget {
       appBar: CustomAppBar.simple(
         title: 'personal_data'.tr(),
         showBackButton: true,
+        leadingBackgroundColor: context.colors.purple100,
         onBackPressed: () => context.pop(),
       ),
       body: BlocConsumer<PersonalDataCubit, PersonalDataState>(

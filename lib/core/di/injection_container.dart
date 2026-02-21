@@ -32,9 +32,14 @@ import '../../features/profile/data/datasource/remote/profile_remote_data_source
 import '../../features/profile/data/repository_imp/profile_repository_impl.dart';
 import '../../features/profile/domain/repository/profile_repository.dart';
 import '../../features/profile/domain/usecase/complete_profile_usecase.dart';
+import '../../features/profile/domain/usecase/get_office_assets_usecase.dart';
+import '../../features/profile/domain/usecase/get_payroll_details_usecase.dart';
+import '../../features/profile/domain/usecase/get_payroll_history_usecase.dart';
 import '../../features/profile/domain/usecase/get_profile_usecase.dart';
 import '../../features/profile/domain/usecase/update_profile_usecase.dart';
 import '../../features/profile/domain/usecase/upload_profile_image_usecase.dart';
+import '../../features/profile/presentation/office_assets/logic/office_assets_cubit.dart';
+import '../../features/profile/presentation/payroll/logic/payroll_cubit.dart';
 import '../../features/profile/presentation/personal_data/logic/personal_data_cubit.dart';
 import '../../features/profile/presentation/profile/logic/profile_cubit.dart';
 import '../data/cache/cache_manager.dart';
@@ -59,8 +64,6 @@ Future<void> _initCore() async {
 
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerSingleton<SharedPreferences>(sharedPreferences);
-
-  print('🏗️ [DI] SharedPreferences hashCode: ${sharedPreferences.hashCode}');
 
   sl.registerLazySingleton<PreferencesService>(
     () => SharedPreferencesServiceImpl(sl<SharedPreferences>()),
@@ -193,6 +196,16 @@ Future<void> _initProfile() async {
         () => UpdateProfileUseCase(sl<ProfileRepository>()),
   );
 
+  sl.registerLazySingleton<GetPayrollHistoryUseCase>(
+        () => GetPayrollHistoryUseCase(sl<ProfileRepository>()),
+  );
+  sl.registerLazySingleton<GetPayrollDetailsUseCase>(
+        () => GetPayrollDetailsUseCase(sl<ProfileRepository>()),
+  );
+  sl.registerLazySingleton<GetOfficeAssetsUseCase>(
+        () => GetOfficeAssetsUseCase(sl<ProfileRepository>()),
+  );
+
   //presentation
   sl.registerFactory<ProfileCubit>(
         () => ProfileCubit(
@@ -208,4 +221,16 @@ Future<void> _initProfile() async {
       getProfileUseCase: sl<GetProfileUseCase>(),
     ),
   );
+  sl.registerFactory<PayrollCubit>(
+        () => PayrollCubit(
+      getPayrollHistoryUseCase: sl<GetPayrollHistoryUseCase>(),
+      getPayrollDetailsUseCase: sl<GetPayrollDetailsUseCase>(),
+    ),
+  );
+  sl.registerFactory<OfficeAssetsCubit>(
+        () => OfficeAssetsCubit(
+      getOfficeAssetsUseCase: sl<GetOfficeAssetsUseCase>(),
+    ),
+  );
+
 }

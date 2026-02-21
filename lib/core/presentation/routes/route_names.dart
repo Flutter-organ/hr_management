@@ -18,6 +18,8 @@ class RouteNames {
   // Profile
   static const String profile = '/profile';
   static const String personalData = '/profile/personal-data';
+  static const String payrollHistory = '/profile/payroll';
+  static const String payrollDetails = '/profile/payroll/details';
 
 
   // Error
@@ -44,6 +46,8 @@ class RouteNames {
   static bool isOnboardingRoute(String location) {
     return location == onboarding;
   }
+
+  static const String officeAssets = '/profile/office-assets';
 
 
 }

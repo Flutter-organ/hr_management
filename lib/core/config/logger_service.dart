@@ -104,7 +104,7 @@ class LoggerService {
     'secret',
     'secret_key',
     'private_key',
-    'otp',
+    //'otp',
     'code',
     'pin',
     'cvv',

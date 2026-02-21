@@ -3,6 +3,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:hr_management/core/domain/failure/domain_failure.dart';
 import '../../../features/auth/domain/failures/failure.dart';
 import '../../../features/profile/domain/failure/failure.dart';
+import '../../../features/profile/domain/failure/payroll_failure.dart';
 import '../exception/ui_errors.dart';
 
 abstract class BaseCubit<STATE> extends Cubit<STATE> {
@@ -68,6 +69,9 @@ abstract class BaseCubit<STATE> extends Cubit<STATE> {
       ProfileNotCompletedFailure(:final message) => ProfileNotCompletedUiError(message),
       ProfileFetchFailure(:final message) => ProfileFetchUiError(message),
       ProfileImageUploadFailure(:final message) => ProfileImageUploadUiError(message),
+
+      PayrollFetchFailure(:final message) => PayrollFetchUiError(message),
+      PayrollNotFoundFailure(:final message) => PayrollNotFoundUiError(message),
 
 
       UnknownFailure(:final message) => UnknownUiError(message),

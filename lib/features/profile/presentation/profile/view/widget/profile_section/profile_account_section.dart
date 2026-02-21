@@ -29,12 +29,12 @@ class ProfileAccountSection extends StatelessWidget {
         ProfileItem.action(
           title: 'office_assets'.tr(),
           icon: Iconsax.briefcase,
-          onTap: () => {},
+          onTap: () => context.push(RouteNames.officeAssets),
         ),
         ProfileItem.action(
           title: 'payroll_tax'.tr(),
           icon: Iconsax.wallet_3,
-          onTap: () => {},
+          onTap: () => context.push(RouteNames.payrollHistory),
         ),
       ],
     );

@@ -1,5 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
-
+import '../../../../core/data/util/parsing.dart';
 import '../../domain/entity/employee_profile.dart';
 import '../../domain/entity/gender.dart';
 import '../datasource/remote/dto/employee_profile_dto.dart';
@@ -17,22 +16,22 @@ class ProfileMapper {
       lastName: dto.lastName ?? '',
       fullName: dto.fullName ?? '',
       phone: dto.phone,
-      dateOfBirth: _parseDate(dto.dateOfBirth) ?? DateTime.now(),
+      dateOfBirth: DataFormat.parseDate(dto.dateOfBirth) ?? DateTime.now(),
       gender: Gender.fromString(dto.gender ?? 'male'),
       address: dto.address ?? '',
       profileImage: dto.profileImage,
       jobTitle: dto.jobTitle,
       department: dto.department,
       manager: dto.manager,
-      hireDate: _parseDate(dto.hireDate) ?? DateTime.now(),
+      hireDate: DataFormat.parseDate(dto.hireDate) ?? DateTime.now(),
       baseSalary: dto.baseSalary,
       hourlyRate: dto.hourlyRate,
       employmentType: dto.employmentType ?? 'full_time',
       status: dto.status ?? 'pending',
       role: dto.role ?? 'employee',
-      terminationDate: _parseDate(dto.terminationDate),
-      createdAt: _parseDateTime(dto.createdAt),
-      updatedAt: _parseDateTime(dto.updatedAt),
+      terminationDate: DataFormat.parseDate(dto.terminationDate),
+      createdAt: DataFormat.parseDateTime(dto.createdAt),
+      updatedAt: DataFormat.parseDateTime(dto.updatedAt),
     );
   }
 
@@ -51,7 +50,7 @@ class ProfileMapper {
     return CompleteProfileRequestDto(
       firstName: firstName,
       lastName: lastName,
-      dateOfBirth: _formatDate(dateOfBirth),
+      dateOfBirth: DataFormat.formatDate(dateOfBirth),
       gender: gender,
       nationalId: nationalId,
       address: address,
@@ -76,25 +75,4 @@ class ProfileMapper {
     );
   }
 
-  static DateTime? _parseDate(String? dateString) {
-    if (dateString == null || dateString.isEmpty) return null;
-    try {
-      return DateFormat('yyyy-MM-dd').parse(dateString);
-    } catch (e) {
-      return null;
-    }
-  }
-
-  static DateTime? _parseDateTime(String? dateTimeString) {
-    if (dateTimeString == null || dateTimeString.isEmpty) return null;
-    try {
-      return DateFormat('yyyy-MM-dd HH:mm:ss').parse(dateTimeString);
-    } catch (e) {
-      return null;
-    }
-  }
-
-  static String _formatDate(DateTime date) {
-    return DateFormat('yyyy-MM-dd').format(date);
-  }
 }

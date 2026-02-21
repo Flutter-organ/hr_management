@@ -83,3 +83,11 @@ class ProfileImageUploadUiError extends UiError {
   const ProfileImageUploadUiError([super.message = 'Failed to upload profile image']);
 }
 
+class PayrollFetchUiError extends UiError {
+  const PayrollFetchUiError([super.message = 'Failed to load payroll data']);
+}
+
+class PayrollNotFoundUiError extends UiError {
+  const PayrollNotFoundUiError([super.message = 'Payroll record not found']);
+}
+

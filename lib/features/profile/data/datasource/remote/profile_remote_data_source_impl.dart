@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:hr_management/features/profile/data/datasource/remote/dto/response/payroll_dto.dart';
 import 'package:hr_management/features/profile/data/datasource/remote/dto/response/upload_image_response_dto.dart';
 import 'package:hr_management/features/profile/data/datasource/remote/profile_remote_data_source.dart';
 
@@ -114,5 +115,22 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
 
     final data = response.data['data'] as Map<String, dynamic>;
     return UploadImageResponseDto.fromJson(data);
+  }
+
+  @override
+  Future<PayrollDto> getPayrollDetail(int id) async {
+    final response = await _dioClient.get('${ApiConstants.getPayrollDetail}/$id');
+    final data = response.data['data'] as Map<String, dynamic>;
+    return PayrollDto.fromJson(data);
+  }
+
+  @override
+  Future<List<PayrollDto>> getPayrollHistory() async {
+    final response = await _dioClient.get(ApiConstants.getPayrollHistory);
+
+    final data = response.data['data'] as List<dynamic>;
+    return data
+        .map((json) => PayrollDto.fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 }

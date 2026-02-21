@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
+import '../../../../../../../core/config/app_constant.dart';
 import '../../../../../../../core/di/injection_container.dart';
 import '../../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
@@ -27,7 +28,7 @@ class ProfileSettingsSection extends StatelessWidget {
         ProfileItem.action(
           title: 'change_password'.tr(),
           icon: Iconsax.lock,
-          onTap: () => {},
+          onTap: () => SnackBarHelper.showInfo(context, "coming soon "),
         ),
         ProfileItem.action(
           title: 'versioning'.tr(),
@@ -57,7 +58,7 @@ void _showVersionDialog(BuildContext context) {
         borderRadius: BorderRadius.circular(16),
       ),
       title: Text('app_version'.tr()),
-      content: const Text('Version 1.0.0'),
+      content: const Text(AppConstant.appVersion),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),

@@ -1,10 +1,13 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:hr_management/features/profile/domain/entity/office_asset.dart';
+import 'package:hr_management/features/profile/domain/entity/payroll.dart';
 import '../../../../core/domain/failure/domain_failure.dart';
 import '../../domain/entity/employee_profile.dart';
 import '../../domain/entity/gender.dart';
 import '../../domain/repository/profile_repository.dart';
 import '../datasource/local/profile_local_data_source.dart';
 import '../datasource/remote/profile_remote_data_source.dart';
+import '../mapper/payroll_mapper.dart';
 import '../mapper/profile_failure_mapper.dart';
 import '../mapper/profile_mapper.dart';
 
@@ -122,4 +125,38 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return Left(ProfileFailureMapper.mapException(e));
     }
   }
+
+  @override
+  Future<Either<Failure, Payroll>> getPayrollDetail(int id) async {
+    try {
+      final dto = await _remoteDataSource.getPayrollDetail(id);
+      return Right(PayrollMapper.toDomain(dto));
+    } catch (e) {
+      return Left(ProfileFailureMapper.mapException(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Payroll>>> getPayrollHistory() async {
+    try {
+      final response = await _remoteDataSource.getPayrollHistory();
+      final domain = response.map((e) => PayrollMapper.toDomain(e)).toList();
+      return Right(domain);
+    } catch (e) {
+      return Left(ProfileFailureMapper.mapException(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<OfficeAsset>>> getOfficeAssets() async {
+    try {
+      // TODO: Replace with remote data source when backend is ready
+      // final assets = await _remoteDataSource.getOfficeAssets();
+      final assets = await _localDataSource.getOfficeAssets();
+      return Right(assets);
+    } catch (e) {
+      return Left(UnknownFailure(e.toString()));
+    }
+  }
+
 }

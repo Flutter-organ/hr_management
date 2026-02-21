@@ -11,6 +11,11 @@ import '../../../features/auth/presentation/on_boarding/view/on_boarding_page.da
 import '../../../features/auth/presentation/register/signup/logic/sign_up_cubit.dart';
 import '../../../features/auth/presentation/register/signup/view/screen/sign_up_screen.dart';
 import '../../../features/main_navigation/presentation/screens/main_wrapper_screen.dart';
+import '../../../features/profile/presentation/office_assets/logic/office_assets_cubit.dart';
+import '../../../features/profile/presentation/office_assets/view/screen/office_assets_screen.dart';
+import '../../../features/profile/presentation/payroll/logic/payroll_cubit.dart';
+import '../../../features/profile/presentation/payroll/view/screen/payroll_details_screen.dart';
+import '../../../features/profile/presentation/payroll/view/screen/payroll_history_screen.dart';
 import '../../../features/profile/presentation/personal_data/logic/personal_data_cubit.dart';
 import '../../../features/profile/presentation/personal_data/view/screen/personal_data_screen.dart';
 import '../../../features/profile/presentation/profile/logic/profile_cubit.dart';
@@ -74,6 +79,36 @@ final GoRouter router = GoRouter(
       builder: (context, state) => BlocProvider(
         create: (_) => sl<PersonalDataCubit>()..loadProfile(),
         child: const PersonalDataScreen(),
+      ),
+    ),
+
+    GoRoute(
+      path: RouteNames.payrollHistory,
+      name: 'payroll_history',
+      builder: (context, state) => BlocProvider(
+        create: (_) => sl<PayrollCubit>()..loadPayrollHistory(),
+        child: const PayrollHistoryScreen(),
+      ),
+    ),
+
+    GoRoute(
+      path: RouteNames.payrollDetails,
+      name: 'payroll_details',
+      builder: (context, state) {
+        final payrollId = state.extra as int;
+        return BlocProvider(
+          create: (_) => sl<PayrollCubit>()..loadPayrollDetails(payrollId),
+          child: PayrollDetailsScreen(payrollId: payrollId),
+        );
+      },
+    ),
+
+    GoRoute(
+      path: RouteNames.officeAssets,
+      name: 'office_assets',
+      builder: (context, state) => BlocProvider(
+        create: (_) => sl<OfficeAssetsCubit>()..loadAssets(),
+        child: const OfficeAssetsScreen(),
       ),
     ),
 
