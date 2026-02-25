@@ -10,12 +10,12 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../../../../../core/presentation/design_system/components/custom_input_field.dart';
 import '../../../../../../core/presentation/design_system/components/custom_primary_button.dart';
+import '../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../../core/presentation/routes/route_names.dart';
 import '../../../attendance/logic/attendance_screen_cubit.dart';
 import '../../logic/ClockInFlowCubit.dart';
 import '../../logic/ClockInFlowStatus.dart';
 
-/// شاشة تأكيد الصورة وتسجيل الحضور - بنفس التصميم القديم
 class ConfirmationScreen extends StatefulWidget {
   const ConfirmationScreen({super.key});
 
@@ -37,20 +37,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
     return BlocConsumer<ClockInFlowCubit, ClockInFlowState>(
       listener: (context, state) {
         if (state.isSuccess) {
-          // ✅ Refresh الـ Attendance Screen
-          try {
-            context.read<AttendanceScreenCubit>().refreshAfterClockIn();
-          } catch (e) {
-            debugPrint('AttendanceScreenCubit not found: $e');
-          }
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('تم التسجيل بنجاح'),
-              backgroundColor: Colors.green,
-              duration: Duration(seconds: 2),
-            ),
-          );
+          SnackBarHelper.showSuccess(context, 'Clock In Successfully'.tr());
 
           Future.delayed(const Duration(seconds: 2), () {
             if (mounted) {
@@ -60,18 +47,9 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
         }
 
         if (state.hasError && state.errorMessage != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.errorMessage!),
-              backgroundColor: Colors.red,
-              action: SnackBarAction(
-                label: 'Retry'.tr(),
-                textColor: Colors.white,
-                onPressed: () {
-                  context.read<ClockInFlowCubit>().clearError();
-                },
-              ),
-            ),
+          SnackBarHelper.showError(
+            context,
+            state.errorMessage!,
           );
         }
       },
@@ -100,104 +78,22 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                 ),
                 child: Column(
                   children: [
-                    // ✅ Image Preview with Location Overlay (نفس التصميم القديم)
                     Column(
                       children: [
                         SizedBox(
                           width: double.infinity,
                           height: 440,
-                          child: Stack(
-                            children: [
-                              if (state.capturedImage != null)
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Image.file(
-                                    File(state.capturedImage!.path),
-                                    fit: BoxFit.cover,
-                                    width: 334,
-                                  ),
-                                ),
-
-                              // Gradient Overlay في الأسفل
-                              Positioned(
-                                bottom: 0,
-                                left: 0,
-                                right: 0,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      colors: [
-                                        ExtensionColors.transparentColor,
-                                        context.colors.black.withOpacity(0.5),
-                                      ],
-                                    ),
-                                  ),
-                                  padding: const EdgeInsets.all(16),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      // Location Coordinates
-                                      if (state.userLocation != null) ...[
-                                        Text(
-                                          'Lat : ${state.userLocation!.latitude.toStringAsFixed(5)}',
-                                          style: context.textTheme.labelMediumFont.copyWith(
-                                            color: context.colors.white,
-                                          ),
-                                        ),
-                                        Text(
-                                          'Long : ${state.userLocation!.longitude.toStringAsFixed(5)}',
-                                          style: context.textTheme.labelMediumFont.copyWith(
-                                            color: context.colors.white,
-                                          ),
-                                        ),
-                                      ],
-
-                                      // Date & Time
-                                      Text(
-                                        formatDate(DateTime.now()),
-                                        style: context.textTheme.labelMediumFont.copyWith(
-                                          color: context.colors.white,
-                                        ),
-                                      ),
-
-                                      const SizedBox(height: 16),
-
-                                      // Retake Photo Button (في نفس المكان القديم)
-                                      CustomPrimaryButton.gradient(
-                                        height: 52,
-                                        textStyle: context.textTheme.labelLargeFont.copyWith(
-                                          color: context.colors.white,
-                                        ),
-                                        buttonText: 'Retake Photo',
-                                        borderRadius: 100,
-                                        onPressed: state.isSubmitting
-                                            ? null
-                                            : () {
-                                          cubit.retakePicture();
-                                          context.pop();
-                                        },
-                                        icon: Icon(
-                                          Iconsax.refresh_circle4,
-                                          size: 20,
-                                          color: context.colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                          child: _buildImageCard(
+                              context,
+                              cubit,
+                              state
+                          )
                         ),
                       ],
                     ),
 
                     const SizedBox(height: 16),
 
-                    // Notes Input (نفس التصميم القديم)
                     CustomInputField(
                       contentPaddingVertical: 50,
                       label: "Clock-in Notes (Optional)".tr(),
@@ -216,7 +112,6 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
             ),
           ),
 
-          // Bottom Navigation Bar (نفس التصميم القديم)
           bottomNavigationBar: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -247,8 +142,121 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
     );
   }
 }
+Widget _buildImageCard(
+    BuildContext context,
+    ClockInFlowCubit cubit,
+    ClockInFlowState state
+    ) {
+  return Stack(
+    children: [
+      if (state.capturedImage != null)
+        ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: Image.file(
+            File(state.capturedImage!.path),
+            fit: BoxFit.cover,
+            width: 334,
+          ),
+        ),
 
-// ✅ نفس الـ Helper Function القديمة
+      Positioned(
+        bottom: 0,
+        left: 0,
+        right: 0,
+        child: _buildImageOverlay(
+            context,
+            cubit,
+            state
+        ),
+      ),
+    ],
+  );
+}
+Widget _buildLocationAndRetake(
+    BuildContext context,
+    ClockInFlowCubit cubit,
+    ClockInFlowState state
+    ){
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      // Location Coordinates
+      if (state.userLocation != null) ...[
+        Text(
+          'Lat : ${state.userLocation!.latitude.toStringAsFixed(5)}',
+          style: context.textTheme.labelMediumFont.copyWith(
+            color: context.colors.white,
+          ),
+        ),
+        Text(
+          'Long : ${state.userLocation!.longitude.toStringAsFixed(5)}',
+          style: context.textTheme.labelMediumFont.copyWith(
+            color: context.colors.white,
+          ),
+        ),
+      ],
+
+      // Date & Time
+      Text(
+        formatDate(DateTime.now()),
+        style: context.textTheme.labelMediumFont.copyWith(
+          color: context.colors.white,
+        ),
+      ),
+
+      const SizedBox(height: 16),
+
+      // Retake Photo Button (في نفس المكان القديم)
+      CustomPrimaryButton.gradient(
+        height: 52,
+        textStyle: context.textTheme.labelLargeFont.copyWith(
+          color: context.colors.white,
+        ),
+        buttonText: 'Retake Photo',
+        borderRadius: 100,
+        onPressed: state.isSubmitting
+            ? null
+            : () {
+          cubit.retakePicture();
+          context.pop();
+        },
+        icon: Icon(
+          Iconsax.refresh_circle4,
+          size: 20,
+          color: context.colors.white,
+        ),
+      ),
+    ],
+  );
+
+}
+
+Widget _buildImageOverlay(
+    BuildContext context,
+    ClockInFlowCubit cubit,
+    ClockInFlowState state
+    ){
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(12),
+      gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          ExtensionColors.transparentColor,
+          context.colors.black.withOpacity(0.5),
+        ],
+      ),
+    ),
+    padding: const EdgeInsets.all(16),
+    child: _buildLocationAndRetake(
+        context,
+        cubit,
+        state
+    ),
+  );
+}
+
 String formatDate(DateTime dateTime) {
   final datePart = DateFormat('dd/MM/yy hh:mma').format(dateTime);
   return '$datePart GMT +07:00';

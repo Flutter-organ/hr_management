@@ -7,7 +7,7 @@ class ClockOutAttendanceUseCase {
   final AttendanceRepository attendanceRepository;
 
   ClockOutAttendanceUseCase({required this.attendanceRepository});
-  Future<Either<Failure, bool>> call(String attendanceId) async {
+  Future<Either<Failure, bool>> call() async {
     final isClockedOut = await attendanceRepository.attendanceClockOut();
     return isClockedOut;
   }

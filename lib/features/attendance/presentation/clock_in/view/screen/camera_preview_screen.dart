@@ -5,10 +5,11 @@ import 'package:go_router/go_router.dart';
 import 'package:hr_management/core/presentation/design_system/components/app_bar.dart';
 import 'package:hr_management/core/presentation/design_system/theme/helper/extention_colors.dart';
 import 'package:iconsax/iconsax.dart';
+import '../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../../core/presentation/routes/route_names.dart';
 import '../../logic/ClockInFlowCubit.dart';
 import '../../logic/ClockInFlowStatus.dart';
-import 'CameraControlButtons.dart';
+import '../widget/CameraControlButtons.dart';
 
 class CameraPreviewScreen extends StatelessWidget {
   const CameraPreviewScreen({super.key});
@@ -22,9 +23,7 @@ class CameraPreviewScreen extends StatelessWidget {
         }
 
         if (state.hasError && state.errorMessage != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage!)),
-          );
+          SnackBarHelper.showError(context, state.errorMessage!);
         }
       },
       builder: (context, state) {

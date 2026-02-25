@@ -22,14 +22,11 @@ class ClockInFlowState extends Equatable {
 
   // 🔹 Location Data (Step 1)
   final Location? userLocation;
-  final bool isInClockInArea;
   final bool isPopupVisible;
 
   // 🔹 User Info
   final String? userName;
   final String? userImageUrl;
-  final String? clockInTime;
-  final String? clockOutTime;
 
   // 🔹 Camera Data (Step 2)
   final CameraController? cameraController;
@@ -48,14 +45,11 @@ class ClockInFlowState extends Equatable {
 
     // Location
     this.userLocation,
-    this.isInClockInArea = false,
     this.isPopupVisible = false,
 
     // User
     this.userName,
     this.userImageUrl,
-    this.clockInTime,
-    this.clockOutTime,
 
     // Camera
     this.cameraController,
@@ -76,7 +70,6 @@ class ClockInFlowState extends Equatable {
     Location? officeLocation,
     double? allowedRadius,
     double? distanceFromOffice,
-    bool? isInClockInArea,
     bool? isPopupVisible,
     String? userName,
     String? userImageUrl,
@@ -94,12 +87,9 @@ class ClockInFlowState extends Equatable {
       status: status ?? this.status,
       errorMessage: errorMessage,
       userLocation: userLocation ?? this.userLocation,
-      isInClockInArea: isInClockInArea ?? this.isInClockInArea,
       isPopupVisible: isPopupVisible ?? this.isPopupVisible,
       userName: userName ?? this.userName,
       userImageUrl: userImageUrl ?? this.userImageUrl,
-      clockInTime: clockInTime ?? this.clockInTime,
-      clockOutTime: clockOutTime ?? this.clockOutTime,
       cameraController: cameraController ?? this.cameraController,
       capturedImage: capturedImage ?? this.capturedImage,
       submissionTime: submissionTime ?? this.submissionTime,
@@ -113,15 +103,14 @@ class ClockInFlowState extends Equatable {
   // 🔹 Getters
   bool get isLocationLoading => status == ClockInFlowStatus.loadingLocation;
   bool get isLocationReady => status == ClockInFlowStatus.locationReady;
+
   bool get isCameraReady => status == ClockInFlowStatus.cameraReady;
   bool get isCapturing => status == ClockInFlowStatus.capturingPhoto;
   bool get hasImage => capturedImage != null;
+
   bool get isSubmitting => status == ClockInFlowStatus.submittingClockIn;
   bool get isSuccess => status == ClockInFlowStatus.success;
   bool get hasError => status == ClockInFlowStatus.error;
-
-  bool get canProceedToCamera =>
-      isLocationReady && userLocation != null && isInClockInArea;
 
   bool get canSubmitClockIn =>
       hasImage && userLocation != null;
@@ -136,12 +125,9 @@ class ClockInFlowState extends Equatable {
     status,
     errorMessage,
     userLocation,
-    isInClockInArea,
     isPopupVisible,
     userName,
     userImageUrl,
-    clockInTime,
-    clockOutTime,
     cameraController,
     capturedImage,
     isFlashOn,

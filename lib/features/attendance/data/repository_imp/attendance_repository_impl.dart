@@ -1,12 +1,12 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:hr_management/features/attendance/domain/enitity/AttendanceHistory.dart';
-import 'package:hr_management/features/attendance/domain/enitity/AttendanceHistoryDays.dart';
 import 'package:hr_management/features/attendance/domain/enitity/attendanceclockIn.dart';
 
 import '../../../auth/domain/failures/failure.dart';
+import '../../domain/enitity/history_attendance.dart';
+import '../../domain/enitity/today_attendance.dart';
 import '../../domain/repository/AttendanceRepository.dart';
 import '../data_source/remote/attendance_remote_data_source.dart';
-import '../mappers/AttendanceMapper.dart';
+import '../mappers/attendance_mapper.dart';
 
 class AttendanceRepositoryImpl implements AttendanceRepository {
   final AttendanceRemoteDataSource _attendanceRemoteDataSource;
@@ -16,32 +16,35 @@ class AttendanceRepositoryImpl implements AttendanceRepository {
   }) : _attendanceRemoteDataSource = attendanceRemoteDataSource;
 
   @override
-  Future<Either<Failure, AttendanceHistory>> attendanceHistory() async {
+  Future<Either<Failure, HistoryAttendance>> attendanceHistory() async {
     try {
-      final attendanceHistoryResponse = _attendanceRemoteDataSource
+      final attendanceHistoryResponse = await _attendanceRemoteDataSource
           .attendanceHistory();
-      final attendanceHistory = AttendanceMapper.toDomainAttendanceHistory(
-        await attendanceHistoryResponse,
-      );
-      return Right(attendanceHistory);
+      return Right( AttendanceMapper.toDomainAttendanceHistory(
+        attendanceHistoryResponse
+      ));
     } on Exception catch (e) {
       return Left(ServerFailure(e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, AttendanceDay>> getAttendanceToday() async {
-    final attendanceToday = await _attendanceRemoteDataSource.attendanceToday();
-    return Right(AttendanceMapper.toDomainAttendanceDay(attendanceToday));
+  Future<Either<Failure, TodayAttendance>> getTodayAttendance() async {
+    try {
+      final todayAttendanceResponse = await _attendanceRemoteDataSource.attendanceToday();
+        return Right(AttendanceMapper.toDomainTodayAttendance(todayAttendanceResponse));
+    } on Exception catch (e) {
+     return Left(ServerFailure(e.toString()));
+    }
   }
 
   @override
-  Future<Either<Failure, bool>> attendanceClockIn({
-    required AttendanceClockIn attendanceClockIn,
+  Future<Either<Failure, bool>> clockInAttendance({
+    required ClockInAttendance clockInAttendance,
   }) async {
     try {
-      final isClockIn = await _attendanceRemoteDataSource.attendanceClockIn(
-        AttendanceMapper.toDtoAttendanceClockInRequest(attendanceClockIn),
+      final isClockIn = await _attendanceRemoteDataSource.clockInAttendance(
+        AttendanceMapper.toDtoAttendanceClockInRequest(clockInAttendance),
       );
       return Right(isClockIn);
     } on Exception catch (e) {

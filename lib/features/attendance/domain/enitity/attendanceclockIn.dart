@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
 
-class AttendanceClockIn extends Equatable {
+class ClockInAttendance extends Equatable {
   final num latitude;
   final num longitude;
   final String? notes;
   final String proofImage;
 
-  const AttendanceClockIn({
+  const ClockInAttendance({
     required this.latitude,
     required this.longitude,
     required this.notes,

@@ -10,10 +10,10 @@ class ClockInAttendanceUseCase {
     required this.attendanceRepository,
   });
   Future<Either<Failure, bool>> call({
-      required AttendanceClockIn attendanceClockIn,
+      required ClockInAttendance attendanceClockIn,
   }) async {
-    return await attendanceRepository.attendanceClockIn(
-      attendanceClockIn: attendanceClockIn,
+    return await attendanceRepository.clockInAttendance(
+      clockInAttendance: attendanceClockIn,
     );
   }
 }

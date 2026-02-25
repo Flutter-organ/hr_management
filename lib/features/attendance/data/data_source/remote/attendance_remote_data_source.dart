@@ -1,16 +1,17 @@
 
-import 'package:hr_management/features/attendance/data/data_source/remote/dto/attendance_day.dart';
-import 'package:hr_management/features/attendance/data/data_source/remote/dto/request.dart';
+import 'package:hr_management/features/attendance/data/data_source/remote/dto/clock_in_attendance_request.dart';
 
-import 'dto/Attendance_history_response.dart';
+import 'dto/history_attendance_response.dart';
+import 'dto/today_attendance_response.dart';
+
 
 abstract class AttendanceRemoteDataSource {
-  Future<AttendanceHistoryResponse> attendanceHistory();
+  Future<HistoryAttendanceResponse> attendanceHistory();
 
-  Future<AttendanceDayDto> attendanceToday();
+  Future<TodayAttendanceResponse> attendanceToday();
 
-  Future<bool> attendanceClockIn(
-    AttendanceClockInRequest attendanceClockInRequest,
+  Future<bool> clockInAttendance(
+    ClockInAttendanceRequest clockInAttendanceRequest,
   );
 
   Future<bool> attendanceClockOut();

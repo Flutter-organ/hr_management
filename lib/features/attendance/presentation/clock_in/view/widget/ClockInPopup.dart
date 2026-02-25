@@ -13,7 +13,6 @@ class ClockInPopup extends StatelessWidget {
   final String locationText;
   final String clockInTime;
   final String clockOutTime;
-  final bool isInClockInArea;
 
   const ClockInPopup({
     super.key,
@@ -23,7 +22,6 @@ class ClockInPopup extends StatelessWidget {
     required this.locationText,
     required this.clockInTime,
     required this.clockOutTime,
-    required this.isInClockInArea,
   });
 
   @override
@@ -48,7 +46,6 @@ class ClockInPopup extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _HeaderCard(
-              isInClockInArea: isInClockInArea,
             ),
             const SizedBox(height: 16),
 
@@ -72,21 +69,12 @@ class ClockInPopup extends StatelessWidget {
 }
 
 class _HeaderCard extends StatelessWidget {
-  final bool isInClockInArea;
-
-  const _HeaderCard({
-    required this.isInClockInArea,
-  });
-
+  const _HeaderCard();
   @override
   Widget build(BuildContext context) {
     return HomeBanner(
-      title: isInClockInArea
-          ? "You are in the clock-in area!"
-          : "You are outside the clock-in area",
-      subtitle: isInClockInArea
-          ? "Now you can press clock-in in this area"
-          : "You can clock-in anytime ",
+      title: "You are in the clock-in area!",
+      subtitle:"Now you can press clock-in in this area",
       image: AppAssets.clockIn,
     );
   }

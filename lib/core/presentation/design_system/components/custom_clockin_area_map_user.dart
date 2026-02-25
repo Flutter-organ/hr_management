@@ -7,7 +7,6 @@ import '../theme/helper/theme_extention.dart';
 class CustomClockInAreaMapUser extends StatelessWidget {
   final String imageUrl;
   final Color? circularColor;
-  final EdgeInsets? padding;
   final void Function()? onTap;
 
   const CustomClockInAreaMapUser({
@@ -15,26 +14,19 @@ class CustomClockInAreaMapUser extends StatelessWidget {
     required this.imageUrl,
     this.onTap,
     this.circularColor,
-    this.padding = const EdgeInsets.all(83),
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: circularColor ?? context.colors.gray200,
-        border: Border.all(color: context.colors.purple500),
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(50),
-        onTap: onTap,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            border: Border.all(color: context.colors.purple500, width: 3),
-          ),
+    return InkWell(
+      borderRadius: BorderRadius.circular(50),
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          border: Border.all(color: context.colors.purple500, width: 3),
+        ),
+        child: ClipOval(
           child: CachedNetworkImage(
             imageUrl: imageUrl,
             fit: BoxFit.cover,

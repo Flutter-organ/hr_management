@@ -1,4 +1,4 @@
-class AttendanceClockInRequest {
+class ClockInAttendanceRequest {
   final num latitude;
 
   final num longitude;
@@ -6,7 +6,7 @@ class AttendanceClockInRequest {
   final String notes;
   final String proofImage;
 
-  AttendanceClockInRequest({
+  ClockInAttendanceRequest({
     required this.latitude,
     required this.longitude,
     required this.notes,

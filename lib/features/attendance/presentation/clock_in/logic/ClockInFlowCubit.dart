@@ -3,7 +3,7 @@ import 'package:camera/camera.dart';
 import '../../../../../core/presentation/base_viewmodel/base_cubit.dart';
 import '../../../domain/enitity/attendanceclockIn.dart';
 import '../../../domain/use_case/GetCurrentLocationUseCase.dart';
-import '../../../domain/use_case/attendance_clock_in_use_case.dart';
+import '../../../domain/use_case/clock_in_attendance_use_case.dart';
 import '../../../domain/use_case/getUserInfoUseCase.dart';
 import 'ClockInFlowStatus.dart';
 
@@ -11,7 +11,6 @@ class ClockInFlowCubit extends BaseCubit<ClockInFlowState> {
   final GetCurrentLocationUseCase _getCurrentLocation;
   final GetUserInfoUseCase _getUserInfo;
   final ClockInAttendanceUseCase _clockInAttendance;
-
 
   CameraController? _cameraController;
   List<CameraDescription>? _cameras;
@@ -21,15 +20,15 @@ class ClockInFlowCubit extends BaseCubit<ClockInFlowState> {
     required GetCurrentLocationUseCase getCurrentLocation,
     required GetUserInfoUseCase getUserInfo,
     required ClockInAttendanceUseCase clockInAttendance,
-  })  : _getCurrentLocation = getCurrentLocation,
-        _getUserInfo = getUserInfo,
-        _clockInAttendance = clockInAttendance,
-        super(ClockInFlowState()) {
+  }) : _getCurrentLocation = getCurrentLocation,
+       _getUserInfo = getUserInfo,
+       _clockInAttendance = clockInAttendance,
+       super(ClockInFlowState()) {
     _initLocation();
   }
 
   // ═══════════════════════════════════════════════════════════
-  // 🗺️ STEP 1: LOCATION SCREEN
+  //  STEP 1: LOCATION SCREEN
   // ═══════════════════════════════════════════════════════════
 
   Future<void> _initLocation() async {
@@ -39,16 +38,17 @@ class ClockInFlowCubit extends BaseCubit<ClockInFlowState> {
     await _loadUserLocation();
   }
 
-
   Future<void> _loadUserData() async {
     await execute(
       onLoading: () {},
       call: () => _getUserInfo(),
       onSuccess: (user) {
-        updateState((s) => s.copyWith(
-          userName: user.firstname,
-          userImageUrl: user.imageUser,
-        ));
+        updateState(
+          (s) => s.copyWith(
+            userName: user.firstname,
+            userImageUrl: user.imageUser,
+          ),
+        );
       },
       onError: (e) {
         updateState((s) => s.copyWith(errorMessage: e.message));
@@ -58,60 +58,58 @@ class ClockInFlowCubit extends BaseCubit<ClockInFlowState> {
 
   Future<void> _loadUserLocation() async {
     await execute(
-      onLoading: () {},
       call: () => _getCurrentLocation(),
       onSuccess: (location) async {
-        updateState((s) => s.copyWith(
+        updateState(
+          (s) => s.copyWith(
             userLocation: location,
             status: ClockInFlowStatus.locationReady,
-            isInClockInArea: true
-        ));
+          ),
+        );
       },
       onError: (e) {
-        updateState((s) => s.copyWith(
-          status: ClockInFlowStatus.error,
-          errorMessage: e.message,
-        ));
+        updateState(
+          (s) => s.copyWith(
+            status: ClockInFlowStatus.error,
+            errorMessage: e.message,
+          ),
+        );
       },
     );
   }
 
-
   void togglePopup() {
-    updateState((s) => s.copyWith(isPopupVisible: !state.isPopupVisible));
+    updateState((s) => s.copyWith(
+        isPopupVisible: !state.isPopupVisible
+    ));
   }
 
   // ═══════════════════════════════════════════════════════════
-  // 📸 STEP 2: CAMERA SCREEN
+  //  STEP 2: CAMERA SCREEN
   // ═══════════════════════════════════════════════════════════
 
   Future<void> initializeCamera() async {
     try {
-      updateState((s) => s.copyWith(status: ClockInFlowStatus.loadingCamera));
+      updateState((s) => s.copyWith(
+          status: ClockInFlowStatus.loadingCamera
+      ));
 
-      _cameras = await availableCameras();
+     _cameras = await availableCameras();
 
-      if (_cameras == null || _cameras!.isEmpty) {
-        updateState((s) => s.copyWith(
-          status: ClockInFlowStatus.error,
-          errorMessage: "No cameras found",
-        ));
-        return;
-      }
-
-      // اختيار الكاميرا الأمامية
-      int cameraIndex = _cameras!.indexWhere(
-            (camera) => camera.lensDirection == CameraLensDirection.front,
+      final camera = _cameras!.firstWhere(
+          (camera)=> camera.lensDirection == CameraLensDirection.front,
+         orElse: ()=>_cameras!.first
       );
 
-      if (cameraIndex == -1) cameraIndex = 0;
+      await _setupCamera(camera);
 
-      await _setupCamera(_cameras![cameraIndex]);
     } catch (e) {
-      updateState((s) => s.copyWith(
-        status: ClockInFlowStatus.error,
-        errorMessage: "Camera initialization failed: $e",
-      ));
+      updateState(
+        (s) => s.copyWith(
+          status: ClockInFlowStatus.error,
+          errorMessage: "Camera initialization failed",
+        ),
+      );
     }
   }
 
@@ -131,21 +129,25 @@ class ClockInFlowCubit extends BaseCubit<ClockInFlowState> {
     final maxZoom = await _cameraController!.getMaxZoomLevel();
     _minZoomLevel = await _cameraController!.getMinZoomLevel();
 
-    updateState((s) => s.copyWith(
-      status: ClockInFlowStatus.cameraReady,
-      cameraController: _cameraController,
-      currentZoomLevel: _minZoomLevel,
-      maxZoomLevel: maxZoom,
-      isFlashOn: false,
-    ));
+    updateState(
+      (s) => s.copyWith(
+        status: ClockInFlowStatus.cameraReady,
+        cameraController: _cameraController,
+        currentZoomLevel: _minZoomLevel,
+        maxZoomLevel: maxZoom,
+        isFlashOn: false,
+      ),
+    );
   }
 
   Future<void> takePicture() async {
     if (_cameraController == null || !_cameraController!.value.isInitialized) {
-      updateState((s) => s.copyWith(
-        status: ClockInFlowStatus.error,
-        errorMessage: "Camera not ready",
-      ));
+      updateState(
+        (s) => s.copyWith(
+          status: ClockInFlowStatus.error,
+          errorMessage: "Camera not ready",
+        ),
+      );
       return;
     }
 
@@ -154,61 +156,52 @@ class ClockInFlowCubit extends BaseCubit<ClockInFlowState> {
 
       final image = await _cameraController!.takePicture();
 
-      updateState((s) => s.copyWith(
-        status: ClockInFlowStatus.photoCaptured,
-        capturedImage: image,
-      ));
+      updateState(
+        (s) => s.copyWith(
+          status: ClockInFlowStatus.photoCaptured,
+          capturedImage: image,
+        ),
+      );
     } catch (e) {
-      updateState((s) => s.copyWith(
-        status: ClockInFlowStatus.error,
-        errorMessage: "Failed to capture photo: $e",
-      ));
+      updateState(
+        (s) => s.copyWith(
+          status: ClockInFlowStatus.error,
+          errorMessage: "Failed to capture photo: $e",
+        ),
+      );
     }
   }
 
   Future<void> toggleFlash() async {
-    if (_cameraController == null || !_cameraController!.value.isInitialized) {
-      return;
-    }
-
-    try {
-      final newFlashMode = state.isFlashOn ? FlashMode.off : FlashMode.torch;
-      await _cameraController!.setFlashMode(newFlashMode);
-
-      updateState((s) => s.copyWith(isFlashOn: !state.isFlashOn));
-    } catch (e) {
-      print("Flash toggle error: $e");
-    }
+    if (_cameraController == null || !_cameraController!.value.isInitialized) return;
+    final newMode = state.isFlashOn ? FlashMode.off : FlashMode.torch;
+    await _cameraController!.setFlashMode(newMode);
+    updateState((s) => s.copyWith(isFlashOn: !state.isFlashOn));
   }
 
   Future<void> adjustZoom() async {
-    if (_cameraController == null || !_cameraController!.value.isInitialized) {
-      return;
-    }
+    if (_cameraController == null || !_cameraController!.value.isInitialized) return;
 
-    try {
-      double newZoom;
+    final min = _minZoomLevel;
+    final max = state.maxZoomLevel;
+    final mid = (min + max) / 2;
+    final current = state.currentZoomLevel;
 
-      if (state.currentZoomLevel == _minZoomLevel) {
-        newZoom = (state.maxZoomLevel + _minZoomLevel) / 2;
-      } else if (state.currentZoomLevel < state.maxZoomLevel) {
-        newZoom = state.maxZoomLevel;
-      } else {
-        newZoom = _minZoomLevel;
-      }
+    final newZoom = current <= min ? mid
+        : current < max  ? max
+        : min;
 
-      await _cameraController!.setZoomLevel(newZoom);
-      updateState((s) => s.copyWith(currentZoomLevel: newZoom));
-    } catch (e) {
-      print("Zoom error: $e");
-    }
+    await _cameraController!.setZoomLevel(newZoom);
+    updateState((s) => s.copyWith(currentZoomLevel: newZoom));
   }
 
   void retakePicture() {
-    updateState((s) => s.copyWith(
-      status: ClockInFlowStatus.cameraReady,
-      capturedImage: null,
-    ));
+    updateState(
+      (s) => s.copyWith(
+        status: ClockInFlowStatus.cameraReady,
+        capturedImage: null,
+      ),
+    );
   }
 
   // ═══════════════════════════════════════════════════════════
@@ -224,19 +217,20 @@ class ClockInFlowCubit extends BaseCubit<ClockInFlowState> {
     final location = state.userLocation;
 
     if (image == null || location == null) {
-      updateState((s) => s.copyWith(
-        status: ClockInFlowStatus.error,
-        errorMessage: "الصورة أو الموقع غير متوفرين",
-      ));
+      updateState(
+        (s) => s.copyWith(
+          status: ClockInFlowStatus.error,
+          errorMessage: "image_proof or location  InValiad",
+        ),
+      );
       return;
     }
 
-    updateState((s) =>
-        s.copyWith(status: ClockInFlowStatus.submittingClockIn));
+    updateState((s) => s.copyWith(status: ClockInFlowStatus.submittingClockIn));
 
     await execute(
       call: () => _clockInAttendance(
-        attendanceClockIn: AttendanceClockIn(
+        attendanceClockIn: ClockInAttendance(
           latitude: location.latitude,
           longitude: location.longitude,
           notes: state.notes ?? "",
@@ -244,28 +238,35 @@ class ClockInFlowCubit extends BaseCubit<ClockInFlowState> {
         ),
       ),
       onSuccess: (_) {
-        updateState((s) => s.copyWith(
-          status: ClockInFlowStatus.success,
-          submissionTime: DateTime.now(),
-        ));
+        updateState(
+          (s) => s.copyWith(
+            status: ClockInFlowStatus.success,
+            submissionTime: DateTime.now(),
+          ),
+        );
       },
       onError: (e) {
-        updateState((s) => s.copyWith(
-          status: ClockInFlowStatus.error,
-          errorMessage: e.message,
-        ));
+        updateState(
+          (s) => s.copyWith(
+            status: ClockInFlowStatus.error,
+            errorMessage: e.message,
+          ),
+        );
       },
     );
   }
 
   void clearError() {
     if (state.hasError) {
-      updateState((s) => s.copyWith(
-        status: ClockInFlowStatus.locationReady,
-        errorMessage: null,
-      ));
+      updateState(
+        (s) => s.copyWith(
+          status: ClockInFlowStatus.locationReady,
+          errorMessage: null,
+        ),
+      );
     }
   }
+
   @override
   Future<void> close() {
     _cameraController?.dispose();

@@ -1,7 +1,7 @@
 import 'package:fpdart/fpdart.dart';
 
 import '../../../auth/domain/failures/failure.dart';
-import '../enitity/AttendanceHistory.dart';
+import '../enitity/history_attendance.dart';
 import '../repository/AttendanceRepository.dart';
 
 class GetAttendanceHistoryUseCase {
@@ -9,7 +9,7 @@ class GetAttendanceHistoryUseCase {
 
   const GetAttendanceHistoryUseCase(this._attendanceRepository);
 
-  Future<Either<Failure, AttendanceHistory>> call() async {
+  Future<Either<Failure, HistoryAttendance>> call() async {
     return _attendanceRepository.attendanceHistory();
   }
 }

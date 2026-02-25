@@ -1,11 +1,11 @@
 
 import 'package:hr_management/features/attendance/data/data_source/remote/attendance_remote_data_source.dart';
-import 'package:hr_management/features/attendance/data/data_source/remote/dto/Attendance_history_response.dart';
-import 'package:hr_management/features/attendance/data/data_source/remote/dto/attendance_day.dart';
 
 import '../../../../../core/data/network/api_constants.dart';
 import '../../../../../core/data/network/dio_client.dart';
-import 'dto/request.dart';
+import 'dto/history_attendance_response.dart';
+import 'dto/clock_in_attendance_request.dart';
+import 'dto/today_attendance_response.dart';
 
 class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
   final DioClient _dioClient;
@@ -14,37 +14,34 @@ class AttendanceRemoteDataSourceImpl implements AttendanceRemoteDataSource {
       : _dioClient = dioClient;
 
   @override
-  Future<AttendanceHistoryResponse> attendanceHistory() async {
+  Future<HistoryAttendanceResponse> attendanceHistory() async {
     final response = await _dioClient.get(
         ApiConstants.attendanceHistory,
 
     );
-    final data = response.data['data'] as Map<String, dynamic>;
-    print("===========================$data");
-    return AttendanceHistoryResponse.fromJson(data);
+    return HistoryAttendanceResponse.fromJson( response.data['data']);
   }
 
   @override
-  Future<AttendanceDayDto> attendanceToday() async {
+  Future<TodayAttendanceResponse> attendanceToday() async {
     final response = await _dioClient.get(ApiConstants.attendanceToday);
-    return AttendanceDayDto.fromJson(response.data);
-
+    return TodayAttendanceResponse.fromJson( response.data['data']);
   }
 
   @override
-  Future<bool> attendanceClockIn(
-      AttendanceClockInRequest attendanceClockInRequest,
+  Future<bool> clockInAttendance(
+      ClockInAttendanceRequest clockInAttendanceRequest,
       )  async {
-    print("===========================${attendanceClockInRequest.latitude}");
-    print("===========================${attendanceClockInRequest.longitude}");
-    print("===========================${attendanceClockInRequest.notes}");
-    print("===========================${attendanceClockInRequest.proofImage}");
+    print("===========================${clockInAttendanceRequest.latitude}");
+    print("===========================${clockInAttendanceRequest.longitude}");
+    print("===========================${clockInAttendanceRequest.notes}");
+    print("===========================${clockInAttendanceRequest.proofImage}");
 
-    final response = await _dioClient.post(
+    final response =  await _dioClient.post(
         ApiConstants.attendanceCheckIn,
-        data: attendanceClockInRequest.toJson()
+        data: clockInAttendanceRequest.toJson()
         );
-    return true;
+    return response.data['success'];
   }
 
 

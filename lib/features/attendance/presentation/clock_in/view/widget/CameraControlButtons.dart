@@ -120,29 +120,32 @@ class _CameraIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-        width: 50,
-        height: 50,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: ExtensionColors.backgroundCamera,
-          border: Border.all(
-            color:context.colors.white,
-            width: 2,
-          ),
-        ),
-        child: icon != null
-            ? Icon(
-          icon,
-          color: context.colors.white,
-          size: size,
-        ) : Text(
-            textButton!,
-            style: context.textTheme.bodyMediumFont.copyWith(
-              color: context.colors.white,
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+        alignment: Alignment.center,
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: ExtensionColors.backgroundCamera,
+            border: Border.all(
+              color:context.colors.white,
+              width: 2,
             ),
-        )
+          ),
+          child: icon != null
+              ? Icon(
+            icon,
+            color: context.colors.white,
+            size: size,
+          ) : Text(
+              textButton!,
+              style: context.textTheme.bodyMediumFont.copyWith(
+                color: context.colors.white,
+              ),
+          )
+      ),
     );
   }
 }

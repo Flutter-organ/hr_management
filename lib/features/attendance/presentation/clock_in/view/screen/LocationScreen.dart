@@ -1,14 +1,16 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hr_management/core/presentation/design_system/components/app_bar.dart';
 import '../../../../../../core/presentation/design_system/components/custom_primary_button.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/extention_colors.dart';
+import '../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../../core/presentation/routes/route_names.dart';
 import '../../logic/ClockInFlowCubit.dart';
 import '../../logic/ClockInFlowStatus.dart';
-import 'ClockInMap.dart';
-import 'ClockInPopup.dart';
+import '../widget/ClockInMap.dart';
+import '../widget/ClockInPopup.dart';
 
 class ClockInLocationScreen extends StatelessWidget {
   const ClockInLocationScreen({super.key});
@@ -18,9 +20,7 @@ class ClockInLocationScreen extends StatelessWidget {
     return BlocConsumer<ClockInFlowCubit, ClockInFlowState>(
       listener: (context, state) {
         if (state.hasError && state.errorMessage != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage!)),
-          );
+          SnackBarHelper.showError(context, state.errorMessage!);
         }
       },
       builder: (context, state) {
@@ -29,7 +29,7 @@ class ClockInLocationScreen extends StatelessWidget {
             body: Center(child: CircularProgressIndicator()),
           );
         }
-
+        final cubit = context.read<ClockInFlowCubit>();
         return Scaffold(
           extendBodyBehindAppBar: true,
           appBar: CustomAppBar(
@@ -40,10 +40,9 @@ class ClockInLocationScreen extends StatelessWidget {
           body: Stack(
             children: [
               ClockInMap(
-                userLocation: state.userLocation!,
-                isPopupVisible: state.isPopupVisible,
+                clockInFlowState: state,
                 onMarkerTap: () {
-                  context.read<ClockInFlowCubit>().togglePopup();
+                  cubit.togglePopup();
                 },
               ),
 
@@ -55,13 +54,15 @@ class ClockInLocationScreen extends StatelessWidget {
                   children: [
                     if (state.isPopupVisible)
                       ClockInPopup(
-                        userName: state.userName ?? "User",
+                        userName: state.userName ?? "---",
                         userImageUrl: state.userImageUrl ?? "",
-                        dateJoined: state.clockInTime ?? "---",
+                        dateJoined: DateFormat(
+                          'd MMMM y',
+                          context.locale.languageCode,
+                        ).format(DateTime.now()),
                         locationText: state.locationCoordinates,
-                        clockInTime: state.clockInTime ?? "09:00",
-                        clockOutTime: state.clockOutTime ?? "05:00",
-                        isInClockInArea: state.isInClockInArea,
+                        clockInTime: "09:00".tr(),
+                        clockOutTime:"05:00".tr(),
                       ),
 
                     Container(
@@ -69,12 +70,10 @@ class ClockInLocationScreen extends StatelessWidget {
                       color: Colors.white,
                       child: CustomPrimaryButton.gradient(
                         buttonText: 'Selfie To Clock In',
-                        onPressed: state.canProceedToCamera
-                            ? () {
-                          context.read<ClockInFlowCubit>().initializeCamera();
+                        onPressed: () {
+                          cubit.initializeCamera();
                           context.push(RouteNames.selfieCamera);
-                        }
-                            : null,
+                        },
                       ),
                     ),
                   ],

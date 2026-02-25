@@ -1,6 +1,4 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:hr_management/features/attendance/domain/enitity/AttendanceHistoryDays.dart';
-
 import '../../../auth/domain/failures/failure.dart';
 import '../enitity/UserLocation.dart';
 

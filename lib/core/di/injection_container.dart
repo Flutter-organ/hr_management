@@ -19,8 +19,11 @@ import '../../features/attendance/data/repository_imp/LocationRepositoryImpl.dar
 import '../../features/attendance/data/repository_imp/attendance_repository_impl.dart';
 import '../../features/attendance/domain/repository/AttendanceRepository.dart';
 import '../../features/attendance/domain/repository/LocationRepository.dart';
+import '../../features/attendance/domain/use_case/EndAttendanceBreakUseCase.dart';
 import '../../features/attendance/domain/use_case/GetCurrentLocationUseCase.dart';
-import '../../features/attendance/domain/use_case/attendance_clock_in_use_case.dart';
+import '../../features/attendance/domain/use_case/StartAttendanceBreakUseCase.dart';
+import '../../features/attendance/domain/use_case/clock_in_attendance_use_case.dart';
+import '../../features/attendance/domain/use_case/clock_out_attendance_use_case.dart';
 import '../../features/attendance/domain/use_case/get_attendance_today_use_case.dart';
 import '../../features/attendance/presentation/clock_in/logic/ClockInFlowCubit.dart';
 import '../../features/attendance/presentation/attendance/logic/attendance_screen_cubit.dart';
@@ -170,10 +173,31 @@ Future<void> _initAttendance() async {
     () => GetTodayAttendanceUseCase(sl<AttendanceRepository>()),
   );
 
+  sl.registerLazySingleton<StartAttendanceBreakUseCase>(
+    () => StartAttendanceBreakUseCase(
+      attendanceRepository: sl<AttendanceRepository>(),
+    )
+  );
+  sl.registerLazySingleton<EndAttendanceBreakUseCase>(
+    () => EndAttendanceBreakUseCase(
+      attendanceRepository: sl<AttendanceRepository>(),
+    )
+  );
+  sl.registerLazySingleton<ClockOutAttendanceUseCase>(
+    () => ClockOutAttendanceUseCase(
+      attendanceRepository: sl<AttendanceRepository>(),
+    )
+  );
+
+
+  //presentation
   sl.registerFactory<AttendanceScreenCubit>(
     () => AttendanceScreenCubit(
         getAttendanceHistoryUseCase: sl<GetAttendanceHistoryUseCase>(),
-     getTodayAttendanceUseCase: sl<GetTodayAttendanceUseCase>()
+     getTodayAttendanceUseCase: sl<GetTodayAttendanceUseCase>(),
+      startAttendanceBreakUseCase: sl<StartAttendanceBreakUseCase>(),
+      endAttendanceBreakUseCase: sl<EndAttendanceBreakUseCase>(),
+      clockOutAttendanceUseCase: sl<ClockOutAttendanceUseCase>(),
     ),
   );
   // ✅ Register ClockInFlowCubit
