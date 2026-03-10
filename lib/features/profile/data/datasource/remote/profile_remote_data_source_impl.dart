@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:hr_management/features/profile/data/datasource/remote/dto/response/payroll_dto.dart';
+import 'package:hr_management/features/profile/data/datasource/remote/dto/payroll_dto.dart';
 import 'package:hr_management/features/profile/data/datasource/remote/dto/response/upload_image_response_dto.dart';
 import 'package:hr_management/features/profile/data/datasource/remote/profile_remote_data_source.dart';
 
@@ -20,7 +20,6 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
 
   @override
   Future<EmployeeProfileDto> getProfile() async {
-
     final response = await _dioClient.get(ApiConstants.getProfile);
 
     final success = response.data['success'] as bool?;
@@ -40,11 +39,36 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   }
 
   @override
-  Future<EmployeeProfileDto> completeProfile(CompleteProfileRequestDto request) async {
-    final response = await _dioClient.post(
-      ApiConstants.completeProfile,
-      data: request.toJson(),
-    );
+  Future<EmployeeProfileDto> completeProfile({
+    required CompleteProfileRequestDto request,
+    String? profileImagePath,
+  }) async {
+    Response response;
+
+    if (profileImagePath == null || profileImagePath.isEmpty) {
+      response = await _dioClient.post(
+        ApiConstants.completeProfile,
+        data: request.toJson(),
+      );
+    } else {
+      final file = File(profileImagePath);
+      if (!file.existsSync()) {
+        throw const ValidationException(message: 'Profile image file does not exist');
+      }
+
+      final fileName = file.path.split('/').last;
+      final multipartFile = await MultipartFile.fromFile(
+        profileImagePath,
+        filename: fileName,
+      );
+
+      response = await _dioClient.uploadFiles(
+        ApiConstants.completeProfile,
+        files: {'profile_image': multipartFile},
+        extraFields: request.toJson(),
+        method: HttpMethod.post,
+      );
+    }
 
     final data = response.data['data'] as Map<String, dynamic>;
     return EmployeeProfileDto.fromJson(data);
@@ -55,41 +79,34 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     required UpdateProfileRequestDto request,
     String? avatarPath,
   }) async {
+    Response response;
+
     if (avatarPath == null || avatarPath.isEmpty) {
-      final response = await _dioClient.put(
+      response = await _dioClient.put(
         ApiConstants.updateProfile,
         data: request.toJson(),
       );
-
-      final data = response.data['data'] as Map<String, dynamic>;
-      if (data.containsKey('employee')) {
-        return EmployeeProfileDto.fromJson(data['employee'] as Map<String, dynamic>);
+    } else {
+      final file = File(avatarPath);
+      if (!file.existsSync()) {
+        throw const ValidationException(message: 'Avatar file does not exist');
       }
-      return EmployeeProfileDto.fromJson(data);
+
+      final fileName = file.path.split('/').last;
+      final multipartFile = await MultipartFile.fromFile(
+        avatarPath,
+        filename: fileName,
+      );
+
+      response = await _dioClient.uploadFiles(
+        ApiConstants.updateProfile,
+        files: {'profile_image': multipartFile},
+        extraFields: request.toJson(),
+        method: HttpMethod.put,
+      );
     }
-
-    final file = File(avatarPath);
-    if (!file.existsSync()) {
-      throw const ValidationException(message: 'Avatar file does not exist');
-    }
-
-    final fileName = file.path.split('/').last;
-    final multipartFile = await MultipartFile.fromFile(
-      avatarPath,
-      filename: fileName,
-    );
-
-    final response = await _dioClient.uploadFiles(
-      ApiConstants.updateProfile,
-      files: {'avatar': multipartFile},
-      extraFields: request.toJson(),
-      method: HttpMethod.put,
-    );
 
     final data = response.data['data'] as Map<String, dynamic>;
-    if (data.containsKey('employee')) {
-      return EmployeeProfileDto.fromJson(data['employee'] as Map<String, dynamic>);
-    }
     return EmployeeProfileDto.fromJson(data);
   }
 

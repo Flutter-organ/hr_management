@@ -11,6 +11,7 @@ class HrManagementTheme {
     return ThemeData(
         useMaterial3: true,
         brightness: Brightness.light,
+        fontFamily: 'Inter',
         colorScheme: ColorScheme.light(
           primary: hrManagementColors.primary,
           onPrimary: hrManagementColors.onPrimary,

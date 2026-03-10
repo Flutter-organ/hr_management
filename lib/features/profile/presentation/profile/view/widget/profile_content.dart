@@ -21,7 +21,7 @@ class ProfileContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        ProfileContactSection(profile: profile, userIdentifier: userIdentifier),
+        ProfileContactSection(profile: profile,),
         const SizedBox(height: 20),
         ProfileAccountSection(profile: profile),
         const SizedBox(height: 20),

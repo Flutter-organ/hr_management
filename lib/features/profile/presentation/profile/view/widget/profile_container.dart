@@ -59,6 +59,7 @@ class ProfileItem {
   final Color? iconColor;
   final Color? textColor;
   final Color? iconBackgroundColor;
+  final bool isDanger;
 
   const ProfileItem({
     required this.title,
@@ -68,6 +69,7 @@ class ProfileItem {
     this.iconColor,
     this.textColor,
     this.iconBackgroundColor,
+    this.isDanger = false,
   });
 
   factory ProfileItem.info({
@@ -88,13 +90,14 @@ class ProfileItem {
     required String title,
     required IconData icon,
     required VoidCallback onTap,
+    bool showArrow = true,
     Color? iconColor,
   }) {
     return ProfileItem(
       title: title,
       icon: icon,
       onTap: onTap,
-      showArrow: true,
+      showArrow: showArrow,
       iconColor: iconColor,
     );
   }
@@ -111,6 +114,7 @@ class ProfileItem {
       showArrow: false,
       iconColor: null,
       textColor: null,
+      isDanger: true,
     );
   }
 }
@@ -123,11 +127,7 @@ class _ProfileItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDanger = item.iconColor == null &&
-        item.textColor == null &&
-        !item.showArrow &&
-        item.onTap != null;
-
+    final isDanger = item.isDanger;
 
     final iconColor = item.iconColor ??
         (isDanger ? context.colors.error : context.colors.purple500);

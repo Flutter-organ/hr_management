@@ -187,7 +187,7 @@ class PersonalDataScreen extends StatelessWidget {
           _buildReadOnlyField(
             context,
             label: 'position'.tr(),
-            value: state.profile?.jobTitle ?? state.profile?.displayJobTitle ??
+            value: state.profile?.jobTitle ?? state.profile?.formattedJobTitle ??
                 '',
             icon: Iconsax.briefcase,
           ),

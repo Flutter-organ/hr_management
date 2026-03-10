@@ -1,5 +1,8 @@
 import 'package:equatable/equatable.dart';
 
+import 'department_dto.dart';
+import 'manager_dto.dart';
+
 class EmployeeProfileDto extends Equatable {
   final int? id;
   final String? employeeCode;
@@ -12,14 +15,13 @@ class EmployeeProfileDto extends Equatable {
   final String? address;
   final String? profileImage;
   final String? jobTitle;
-  final String? department;
-  final String? manager;
+  final DepartmentDto? department;
+  final ManagerDto? manager;
   final String? hireDate;
-  final double? baseSalary;
-  final double? hourlyRate;
+  final String? baseSalary;
+  final String? hourlyRate;
   final String? employmentType;
   final String? status;
-  final String? role;
   final String? terminationDate;
   final String? createdAt;
   final String? updatedAt;
@@ -43,7 +45,6 @@ class EmployeeProfileDto extends Equatable {
     this.hourlyRate,
     this.employmentType,
     this.status,
-    this.role,
     this.terminationDate,
     this.createdAt,
     this.updatedAt,
@@ -62,18 +63,26 @@ class EmployeeProfileDto extends Equatable {
       address: json['address'] as String?,
       profileImage: json['profile_image'] as String?,
       jobTitle: json['job_title'] as String?,
-      department: json['department'] as String?,
-      manager: json['manager'] as String?,
+      department: json['department'] != null
+          ? DepartmentDto.fromJson(json['department'] as Map<String, dynamic>)
+          : null,
+      manager: json['manager'] != null
+          ? ManagerDto.fromJson(json['manager'] as Map<String, dynamic>)
+          : null,
       hireDate: json['hire_date'] as String?,
-      baseSalary: (json['base_salary'] as num?)?.toDouble(),
-      hourlyRate: (json['hourly_rate'] as num?)?.toDouble(),
+      baseSalary: _parseToString(json['base_salary']),
+      hourlyRate: _parseToString(json['hourly_rate']),
       employmentType: json['employment_type'] as String?,
       status: json['status'] as String?,
-      role: json['role'] as String?,
       terminationDate: json['termination_date'] as String?,
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
     );
+  }
+
+  static String? _parseToString(dynamic value) {
+    if (value == null) return null;
+    return value.toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -89,14 +98,13 @@ class EmployeeProfileDto extends Equatable {
       'address': address,
       'profile_image': profileImage,
       'job_title': jobTitle,
-      'department': department,
-      'manager': manager,
+      'department': department?.toJson(),
+      'manager': manager?.toJson(),
       'hire_date': hireDate,
       'base_salary': baseSalary,
       'hourly_rate': hourlyRate,
       'employment_type': employmentType,
       'status': status,
-      'role': role,
       'termination_date': terminationDate,
       'created_at': createdAt,
       'updated_at': updatedAt,
@@ -123,7 +131,6 @@ class EmployeeProfileDto extends Equatable {
     hourlyRate,
     employmentType,
     status,
-    role,
     terminationDate,
     createdAt,
     updatedAt,

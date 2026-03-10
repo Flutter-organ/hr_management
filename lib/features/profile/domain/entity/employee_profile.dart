@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-
+import 'department.dart';
 import 'gender.dart';
-
+import 'manager.dart';
 
 class EmployeeProfile extends Equatable {
   final int id;
@@ -9,26 +9,23 @@ class EmployeeProfile extends Equatable {
   final String firstName;
   final String lastName;
   final String fullName;
-  final String? email;
-  //final String? nationalId;
   final String? phone;
-  final DateTime dateOfBirth;
+  final String? emailAddress;
+  final DateTime? dateOfBirth;
   final Gender gender;
   final String address;
   final String? profileImage;
   final String? jobTitle;
-  final String? department;
-  final String? manager;
-  final DateTime hireDate;
+  final Department? department;
+  final Manager? manager;
+  final DateTime? hireDate;
   final double? baseSalary;
   final double? hourlyRate;
   final String employmentType;
   final String status;
-  final String role;
   final DateTime? terminationDate;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-
 
   const EmployeeProfile({
     required this.id,
@@ -36,56 +33,62 @@ class EmployeeProfile extends Equatable {
     required this.firstName,
     required this.lastName,
     required this.fullName,
-    this.email,
-    //this.nationalId,
     this.phone,
-    required this.dateOfBirth,
+    this.emailAddress,
+    this.dateOfBirth,
     required this.gender,
     required this.address,
     this.profileImage,
     this.jobTitle,
     this.department,
     this.manager,
-    required this.hireDate,
+    this.hireDate,
     this.baseSalary,
     this.hourlyRate,
     required this.employmentType,
     required this.status,
     this.terminationDate,
-    this.role = 'employee',
     this.createdAt,
     this.updatedAt,
   });
 
-  bool get isActive => status == 'active';
+  bool get isActive => status.toLowerCase() == 'active';
+
+  bool get isPending => status.toLowerCase() == 'pending';
+
+  bool get isEmailType => emailAddress != null;
+
+  bool get isPhoneType => phone != null;
+
 
   String get formattedSalary {
     if (baseSalary == null) return 'Not specified';
-    return '\$${baseSalary!.toStringAsFixed(0)}';
+    return '${baseSalary!.toStringAsFixed(2)}';
   }
 
   String get formattedGender {
-    return gender.name.toUpperCase();
+    return gender.name[0].toUpperCase() + gender.name.substring(1);
   }
 
   String get formattedDateOfBirth {
-    return '${dateOfBirth.day}/${dateOfBirth.month}/${dateOfBirth.year}';
+    if (dateOfBirth == null) return 'Not specified';
+    return '${hireDate!.day}/${hireDate!.month}/${hireDate!.year}';
   }
 
-  String get formattedEmploymentDate {
-    return '${hireDate.day}/${hireDate.month}/${hireDate.year}';
+  String get formattedHireDate {
+    if (hireDate == null) return 'Not specified';
+    return '${hireDate!.day}/${hireDate!.month}/${hireDate!.year}';
   }
 
-  String get displayJobTitle => jobTitle ?? 'Employee';
+  String get formattedJobTitle => jobTitle ?? 'Employee';
+
+  String get formattedDepartment => department?.name ?? 'Not assigned';
+
+  String get formattedManager => manager?.fullName ?? 'Not assigned';
 
   bool get isProfileComplete {
-    return firstName.isNotEmpty &&
-        lastName.isNotEmpty &&
-        address.isNotEmpty &&
-        employmentType.isNotEmpty &&
-        jobTitle != null;
+    return firstName.isNotEmpty && lastName.isNotEmpty;
   }
-
 
   @override
   List<Object?> get props => [
@@ -94,12 +97,10 @@ class EmployeeProfile extends Equatable {
     firstName,
     lastName,
     fullName,
-    email,
-    //nationalId,
+    phone,
     dateOfBirth,
     gender,
     address,
-    phone,
     profileImage,
     jobTitle,
     department,
@@ -110,6 +111,8 @@ class EmployeeProfile extends Equatable {
     employmentType,
     status,
     terminationDate,
+    createdAt,
+    updatedAt,
   ];
 
   EmployeeProfile copyWith({
@@ -119,21 +122,18 @@ class EmployeeProfile extends Equatable {
     String? lastName,
     String? fullName,
     String? phone,
-    String? email,
-    //String? nationalId,
     DateTime? dateOfBirth,
     Gender? gender,
     String? address,
     String? profileImage,
     String? jobTitle,
-    String? department,
-    String? manager,
+    Department? department,
+    Manager? manager,
     DateTime? hireDate,
     double? baseSalary,
     double? hourlyRate,
     String? employmentType,
     String? status,
-    String? role,
     DateTime? terminationDate,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -145,8 +145,6 @@ class EmployeeProfile extends Equatable {
       lastName: lastName ?? this.lastName,
       fullName: fullName ?? this.fullName,
       phone: phone ?? this.phone,
-      email: email ?? this.email,
-      //nationalId: nationalId ?? this.nationalId,
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       gender: gender ?? this.gender,
       address: address ?? this.address,
@@ -159,12 +157,9 @@ class EmployeeProfile extends Equatable {
       hourlyRate: hourlyRate ?? this.hourlyRate,
       employmentType: employmentType ?? this.employmentType,
       status: status ?? this.status,
-      role: role ?? this.role,
       terminationDate: terminationDate ?? this.terminationDate,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
   }
-
-
 }

@@ -12,26 +12,20 @@ class CompleteProfileUseCase {
   Future<Either<Failure, EmployeeProfile>> call({
     required String firstName,
     required String lastName,
-    required DateTime dateOfBirth,
-    required Gender gender,
-    required String nationalId,
-    required String address,
-    // required int departmentId,
-    // required String position,
-    // required DateTime employmentDate,
-    // required double salary,
+    String? phone,
+    DateTime? dateOfBirth,
+    Gender? gender,
+    String? address,
+    String? profileImagePath,
   }) {
     return _repository.completeProfile(
       firstName: firstName,
       lastName: lastName,
+      phone: phone,
       dateOfBirth: dateOfBirth,
       gender: gender,
-      nationalId: nationalId,
       address: address,
-      // departmentId: departmentId,
-      // position: position,
-      // employmentDate: employmentDate,
-      // salary: salary,
+      profileImagePath: profileImagePath,
     );
   }
 }

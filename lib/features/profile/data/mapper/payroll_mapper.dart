@@ -1,6 +1,6 @@
 import '../../../../core/data/util/parsing.dart';
 import '../../domain/entity/payroll.dart';
-import '../datasource/remote/dto/response/payroll_dto.dart';
+import '../datasource/remote/dto/payroll_dto.dart';
 
 class PayrollMapper {
   PayrollMapper._();

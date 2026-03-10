@@ -42,23 +42,14 @@ abstract class BaseCubit<STATE> extends Cubit<STATE> {
       TimeoutFailure() => const TimeoutUiError(),
       ServerFailure(:final message) => ServerUiError(message),
       CacheFailure(:final message) => CacheUiError(message),
-
-      InvalidCredentialsFailure(:final message) => InvalidCredentialsUiError(
-        message,
-      ),
+      InvalidCredentialsFailure(:final message) => InvalidCredentialsUiError(message,),
       SessionExpiredFailure(:final message) => UnauthorizedUiError(message),
       UserNotFoundFailure(:final message) => NotFoundUiError(message),
       InvalidOtpFailure(:final message) => InvalidOtpUiError(message),
       OtpExpiredFailure(:final message) => InvalidOtpUiError(message),
-      EmailAlreadyExistsFailure(:final message) => AccountExistsUiError(
-        message,
-      ),
-      PhoneAlreadyExistsFailure(:final message) => AccountExistsUiError(
-        message,
-      ),
-      AccountNotVerifiedFailure(:final message) => AccountNotVerifiedUiError(
-        message,
-      ),
+      EmailAlreadyExistsFailure(:final message) => AccountExistsUiError(message,),
+      PhoneAlreadyExistsFailure(:final message) => AccountExistsUiError(message,),
+      AccountNotVerifiedFailure(:final message) => AccountNotVerifiedUiError(message,),
       AccountDisabledFailure(:final message) => AccountDisabledUiError(message),
       TooManyAttemptsFailure(:final message) => TooManyAttemptsUiError(message),
 
@@ -73,6 +64,7 @@ abstract class BaseCubit<STATE> extends Cubit<STATE> {
       PayrollFetchFailure(:final message) => PayrollFetchUiError(message),
       PayrollNotFoundFailure(:final message) => PayrollNotFoundUiError(message),
 
+      ProfileAlreadyExistsFailure(:final message) => ProfileAlreadyExistsUiError(message),
 
       UnknownFailure(:final message) => UnknownUiError(message),
       _ => const UnknownUiError("Unknown error occurred")

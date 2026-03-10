@@ -1,40 +1,39 @@
 class CompleteProfileRequestDto {
   final String firstName;
   final String lastName;
-  final String dateOfBirth;
-  final String gender;
-  final String nationalId;
-  final String address;
-  // final int departmentId;
-  // final String position;
-  // final String employmentDate;
-  // final double salary;
+  final String? phone;
+  final String? dateOfBirth;
+  final String? gender;
+  final String? address;
 
   const CompleteProfileRequestDto({
     required this.firstName,
     required this.lastName,
-    required this.dateOfBirth,
-    required this.gender,
-    required this.nationalId,
-    required this.address,
-    // required this.departmentId,
-    // required this.position,
-    // required this.employmentDate,
-    // required this.salary,
+    this.phone,
+    this.dateOfBirth,
+    this.gender,
+    this.address,
   });
 
   Map<String, dynamic> toJson() {
-    return {
+    final data = <String, dynamic>{
       'first_name': firstName,
       'last_name': lastName,
-      'date_of_birth': dateOfBirth,
-      'gender': gender,
-      'national_id': nationalId,
-      'address': address,
-      // 'department_id': departmentId,
-      // 'position': position,
-      // 'employment_date': employmentDate,
-      // 'salary': salary,
     };
+
+    if (phone != null && phone!.isNotEmpty) {
+      data['phone'] = phone;
+    }
+    if (dateOfBirth != null && dateOfBirth!.isNotEmpty) {
+      data['date_of_birth'] = dateOfBirth;
+    }
+    if (gender != null && gender!.isNotEmpty) {
+      data['gender'] = gender;
+    }
+    if (address != null && address!.isNotEmpty) {
+      data['address'] = address;
+    }
+
+    return data;
   }
 }

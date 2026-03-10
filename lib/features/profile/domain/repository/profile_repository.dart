@@ -11,30 +11,27 @@ abstract class ProfileRepository {
   Future<Either<Failure, EmployeeProfile>> completeProfile({
     required String firstName,
     required String lastName,
-    required DateTime dateOfBirth,
-    required Gender gender,
-    required String nationalId,
-    required String address,
-    // required int departmentId,
-    // required String position,
-    // required DateTime employmentDate,
-    // required double salary,
+    String? phone,
+    DateTime? dateOfBirth,
+    Gender? gender,
+    String? address,
+    String? profileImagePath,
   });
 
   Future<Either<Failure, EmployeeProfile>> updateProfile({
     String? firstName,
     String? lastName,
     String? phone,
+    DateTime? dateOfBirth,
+    Gender? gender,
     String? address,
     String? avatarPath,
   });
 
   Future<Either<Failure, bool>> isProfileCompleted();
-
   Future<Either<Failure, String>> uploadProfileImage(String filePath);
 
   Future<Either<Failure, List<Payroll>>> getPayrollHistory();
   Future<Either<Failure, Payroll>> getPayrollDetail(int id);
-
   Future<Either<Failure, List<OfficeAsset>>> getOfficeAssets();
 }

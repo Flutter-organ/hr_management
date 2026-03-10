@@ -10,6 +10,8 @@ extension GenderExtension on Gender {
         return 'male'.tr();
       case Gender.female:
         return 'female'.tr();
+      case Gender.unspecified:
+        return 'unspecified'.tr();
     }
   }
 }

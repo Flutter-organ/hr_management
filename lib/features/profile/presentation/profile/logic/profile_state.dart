@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-
 import '../../../domain/entity/employee_profile.dart';
 import '../../../domain/entity/gender.dart';
 
@@ -15,15 +14,16 @@ class ProfileState extends Equatable {
 
   final String firstName;
   final String lastName;
+  final String? phone;
   final DateTime? dateOfBirth;
   final Gender selectedGender;
-  final String nationalId;
-  final String address;
+  final String? address;
+  final String? selectedProfileImagePath;
 
   final String? firstNameError;
   final String? lastNameError;
+  final String? phoneError;
   final String? dateOfBirthError;
-  final String? nationalIdError;
   final String? addressError;
 
   const ProfileState({
@@ -36,23 +36,20 @@ class ProfileState extends Equatable {
     this.uploadImageError,
     this.firstName = '',
     this.lastName = '',
+    this.phone,
     this.dateOfBirth,
     this.selectedGender = Gender.male,
-    this.nationalId = '',
-    this.address = '',
+    this.address,
+    this.selectedProfileImagePath,
     this.firstNameError,
     this.lastNameError,
+    this.phoneError,
     this.dateOfBirthError,
-    this.nationalIdError,
     this.addressError,
   });
 
   bool get isFormValid =>
-      firstName.trim().isNotEmpty &&
-          lastName.trim().isNotEmpty &&
-          dateOfBirth != null &&
-          nationalId.trim().isNotEmpty &&
-          address.trim().isNotEmpty;
+      firstName.trim().isNotEmpty && lastName.trim().isNotEmpty;
 
   ProfileState copyWith({
     EmployeeProfile? profile,
@@ -64,23 +61,25 @@ class ProfileState extends Equatable {
     String? uploadImageError,
     String? firstName,
     String? lastName,
+    String? phone,
     DateTime? dateOfBirth,
     Gender? selectedGender,
-    String? nationalId,
     String? address,
+    String? selectedProfileImagePath,
     String? firstNameError,
     String? lastNameError,
+    String? phoneError,
     String? dateOfBirthError,
-    String? nationalIdError,
     String? addressError,
     bool clearError = false,
     bool clearUploadImageError = false,
     bool clearFirstNameError = false,
     bool clearLastNameError = false,
+    bool clearPhoneError = false,
     bool clearDateOfBirthError = false,
-    bool clearNationalIdError = false,
     bool clearAddressError = false,
     bool clearAllFormErrors = false,
+    bool clearSelectedProfileImage = false,
   }) {
     return ProfileState(
       profile: profile ?? this.profile,
@@ -92,15 +91,28 @@ class ProfileState extends Equatable {
       uploadImageError: clearUploadImageError ? null : (uploadImageError ?? this.uploadImageError),
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
+      phone: phone ?? this.phone,
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       selectedGender: selectedGender ?? this.selectedGender,
-      nationalId: nationalId ?? this.nationalId,
       address: address ?? this.address,
-      firstNameError: (clearFirstNameError || clearAllFormErrors) ? null : (firstNameError ?? this.firstNameError),
-      lastNameError: (clearLastNameError || clearAllFormErrors) ? null : (lastNameError ?? this.lastNameError),
-      dateOfBirthError: (clearDateOfBirthError || clearAllFormErrors) ? null : (dateOfBirthError ?? this.dateOfBirthError),
-      nationalIdError: (clearNationalIdError || clearAllFormErrors) ? null : (nationalIdError ?? this.nationalIdError),
-      addressError: (clearAddressError || clearAllFormErrors) ? null : (addressError ?? this.addressError),
+      selectedProfileImagePath: clearSelectedProfileImage
+          ? null
+          : (selectedProfileImagePath ?? this.selectedProfileImagePath),
+      firstNameError: (clearFirstNameError || clearAllFormErrors)
+          ? null
+          : (firstNameError ?? this.firstNameError),
+      lastNameError: (clearLastNameError || clearAllFormErrors)
+          ? null
+          : (lastNameError ?? this.lastNameError),
+      phoneError: (clearPhoneError || clearAllFormErrors)
+          ? null
+          : (phoneError ?? this.phoneError),
+      dateOfBirthError: (clearDateOfBirthError || clearAllFormErrors)
+          ? null
+          : (dateOfBirthError ?? this.dateOfBirthError),
+      addressError: (clearAddressError || clearAllFormErrors)
+          ? null
+          : (addressError ?? this.addressError),
     );
   }
 
@@ -115,14 +127,15 @@ class ProfileState extends Equatable {
     uploadImageError,
     firstName,
     lastName,
+    phone,
     dateOfBirth,
     selectedGender,
-    nationalId,
     address,
+    selectedProfileImagePath,
     firstNameError,
     lastNameError,
+    phoneError,
     dateOfBirthError,
-    nationalIdError,
     addressError,
   ];
 }

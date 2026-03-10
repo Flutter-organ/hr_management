@@ -40,30 +40,27 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Either<Failure, EmployeeProfile>> completeProfile({
     required String firstName,
     required String lastName,
-    required DateTime dateOfBirth,
-    required Gender gender,
-    required String nationalId,
-    required String address,
-    // required int departmentId,
-    // required String position,
-    // required DateTime employmentDate,
-    // required double salary,
+    String? phone,
+    DateTime? dateOfBirth,
+    Gender? gender,
+    String? address,
+    String? profileImagePath,
   }) async {
     try {
       final request = ProfileMapper.toCompleteProfileRequestDto(
         firstName: firstName,
         lastName: lastName,
+        phone: phone,
         dateOfBirth: dateOfBirth,
-        gender: gender.name,
-        nationalId: nationalId,
+        gender: gender?.name,
         address: address,
-        // departmentId: departmentId,
-        // position: position,
-        // employmentDate: employmentDate,
-        // salary: salary,
       );
 
-      final profileDto = await _remoteDataSource.completeProfile(request);
+      final profileDto = await _remoteDataSource.completeProfile(
+        request: request,
+        profileImagePath: profileImagePath,
+      );
+
       final profile = ProfileMapper.toDomain(profileDto);
 
       await _localDataSource.cacheProfile(profileDto);
@@ -80,6 +77,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
     String? firstName,
     String? lastName,
     String? phone,
+    DateTime? dateOfBirth,
+    Gender? gender,
     String? address,
     String? avatarPath,
   }) async {
@@ -88,6 +87,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
         firstName: firstName,
         lastName: lastName,
         phone: phone,
+        dateOfBirth: dateOfBirth,
+        gender: gender?.name,
         address: address,
       );
 
@@ -98,6 +99,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
       final profile = ProfileMapper.toDomain(profileDto);
 
+      // Update cache with partial data
       await _localDataSource.cacheProfile(profileDto);
 
       return Right(profile);

@@ -43,7 +43,7 @@ class ProfileHeaderWidget extends StatelessWidget {
         const SizedBox(height: 4),
 
         Text(
-          profile.displayJobTitle,
+          profile.formattedJobTitle,
           style: context.textTheme.popupBodyFont.copyWith(
             color: context.colors.purple500,
             fontSize: 13,

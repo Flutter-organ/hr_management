@@ -190,6 +190,13 @@
   "faq_help": "الأسئلة الشائعة والمساعدة",
   "logout": "تسجيل الخروج",
   "app_version": "إصدار التطبيق",
+  "unspecified": "غير محدد",
+  "enter_address_optional": "Enter address (optional)",
+  "select_date_optional": "Select date (optional)",
+  "address_too_short": "Address must be at least 5 characters",
+  "profile_already_exists": "Profile already exists. Use update instead.",
+  "employee_code_copied": "Employee code copied to clipboard",
+  "no_data_found": "No Data Found",
 
   "payroll_and_tax": "Payroll and Tax",
   "received": "Received",

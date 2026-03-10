@@ -28,7 +28,7 @@ class CompleteProfileFormContent extends StatelessWidget {
                 Expanded(
                   child: _buildTextField(
                     context,
-                    label: 'first_name'.tr(),
+                    label: '${'first_name'.tr()} *',
                     hint: 'first_name'.tr(),
                     value: state.firstName,
                     error: state.firstNameError,
@@ -41,7 +41,7 @@ class CompleteProfileFormContent extends StatelessWidget {
                 Expanded(
                   child: _buildTextField(
                     context,
-                    label: 'last_name'.tr(),
+                    label: '${'last_name'.tr()} *',
                     hint: 'last_name'.tr(),
                     value: state.lastName,
                     error: state.lastNameError,
@@ -54,6 +54,19 @@ class CompleteProfileFormContent extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
+            _buildTextField(
+              context,
+              label: 'phone'.tr(),
+              hint: 'enter_phone_optional'.tr(),
+              value: state.phone ?? '',
+              error: state.phoneError,
+              icon: Iconsax.call,
+              keyboardType: TextInputType.phone,
+              enabled: !state.isLoading,
+              onChanged: cubit.onPhoneChanged,
+            ),
+            const SizedBox(height: 16),
+
             _buildDatePicker(context, state, cubit),
             const SizedBox(height: 16),
 
@@ -62,22 +75,9 @@ class CompleteProfileFormContent extends StatelessWidget {
 
             _buildTextField(
               context,
-              label: 'national_id'.tr(),
-              hint: 'enter_national_id'.tr(),
-              value: state.nationalId,
-              error: state.nationalIdError,
-              icon: Iconsax.card,
-              keyboardType: TextInputType.number,
-              enabled: !state.isLoading,
-              onChanged: cubit.onNationalIdChanged,
-            ),
-            const SizedBox(height: 16),
-
-            _buildTextField(
-              context,
               label: 'address'.tr(),
-              hint: 'enter_address'.tr(),
-              value: state.address,
+              hint: 'enter_address_optional'.tr(),
+              value: state.address ?? '',
               error: state.addressError,
               icon: Iconsax.location,
               minLines: 2,
@@ -238,13 +238,23 @@ class CompleteProfileFormContent extends StatelessWidget {
             Expanded(
               child: _buildGenderOption(
                 context,
+                gender: Gender.unspecified,
+                isSelected: state.selectedGender == Gender.unspecified,
+                enabled: !state.isLoading,
+                onTap: () => cubit.onGenderChanged(Gender.unspecified),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: _buildGenderOption(
+                context,
                 gender: Gender.male,
                 isSelected: state.selectedGender == Gender.male,
                 enabled: !state.isLoading,
                 onTap: () => cubit.onGenderChanged(Gender.male),
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 8),
             Expanded(
               child: _buildGenderOption(
                 context,

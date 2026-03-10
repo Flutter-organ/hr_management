@@ -13,6 +13,8 @@ class UpdateProfileUseCase {
     String? firstName,
     String? lastName,
     String? phone,
+    DateTime? dateOfBirth,
+    Gender? gender,
     String? address,
     String? avatarPath,
   }) {
@@ -20,6 +22,8 @@ class UpdateProfileUseCase {
       firstName: firstName,
       lastName: lastName,
       phone: phone,
+      dateOfBirth: dateOfBirth,
+      gender: gender,
       address: address,
       avatarPath: avatarPath,
     );

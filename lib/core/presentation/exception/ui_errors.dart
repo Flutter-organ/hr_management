@@ -91,3 +91,9 @@ class PayrollNotFoundUiError extends UiError {
   const PayrollNotFoundUiError([super.message = 'Payroll record not found']);
 }
 
+class ProfileAlreadyExistsUiError extends UiError {
+  const ProfileAlreadyExistsUiError([
+    super.message = 'Profile already exists. Use update instead.',
+  ]);
+}
+

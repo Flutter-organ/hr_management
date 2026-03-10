@@ -44,6 +44,7 @@ class ProfileFailureMapper {
   static Failure _mapServerException(ServerException exception) {
     final code = exception.code?.toUpperCase();
     final message = exception.message;
+
     switch (code) {
       case 'PROFILE_NOT_COMPLETED':
         return ProfileNotCompletedFailure(message);
@@ -53,11 +54,15 @@ class ProfileFailureMapper {
         return ProfileUpdateFailure(message);
       case 'PROFILE_IMAGE_UPLOAD_FAILED':
         return ProfileImageUploadFailure(message);
+      case 'PROFILE_ALREADY_EXISTS':
+        return ProfileAlreadyExistsFailure(message);
     }
 
     switch (exception.statusCode) {
       case 404:
         return ProfileFetchFailure(message);
+      case 409:
+        return ProfileAlreadyExistsFailure(message);
       case 422:
         return ProfileUpdateFailure(message);
       default:

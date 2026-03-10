@@ -6,13 +6,13 @@ import '../profile_container.dart';
 
 class ProfileContactSection extends StatelessWidget {
   final EmployeeProfile profile;
-  final String? userIdentifier;
+  //final String? userIdentifier;
 
 
   const ProfileContactSection({
     super.key,
     required this.profile,
-    required this.userIdentifier,
+    //required this.userIdentifier,
   });
 
   @override
@@ -20,9 +20,15 @@ class ProfileContactSection extends StatelessWidget {
     return ProfileContainer(
       title: 'contact'.tr(),
       profileItems: [
+        if (profile.emailAddress != null)
+          ProfileItem.info(
+            title: profile.emailAddress!,
+            icon: Iconsax.sms,
+          ),
+        if (profile.phone != null)
         ProfileItem.info(
-          title: userIdentifier ?? 'no_contact'.tr(),
-          icon: Iconsax.sms,
+          title: profile.phone!,
+          icon: Iconsax.mobile,
         ),
         ProfileItem.info(
           title: profile.address.isNotEmpty

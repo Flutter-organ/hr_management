@@ -48,15 +48,15 @@ class ProfileCubit extends BaseCubit<ProfileState> {
     ));
   }
 
-  void onGenderChanged(Gender value) {
-    updateState((s) => s.copyWith(selectedGender: value));
+  void onPhoneChanged(String value) {
+    updateState((s) => s.copyWith(
+      phone: value,
+      clearPhoneError: true,
+    ));
   }
 
-  void onNationalIdChanged(String value) {
-    updateState((s) => s.copyWith(
-      nationalId: value,
-      clearNationalIdError: true,
-    ));
+  void onGenderChanged(Gender value) {
+    updateState((s) => s.copyWith(selectedGender: value));
   }
 
   void onAddressChanged(String value) {
@@ -64,6 +64,10 @@ class ProfileCubit extends BaseCubit<ProfileState> {
       address: value,
       clearAddressError: true,
     ));
+  }
+
+  void onProfileImageSelected(String path) {
+    updateState((s) => s.copyWith(selectedProfileImagePath: path));
   }
 
   void clearFormErrors() {
@@ -74,10 +78,11 @@ class ProfileCubit extends BaseCubit<ProfileState> {
     updateState((s) => s.copyWith(
       firstName: '',
       lastName: '',
+      phone: null,
       dateOfBirth: null,
       selectedGender: Gender.male,
-      nationalId: '',
-      address: '',
+      address: null,
+      clearSelectedProfileImage: true,
       clearAllFormErrors: true,
     ));
   }
@@ -101,7 +106,7 @@ class ProfileCubit extends BaseCubit<ProfileState> {
             isLoading: false,
             profile: profile,
             isProfileNotCompleted: false,
-            userIdentifier: profile.email ?? profile.phone ?? cachedIdentifier,
+            userIdentifier: profile.phone ?? profile.emailAddress ?? cachedIdentifier,
           ),
         );
       },
@@ -123,38 +128,32 @@ class ProfileCubit extends BaseCubit<ProfileState> {
     if (!_validateCompleteProfileForm()) return;
 
     await execute(
-      onLoading: () => updateState(
-            (s) => s.copyWith(isLoading: true, clearError: true),
-      ),
+      onLoading: () => updateState((s) => s.copyWith(
+        isLoading: true,
+        clearError: true,
+      )),
       call: () => _completeProfileUseCase(
         firstName: state.firstName.trim(),
         lastName: state.lastName.trim(),
-        dateOfBirth: state.dateOfBirth!,
+        phone: state.phone?.trim(),
+        dateOfBirth: state.dateOfBirth,
         gender: state.selectedGender,
-        nationalId: state.nationalId.trim(),
-        address: state.address.trim(),
-        //departmentId,
-        // position,
-        // employmentDate,
-        // salary,
+        address: state.address?.trim(),
+        profileImagePath: state.selectedProfileImagePath,
       ),
       onSuccess: (profile) {
-        updateState(
-              (s) => s.copyWith(
-            isLoading: false,
-            profile: profile,
-            isProfileNotCompleted: false,
-          ),
-        );
+        updateState((s) => s.copyWith(
+          isLoading: false,
+          profile: profile,
+          isProfileNotCompleted: false,
+        ));
         resetForm();
       },
       onError: (error) {
-        updateState(
-              (s) => s.copyWith(
-            isLoading: false,
-            error: error.message,
-          ),
-        );
+        updateState((s) => s.copyWith(
+          isLoading: false,
+          error: error.message,
+        ));
       },
     );
   }
@@ -215,13 +214,9 @@ class ProfileCubit extends BaseCubit<ProfileState> {
   Future<String?> _loadCachedIdentifier() async {
     final result = await _loadIdentifierUseCase();
     return result.fold(
-          (failure) {
-        print('❌ [ProfileCubit] Failed: ${failure.message}');
-        return null;
-      },
-          (identifier) {return identifier;},
+          (failure) => null,
+          (identifier) => identifier,
     );
-
   }
 
 
@@ -243,14 +238,11 @@ class ProfileCubit extends BaseCubit<ProfileState> {
       isValid = false;
     }
 
-    if (state.nationalId.trim().isEmpty) {
-      updateState((s) => s.copyWith(nationalIdError: 'national_id_required'.tr()));
-      isValid = false;
-    }
-
-    if (state.address.trim().isEmpty) {
-      updateState((s) => s.copyWith(addressError: 'address_required'.tr()));
-      isValid = false;
+    if (state.address != null && state.address!.trim().isNotEmpty) {
+      if (state.address!.trim().length < 5) {
+        updateState((s) => s.copyWith(addressError: 'address_too_short'.tr()));
+        isValid = false;
+      }
     }
 
     return isValid;
