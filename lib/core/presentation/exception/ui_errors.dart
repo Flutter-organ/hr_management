@@ -97,3 +97,19 @@ class ProfileAlreadyExistsUiError extends UiError {
   ]);
 }
 
+class ChangePasswordUiError extends UiError {
+  const ChangePasswordUiError([super.message = 'Failed to change password']);
+}
+
+class SamePasswordUiError extends UiError {
+  const SamePasswordUiError([
+    super.message = 'New password must be different from the current password.',
+  ]);
+}
+
+class InvalidCurrentPasswordUiError extends UiError {
+  const InvalidCurrentPasswordUiError([
+    super.message = 'Current password is incorrect.',
+  ]);
+}
+

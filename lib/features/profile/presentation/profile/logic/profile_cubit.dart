@@ -3,7 +3,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:hr_management/features/profile/presentation/profile/logic/profile_state.dart';
 import '../../../../../core/config/app_constant.dart';
 import '../../../../../core/presentation/base_viewmodel/base_cubit.dart';
+import '../../../../../core/presentation/routes/config/app_state_notifier.dart';
 import '../../../../auth/domain/use_cases/load_identifier_use_case.dart';
+import '../../../../auth/domain/use_cases/logout_use_case.dart';
 import '../../../domain/entity/gender.dart';
 import '../../../domain/usecase/complete_profile_usecase.dart';
 import '../../../domain/usecase/get_profile_usecase.dart';
@@ -14,16 +16,19 @@ class ProfileCubit extends BaseCubit<ProfileState> {
   final UploadProfileImageUseCase _uploadProfileImageUseCase;
   final CompleteProfileUseCase _completeProfileUseCase;
   final LoadIdentifierUseCase _loadIdentifierUseCase;
+  final LogoutUseCase _logoutUseCase;
 
   ProfileCubit({
     required GetProfileUseCase getProfileUseCase,
     required UploadProfileImageUseCase uploadProfileImageUseCase,
     required LoadIdentifierUseCase loadIdentifierUseCase,
     required CompleteProfileUseCase completeProfileUseCase,
+    required LogoutUseCase logoutUseCase,
   }) : _getProfileUseCase = getProfileUseCase,
        _uploadProfileImageUseCase = uploadProfileImageUseCase,
        _loadIdentifierUseCase = loadIdentifierUseCase,
        _completeProfileUseCase = completeProfileUseCase,
+       _logoutUseCase = logoutUseCase,
        super(const ProfileState());
 
 
@@ -201,6 +206,24 @@ class ProfileCubit extends BaseCubit<ProfileState> {
 
   Future<void> refreshProfile() async {
     await getProfile();
+  }
+
+  Future<void> logout() async {
+    await execute(
+      onLoading: () => updateState((s) => s.copyWith(isLoading: true,
+      clearError: true)),
+      call: () => _logoutUseCase(),
+      onSuccess: (_) {
+        updateState((s) => s.copyWith(isLoading: false));
+        AuthStateNotifier.instance.setLoggedOut();
+      },
+      onError: (error) {
+        updateState((s) => s.copyWith(
+          isLoading: false,
+          error: error.message,
+        ));
+      }
+    );
   }
 
   void clearError() {

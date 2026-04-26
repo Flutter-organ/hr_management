@@ -1,5 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 
+import '../../config/app_constant.dart';
+
 class Validators {
   Validators._();
 
@@ -37,8 +39,8 @@ class Validators {
   static String? validatePhone(
       String? value, {
         bool required = true,
-        int minDigits = 10,
-        int maxDigits = 15,
+        int minDigits = AppConstant.minPhoneNumberLength,
+        int maxDigits = AppConstant.maxPhoneNumberLength,
         String? requiredMessage,
         String? invalidMessage,
       }) {
@@ -64,7 +66,9 @@ class Validators {
     return null;
   }
 
-  static bool isValidPhone(String phone, {int minDigits = 10, int maxDigits = 15}) {
+  static bool isValidPhone(String phone, {
+    int minDigits = AppConstant.minPhoneNumberLength,
+    int maxDigits = AppConstant.maxPhoneNumberLength }) {
     final trimmed = phone.trim();
 
     if (!_phoneRegex.hasMatch(trimmed)) {
@@ -79,7 +83,7 @@ class Validators {
   static String? validatePassword(
       String? value, {
         bool required = true,
-        int minLength = 8,
+        int minLength = AppConstant.passwordLength,
         String? requiredMessage,
         String? minLengthMessage,
       }) {
@@ -102,7 +106,7 @@ class Validators {
   static String? validatePasswordWithComplexity(
       String? value, {
         bool required = true,
-        int minLength = 8,
+        int minLength = AppConstant.passwordLength,
         bool requireUppercase = true,
         bool requireLowercase = true,
         bool requireNumber = true,
@@ -167,7 +171,7 @@ class Validators {
   static String? validateOtp(
       String? value, {
         bool required = true,
-        int length = 6,
+        int length = AppConstant.otpLength,
         String? requiredMessage,
         String? invalidMessage,
       }) {

@@ -66,6 +66,10 @@ abstract class BaseCubit<STATE> extends Cubit<STATE> {
 
       ProfileAlreadyExistsFailure(:final message) => ProfileAlreadyExistsUiError(message),
 
+      ChangePasswordFailure(:final message) => ChangePasswordUiError(message),
+      SamePasswordFailure(:final message) => SamePasswordUiError(message),
+      InvalidCurrentPasswordFailure(:final message) => InvalidCurrentPasswordUiError(message),
+
       UnknownFailure(:final message) => UnknownUiError(message),
       _ => const UnknownUiError("Unknown error occurred")
     };

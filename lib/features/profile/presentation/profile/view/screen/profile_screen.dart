@@ -94,7 +94,8 @@ class ProfileScreen extends StatelessWidget {
                 customHeader: ProfileHeaderWidget(profile: profile),
                 content: ProfileContent(
                   profile: profile,
-                  userIdentifier: state.userIdentifier,
+                  cubit: context.read<ProfileCubit>(),
+                  //userIdentifier: state.userIdentifier,
                 ),
               ),
             ),

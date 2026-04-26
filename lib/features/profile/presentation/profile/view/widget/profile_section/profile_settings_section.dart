@@ -1,23 +1,22 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../../../core/config/app_constant.dart';
-import '../../../../../../../core/di/injection_container.dart';
-import '../../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
-import '../../../../../../../core/presentation/routes/config/app_state_notifier.dart';
-import '../../../../../../../core/presentation/routes/route_names.dart';
-import '../../../../../../auth/domain/use_cases/logout_use_case.dart';
+import '../../../../../../auth/presentation/change_password/view/popup/change_password_popup.dart';
 import '../../../../../domain/entity/employee_profile.dart';
+import '../../../logic/profile_cubit.dart';
 import '../profile_container.dart';
 
 class ProfileSettingsSection extends StatelessWidget {
   final EmployeeProfile profile;
+  final ProfileCubit cubit;
+
 
   const ProfileSettingsSection({
     super.key,
     required this.profile,
+    required this.cubit,
   });
 
   @override
@@ -28,7 +27,7 @@ class ProfileSettingsSection extends StatelessWidget {
         ProfileItem.action(
           title: 'change_password'.tr(),
           icon: Iconsax.lock,
-          onTap: () => SnackBarHelper.showInfo(context, "coming soon "),
+          onTap: () => ChangePasswordPopup.show(context),
         ),
         ProfileItem.action(
           title: 'versioning'.tr(),
@@ -43,7 +42,7 @@ class ProfileSettingsSection extends StatelessWidget {
         ProfileItem.danger(
           title: 'logout'.tr(),
           icon: Iconsax.logout,
-          onTap: () => _showLogoutDialog(context),
+          onTap: () => _showLogoutDialog(context, cubit),
         ),
       ],
     );
@@ -69,7 +68,7 @@ void _showVersionDialog(BuildContext context) {
   );
 }
 
-void _showLogoutDialog(BuildContext context) {
+void _showLogoutDialog(BuildContext context, ProfileCubit cubit) {
   showDialog(
     context: context,
     builder: (dialogContext) => AlertDialog(
@@ -86,21 +85,7 @@ void _showLogoutDialog(BuildContext context) {
         TextButton(
           onPressed: () async {
             Navigator.pop(dialogContext);
-
-            final result = await sl<LogoutUseCase>().call();
-            result.fold(
-                  (failure) {
-                if (context.mounted) {
-                  SnackBarHelper.showError(context, failure.message);
-                }
-              },
-                  (_) {
-                AuthStateNotifier.instance.setLoggedOut();
-                if (context.mounted) {
-                  context.go(RouteNames.login);
-                }
-              },
-            );
+            cubit.logout();
           },
           child: Text(
             'logout'.tr(),

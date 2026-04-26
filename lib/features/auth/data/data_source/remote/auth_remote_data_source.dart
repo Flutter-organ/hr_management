@@ -17,5 +17,11 @@ abstract class AuthRemoteDataSource {
 
   Future<bool> register({required RegisterDtoRequest registerDtoRequest});
 
+  Future<bool> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String newPasswordConfirmation,
+  });
+
   Future<OtpVerifyResponse> verifyOTP({required VerifyOtpRequest verifyOtpDto});
 }

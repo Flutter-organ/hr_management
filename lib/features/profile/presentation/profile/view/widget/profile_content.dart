@@ -4,15 +4,18 @@ import 'package:hr_management/features/profile/presentation/profile/view/widget/
 import 'package:hr_management/features/profile/presentation/profile/view/widget/profile_section/profile_settings_section.dart';
 
 import '../../../../domain/entity/employee_profile.dart';
+import '../../logic/profile_cubit.dart';
 
 class ProfileContent extends StatelessWidget {
   final EmployeeProfile profile;
-  final String? userIdentifier;
+  final ProfileCubit cubit;
+  //final String? userIdentifier;
 
   const ProfileContent({
     super.key,
     required this.profile,
-    required this.userIdentifier,
+    required this.cubit,
+    //required this.userIdentifier,
   });
 
   @override
@@ -25,7 +28,7 @@ class ProfileContent extends StatelessWidget {
         const SizedBox(height: 20),
         ProfileAccountSection(profile: profile),
         const SizedBox(height: 20),
-        ProfileSettingsSection(profile: profile),
+        ProfileSettingsSection(profile: profile, cubit: cubit),
       ],
     );
   }

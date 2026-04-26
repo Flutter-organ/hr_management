@@ -14,12 +14,14 @@ import '../../features/auth/data/data_source/local/auth_local_data_source_imp.da
 import '../../features/auth/data/data_source/remote/auth_remote_data_source.dart';
 import '../../features/auth/data/data_source/remote/auth_remote_data_source_impl.dart';
 import '../../features/auth/data/repository_imp/auth_repository_imp.dart';
+import '../../features/auth/domain/use_cases/change_password_use_case.dart';
 import '../../features/auth/domain/use_cases/logout_use_case.dart';
 import '../../features/auth/domain/use_cases/reset_password_use_case.dart';
 import '../../features/auth/domain/use_cases/check_onboarding_status_use_case.dart';
 import '../../features/auth/domain/use_cases/complete_onboarding_use_case.dart';
 import '../../features/auth/domain/use_cases/otp_use_case.dart';
 import '../../features/auth/domain/use_cases/forgot_password_use_case.dart';
+import '../../features/auth/presentation/change_password/logic/change_password_cubit.dart';
 import '../../features/auth/presentation/forget_password/logic/forgot_password_cubit.dart';
 import '../../features/auth/presentation/on_boarding/logic/on_boarding_cubit.dart';
 import '../../features/auth/presentation/register/signup/logic/sign_up_cubit.dart';
@@ -122,6 +124,9 @@ Future<void> _initAuth() async {
     authRepository: sl<AuthRepository>(),
     cacheManager: sl<CacheManager>(),)
   );
+  sl.registerLazySingleton<ChangePasswordUseCase>(
+        () => ChangePasswordUseCase(sl<AuthRepository>()),
+  );
 
   //presentation
   sl.registerFactory<ForgotPasswordCubit>(
@@ -137,6 +142,12 @@ Future<void> _initAuth() async {
           () => SignUpCubit(sl<RegisterUseCase>()));
   sl.registerFactory<VerifyOtpCubit>(
         () => VerifyOtpCubit(sl<VerifyOTPUseCase>()),
+  );
+  sl.registerFactory<ChangePasswordCubit>(
+        () => ChangePasswordCubit(
+      changePasswordUseCase: sl<ChangePasswordUseCase>(),
+      logoutUseCase: sl<LogoutUseCase>(),
+    ),
   );
 }
 
@@ -213,6 +224,7 @@ Future<void> _initProfile() async {
           uploadProfileImageUseCase: sl<UploadProfileImageUseCase>(),
           loadIdentifierUseCase: sl<LoadIdentifierUseCase>(),
           completeProfileUseCase: sl<CompleteProfileUseCase>(),
+          logoutUseCase: sl<LogoutUseCase>(),
     ),
   );
   sl.registerFactory<PersonalDataCubit>(

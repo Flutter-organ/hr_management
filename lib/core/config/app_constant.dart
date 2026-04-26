@@ -6,5 +6,10 @@ class AppConstant {
 
   // App config
   static const double maxImageSizeMB = 5.0;
+  static const int passwordLength = 8;
+  static const int otpLength = 6;
+  static const int minPhoneNumberLength = 10;
+  static const int maxPhoneNumberLength = 15;
+
 
 }

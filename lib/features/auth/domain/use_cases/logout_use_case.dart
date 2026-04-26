@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import '../../../../core/data/cache/cache_manager.dart';
 import '../../../../core/domain/failure/domain_failure.dart';
@@ -14,16 +15,16 @@ class LogoutUseCase {
         _cacheManager = cacheManager;
 
   Future<Either<Failure, Unit>> call() async {
-    final result = await _authRepository.clearToken();
-
-    if (result.isRight()) {
-      try {
-        await _cacheManager.clearAllCache();
-      } catch (_) {
-        // Ignore cache clearing errors
-      }
+    try {
+      await _authRepository.clearToken();
+    } catch (e) {
+      debugPrint('⚠️ Failed to clear token: $e');
     }
-
-    return result;
+    try {
+      await _cacheManager.clearAllCache();
+    } catch (e) {
+      debugPrint('⚠️ Failed to clear cache: $e');
+    }
+    return const Right(unit);
   }
 }
