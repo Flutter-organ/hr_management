@@ -3,11 +3,8 @@ import 'dart:convert';
 import 'package:hr_management/core/data/cache/preferences_keys.dart';
 import 'package:hr_management/features/profile/data/datasource/local/profile_local_data_source.dart';
 import 'package:hr_management/features/profile/data/datasource/remote/dto/employee_profile_dto.dart';
-import 'package:hr_management/features/profile/domain/entity/office_asset.dart';
-
 import '../../../../../core/data/cache/shared_preferences_service.dart';
 import '../../../../../core/data/exception/app_exception.dart';
-import 'office_assets_local_data_source_impl.dart';
 
 class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
   final PreferencesService _preferencesService;
@@ -75,11 +72,11 @@ class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
     }
   }
 
-  @override
-  Future<List<OfficeAsset>> getOfficeAssets() async {
-      // Simulate network delay
-      await Future.delayed(const Duration(milliseconds: 800));
-      // Return dummy data
-      return OfficeAssetsDummyLocalData.dummyAssets;
-  }
+  // @override
+  // Future<List<OfficeAsset>> getOfficeAssets() async {
+  //     // Simulate network delay
+  //     await Future.delayed(const Duration(milliseconds: 800));
+  //     // Return dummy data
+  //     return OfficeAssetsDummyLocalData.dummyAssets;
+  // }
 }

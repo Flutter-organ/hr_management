@@ -1,4 +1,3 @@
-import '../../../domain/entity/office_asset.dart';
 import '../remote/dto/employee_profile_dto.dart';
 
 abstract class ProfileLocalDataSource {
@@ -12,6 +11,6 @@ abstract class ProfileLocalDataSource {
 
   Future<void> setProfileCompleted(bool completed);
 
-  /// Get dummy office assets (will be replaced with remote data source later)
-  Future<List<OfficeAsset>> getOfficeAssets();
+  // /// Get dummy office assets (will be replaced with remote data source later)
+  // Future<List<OfficeAsset>> getOfficeAssets();
 }

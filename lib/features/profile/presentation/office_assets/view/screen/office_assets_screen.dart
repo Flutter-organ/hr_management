@@ -216,7 +216,7 @@ class OfficeAssetsScreen extends StatelessWidget {
         _buildReadOnlyField(
           context,
           label: 'brand'.tr(),
-          value: asset.brand,
+          value: asset.brand ?? '-',
           icon: Iconsax.tag,
         ),
         const SizedBox(height: 16),
@@ -227,7 +227,7 @@ class OfficeAssetsScreen extends StatelessWidget {
         _buildReadOnlyField(
           context,
           label: 'buying_date'.tr(),
-          value: asset.formattedBuyingDate,
+          value: asset.formattedReceivedDate,
           icon: Iconsax.receipt_edit,
         ),
         const SizedBox(height: 16),
@@ -244,15 +244,13 @@ class OfficeAssetsScreen extends StatelessWidget {
           // ),
         ),
 
-        if (asset.serialNumber != null && asset.serialNumber!.isNotEmpty) ...[
           const SizedBox(height: 16),
           _buildReadOnlyField(
             context,
             label: 'serial_number'.tr(),
-            value: asset.serialNumber!,
+            value: asset.serialNumber,
             icon: Iconsax.barcode,
           ),
-        ],
 
         if (asset.description != null && asset.description!.isNotEmpty) ...[
           const SizedBox(height: 16),

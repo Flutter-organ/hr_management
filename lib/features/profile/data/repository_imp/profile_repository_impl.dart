@@ -7,6 +7,7 @@ import '../../domain/entity/gender.dart';
 import '../../domain/repository/profile_repository.dart';
 import '../datasource/local/profile_local_data_source.dart';
 import '../datasource/remote/profile_remote_data_source.dart';
+import '../mapper/office_assets_mapper.dart';
 import '../mapper/payroll_mapper.dart';
 import '../mapper/profile_failure_mapper.dart';
 import '../mapper/profile_mapper.dart';
@@ -152,12 +153,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
   @override
   Future<Either<Failure, List<OfficeAsset>>> getOfficeAssets() async {
     try {
-      // TODO: Replace with remote data source when backend is ready
-      // final assets = await _remoteDataSource.getOfficeAssets();
-      final assets = await _localDataSource.getOfficeAssets();
-      return Right(assets);
+      final assets = await _remoteDataSource.getOfficeAssets();
+      return Right(assets.map((e) => OfficeAssetsMapper.toDomain(e)).toList());
     } catch (e) {
-      return Left(UnknownFailure(e.toString()));
+      return Left(ProfileFailureMapper.mapException(e));
     }
   }
 

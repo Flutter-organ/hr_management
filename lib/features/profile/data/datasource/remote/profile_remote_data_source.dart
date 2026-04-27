@@ -2,6 +2,7 @@ import 'dto/employee_profile_dto.dart';
 import 'dto/request/complete_profile_request.dart';
 import 'dto/request/update_profile_request_dto.dart';
 import 'dto/payroll_dto.dart';
+import 'dto/response/office_assets_dto.dart';
 import 'dto/response/upload_image_response_dto.dart';
 
 abstract class ProfileRemoteDataSource {
@@ -20,4 +21,7 @@ abstract class ProfileRemoteDataSource {
   Future<List<PayrollDto>> getPayrollHistory();
 
   //Future<PayrollDto> getPayrollDetail(int id);
+
+  Future<List<OfficeAssetsDto>> getOfficeAssets();
+
 }

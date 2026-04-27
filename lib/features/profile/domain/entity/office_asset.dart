@@ -4,18 +4,19 @@ enum WarrantyStatus {
   active,
   expired,
   off;
-  bool get isActive => this == WarrantyStatus.active;
 }
 
 class OfficeAsset extends Equatable {
   final int id;
   final String name;
-  final String brand;
+  final String? brand;
   final String? model;
-  final String? serialNumber;
+  final String serialNumber;
+  final String? assetCode;
   final WarrantyStatus warrantyStatus;
+  final String? condition;
+  final String? status;
   final DateTime? warrantyExpireDate;
-  final DateTime buyingDate;
   final DateTime receivedOn;
   final String? imageUrl;
   final String? description;
@@ -24,27 +25,24 @@ class OfficeAsset extends Equatable {
   const OfficeAsset({
     required this.id,
     required this.name,
-    required this.brand,
-    this.model,
-    this.serialNumber,
-    required this.warrantyStatus,
-    this.warrantyExpireDate,
-    required this.buyingDate,
+    required this.serialNumber,
     required this.receivedOn,
+    this.brand,
+    this.model,
+    this.assetCode,
+    this.warrantyStatus = WarrantyStatus.off,
+    this.warrantyExpireDate,
     this.imageUrl,
     this.description,
     this.category,
+    this.condition,
+    this.status,
   });
 
   static const months =[
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
-
-  /// Formatted buying date: "12 September 2020"
-  String get formattedBuyingDate {
-    return '${buyingDate.day} ${months[buyingDate.month - 1]} ${buyingDate.year}';
-  }
 
   /// Formatted received date: "14 September 2020"
   String get formattedReceivedDate {
@@ -67,10 +65,11 @@ class OfficeAsset extends Equatable {
     serialNumber,
     warrantyStatus,
     warrantyExpireDate,
-    buyingDate,
     receivedOn,
     imageUrl,
     description,
     category,
+    condition,
+    status,
   ];
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:hr_management/features/profile/data/datasource/remote/dto/payroll_dto.dart';
+import 'package:hr_management/features/profile/data/datasource/remote/dto/response/office_assets_dto.dart';
 import 'package:hr_management/features/profile/data/datasource/remote/dto/response/upload_image_response_dto.dart';
 import 'package:hr_management/features/profile/data/datasource/remote/profile_remote_data_source.dart';
 import '../../../../../core/data/exception/app_exception.dart';
@@ -146,6 +147,16 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     final data = response.data['data'] as List<dynamic>;
     return data
         .map((json) => PayrollDto.fromJson(json as Map<String, dynamic>))
+        .toList();
+  }
+
+  @override
+  Future<List<OfficeAssetsDto>> getOfficeAssets() async {
+    final response = await _dioClient.get(ApiConstants.getOfficeAssets);
+
+    final data = response.data['data'] as List<dynamic>;
+    return data
+        .map((json) => OfficeAssetsDto.fromJson(json as Map<String, dynamic>))
         .toList();
   }
 }
