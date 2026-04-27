@@ -35,7 +35,6 @@ import '../../features/profile/data/repository_imp/profile_repository_impl.dart'
 import '../../features/profile/domain/repository/profile_repository.dart';
 import '../../features/profile/domain/usecase/complete_profile_usecase.dart';
 import '../../features/profile/domain/usecase/get_office_assets_usecase.dart';
-import '../../features/profile/domain/usecase/get_payroll_details_usecase.dart';
 import '../../features/profile/domain/usecase/get_payroll_history_usecase.dart';
 import '../../features/profile/domain/usecase/get_profile_usecase.dart';
 import '../../features/profile/domain/usecase/update_profile_usecase.dart';
@@ -210,9 +209,6 @@ Future<void> _initProfile() async {
   sl.registerLazySingleton<GetPayrollHistoryUseCase>(
         () => GetPayrollHistoryUseCase(sl<ProfileRepository>()),
   );
-  sl.registerLazySingleton<GetPayrollDetailsUseCase>(
-        () => GetPayrollDetailsUseCase(sl<ProfileRepository>()),
-  );
   sl.registerLazySingleton<GetOfficeAssetsUseCase>(
         () => GetOfficeAssetsUseCase(sl<ProfileRepository>()),
   );
@@ -236,7 +232,6 @@ Future<void> _initProfile() async {
   sl.registerFactory<PayrollCubit>(
         () => PayrollCubit(
       getPayrollHistoryUseCase: sl<GetPayrollHistoryUseCase>(),
-      getPayrollDetailsUseCase: sl<GetPayrollDetailsUseCase>(),
     ),
   );
   sl.registerFactory<OfficeAssetsCubit>(

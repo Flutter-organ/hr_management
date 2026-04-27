@@ -1,57 +1,61 @@
 class PayrollDto {
   final int? id;
-  final String? month;
-  final double? baseSalary;
+  final int? month;
+  final int? year;
+  final double? basicSalary;
+  final double? allowances;
+  final double? bonuses;
   final double? overtimePay;
   final double? deductions;
-  final double? netSalary;
-  final String? status;
-  final String? paidAt;
-
-  // Additional fields (if backend provides)
   final double? tax;
-  final double? bonus;
-  final double? reimbursement;
+  final double? netSalary;
+  final int? workingDays;
+  final int? presentDays;
+  final int? absentDays;
   final double? totalHours;
-  final double? overtimeHours;
-  final String? periodStart;
-  final String? periodEnd;
+  final String? status;
+  final String? paymentDate;
+  final String? paymentMethod;
 
   const PayrollDto({
     this.id,
     this.month,
-    this.baseSalary,
+    this.year,
+    this.basicSalary,
+    this.allowances,
+    this.bonuses,
     this.overtimePay,
     this.deductions,
-    this.netSalary,
-    this.status,
-    this.paidAt,
     this.tax,
-    this.bonus,
-    this.reimbursement,
+    this.netSalary,
+    this.workingDays,
+    this.presentDays,
+    this.absentDays,
     this.totalHours,
-    this.overtimeHours,
-    this.periodStart,
-    this.periodEnd,
+    this.status,
+    this.paymentDate,
+    this.paymentMethod,
   });
 
   factory PayrollDto.fromJson(Map<String, dynamic> json) {
     return PayrollDto(
       id: json['id'] as int?,
-      month: json['month'] as String?,
-      baseSalary: (json['base_salary'] as num?)?.toDouble(),
+      month: json['month'] as int?,
+      year: json['year'] as int?,
+      basicSalary: (json['basic_salary'] as num?)?.toDouble(),
+      allowances: (json['allowances'] as num?)?.toDouble(),
+      bonuses: (json['bonuses'] as num?)?.toDouble(),
       overtimePay: (json['overtime_pay'] as num?)?.toDouble(),
       deductions: (json['deductions'] as num?)?.toDouble(),
-      netSalary: (json['net_salary'] as num?)?.toDouble(),
-      status: json['status'] as String?,
-      paidAt: json['paid_at'] as String?,
       tax: (json['tax'] as num?)?.toDouble(),
-      bonus: (json['bonus'] as num?)?.toDouble(),
-      reimbursement: (json['reimbursement'] as num?)?.toDouble(),
+      netSalary: (json['net_salary'] as num?)?.toDouble(),
+      workingDays: json['working_days'] as int?,
+      presentDays: json['present_days'] as int?,
+      absentDays: json['absent_days'] as int?,
       totalHours: (json['total_hours'] as num?)?.toDouble(),
-      overtimeHours: (json['overtime_hours'] as num?)?.toDouble(),
-      periodStart: json['period_start'] as String?,
-      periodEnd: json['period_end'] as String?,
+      status: json['status'] as String?,
+      paymentDate: json['payment_date'] as String?,
+      paymentMethod: json['payment_method'] as String?,
     );
   }
 
@@ -59,19 +63,21 @@ class PayrollDto {
     return {
       'id': id,
       'month': month,
-      'base_salary': baseSalary,
+      'year': year,
+      'basic_salary': basicSalary,
+      'allowances': allowances,
+      'bonuses': bonuses,
       'overtime_pay': overtimePay,
       'deductions': deductions,
-      'net_salary': netSalary,
-      'status': status,
-      'paid_at': paidAt,
       'tax': tax,
-      'bonus': bonus,
-      'reimbursement': reimbursement,
+      'net_salary': netSalary,
+      'working_days': workingDays,
+      'present_days': presentDays,
+      'absent_days': absentDays,
       'total_hours': totalHours,
-      'overtime_hours': overtimeHours,
-      'period_start': periodStart,
-      'period_end': periodEnd,
+      'status': status,
+      'payment_date': paymentDate,
+      'payment_method': paymentMethod,
     };
   }
 }

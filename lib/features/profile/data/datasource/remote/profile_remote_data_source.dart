@@ -19,5 +19,5 @@ abstract class ProfileRemoteDataSource {
 
   Future<List<PayrollDto>> getPayrollHistory();
 
-  Future<PayrollDto> getPayrollDetail(int id);
+  //Future<PayrollDto> getPayrollDetail(int id);
 }

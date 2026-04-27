@@ -6,17 +6,18 @@ import '../../../../../../core/presentation/design_system/components/app_bar.dar
 import '../../../../../../core/presentation/design_system/components/custom_primary_button.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
+import '../../../../domain/entity/payroll.dart';
 import '../../logic/payroll_cubit.dart';
 import '../../logic/payroll_state.dart';
 import '../widget/payroll_details_card.dart';
 import '../widget/working_hours_card.dart';
 
 class PayrollDetailsScreen extends StatelessWidget {
-  final int payrollId;
+  final Payroll payroll;
 
   const PayrollDetailsScreen({
     super.key,
-    required this.payrollId,
+    required this.payroll,
   });
 
   @override
@@ -46,10 +47,6 @@ class PayrollDetailsScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          if (state.isLoadingDetails) {
-            return _buildLoadingState(context);
-          }
-
           if (state.selectedPayroll == null) {
             return _buildErrorState(context);
           }
@@ -80,14 +77,6 @@ class PayrollDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLoadingState(BuildContext context) {
-    return Center(
-      child: CircularProgressIndicator(
-        color: context.colors.purple500,
-      ),
-    );
-  }
-
   Widget _buildErrorState(BuildContext context) {
     return Center(
       child: Padding(
@@ -110,7 +99,7 @@ class PayrollDetailsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             TextButton.icon(
-              onPressed: () => context.read<PayrollCubit>().loadPayrollDetails(payrollId),
+              onPressed: () => context.read<PayrollCubit>().selectPayroll(payroll),
               icon: const Icon(Icons.refresh),
               label: Text('retry'.tr()),
             ),

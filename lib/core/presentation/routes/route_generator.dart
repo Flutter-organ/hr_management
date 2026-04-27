@@ -11,6 +11,7 @@ import '../../../features/auth/presentation/on_boarding/view/on_boarding_page.da
 import '../../../features/auth/presentation/register/signup/logic/sign_up_cubit.dart';
 import '../../../features/auth/presentation/register/signup/view/screen/sign_up_screen.dart';
 import '../../../features/main_navigation/presentation/screens/main_wrapper_screen.dart';
+import '../../../features/profile/domain/entity/payroll.dart';
 import '../../../features/profile/presentation/office_assets/logic/office_assets_cubit.dart';
 import '../../../features/profile/presentation/office_assets/view/screen/office_assets_screen.dart';
 import '../../../features/profile/presentation/payroll/logic/payroll_cubit.dart';
@@ -95,10 +96,10 @@ final GoRouter router = GoRouter(
       path: RouteNames.payrollDetails,
       name: 'payroll_details',
       builder: (context, state) {
-        final payrollId = state.extra as int;
+        final payroll = state.extra as Payroll;
         return BlocProvider(
-          create: (_) => sl<PayrollCubit>()..loadPayrollDetails(payrollId),
-          child: PayrollDetailsScreen(payrollId: payrollId),
+          create: (_) => sl<PayrollCubit>()..selectPayroll(payroll),
+          child: PayrollDetailsScreen(payroll: payroll),
         );
       },
     ),

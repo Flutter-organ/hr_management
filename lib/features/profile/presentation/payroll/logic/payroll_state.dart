@@ -6,7 +6,6 @@ class PayrollState extends Equatable {
   final List<Payroll> payrollHistory;
   final Payroll? selectedPayroll;
   final bool isLoadingHistory;
-  final bool isLoadingDetails;
   final bool isExportingPdf;
   final String? error;
   final String? exportSuccess;
@@ -15,7 +14,6 @@ class PayrollState extends Equatable {
     this.payrollHistory = const [],
     this.selectedPayroll,
     this.isLoadingHistory = false,
-    this.isLoadingDetails = false,
     this.isExportingPdf = false,
     this.error,
     this.exportSuccess,
@@ -39,7 +37,6 @@ class PayrollState extends Equatable {
       payrollHistory: payrollHistory ?? this.payrollHistory,
       selectedPayroll: clearSelectedPayroll ? null : (selectedPayroll ?? this.selectedPayroll),
       isLoadingHistory: isLoadingHistory ?? this.isLoadingHistory,
-      isLoadingDetails: isLoadingDetails ?? this.isLoadingDetails,
       isExportingPdf: isExportingPdf ?? this.isExportingPdf,
       error: clearError ? null : (error ?? this.error),
       exportSuccess: clearExportSuccess ? null : (exportSuccess ?? this.exportSuccess),
@@ -51,7 +48,6 @@ class PayrollState extends Equatable {
     payrollHistory,
     selectedPayroll,
     isLoadingHistory,
-    isLoadingDetails,
     isExportingPdf,
     error,
     exportSuccess,

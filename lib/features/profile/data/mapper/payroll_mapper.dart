@@ -8,20 +8,22 @@ class PayrollMapper {
   static Payroll toDomain(PayrollDto dto) {
     return Payroll(
       id: dto.id ?? 0,
-      yearMonth: dto.month ?? '',
-      baseSalary: dto.baseSalary ?? 0.0,
+      month: dto.month ?? 0,
+      year: dto.year ?? 0,
+      basicSalary: dto.basicSalary ?? 0.0,
+      allowances: dto.allowances,
+      bonuses: dto.bonuses,
       overtimePay: dto.overtimePay ?? 0.0,
       deductions: dto.deductions ?? 0.0,
-      netSalary: dto.netSalary ?? 0.0,
-      status: dto.status ?? 'pending',
-      paidAt: DataFormat.parseDate(dto.paidAt),
       tax: dto.tax,
-      bonus: dto.bonus,
-      reimbursement: dto.reimbursement,
+      netSalary: dto.netSalary ?? 0.0,
+      workingDays: dto.workingDays,
+      presentDays: dto.presentDays,
+      absentDays: dto.absentDays,
       totalHours: dto.totalHours,
-      overtimeHours: dto.overtimeHours,
-      periodStart: DataFormat.parseDate(dto.periodStart),
-      periodEnd: DataFormat.parseDate(dto.periodEnd),
+      status: dto.status ?? 'pending',
+      paymentDate: DataFormat.parseDate(dto.paymentDate),
+      paymentMethod: dto.paymentMethod,
     );
   }
 

@@ -48,7 +48,7 @@ class PayrollMonthCard extends StatelessWidget {
           ),
           StateItemModel(
             label: 'paid_on'.tr(),
-            value: payroll.formattedPaidDate,
+            value: payroll.formattedPaidPeriod,
           ),
         ],
         itemValueTextStyle: context.textTheme.titleSmallFont.copyWith(

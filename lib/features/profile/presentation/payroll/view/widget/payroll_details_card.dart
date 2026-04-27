@@ -48,7 +48,7 @@ class PayrollDetailsCard extends StatelessWidget {
           _buildPayrollRow(
             context,
             label: 'basic_salary'.tr(),
-            value: payroll.formattedBaseSalary,
+            value: payroll.formattedBasicSalary,
           ),
           const SizedBox(height: 12),
 
@@ -60,21 +60,21 @@ class PayrollDetailsCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
 
-          if (payroll.reimbursement != null && payroll.reimbursement! > 0) ...[
+          if (payroll.allowances != null && payroll.allowances! > 0) ...[
             _buildPayrollRow(
               context,
               label: 'reimbursement'.tr(),
-              value: '+\$${payroll.reimbursement!.toStringAsFixed(2)}',
+              value: '+\$${payroll.allowances!.toStringAsFixed(2)}',
               valueColor: context.colors.success25,
             ),
             const SizedBox(height: 12),
           ],
 
-          if (payroll.bonus != null && payroll.bonus! > 0) ...[
+          if (payroll.bonuses != null && payroll.bonuses! > 0) ...[
             _buildPayrollRow(
               context,
               label: 'bonus'.tr(),
-              value: '+\$${payroll.bonus!.toStringAsFixed(2)}',
+              value: '+\$${payroll.bonuses!.toStringAsFixed(2)}',
               valueColor: context.colors.success25,
             ),
             const SizedBox(height: 12),

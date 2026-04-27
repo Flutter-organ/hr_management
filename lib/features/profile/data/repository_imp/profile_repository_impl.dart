@@ -128,15 +128,15 @@ class ProfileRepositoryImpl implements ProfileRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, Payroll>> getPayrollDetail(int id) async {
-    try {
-      final dto = await _remoteDataSource.getPayrollDetail(id);
-      return Right(PayrollMapper.toDomain(dto));
-    } catch (e) {
-      return Left(ProfileFailureMapper.mapException(e));
-    }
-  }
+  // @override
+  // Future<Either<Failure, Payroll>> getPayrollDetail(int id) async {
+  //   try {
+  //     final dto = await _remoteDataSource.getPayrollDetail(id);
+  //     return Right(PayrollMapper.toDomain(dto));
+  //   } catch (e) {
+  //     return Left(ProfileFailureMapper.mapException(e));
+  //   }
+  // }
 
   @override
   Future<Either<Failure, List<Payroll>>> getPayrollHistory() async {

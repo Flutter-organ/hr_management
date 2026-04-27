@@ -2,18 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:hr_management/features/profile/presentation/payroll/logic/payroll_state.dart';
 import '../../../../../core/presentation/base_viewmodel/base_cubit.dart';
 import '../../../domain/entity/payroll.dart';
-import '../../../domain/usecase/get_payroll_details_usecase.dart';
 import '../../../domain/usecase/get_payroll_history_usecase.dart';
 
 class PayrollCubit extends BaseCubit<PayrollState> {
   final GetPayrollHistoryUseCase _getPayrollHistoryUseCase;
-  final GetPayrollDetailsUseCase _getPayrollDetailsUseCase;
 
   PayrollCubit({
     required GetPayrollHistoryUseCase getPayrollHistoryUseCase,
-    required GetPayrollDetailsUseCase getPayrollDetailsUseCase,
   })  : _getPayrollHistoryUseCase = getPayrollHistoryUseCase,
-        _getPayrollDetailsUseCase = getPayrollDetailsUseCase,
         super(const PayrollState());
 
   Future<void> loadPayrollHistory() async {
@@ -32,28 +28,6 @@ class PayrollCubit extends BaseCubit<PayrollState> {
       onError: (error) {
         updateState((s) => s.copyWith(
           isLoadingHistory: false,
-          error: error.message,
-        ));
-      },
-    );
-  }
-
-  Future<void> loadPayrollDetails(int id) async {
-    await execute(
-      onLoading: () => updateState((s) => s.copyWith(
-        isLoadingDetails: true,
-        clearError: true,
-      )),
-      call: () => _getPayrollDetailsUseCase(id),
-      onSuccess: (payroll) {
-        updateState((s) => s.copyWith(
-          isLoadingDetails: false,
-          selectedPayroll: payroll,
-        ));
-      },
-      onError: (error) {
-        updateState((s) => s.copyWith(
-          isLoadingDetails: false,
           error: error.message,
         ));
       },

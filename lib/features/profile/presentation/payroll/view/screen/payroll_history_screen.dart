@@ -8,6 +8,7 @@ import '../../../../../../core/presentation/design_system/components/app_bar.dar
 import '../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
 import '../../../../../../core/presentation/routes/route_names.dart';
+import '../../../../domain/entity/payroll.dart';
 import '../../logic/payroll_cubit.dart';
 import '../../logic/payroll_state.dart';
 import '../widget/payroll_month_card.dart';
@@ -54,7 +55,7 @@ class PayrollHistoryScreen extends StatelessWidget {
                 final payroll = state.payrollHistory[index];
                 return PayrollMonthCard(
                   payroll: payroll,
-                  onTap: () => _navigateToDetails(context, payroll.id),
+                  onTap: () => _navigateToDetails(context, payroll),
                 );
               },
             ),
@@ -112,10 +113,10 @@ class PayrollHistoryScreen extends StatelessWidget {
     );
   }
 
-  void _navigateToDetails(BuildContext context, int payrollId) {
+  void _navigateToDetails(BuildContext context, Payroll payroll) {
     context.push(
       RouteNames.payrollDetails,
-      extra: payrollId,
+      extra: payroll,
     );
   }
 }

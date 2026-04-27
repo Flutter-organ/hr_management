@@ -30,11 +30,12 @@ class WorkingHoursCard extends StatelessWidget {
       itemPadding: const EdgeInsets.all(12),
       itemBorderRadius: BorderRadius.circular(12),
       items: [
-        StateItemModel(
-          label: 'overtime'.tr(),
-          value: payroll.formattedOvertimeHours,
-          icon: _buildIcon(context, Iconsax.clock),
-        ),
+        if (payroll.presentDays != null && payroll.workingDays != null)
+          StateItemModel(
+            label: 'attendance'.tr(),
+            value: '${payroll.presentDays}/${payroll.workingDays} ${'days'.tr()}',
+            icon: _buildIcon(context, Iconsax.calendar),
+          ),
         StateItemModel(
           label: 'this_pay_period'.tr(),
           value: payroll.formattedTotalHours,

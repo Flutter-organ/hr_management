@@ -32,6 +32,6 @@ abstract class ProfileRepository {
   Future<Either<Failure, String>> uploadProfileImage(String filePath);
 
   Future<Either<Failure, List<Payroll>>> getPayrollHistory();
-  Future<Either<Failure, Payroll>> getPayrollDetail(int id);
+  //Future<Either<Failure, Payroll>> getPayrollDetail(int id);
   Future<Either<Failure, List<OfficeAsset>>> getOfficeAssets();
 }

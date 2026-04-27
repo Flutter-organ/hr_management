@@ -1,10 +1,8 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:hr_management/features/profile/data/datasource/remote/dto/payroll_dto.dart';
 import 'package:hr_management/features/profile/data/datasource/remote/dto/response/upload_image_response_dto.dart';
 import 'package:hr_management/features/profile/data/datasource/remote/profile_remote_data_source.dart';
-
 import '../../../../../core/data/exception/app_exception.dart';
 import '../../../../../core/data/network/api_constants.dart';
 import '../../../../../core/data/network/dio_client.dart';
@@ -134,12 +132,12 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     return UploadImageResponseDto.fromJson(data);
   }
 
-  @override
-  Future<PayrollDto> getPayrollDetail(int id) async {
-    final response = await _dioClient.get('${ApiConstants.getPayrollDetail}/$id');
-    final data = response.data['data'] as Map<String, dynamic>;
-    return PayrollDto.fromJson(data);
-  }
+  // @override
+  // Future<PayrollDto> getPayrollDetail(int id) async {
+  //   final response = await _dioClient.get('${ApiConstants.getPayrollDetail}/$id');
+  //   final data = response.data['data'] as Map<String, dynamic>;
+  //   return PayrollDto.fromJson(data);
+  // }
 
   @override
   Future<List<PayrollDto>> getPayrollHistory() async {
