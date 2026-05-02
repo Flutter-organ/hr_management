@@ -6,13 +6,17 @@ import '../theme/helper/theme_extention.dart';
 enum StatusBarEnum { review, approved, rejected }
 
 class CustomStatusBar extends StatefulWidget {
-  final num reviewCount, approveCount, rejectedCount;
+  final num tapOneCount, tapTwoCount, tapThreeCount;
+  final String? tapOne, tapTwo, tapThree;
 
   const CustomStatusBar({
     super.key,
-    required this.reviewCount,
-    required this.approveCount,
-    required this.rejectedCount,
+    required this.tapOneCount,
+    required this.tapTwoCount,
+    required this.tapThreeCount,
+    this.tapOne,
+    this.tapTwo,
+    this.tapThree,
   });
 
   @override
@@ -27,7 +31,7 @@ class _CustomStatusBarState extends State<CustomStatusBar> {
     return Container(
       padding: EdgeInsets.all(4),
       decoration: BoxDecoration(
-        border: Border.all(color: context.colors.gray50),
+        color: context.colors.white,
         borderRadius: BorderRadius.circular(100),
       ),
       child: Row(
@@ -35,22 +39,22 @@ class _CustomStatusBarState extends State<CustomStatusBar> {
         children: [
           Expanded(
             child: _statusBarFunc(
-              title: "reviewbtn".tr(),
-              num: widget.reviewCount,
+              title: widget.tapOne ?? "reviewbtn".tr(),
+              count: widget.tapOneCount,
               type: StatusBarEnum.review,
             ),
           ),
           Expanded(
             child: _statusBarFunc(
-              title: "approvedbtn".tr(),
-              num: widget.approveCount,
+              title: widget.tapTwo ?? "approvedbtn".tr(),
+              count: widget.tapTwoCount,
               type: StatusBarEnum.approved,
             ),
           ),
           Expanded(
             child: _statusBarFunc(
-              title: "rejectedbtn".tr(),
-              num: widget.rejectedCount,
+              title: widget.tapThree ?? "rejectedbtn".tr(),
+              count: widget.tapThreeCount,
               type: StatusBarEnum.rejected,
             ),
           ),
@@ -61,7 +65,7 @@ class _CustomStatusBarState extends State<CustomStatusBar> {
 
   Widget _statusBarFunc({
     required String title,
-    required num num,
+    required num count,
     required StatusBarEnum type,
   }) {
     bool isSelected = statusBarEnum == type;
@@ -94,7 +98,7 @@ class _CustomStatusBarState extends State<CustomStatusBar> {
                       : context.colors.textSecondary,
                 ),
               ),
-              if (num > 0)
+              if (count > 0)
                 ClipOval(
                   child: Container(
                     padding: EdgeInsets.all(4),
@@ -105,7 +109,7 @@ class _CustomStatusBarState extends State<CustomStatusBar> {
                           : context.colors.gray300,
                     ),
                     child: Text(
-                      num.toString(),
+                      count.toString(),
                       style: context.textTheme.labelSmallFont.copyWith(
                         fontSize: 10,
                         color: context.colors.white,

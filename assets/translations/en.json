@@ -25,7 +25,9 @@
   "delete": "Delete File",
   "keep_file": "Keep File",
   "today_task": "Today Task",
-  "sub_title": "The tasks assigned to you for today",
+  "task_sub": "The tasks assigned to you for today",
+  "no_task": "No Tasks Assigned",
+  "no_task_des": "It looks like you don’t have any tasks assigned to you right now. Don’t worry, this space will be updated as new tasks become available.",
   "count_task": "1",
   "wiring_dashboard_analytics": "Wiring Dashboard Analytics",
 
@@ -169,6 +171,9 @@
   "task": "Task",
   "expense": "Expense",
   "leave": "Leave",
+  "reviewbtn": "Review",
+  "approvedbtn": "Approved",
+  "rejectedbtn": "Rejected",
 
   "my_profile": "My profile",
   "personal_data": "Personal Data",
