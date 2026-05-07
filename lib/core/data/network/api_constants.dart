@@ -10,8 +10,8 @@ class ApiConstants {
   static const String verifyOtp = '/api/auth/verify-otp';
   static const String login = '/api/auth/login';
   static const String forgotPassword = '/api/auth/forgot-password';
-  static const String verifyForgotPasswordOtp =
-      '/api/auth/verify-forgot-password-otp';
+  static const String verifyForgotPasswordOtp = '/api/auth/verify-forgot-password-otp';
+
   static const String logout = '/api/auth/logout';
   static const String logoutAll = '/api/auth/logout-all';
   static const String deleteAccount = '/api/auth/delete-account';
@@ -19,4 +19,13 @@ class ApiConstants {
 
   static const String tokenKey = 'token';
   static const String multipartContentType = 'multipart/form-data';
+
+  static const String getProfile = '/api/profile';
+  static const String changePassword = '/api/auth/change-password';
+  static const String completeProfile = '/api/profile/complete';
+  static const String updateProfile = '/api/profile';
+  static const String uploadProfileImage = '/api/uploads/profile-image';
+  static const String getOfficeAssets = '/api/assets/my';
+  static const String getPayrollHistory = '/api/payroll';
+  //static const String getPayrollDetail = '/api/payroll';
 }

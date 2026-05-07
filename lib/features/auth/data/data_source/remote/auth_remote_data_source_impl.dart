@@ -1,6 +1,7 @@
 import '../../../../../core/data/network/api_constants.dart';
 import '../../../../../core/data/network/dio_client.dart';
 import 'auth_remote_data_source.dart';
+import 'dto/request/change_password_request_dto.dart';
 import 'dto/request/login_request.dart';
 import 'dto/request/register_dto_request.dart';
 import 'dto/request/reset_password_request.dart';
@@ -62,7 +63,7 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
       ApiConstants.register,
       data: registerDtoRequest.toJson(),
     );
-    return response.data['success'] as bool;
+    return response.data['success'] as bool? ?? false;
   }
 
   @override
@@ -74,5 +75,20 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
       data: verifyOtpDto.toJson(),
     );
     return OtpVerifyResponse.fromJson(response.data['data']);
+  }
+
+  @override
+  Future<bool> changePassword({required String currentPassword,
+    required String newPassword, required String newPasswordConfirmation}) async {
+    final request = ChangePasswordRequestDto(
+      currentPassword: currentPassword,
+      newPassword: newPassword,
+      newPasswordConfirmation: newPasswordConfirmation,
+    );
+    final response = await _dioClient.post(
+      ApiConstants.changePassword,
+      data: request.toJson(),
+    );
+    return response.data['success'] as bool? ?? false;
   }
 }

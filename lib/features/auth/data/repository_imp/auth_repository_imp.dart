@@ -20,8 +20,9 @@ class AuthRepositoryImp implements AuthRepository {
   const AuthRepositoryImp({
     required AuthLocalDataSource localDataSource,
     required AuthRemoteDataSource remoteDataSource,
-  }) : _localDataSource = localDataSource,
-       _remoteDataSource = remoteDataSource;
+  })
+      : _localDataSource = localDataSource,
+        _remoteDataSource = remoteDataSource;
 
   @override
   Future<Either<Failure, User>> login({
@@ -40,6 +41,8 @@ class AuthRepositoryImp implements AuthRepository {
 
       if (response.accessToken != null && response.accessToken!.isNotEmpty) {
         await _localDataSource.saveToken(response.accessToken!);
+        await _localDataSource.saveIdentifier(
+            response.user?.email ?? response.user?.phone ?? identifier);
       } else {
         return Left(const ServerFailure('Access token is missing'));
       }
@@ -134,6 +137,8 @@ class AuthRepositoryImp implements AuthRepository {
       }
 
       await _localDataSource.saveToken(response.accessToken ?? '');
+      await _localDataSource.saveIdentifier(
+          response.user?.email ?? response.user?.phone ?? identifier);
 
       return Right(AuthMapper.toDomain(response.user));
     } catch (e) {
@@ -193,11 +198,30 @@ class AuthRepositoryImp implements AuthRepository {
       final otpVerifyResponse = await _remoteDataSource.verifyOTP(
         verifyOtpDto: verifyOtpDto,
       );
-      if (otpVerifyResponse.accessToken != null) {
+      if (otpVerifyResponse.accessToken != null &&
+          otpVerifyResponse.accessToken!.isNotEmpty) {
         await saveToken(otpVerifyResponse.accessToken!);
+        await _localDataSource.saveIdentifier(
+            otpVerifyResponse.user?.email ?? otpVerifyResponse.user?.phone ??
+                "");
       }
       final user = AuthMapper.toDomain(otpVerifyResponse.user);
       return Right(user);
+    } catch (e) {
+      return Left(AuthFailureMapper.mapException(e));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> changePassword({required String currentPassword,
+    required String newPassword, required String newPasswordConfirmation}) async {
+    try {
+       final response = await _remoteDataSource.changePassword(
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+        newPasswordConfirmation: newPasswordConfirmation,
+      );
+      return Right(response);
     } catch (e) {
       return Left(AuthFailureMapper.mapException(e));
     }

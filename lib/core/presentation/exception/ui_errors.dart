@@ -69,3 +69,47 @@ class CacheUiError extends UiError {
 class UnknownUiError extends UiError {
   const UnknownUiError([super.message = 'An unexpected error occurred']);
 }
+
+class ProfileUpdateUiError extends UiError {
+  const ProfileUpdateUiError([super.message = 'Failed to update profile']);
+}
+class ProfileNotCompletedUiError extends UiError {
+  const ProfileNotCompletedUiError([super.message = 'Profile not completed yet.']);
+}
+class ProfileFetchUiError extends UiError {
+  const ProfileFetchUiError([super.message = 'Failed to fetch profile']);
+}
+class ProfileImageUploadUiError extends UiError {
+  const ProfileImageUploadUiError([super.message = 'Failed to upload profile image']);
+}
+
+class PayrollFetchUiError extends UiError {
+  const PayrollFetchUiError([super.message = 'Failed to load payroll data']);
+}
+
+class PayrollNotFoundUiError extends UiError {
+  const PayrollNotFoundUiError([super.message = 'Payroll record not found']);
+}
+
+class ProfileAlreadyExistsUiError extends UiError {
+  const ProfileAlreadyExistsUiError([
+    super.message = 'Profile already exists. Use update instead.',
+  ]);
+}
+
+class ChangePasswordUiError extends UiError {
+  const ChangePasswordUiError([super.message = 'Failed to change password']);
+}
+
+class SamePasswordUiError extends UiError {
+  const SamePasswordUiError([
+    super.message = 'New password must be different from the current password.',
+  ]);
+}
+
+class InvalidCurrentPasswordUiError extends UiError {
+  const InvalidCurrentPasswordUiError([
+    super.message = 'Current password is incorrect.',
+  ]);
+}
+

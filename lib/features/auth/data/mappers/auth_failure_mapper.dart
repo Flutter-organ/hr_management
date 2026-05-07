@@ -120,6 +120,13 @@ class AuthFailureMapper {
         return EmailAlreadyExistsFailure(message);
       case 'PHONE_EXISTS':
         return PhoneAlreadyExistsFailure(message);
+      case 'SAME_PASSWORD':
+        return SamePasswordFailure(message);
+      case 'INVALID_CURRENT_PASSWORD':
+      case 'WRONG_PASSWORD':
+        return InvalidCurrentPasswordFailure(message);
+      case 'CHANGE_PASSWORD_FAILED':
+        return ChangePasswordFailure(message);
     }
 
     switch (exception.statusCode) {

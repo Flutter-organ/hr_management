@@ -15,6 +15,13 @@ class RouteNames {
   static const String expenseScreen = '/expense';
   static const String leaveScreen = '/leave';
 
+  // Profile
+  static const String profile = '/profile';
+  static const String personalData = '/profile/personal-data';
+  static const String payrollHistory = '/profile/payroll';
+  static const String payrollDetails = '/profile/payroll/details';
+
+
   // Error
   static const String notFound = '/404';
 
@@ -25,6 +32,7 @@ class RouteNames {
     taskScreen,
     expenseScreen,
     leaveScreen,
+    profile,
   ];
 
   static bool isProtectedRoute(String location) {
@@ -38,6 +46,8 @@ class RouteNames {
   static bool isOnboardingRoute(String location) {
     return location == onboarding;
   }
+
+  static const String officeAssets = '/profile/office-assets';
 
 
 }

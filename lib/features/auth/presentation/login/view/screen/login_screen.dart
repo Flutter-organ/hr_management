@@ -42,8 +42,8 @@ class LoginScreen extends StatelessWidget {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: const LoginCard(),
+                ),
               ),
-            ),
           ],
         ),
       ),

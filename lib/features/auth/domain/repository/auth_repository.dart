@@ -29,6 +29,12 @@ abstract class AuthRepository {
     required String passwordConfirmation,
   });
 
+  Future<Either<Failure, bool>> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String newPasswordConfirmation,
+  });
+
   Future<Either<Failure, User>> login({
     required String identifier,
     required String password,
@@ -38,4 +44,5 @@ abstract class AuthRepository {
   Future<Either<Failure, Unit>> saveIdentifier(String mail);
   Future<Either<Failure, String?>> getIdentifier();
   Future<Either<Failure, Unit>> clearIdentifier();
+
 }

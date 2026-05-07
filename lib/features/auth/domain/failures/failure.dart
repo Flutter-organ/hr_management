@@ -83,3 +83,21 @@ class ValidationFailure extends AuthFailure {
   @override
   int get hashCode => Object.hash(super.hashCode, fieldErrors);
 }
+
+class ChangePasswordFailure extends AuthFailure {
+  const ChangePasswordFailure([
+    super.message = 'Failed to change password',
+  ]);
+}
+
+class SamePasswordFailure extends AuthFailure {
+  const SamePasswordFailure([
+    super.message = 'New password must be different from the current password.',
+  ]);
+}
+
+class InvalidCurrentPasswordFailure extends AuthFailure {
+  const InvalidCurrentPasswordFailure([
+    super.message = 'Current password is incorrect.',
+  ]);
+}

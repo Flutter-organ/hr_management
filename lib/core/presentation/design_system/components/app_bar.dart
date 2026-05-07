@@ -21,12 +21,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double? leadingWidth;
   final Color? leadingBackgroundColor;
   final Color? leadingIconColor;
+  final Color? actionBackgroundColor;
+  final Color? actionIconColor;
 
   final String? profileName;
   final String? profileJobTitle;
   final String? profileAvatarUrl;
   final VoidCallback? onChatPressed;
   final VoidCallback? onBellPressed;
+  final VoidCallback? onProfilePressed;
   final bool isVerified;
   final bool safeArea;
 
@@ -50,12 +53,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.leadingBackgroundColor,
     this.leadingIconColor,
     this.actionsPadding,
+    this.actionBackgroundColor,
+    this.actionIconColor,
 
     this.profileName,
     this.profileJobTitle,
     this.profileAvatarUrl,
     this.onChatPressed,
     this.onBellPressed,
+    this.onProfilePressed,
     this.isVerified = false,
     this.safeArea = false,
   });
@@ -67,6 +73,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     List<Widget>? actions,
     Color? backgroundColor,
     Color? foregroundColor,
+    Color? leadingBackgroundColor,
+    Color? leadingIconColor,
   }) {
     return CustomAppBar(
       title: title,
@@ -76,6 +84,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
       centerTitle: true,
+      leadingBackgroundColor: leadingBackgroundColor,
+      leadingIconColor: leadingIconColor,
     );
   }
 
@@ -85,10 +95,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     String? profileAvatarUrl,
     VoidCallback? onChatPressed,
     VoidCallback? onBellPressed,
+    Color? actionBackgroundColor,
+    Color? actionIconColor,
     Color? backgroundColor,
     bool isVerified = false,
     Color? foregroundColor,
     bool showBackButton = false,
+    bool safeArea = false,
+    VoidCallback? onProfilePressed,
   }) {
     return CustomAppBar(
       profileName: profileName,
@@ -97,10 +111,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       onChatPressed: onChatPressed,
       onBellPressed: onBellPressed,
       backgroundColor: backgroundColor,
+      actionBackgroundColor: actionBackgroundColor,
+      actionIconColor: actionIconColor,
       centerTitle: false,
       foregroundColor: foregroundColor,
       showBackButton: showBackButton,
       isVerified: isVerified,
+      safeArea: safeArea,
+      onProfilePressed: onProfilePressed,
     );
   }
 
@@ -113,12 +131,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final effectiveForegroundColor = foregroundColor ?? colors.textPrimary;
 
     return Container(
-        padding: padding ?? EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-        //color: effectiveBackgroundColor,
-        child:
-        safeArea ?
-        SafeArea(child: _buildAppBar(context, effectiveBackgroundColor, effectiveForegroundColor))
-            : _buildAppBar(context, effectiveBackgroundColor, effectiveForegroundColor)
+      padding: padding ?? EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      //color: effectiveBackgroundColor,
+      child:
+      safeArea ?
+      SafeArea(child: _buildAppBar(context, effectiveBackgroundColor, effectiveForegroundColor))
+          : _buildAppBar(context, effectiveBackgroundColor, effectiveForegroundColor)
     );
   }
 
@@ -139,18 +157,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget? _buildLeading(BuildContext context) {
-    if (showBackButton) {
+    if (showBackButton && !isProfileMode) {
       return IconButton(
         icon: Icon(
           Icons.arrow_back_ios_new_rounded,
-          size: 18,
+          size: 16,
           color: leadingIconColor ?? context.colors.primary,
         ),
         onPressed: onBackPressed ?? () => Navigator.of(context).pop(),
         style: IconButton.styleFrom(
           backgroundColor: leadingBackgroundColor ?? context.colors.white,
           shape: const CircleBorder(),
-          padding: const EdgeInsets.all(6),
+          padding: const EdgeInsets.all(8),
         ),
       );
     }
@@ -183,18 +201,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildProfileAvatar() {
-    return CircleAvatar(
-      radius: 20,
-      child: ClipOval(
-        child: CachedNetworkImage(
-          imageUrl: profileAvatarUrl ?? '',
-          fit: BoxFit.cover,
-          width: 44,
-          height: 44,
-          placeholder: (context, url) =>
-              Image.asset(AppAssets.placeHolderProfile, fit: BoxFit.cover),
-          errorWidget: (context, url, error) =>
-              Image.asset(AppAssets.placeHolderProfile, fit: BoxFit.cover),
+    return GestureDetector(
+      onTap: onProfilePressed,
+      child: CircleAvatar(
+        radius: 20,
+        child: ClipOval(
+          child: CachedNetworkImage(
+            imageUrl: profileAvatarUrl ?? '',
+            fit: BoxFit.cover,
+            width: 44,
+            height: 44,
+            placeholder: (context, url) =>
+                Image.asset(AppAssets.placeHolderProfile, fit: BoxFit.cover),
+            errorWidget: (context, url, error) =>
+                Image.asset(AppAssets.placeHolderProfile, fit: BoxFit.cover),
+          ),
         ),
       ),
     );
@@ -236,14 +257,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return [
       _buildActionButton(
-        icon: Icons.chat_bubble_outline,
+        icon: Icons.message_rounded,
         onPressed: onChatPressed,
-        backgroundColor: context.colors.purple100,
-        iconColor: context.colors.primary,
+        backgroundColor: actionBackgroundColor ?? context.colors.purple100,
+        iconColor: actionIconColor ?? context.colors.primary,
       ),
       const SizedBox(width: 8),
       _buildActionButton(
-        icon: Icons.notifications_outlined,
+        icon: Icons.notifications_rounded,
         onPressed: onBellPressed,
         backgroundColor: context.colors.purple100,
         iconColor: context.colors.primary,
@@ -257,13 +278,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required Color backgroundColor,
     required Color iconColor,
   }) {
-    return IconButton(
-      icon: Icon(icon, size: 20, color: iconColor),
-      onPressed: onPressed,
-      style: IconButton.styleFrom(
-        backgroundColor: backgroundColor,
-        shape: const CircleBorder(),
-        padding: const EdgeInsets.all(8),
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        shape: BoxShape.circle,
+      ),
+      child: IconButton(
+        icon: Icon(icon, size: 20, color: iconColor),
+        onPressed: onPressed,
+        padding: EdgeInsets.zero,
+        constraints: const BoxConstraints(),
       ),
     );
   }

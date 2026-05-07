@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:hr_management/core/domain/failure/domain_failure.dart';
 import '../../../features/auth/domain/failures/failure.dart';
-import '../../domain/failure/domain_failure.dart';
+import '../../../features/profile/domain/failure/failure.dart';
+import '../../../features/profile/domain/failure/payroll_failure.dart';
 import '../exception/ui_errors.dart';
 
 abstract class BaseCubit<STATE> extends Cubit<STATE> {
@@ -40,33 +42,35 @@ abstract class BaseCubit<STATE> extends Cubit<STATE> {
       TimeoutFailure() => const TimeoutUiError(),
       ServerFailure(:final message) => ServerUiError(message),
       CacheFailure(:final message) => CacheUiError(message),
-
-      InvalidCredentialsFailure(:final message) => InvalidCredentialsUiError(
-        message,
-      ),
+      InvalidCredentialsFailure(:final message) => InvalidCredentialsUiError(message,),
       SessionExpiredFailure(:final message) => UnauthorizedUiError(message),
       UserNotFoundFailure(:final message) => NotFoundUiError(message),
       InvalidOtpFailure(:final message) => InvalidOtpUiError(message),
       OtpExpiredFailure(:final message) => InvalidOtpUiError(message),
-      EmailAlreadyExistsFailure(:final message) => AccountExistsUiError(
-        message,
-      ),
-      PhoneAlreadyExistsFailure(:final message) => AccountExistsUiError(
-        message,
-      ),
-      AccountNotVerifiedFailure(:final message) => AccountNotVerifiedUiError(
-        message,
-      ),
+      EmailAlreadyExistsFailure(:final message) => AccountExistsUiError(message,),
+      PhoneAlreadyExistsFailure(:final message) => AccountExistsUiError(message,),
+      AccountNotVerifiedFailure(:final message) => AccountNotVerifiedUiError(message,),
       AccountDisabledFailure(:final message) => AccountDisabledUiError(message),
       TooManyAttemptsFailure(:final message) => TooManyAttemptsUiError(message),
 
       ValidationFailure(:final message, :final fieldErrors) =>
         ValidationUiError(message: message, fieldErrors: fieldErrors),
 
-      AuthFailure(:final message) => GenericUiError(message),
+      ProfileUpdateFailure(:final message) => ProfileUpdateUiError(message),
+      ProfileNotCompletedFailure(:final message) => ProfileNotCompletedUiError(message),
+      ProfileFetchFailure(:final message) => ProfileFetchUiError(message),
+      ProfileImageUploadFailure(:final message) => ProfileImageUploadUiError(message),
+
+      PayrollFetchFailure(:final message) => PayrollFetchUiError(message),
+      PayrollNotFoundFailure(:final message) => PayrollNotFoundUiError(message),
+
+      ProfileAlreadyExistsFailure(:final message) => ProfileAlreadyExistsUiError(message),
+
+      ChangePasswordFailure(:final message) => ChangePasswordUiError(message),
+      SamePasswordFailure(:final message) => SamePasswordUiError(message),
+      InvalidCurrentPasswordFailure(:final message) => InvalidCurrentPasswordUiError(message),
 
       UnknownFailure(:final message) => UnknownUiError(message),
-
       _ => const UnknownUiError("Unknown error occurred")
     };
   }

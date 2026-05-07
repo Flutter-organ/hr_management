@@ -1,7 +1,6 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:hr_management/features/auth/domain/entity/user.dart';
 import 'package:hr_management/features/auth/domain/repository/auth_repository.dart';
-
 import '../../../../core/domain/failure/domain_failure.dart';
 import '../entity/auth_type.dart';
 
@@ -25,12 +24,13 @@ class LoginUseCase {
 
     return result.fold(
           (failure) => Left(failure),
-          (user) async {
+          (user) {
         if (isRemembered) {
-          await _repository.saveIdentifier(identifier);
-        } else {
-          await _repository.clearIdentifier();
-        }
+          _repository.saveIdentifier(identifier);
+         }
+          // else {
+        //   _repository.clearIdentifier();
+        // }
         return Right(user);
       },
     );

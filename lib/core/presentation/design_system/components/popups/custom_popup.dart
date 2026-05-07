@@ -49,17 +49,17 @@ class CustomPopup extends StatelessWidget {
     this.isPrimaryButtonEnabled = true,
     this.customHeader,
   }) : assert(
-  icon == null || iconWidget == null,
-  'Cannot provide both icon and iconWidget',
-  ),
-        assert(
-        customHeader == null || (title == null && description == null),
-        'Cannot provide both customHeader and title/description',
-        ),
-        assert(
-        primaryButtonText == null || primaryButtonOnPressed != null,
-        'primaryButtonOnPressed is required when primaryButtonText is provided',
-        );
+    icon == null || iconWidget == null,
+    'Cannot provide both icon and iconWidget',
+    ),
+    assert(
+    customHeader == null || (title == null && description == null),
+    'Cannot provide both customHeader and title/description',
+    ),
+    assert(
+    primaryButtonText == null || primaryButtonOnPressed != null,
+    'primaryButtonOnPressed is required when primaryButtonText is provided',
+    );
 
   factory CustomPopup.primary({
     required IconData icon,
@@ -728,14 +728,14 @@ class _PasswordResetContentState extends State<_PasswordResetContent> {
   }
 
   Widget _buildPasswordField(
-      BuildContext context, {
-        required String label,
-        required String hint,
-        required ValueChanged<String> onChanged,
-        String? errorText,
-        required bool obscure,
-        required VoidCallback onToggleObscure,
-      }) {
+    BuildContext context, {
+    required String label,
+    required String hint,
+    required ValueChanged<String> onChanged,
+    String? errorText,
+    required bool obscure,
+    required VoidCallback onToggleObscure,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -859,7 +859,7 @@ class _LoginContentState extends State<_LoginContent> {
           contentPaddingHorizontal: 16,
           contentPaddingVertical: 16,
           prefixIcon:
-          widget.identifierPrefixIcon ??
+              widget.identifierPrefixIcon ??
               Icon(Iconsax.sms, color: context.colors.purple400, size: 20),
         ),
         if (widget.identifierErrorText != null) ...[
