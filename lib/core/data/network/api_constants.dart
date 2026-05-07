@@ -28,4 +28,7 @@ class ApiConstants {
   static const String getOfficeAssets = '/api/assets/my';
   static const String getPayrollHistory = '/api/payroll';
   //static const String getPayrollDetail = '/api/payroll';
+
+  static const String expenses = '/api/expenses';
+  static const String uploadReceipt= '/api/uploads/receipt';
 }

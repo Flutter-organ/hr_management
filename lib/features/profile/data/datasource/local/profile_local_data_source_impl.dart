@@ -71,12 +71,4 @@ class ProfileLocalDataSourceImpl implements ProfileLocalDataSource {
       throw CacheException.write(PreferencesKeys.profileCompletedKey, e);
     }
   }
-
-  // @override
-  // Future<List<OfficeAsset>> getOfficeAssets() async {
-  //     // Simulate network delay
-  //     await Future.delayed(const Duration(milliseconds: 800));
-  //     // Return dummy data
-  //     return OfficeAssetsDummyLocalData.dummyAssets;
-  // }
 }

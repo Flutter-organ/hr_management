@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hr_management/core/domain/failure/domain_failure.dart';
 import '../../../features/auth/domain/failures/failure.dart';
+import '../../../features/expense/domain/failure/expense_failure.dart';
 import '../../../features/profile/domain/failure/failure.dart';
 import '../../../features/profile/domain/failure/payroll_failure.dart';
 import '../exception/ui_errors.dart';
@@ -70,6 +71,15 @@ abstract class BaseCubit<STATE> extends Cubit<STATE> {
       SamePasswordFailure(:final message) => SamePasswordUiError(message),
       InvalidCurrentPasswordFailure(:final message) => InvalidCurrentPasswordUiError(message),
 
+      ExpenseFetchFailure(:final message) => ExpenseFetchUiError(message),
+      ExpenseNotFoundFailure(:final message) => ExpenseNotFoundUiError(message),
+      ExpenseAlreadyProcessedFailure(:final message) => ExpenseAlreadyProcessedUiError(message),
+      ExpenseCreateFailure(:final message) => ExpenseCreateUiError(message),
+      ExpenseUpdateFailure(:final message) => ExpenseUpdateUiError(message),
+      ExpenseDeleteFailure(:final message) => ExpenseDeleteUiError(message),
+      ReceiptUploadFailure(:final message) => ReceiptUploadUiError(message),
+      ExpenseValidationFailure(:final message, :final fieldErrors) =>
+      ValidationUiError(message: message, fieldErrors: fieldErrors),
       UnknownFailure(:final message) => UnknownUiError(message),
       _ => const UnknownUiError("Unknown error occurred")
     };

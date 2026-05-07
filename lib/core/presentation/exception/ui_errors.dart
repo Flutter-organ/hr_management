@@ -113,3 +113,33 @@ class InvalidCurrentPasswordUiError extends UiError {
   ]);
 }
 
+class ExpenseFetchUiError extends UiError {
+  const ExpenseFetchUiError([super.message = 'Failed to load expenses']);
+}
+
+class ExpenseNotFoundUiError extends UiError {
+  const ExpenseNotFoundUiError([super.message = 'Expense not found']);
+}
+
+class ExpenseAlreadyProcessedUiError extends UiError {
+  const ExpenseAlreadyProcessedUiError([
+    super.message = 'Cannot modify a processed expense',
+  ]);
+}
+
+class ExpenseCreateUiError extends UiError {
+  const ExpenseCreateUiError([super.message = 'Failed to submit expense']);
+}
+
+class ExpenseUpdateUiError extends UiError {
+  const ExpenseUpdateUiError([super.message = 'Failed to update expense']);
+}
+
+class ExpenseDeleteUiError extends UiError {
+  const ExpenseDeleteUiError([super.message = 'Failed to delete expense']);
+}
+
+class ReceiptUploadUiError extends UiError {
+  const ReceiptUploadUiError([super.message = 'Failed to upload receipt']);
+}
+
