@@ -37,6 +37,7 @@ import '../../features/expense/domain/usecase/get_expense_detail_usecase.dart';
 import '../../features/expense/domain/usecase/get_expenses_usecase.dart';
 import '../../features/expense/domain/usecase/update_expense_usecase.dart';
 import '../../features/expense/domain/usecase/upload_receipt_usecase.dart';
+import '../../features/expense/presentation/logic/expenses_cubit.dart';
 import '../../features/profile/data/datasource/local/profile_local_data_source.dart';
 import '../../features/profile/data/datasource/local/profile_local_data_source_impl.dart';
 import '../../features/profile/data/datasource/remote/profile_remote_data_source.dart';
@@ -269,4 +270,13 @@ Future<void> _initExpenses() async {
   sl.registerLazySingleton(() => UpdateExpenseUseCase(sl<ExpensesRepository>()));
   sl.registerLazySingleton(() => DeleteExpenseUseCase(sl<ExpensesRepository>()));
   sl.registerLazySingleton(() => UploadReceiptUseCase(sl<ExpensesRepository>()));
+
+  // presentation
+  sl.registerFactory<ExpensesCubit>(
+        () => ExpensesCubit(
+      getExpensesUseCase: sl<GetExpensesUseCase>(),
+      deleteExpenseUseCase: sl<DeleteExpenseUseCase>(),
+    ),
+  );
+
 }
