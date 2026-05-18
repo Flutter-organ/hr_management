@@ -10,6 +10,7 @@ class AppConstant {
   static const int otpLength = 6;
   static const int minPhoneNumberLength = 10;
   static const int maxPhoneNumberLength = 15;
+  static const String defaultCurrency = 'USD';
 
 
 }

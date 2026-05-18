@@ -276,6 +276,8 @@ Future<void> _initExpenses() async {
         () => ExpensesCubit(
       getExpensesUseCase: sl<GetExpensesUseCase>(),
       deleteExpenseUseCase: sl<DeleteExpenseUseCase>(),
+      createExpenseUseCase: sl<CreateExpenseUseCase>(),
+      uploadReceiptUseCase: sl<UploadReceiptUseCase>(),
     ),
   );
 

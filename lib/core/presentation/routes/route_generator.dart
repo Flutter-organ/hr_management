@@ -12,6 +12,7 @@ import '../../../features/auth/presentation/on_boarding/view/on_boarding_page.da
 import '../../../features/auth/presentation/register/signup/logic/sign_up_cubit.dart';
 import '../../../features/auth/presentation/register/signup/view/screen/sign_up_screen.dart';
 import '../../../features/expense/presentation/logic/expenses_cubit.dart';
+import '../../../features/expense/presentation/view/screen/submit_expense_screen.dart';
 import '../../../features/main_navigation/presentation/screens/main_wrapper_screen.dart';
 import '../../../features/profile/domain/entity/payroll.dart';
 import '../../../features/profile/presentation/office_assets/logic/office_assets_cubit.dart';
@@ -112,6 +113,15 @@ final GoRouter router = GoRouter(
       builder: (context, state) => BlocProvider(
         create: (_) => sl<OfficeAssetsCubit>()..loadAssets(),
         child: const OfficeAssetsScreen(),
+      ),
+    ),
+
+    GoRoute(
+      path: RouteNames.submitExpense,
+      name: 'submit_expense',
+      builder: (context, state) => BlocProvider.value(
+        value: state.extra as ExpensesCubit,
+        child: const SubmitExpenseScreen(),
       ),
     ),
 

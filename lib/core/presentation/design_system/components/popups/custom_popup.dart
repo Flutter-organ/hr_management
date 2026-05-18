@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pinput/pinput.dart';
@@ -6,6 +6,8 @@ import '../../theme/color/app_constant_colors.dart';
 import '../../theme/helper/theme_extention.dart';
 import '../custom_input_field.dart';
 import '../custom_primary_button.dart';
+
+enum PopupButtonsAxis { row, column }
 
 class CustomPopup extends StatelessWidget {
   final IconData? icon;
@@ -16,6 +18,9 @@ class CustomPopup extends StatelessWidget {
   final String? description;
   final Widget? customHeader;
 
+  final bool showDragHandle;
+  final Color? backgroundColor;
+
   final Widget? content;
 
   final String? primaryButtonText;
@@ -25,9 +30,13 @@ class CustomPopup extends StatelessWidget {
 
   final String? secondaryButtonText;
   final VoidCallback? secondaryButtonOnPressed;
-  final VoidCallback? onTapHere;
+
+  final PopupButtonsAxis buttonsAxis;
 
   final bool showFooter;
+  final String? footerText;
+  final String? footerClickableText;
+  final VoidCallback? onFooterTextClicked;
 
   static const double _defaultIconSize = 100.0;
 
@@ -36,6 +45,8 @@ class CustomPopup extends StatelessWidget {
     this.icon,
     this.iconWidget,
     this.iconWidgetHeight,
+    this.backgroundColor,
+    this.showDragHandle = false,
     this.title,
     this.description,
     this.content,
@@ -43,23 +54,47 @@ class CustomPopup extends StatelessWidget {
     this.primaryButtonOnPressed,
     this.secondaryButtonText,
     this.secondaryButtonOnPressed,
-    this.onTapHere,
+    this.buttonsAxis = PopupButtonsAxis.column,
     this.showFooter = false,
+    this.footerText,
+    this.footerClickableText,
+    this.onFooterTextClicked,
     this.isPrimaryButtonLoading = false,
     this.isPrimaryButtonEnabled = true,
     this.customHeader,
-  }) : assert(
-    icon == null || iconWidget == null,
-    'Cannot provide both icon and iconWidget',
-    ),
-    assert(
-    customHeader == null || (title == null && description == null),
-    'Cannot provide both customHeader and title/description',
-    ),
-    assert(
-    primaryButtonText == null || primaryButtonOnPressed != null,
-    'primaryButtonOnPressed is required when primaryButtonText is provided',
-    );
+  })  : assert(
+  icon == null || iconWidget == null,
+  'Cannot provide both icon and iconWidget',
+  ),
+        assert(
+        customHeader == null || (title == null && description == null),
+        'Cannot provide both customHeader and title/description',
+        ),
+        assert(
+        primaryButtonText == null || primaryButtonOnPressed != null,
+        'primaryButtonOnPressed is required when primaryButtonText is provided',
+        ),
+        assert(
+        secondaryButtonText == null || secondaryButtonOnPressed != null,
+        'secondaryButtonOnPressed is required when secondaryButtonText is provided',
+        ),
+        assert(
+        !showFooter || footerText != null,
+        'footerText is required when showFooter is true',
+        ),
+        assert(
+        onFooterTextClicked == null || footerClickableText != null,
+        'footerClickableText is required when onFooterTextClicked is provided',
+        ),
+        assert(
+        showDragHandle == false || (icon == null && iconWidget == null),
+        'showDragHandle cannot be true when icon or iconWidget is provided',
+        ),
+        assert(
+        showFooter == false || (footerText == null && footerClickableText == null),
+        'footerText and footerClickableText cannot be provided when showFooter is false',
+        );
+
 
   factory CustomPopup.primary({
     required IconData icon,
@@ -150,7 +185,7 @@ class CustomPopup extends StatelessWidget {
   }
 
   factory CustomPopup.otpVerificationPopup({
-    required IconData icon,
+    IconData? icon,
     required String title,
     required String description,
     required String primaryButtonText,
@@ -159,20 +194,20 @@ class CustomPopup extends StatelessWidget {
     required VoidCallback onResendOtp,
     TextEditingController? otpController,
     bool enabled = true,
-    bool isResendEnabled = true,
     bool isPrimaryButtonLoading = false,
     bool isPrimaryButtonEnabled = true,
+    bool showDragHandle = true,
   }) {
     return CustomPopup(
       icon: icon,
       title: title,
       description: description,
+      showDragHandle: showDragHandle,
       content: _OtpInputContent(
         controller: otpController,
         enabled: enabled,
         onChanged: onOtpChanged,
         onResend: onResendOtp,
-        isResendEnabled: isResendEnabled,
       ),
       primaryButtonText: primaryButtonText,
       primaryButtonOnPressed: primaryButtonOnPressed,
@@ -273,22 +308,6 @@ class CustomPopup extends StatelessWidget {
     );
   }
 
-  // double get topPadding {
-  //   if (icon != null)
-  //     return 60;
-  //   else if (iconWidget != null)
-  //     return 76;
-  //   else
-  //     return 24;
-  // }
-  //
-  // double get topMargin {
-  //   if (icon != null || iconWidget != null)
-  //     return 50;
-  //   else return 0;
-  // }
-
-
   bool get _hasTopElement => icon != null || iconWidget != null;
 
   double get _iconHeight {
@@ -298,7 +317,6 @@ class CustomPopup extends StatelessWidget {
   }
 
   double get _overlapAmount => _iconHeight / 2;
-
   double get _topMargin => _hasTopElement ? _overlapAmount : 0;
 
   double get _topPadding {
@@ -308,8 +326,6 @@ class CustomPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final bool hasTopElement = icon != null || iconWidget != null;
-
     return Stack(
       alignment: Alignment.topCenter,
       clipBehavior: Clip.none,
@@ -319,68 +335,84 @@ class CustomPopup extends StatelessWidget {
           margin: EdgeInsets.only(top: _topMargin),
           padding: EdgeInsets.fromLTRB(24, _topPadding, 24, 24),
           decoration: BoxDecoration(
-            color: context.colors.white,
+            color: backgroundColor ?? context.colors.white,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(24),
               topRight: Radius.circular(24),
             ),
           ),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (customHeader != null) ...[
-                  customHeader!,
-                  const SizedBox(height: 24),
-                ] else ...[
-                  if (title != null)
-                    Text(
-                      title!,
-                      style: context.textTheme.popupTitleFont.copyWith(
-                        color: context.colors.textPrimary,
-                      ),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (showDragHandle) ...[
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: context.colors.gray300,
+                      borderRadius: BorderRadius.circular(100),
                     ),
-                  if (title != null && description != null)
-                    const SizedBox(height: 12),
-                  if (description != null)
-                    Text(
-                      description!,
-                      style: context.textTheme.popupBodyFont.copyWith(
-                        color: context.colors.textSecondary,
-                      ),
-                      textAlign: TextAlign.center,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  if (title != null || description != null)
-                    const SizedBox(height: 24),
-                ],
-
-                if (content != null) ...[
-                  content!,
-                  const SizedBox(height: 24),
-                ],
-
-                if (primaryButtonText != null) ...[
-                  _buildPrimaryButton(context),
-                ],
-
-                if (secondaryButtonText != null) ...[
-                  const SizedBox(height: 12),
-                  _buildSecondaryButton(context),
-                ],
-
-                if (showFooter) ...[
-                  const SizedBox(height: 16),
-                  _buildFooter(context),
-                ],
+                  ),
+                ),
+                const SizedBox(height: 16),
               ],
-            ),
+
+              SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (customHeader != null) ...[
+                      customHeader!,
+                      const SizedBox(height: 24),
+                    ] else ...[
+                      if (title != null)
+                        Text(
+                          title!,
+                          style: context.textTheme.popupTitleFont.copyWith(
+                            color: context.colors.textPrimary,
+                          ),
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      if (title != null && description != null)
+                        const SizedBox(height: 12),
+                      if (description != null)
+                        Text(
+                          description!,
+                          style: context.textTheme.popupBodyFont.copyWith(
+                            color: context.colors.textSecondary,
+                          ),
+                          textAlign: TextAlign.center,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      if (title != null || description != null)
+                        const SizedBox(height: 24),
+                    ],
+
+                    if (content != null) ...[
+                      content!,
+                      const SizedBox(height: 24),
+                    ],
+
+                    if (primaryButtonText != null || secondaryButtonText != null) ...[
+                      buttonsAxis == PopupButtonsAxis.row
+                          ? _buildRowButtons(context)
+                          : _buildColumnButtons(context),
+                    ],
+
+                    if (showFooter) ...[
+                      const SizedBox(height: 16),
+                      _buildFooter(context),
+                    ],
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
 
@@ -396,7 +428,6 @@ class CustomPopup extends StatelessWidget {
       ],
     );
   }
-
 
   Widget _buildDefaultIconContainer() {
     return Container(
@@ -418,7 +449,6 @@ class CustomPopup extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _buildPrimaryButton(BuildContext context) {
     return CustomPrimaryButton.gradient(
@@ -447,28 +477,58 @@ class CustomPopup extends StatelessWidget {
     );
   }
 
+  Widget _buildColumnButtons(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (primaryButtonText != null)
+          _buildPrimaryButton(context),
+        if (primaryButtonText != null && secondaryButtonText != null)
+          const SizedBox(height: 12),
+        if (secondaryButtonText != null)
+          _buildSecondaryButton(context),
+      ],
+    );
+  }
+
+  Widget _buildRowButtons(BuildContext context) {
+    return Row(
+      children: [
+        if (secondaryButtonText != null)
+          Expanded(child: _buildSecondaryButton(context)),
+        if (primaryButtonText != null && secondaryButtonText != null)
+          const SizedBox(width: 12),
+        if (primaryButtonText != null)
+          Expanded(child: _buildPrimaryButton(context)),
+      ],
+    );
+  }
+
   Widget _buildFooter(BuildContext context) {
     return Text.rich(
       TextSpan(
         children: [
-          TextSpan(
-            text: "sign_in_different_method".tr(),
-            style: context.textTheme.bodySmallFont.copyWith(
-              color: context.colors.textPrimary,
+          if (footerText != null)
+            TextSpan(
+              text: footerText,
+              style: context.textTheme.bodySmallFont.copyWith(
+                color: context.colors.textPrimary,
+              ),
             ),
-          ),
-          WidgetSpan(
-            alignment: PlaceholderAlignment.middle,
-            child: GestureDetector(
-              onTap: onTapHere,
-              child: Text(
-                " ${"here".tr()}",
-                style: context.textTheme.labelMediumFont.copyWith(
-                  color: AppConstantColors.purple500,
+          if (onFooterTextClicked != null && footerClickableText != null)
+            WidgetSpan(
+              alignment: PlaceholderAlignment.middle,
+              child: GestureDetector(
+                onTap: onFooterTextClicked,
+                child: Text(
+                  ' $footerClickableText',
+                  style: context.textTheme.labelMediumFont.copyWith(
+                    color: AppConstantColors.purple500,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
       maxLines: 1,
@@ -579,20 +639,79 @@ class _SingleInputContentState extends State<_SingleInputContent> {
   }
 }
 
-class _OtpInputContent extends StatelessWidget {
+class _OtpInputContent extends StatefulWidget {
   const _OtpInputContent({
     required this.onChanged,
     required this.onResend,
     this.controller,
     this.enabled = true,
-    this.isResendEnabled = true,
   });
 
   final TextEditingController? controller;
   final bool enabled;
   final ValueChanged<String> onChanged;
   final VoidCallback onResend;
-  final bool isResendEnabled;
+
+  @override
+  State<_OtpInputContent> createState() => _OtpInputContentState();
+}
+
+class _OtpInputContentState extends State<_OtpInputContent> {
+  late TextEditingController _controller;
+  bool _isInternalController = false;
+
+  static const int _cooldownSeconds = 60;
+  late int _secondsRemaining;
+  Timer? _timer;
+
+  bool get _canResend => _secondsRemaining == 0;
+
+  String get _formattedTime {
+    final minutes = _secondsRemaining ~/ 60;
+    final seconds = _secondsRemaining % 60;
+    return '${minutes.toString().padLeft(2, '0')}:'
+        '${seconds.toString().padLeft(2, '0')}';
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.controller != null) {
+      _controller = widget.controller!;
+      _isInternalController = false;
+    } else {
+      _controller = TextEditingController();
+      _isInternalController = true;
+    }
+    _startTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    if (_isInternalController) _controller.dispose();
+    super.dispose();
+  }
+
+  void _startTimer() {
+    _secondsRemaining = _cooldownSeconds;
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (!mounted) return;
+      if (_secondsRemaining == 0) {
+        _timer?.cancel();
+        return;
+      }
+      setState(() => _secondsRemaining--);
+    });
+  }
+
+  void _onResendTapped() {
+    if (!_canResend) return;
+    _controller.clear();
+    widget.onResend();
+    _startTimer();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -600,9 +719,9 @@ class _OtpInputContent extends StatelessWidget {
       children: [
         Pinput(
           length: 6,
-          controller: controller,
-          enabled: enabled,
-          onChanged: onChanged,
+          controller: _controller,
+          enabled: widget.enabled,
+          onChanged: widget.onChanged,
           defaultPinTheme: PinTheme(
             width: 48,
             height: 48,
@@ -610,7 +729,10 @@ class _OtpInputContent extends StatelessWidget {
               color: context.colors.textPrimary,
             ),
             decoration: BoxDecoration(
-              border: Border.all(color: context.colors.gray300, width: 1),
+              border: Border.all(
+                color: context.colors.gray300,
+                width: 1,
+              ),
               borderRadius: BorderRadius.circular(12),
             ),
           ),
@@ -621,42 +743,94 @@ class _OtpInputContent extends StatelessWidget {
               color: context.colors.textPrimary,
             ),
             decoration: BoxDecoration(
-              border: Border.all(color: AppConstantColors.purple500, width: 2),
+              border: Border.all(
+                color: AppConstantColors.purple500,
+                width: 2,
+              ),
               borderRadius: BorderRadius.circular(12),
             ),
           ),
           keyboardType: TextInputType.number,
           preFilledWidget: Text(
-            "0",
+            '0',
             style: context.textTheme.headLineMediumFont.copyWith(
               color: context.colors.gray200,
             ),
           ),
         ),
+
         const SizedBox(height: 16),
 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Haven't received the verification code? ",
-              style: context.textTheme.bodySmallFont.copyWith(
-                color: context.colors.textSecondary,
-              ),
-            ),
-            GestureDetector(
-              onTap: isResendEnabled ? onResend : null,
-              child: Text(
-                "Resend it.",
-                style: context.textTheme.labelMediumFont.copyWith(
-                  color: isResendEnabled
-                      ? AppConstantColors.purple500
-                      : context.colors.gray400,
-                  fontWeight: FontWeight.w600,
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          child: _canResend
+              ? Column(
+            key: const ValueKey('resend'),
+            children: [
+              Text(
+                "Haven't received the verification code?",
+                style: context.textTheme.bodySmallFont.copyWith(
+                  color: context.colors.textSecondary,
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: 4),
+              GestureDetector(
+                onTap: _onResendTapped,
+                child: Text(
+                  'Resend it.',
+                  style: context.textTheme.labelMediumFont.copyWith(
+                    color: AppConstantColors.purple500,
+                    fontWeight: FontWeight.w600,
+                    decoration: TextDecoration.underline,
+                    decorationColor: AppConstantColors.purple500,
+                  ),
+                ),
+              ),
+            ],
+          )
+              : Column(
+            key: const ValueKey('countdown'),
+            children: [
+              Text(
+                "Haven't received the verification code?",
+                style: context.textTheme.bodySmallFont.copyWith(
+                  color: context.colors.textSecondary,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Resend it in ',
+                    style: context.textTheme.bodySmallFont.copyWith(
+                      color: context.colors.textSecondary,
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppConstantColors.purple500
+                          .withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Text(
+                      _formattedTime,
+                      style: context.textTheme.labelMediumFont
+                          .copyWith(
+                        color: AppConstantColors.purple500,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ],
     );

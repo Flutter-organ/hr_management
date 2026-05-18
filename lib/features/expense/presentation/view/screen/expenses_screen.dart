@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../../core/presentation/design_system/components/custom_primary_button.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
+import '../../../../../core/presentation/routes/route_names.dart';
 import '../../../domain/entity/expense.dart';
 import '../../../domain/entity/expense_category.dart';
 import '../../logic/expenses_cubit.dart';
@@ -25,9 +27,8 @@ class ExpensesScreen extends StatelessWidget {
             current.error != previous.error) ||
             (current.deleteError != null &&
                 current.deleteError != previous.deleteError) ||
-            (previous.isDeleting &&
-                !current.isDeleting &&
-                current.deleteError == null),
+            (current.isDeleteSuccess && !previous.isDeleteSuccess),
+
         listener: (context, state) {
           if (state.error != null) {
             SnackBarHelper.showError(context, state.error!);
@@ -39,11 +40,12 @@ class ExpensesScreen extends StatelessWidget {
             context.read<ExpensesCubit>().clearDeleteError();
           }
 
-          if (!state.isDeleting && state.deleteError == null) {
+          if (state.isDeleteSuccess) {
             SnackBarHelper.showSuccess(
               context,
               'Expense deleted successfully',
             );
+            context.read<ExpensesCubit>().clearDeleteSuccess();
           }
         },
         builder: (context, state) {
@@ -235,7 +237,10 @@ class ExpensesScreen extends StatelessWidget {
   }
 
   void _onSubmitExpenseTap(BuildContext context) {
-    // TODO: Navigate to submit expense screen
+    context.push(
+      RouteNames.submitExpense,
+      extra: context.read<ExpensesCubit>(),
+    );
   }
 
   void _onDeleteTap(BuildContext context, Expense expense) {

@@ -13,6 +13,7 @@ class RouteNames {
   static const String attendantScreen = '/attendant';
   static const String taskScreen = '/task';
   static const String expenseScreen = '/expense';
+  static const String submitExpense = '/expense/submit';
   static const String leaveScreen = '/leave';
 
   // Profile
@@ -20,7 +21,7 @@ class RouteNames {
   static const String personalData = '/profile/personal-data';
   static const String payrollHistory = '/profile/payroll';
   static const String payrollDetails = '/profile/payroll/details';
-
+  static const String officeAssets = '/profile/office-assets';
 
   // Error
   static const String notFound = '/404';
@@ -46,8 +47,5 @@ class RouteNames {
   static bool isOnboardingRoute(String location) {
     return location == onboarding;
   }
-
-  static const String officeAssets = '/profile/office-assets';
-
 
 }
