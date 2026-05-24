@@ -358,58 +358,60 @@ class CustomPopup extends StatelessWidget {
                 const SizedBox(height: 16),
               ],
 
-              SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (customHeader != null) ...[
-                      customHeader!,
-                      const SizedBox(height: 24),
-                    ] else ...[
-                      if (title != null)
-                        Text(
-                          title!,
-                          style: context.textTheme.popupTitleFont.copyWith(
-                            color: context.colors.textPrimary,
-                          ),
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      if (title != null && description != null)
-                        const SizedBox(height: 12),
-                      if (description != null)
-                        Text(
-                          description!,
-                          style: context.textTheme.popupBodyFont.copyWith(
-                            color: context.colors.textSecondary,
-                          ),
-                          textAlign: TextAlign.center,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      if (title != null || description != null)
+              Flexible(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (customHeader != null) ...[
+                        customHeader!,
                         const SizedBox(height: 24),
+                      ] else ...[
+                        if (title != null)
+                          Text(
+                            title!,
+                            style: context.textTheme.popupTitleFont.copyWith(
+                              color: context.colors.textPrimary,
+                            ),
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        if (title != null && description != null)
+                          const SizedBox(height: 12),
+                        if (description != null)
+                          Text(
+                            description!,
+                            style: context.textTheme.popupBodyFont.copyWith(
+                              color: context.colors.textSecondary,
+                            ),
+                            textAlign: TextAlign.center,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        if (title != null || description != null)
+                          const SizedBox(height: 24),
+                      ],
+                
+                      if (content != null) ...[
+                        content!,
+                        const SizedBox(height: 24),
+                      ],
+                
+                      if (primaryButtonText != null || secondaryButtonText != null) ...[
+                        buttonsAxis == PopupButtonsAxis.row
+                            ? _buildRowButtons(context)
+                            : _buildColumnButtons(context),
+                      ],
+                
+                      if (showFooter) ...[
+                        const SizedBox(height: 16),
+                        _buildFooter(context),
+                      ],
                     ],
-
-                    if (content != null) ...[
-                      content!,
-                      const SizedBox(height: 24),
-                    ],
-
-                    if (primaryButtonText != null || secondaryButtonText != null) ...[
-                      buttonsAxis == PopupButtonsAxis.row
-                          ? _buildRowButtons(context)
-                          : _buildColumnButtons(context),
-                    ],
-
-                    if (showFooter) ...[
-                      const SizedBox(height: 16),
-                      _buildFooter(context),
-                    ],
-                  ],
+                  ),
                 ),
               ),
             ],
