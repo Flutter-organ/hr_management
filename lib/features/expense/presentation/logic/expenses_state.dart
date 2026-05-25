@@ -17,6 +17,7 @@ class ExpensesState extends Equatable {
   final String? receiptPath;
   final bool isUploadingReceipt;
   final String? uploadReceiptError;
+  final String? receiptUrl;
 
   final ExpenseCategory selectedCategory;
   final DateTime? selectedDate;
@@ -53,6 +54,8 @@ class ExpensesState extends Equatable {
     this.isSubmitting = false,
     this.submitError,
     this.isSubmitSuccess = false,
+    this.receiptUrl,
+
 
     this.categoryError,
     this.dateError,
@@ -89,6 +92,7 @@ class ExpensesState extends Equatable {
     bool clearDeleteError = false,
 
     String? receiptPath,
+    String? receiptUrl,
     bool? isUploadingReceipt,
     String? uploadReceiptError,
     ExpenseCategory? selectedCategory,
@@ -106,6 +110,7 @@ class ExpensesState extends Equatable {
 
     bool clearDeleteSuccess = false,
     bool clearReceiptPath = false,
+    bool clearReceiptUrl = false,
     bool clearUploadReceiptError = false,
     bool clearSubmitError = false,
     bool clearCategoryError = false,
@@ -130,6 +135,9 @@ class ExpensesState extends Equatable {
       receiptPath: clearReceiptPath
           ? null
           : (receiptPath ?? this.receiptPath),
+      receiptUrl: clearReceiptUrl
+          ? null
+          : (receiptUrl ?? this.receiptUrl),
       isUploadingReceipt:
       isUploadingReceipt ?? this.isUploadingReceipt,
       uploadReceiptError: clearUploadReceiptError
@@ -171,6 +179,7 @@ class ExpensesState extends Equatable {
     error,
     deleteError,
     receiptPath,
+    receiptUrl,
     isUploadingReceipt,
     uploadReceiptError,
     selectedCategory,

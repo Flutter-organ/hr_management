@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -9,6 +7,7 @@ import '../../../../../../core/presentation/design_system/components/custom_prim
 import '../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
 import '../../../../../../core/presentation/design_system/theme/hr_management_theme.dart';
+import '../../../../../core/presentation/util/image_picker_helper.dart';
 import '../../logic/expenses_cubit.dart';
 import '../../logic/expenses_state.dart';
 import '../widget/submit_confirm_popup.dart';
@@ -71,7 +70,7 @@ class SubmitExpenseScreen extends StatelessWidget {
                     const SizedBox(height: 24),
 
                     SubmitExpenseForm(
-                      receiptPath: state.receiptPath,
+                      receiptUrl: state.receiptUrl,
                       isUploadingReceipt: state.isUploadingReceipt,
                       uploadReceiptError: state.uploadReceiptError,
                       onPickReceipt: () => _pickReceipt(context),
@@ -154,20 +153,11 @@ class SubmitExpenseScreen extends StatelessWidget {
   }
 
   Future<void> _pickReceipt(BuildContext context) async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png'],
-    );
+    final file = await ImagePickerHelper.pickReceipt();
 
-    if (result == null || result.files.isEmpty) return;
+    if (file == null) return;
 
-    final filePath = result.files.single.path;
-    if (filePath == null) return;
-
-    final file = File(filePath);
-    final fileSizeMB = file.lengthSync() / (1024 * 1024);
-
-    if (fileSizeMB > AppConstant.maxImageSizeMB) {
+    if (!ImagePickerHelper.isFileSizeValid(file)) {
       if (context.mounted) {
         SnackBarHelper.showError(
           context,
@@ -178,7 +168,7 @@ class SubmitExpenseScreen extends StatelessWidget {
     }
 
     if (context.mounted) {
-      context.read<ExpensesCubit>().uploadReceipt(filePath);
+      context.read<ExpensesCubit>().uploadReceipt(file.path);
     }
   }
 

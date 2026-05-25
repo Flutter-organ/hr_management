@@ -27,17 +27,17 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
-  shared_preferences: ^2.5.4
+  shared_preferences: ^2.5.5
   easy_localization: ^3.0.8
   cached_network_image: ^3.3.1
   iconsax: ^0.0.8
-  file_picker: ^10.3.10
+  file_picker: ^12.0.0-beta.4
   flutter_pdfview: ^1.4.3
   flutter_svg: ^2.2.3
   country_picker: ^2.0.27
   pinput: ^6.0.1
   flutter_dotenv: ^6.0.0
-  flutter_secure_storage: ^10.0.0
+  flutter_secure_storage: ^10.3.0
   get_it: ^9.2.0
   dio: ^5.9.1
   equatable: ^2.0.7
@@ -226,7 +226,7 @@ flutter:
     - assets/images/
     - assets/translations/
     - assets/svgs/
-    - .env.example
+    - .env
 
   fonts:
     - family: Inter

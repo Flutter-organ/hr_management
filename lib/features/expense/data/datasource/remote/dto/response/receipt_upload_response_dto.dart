@@ -1,25 +1,25 @@
 class ReceiptUploadResponseDto {
+  final String filename;
+  final String originalName;
   final String path;
   final String url;
-  final String originalName;
   final int size;
-  final String mimeType;
 
   const ReceiptUploadResponseDto({
+    required this.filename,
+    required this.originalName,
     required this.path,
     required this.url,
-    required this.originalName,
     required this.size,
-    required this.mimeType,
   });
 
   factory ReceiptUploadResponseDto.fromJson(Map<String, dynamic> json) {
     return ReceiptUploadResponseDto(
-      path: json['path'] as String,
-      url: json['url'] as String,
-      originalName: json['original_name'] as String,
-      size: json['size'] as int,
-      mimeType: json['mime_type'] as String,
+      filename: json['filename'] as String? ?? '',
+      originalName: json['original_name'] as String? ?? '',
+      path: json['path'] as String? ?? '',
+      url: json['url'] as String? ?? '',
+      size: json['size'] as int? ?? 0,
     );
   }
 }

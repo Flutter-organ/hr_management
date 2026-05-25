@@ -7,7 +7,7 @@ class UploadReceiptUseCase {
 
   const UploadReceiptUseCase(this._repository);
 
-  Future<Either<Failure, String>> call(String filePath) {
+  Future<Either<Failure, ({String path, String url})>> call(String filePath) {
     return _repository.uploadReceipt(filePath);
   }
 }

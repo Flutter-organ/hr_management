@@ -107,10 +107,12 @@ class ExpensesRepositoryImpl implements ExpensesRepository {
   }
 
   @override
-  Future<Either<Failure, String>> uploadReceipt(String filePath) async {
+  Future<Either<Failure, ({String path, String url})>> uploadReceipt(
+      String filePath,
+      ) async {
     try {
       final response = await _remoteDataSource.uploadReceipt(filePath);
-      return Right(response.path);
+      return Right((path: response.path, url: response.url));
     } catch (e) {
       return Left(ExpenseFailureMapper.mapException(e));
     }

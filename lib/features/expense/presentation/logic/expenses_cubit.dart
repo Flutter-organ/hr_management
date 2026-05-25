@@ -119,10 +119,11 @@ class ExpensesCubit extends BaseCubit<ExpensesState> {
         ),
       ),
       call: () => _uploadReceiptUseCase(filePath),
-      onSuccess: (path) => updateState(
+      onSuccess: (result) => updateState(
             (s) => s.copyWith(
           isUploadingReceipt: false,
-          receiptPath: path,
+          receiptPath: result.path,
+          receiptUrl: result.url,
         ),
       ),
       onError: (error) => updateState(
@@ -135,7 +136,8 @@ class ExpensesCubit extends BaseCubit<ExpensesState> {
   }
 
   void removeReceipt() {
-    updateState((s) => s.copyWith(clearReceiptPath: true));
+    updateState((s) => s.copyWith(clearReceiptPath: true
+    , clearReceiptUrl: true));
   }
 
   void clearUploadReceiptError() {

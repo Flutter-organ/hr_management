@@ -9,7 +9,7 @@ import 'expense_category_sheet.dart';
 import 'receipt_upload_widget.dart';
 
 class SubmitExpenseForm extends StatelessWidget {
-  final String? receiptPath;
+  final String? receiptUrl;
   final bool isUploadingReceipt;
   final String? uploadReceiptError;
   final VoidCallback onPickReceipt;
@@ -34,7 +34,7 @@ class SubmitExpenseForm extends StatelessWidget {
 
   const SubmitExpenseForm({
     super.key,
-    this.receiptPath,
+    this.receiptUrl,
     this.isUploadingReceipt = false,
     this.uploadReceiptError,
     required this.onPickReceipt,
@@ -75,7 +75,7 @@ class SubmitExpenseForm extends StatelessWidget {
         const SizedBox(height: 16),
 
         ReceiptUploadWidget(
-          filePath: receiptPath,
+          receiptUrl: receiptUrl,
           isUploading: isUploadingReceipt,
           errorMessage: uploadReceiptError,
           onPickFile: onPickReceipt,
