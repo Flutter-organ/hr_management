@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:hr_management/features/profile/presentation/payroll/logic/payroll_state.dart';
+import 'package:workmate/features/profile/presentation/payroll/logic/payroll_state.dart';
 import '../../../../../core/presentation/base_viewmodel/base_cubit.dart';
 import '../../../domain/entity/payroll.dart';
 import '../../../domain/usecase/get_payroll_history_usecase.dart';

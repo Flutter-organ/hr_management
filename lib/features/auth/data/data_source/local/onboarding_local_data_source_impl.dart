@@ -1,4 +1,4 @@
-import 'package:hr_management/features/auth/data/data_source/local/onboarding_local_data_source%20.dart';
+import 'package:workmate/features/auth/data/data_source/local/onboarding_local_data_source%20.dart';
 import '../../../../../core/data/cache/preferences_keys.dart';
 import '../../../../../core/data/cache/shared_preferences_service.dart';
 import '../../../../../core/data/exception/app_exception.dart';

@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:hr_management/features/profile/presentation/personal_data/logic/personal_data_state.dart';
+import 'package:workmate/features/profile/presentation/personal_data/logic/personal_data_state.dart';
 import '../../../../../core/config/app_constant.dart';
 import '../../../../../core/presentation/base_viewmodel/base_cubit.dart';
 import '../../../../../core/presentation/util/image_picker_helper.dart';

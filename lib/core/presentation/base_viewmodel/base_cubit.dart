@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:hr_management/core/domain/failure/domain_failure.dart';
+import 'package:workmate/core/domain/failure/domain_failure.dart';
 import '../../../features/auth/domain/failures/failure.dart';
 import '../../../features/expense/domain/failure/expense_failure.dart';
 import '../../../features/profile/domain/failure/failure.dart';

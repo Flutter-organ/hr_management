@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hr_management/core/presentation/routes/route_names.dart';
-import 'package:hr_management/features/auth/presentation/on_boarding/logic/on_boarding_cubit.dart';
-import 'package:hr_management/features/expense/presentation/view/screen/expenses_screen.dart';
-import 'package:hr_management/features/home/presentation/view/home_screen.dart';
-import 'package:hr_management/core/di/injection_container.dart';
+import 'package:workmate/core/presentation/routes/route_names.dart';
+import 'package:workmate/features/auth/presentation/on_boarding/logic/on_boarding_cubit.dart';
+import 'package:workmate/features/expense/presentation/view/screen/expenses_screen.dart';
+import 'package:workmate/features/home/presentation/view/home_screen.dart';
+import 'package:workmate/core/di/injection_container.dart';
 import '../../../features/auth/presentation/login/logic/login_cubit.dart';
 import '../../../features/auth/presentation/login/view/screen/login_screen.dart';
 import '../../../features/auth/presentation/on_boarding/view/on_boarding_page.dart';

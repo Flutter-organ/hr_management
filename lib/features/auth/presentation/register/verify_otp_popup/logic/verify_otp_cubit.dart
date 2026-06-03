@@ -1,4 +1,4 @@
-import 'package:hr_management/features/auth/presentation/register/verify_otp_popup/logic/verify_otp_state.dart';
+import 'package:workmate/features/auth/presentation/register/verify_otp_popup/logic/verify_otp_state.dart';
 import '../../../../../../../core/presentation/base_viewmodel/base_cubit.dart';
 import '../../../../../../../core/presentation/util/validator.dart';
 import '../../../../../../core/presentation/routes/config/app_state_notifier.dart';

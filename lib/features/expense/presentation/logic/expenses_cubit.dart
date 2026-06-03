@@ -1,4 +1,4 @@
-import 'package:hr_management/core/presentation/base_viewmodel/base_cubit.dart';
+import 'package:workmate/core/presentation/base_viewmodel/base_cubit.dart';
 import '../../domain/entity/expense.dart';
 import '../../domain/entity/expense_category.dart';
 import '../../domain/usecase/create_expense_usecase.dart';

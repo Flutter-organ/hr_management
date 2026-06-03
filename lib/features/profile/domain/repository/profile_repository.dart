@@ -1,5 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:hr_management/features/profile/domain/entity/gender.dart';
+import 'package:workmate/features/profile/domain/entity/gender.dart';
 import '../../../../core/domain/failure/domain_failure.dart';
 import '../entity/employee_profile.dart';
 import '../entity/office_asset.dart';

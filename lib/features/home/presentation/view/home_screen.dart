@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hr_management/core/presentation/design_system/components/app_bar.dart';
+import 'package:workmate/core/presentation/design_system/components/app_bar.dart';
 import '../../../../core/presentation/routes/route_names.dart';
 
 class HomeScreen extends StatelessWidget {

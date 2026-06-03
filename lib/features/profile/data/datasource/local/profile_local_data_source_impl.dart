@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:hr_management/core/data/cache/preferences_keys.dart';
-import 'package:hr_management/features/profile/data/datasource/local/profile_local_data_source.dart';
-import 'package:hr_management/features/profile/data/datasource/remote/dto/employee_profile_dto.dart';
+import 'package:workmate/core/data/cache/preferences_keys.dart';
+import 'package:workmate/features/profile/data/datasource/local/profile_local_data_source.dart';
+import 'package:workmate/features/profile/data/datasource/remote/dto/employee_profile_dto.dart';
 import '../../../../../core/data/cache/shared_preferences_service.dart';
 import '../../../../../core/data/exception/app_exception.dart';
 
