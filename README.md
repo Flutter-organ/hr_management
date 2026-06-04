@@ -2,4 +2,4 @@
 
 A workspace app for HRs and employees to help them manage their businesses.
 
-<img width="1633" height="1880" alt="WorkMate_logo_with_full_text_c" src="https://github.com/user-attachments/assets/b151e02a-2129-4f74-93d1-bbc1ace7d3f9" />
+<img width="1380" height="752" alt="WorkMate" src="https://github.com/user-attachments/assets/7735a681-2cb5-4738-b86e-9b908ccf54c3" />
