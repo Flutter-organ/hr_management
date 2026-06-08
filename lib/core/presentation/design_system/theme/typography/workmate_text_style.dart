@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'app_constant_text.dart';
 
 @immutable
-class HrManagementTextStyle extends ThemeExtension<HrManagementTextStyle> {
+class WorkMateTextStyle extends ThemeExtension<WorkMateTextStyle> {
   static const _fontFamily = 'Inter';
   final TextStyle displayLargeFont;
   final TextStyle displayMediumFont;
@@ -31,7 +31,7 @@ class HrManagementTextStyle extends ThemeExtension<HrManagementTextStyle> {
 
   final TextStyle navbarTitleFont;
 
-  const HrManagementTextStyle({
+  const WorkMateTextStyle({
     required this.displayLargeFont,
     required this.displayMediumFont,
     required this.displaySmallFont,
@@ -53,7 +53,7 @@ class HrManagementTextStyle extends ThemeExtension<HrManagementTextStyle> {
     required this.navbarTitleFont,
   });
 
-  static const hrManagementTextStyle = HrManagementTextStyle(
+  static const workMateTextStyle = WorkMateTextStyle(
     // ============ DISPLAY ============
     displayLargeFont: TextStyle(
       fontFamily: _fontFamily,
@@ -197,7 +197,7 @@ class HrManagementTextStyle extends ThemeExtension<HrManagementTextStyle> {
   );
 
   @override
-  ThemeExtension<HrManagementTextStyle> copyWith({
+  ThemeExtension<WorkMateTextStyle> copyWith({
     TextStyle? displayLargeFont,
     TextStyle? displayMediumFont,
     TextStyle? displaySmallFont,
@@ -218,7 +218,7 @@ class HrManagementTextStyle extends ThemeExtension<HrManagementTextStyle> {
     TextStyle? popupBodyFont,
     TextStyle? navbarTitleFont,
   }) {
-    return HrManagementTextStyle(
+    return WorkMateTextStyle(
       displayLargeFont: displayLargeFont ?? this.displayLargeFont,
       displayMediumFont: displayMediumFont ?? this.displayMediumFont,
       displaySmallFont: displaySmallFont ?? this.displaySmallFont,
@@ -243,12 +243,12 @@ class HrManagementTextStyle extends ThemeExtension<HrManagementTextStyle> {
   }
 
   @override
-  ThemeExtension<HrManagementTextStyle> lerp(
-    covariant ThemeExtension<HrManagementTextStyle>? other,
+  ThemeExtension<WorkMateTextStyle> lerp(
+    covariant ThemeExtension<WorkMateTextStyle>? other,
     double t,
   ) {
-    if (other is! HrManagementTextStyle) return this;
-    return HrManagementTextStyle(
+    if (other is! WorkMateTextStyle) return this;
+    return WorkMateTextStyle(
       displayLargeFont: TextStyle.lerp(displayLargeFont, other.displayLargeFont, t,)!,
       displayMediumFont: TextStyle.lerp(displayMediumFont, other.displayMediumFont, t,)!,
       displaySmallFont: TextStyle.lerp(displaySmallFont, other.displaySmallFont, t,)!,

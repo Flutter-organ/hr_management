@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'app_constant_colors.dart';
 
 @immutable
-class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
+class WorkMateColorScheme extends ThemeExtension<WorkMateColorScheme> {
   // ============== Gray Palette ==============
   final Color gray25;
   final Color gray50;
@@ -130,7 +130,7 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
 
 
 
-  const HrManagementColorScheme({
+  const WorkMateColorScheme({
     required this.primary,
     required this.primaryVariant,
     required this.onPrimary,
@@ -228,7 +228,7 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
 
   });
 
-  static const light = HrManagementColorScheme(
+  static const light = WorkMateColorScheme(
     primary: AppConstantColors.purple600,
     primaryVariant: AppConstantColors.purple50,
     onPrimary: AppConstantColors.pureWhite,
@@ -326,7 +326,7 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     statusBarColor: AppConstantColors.statusBarColor,
   );
 
-  static const dark = HrManagementColorScheme(
+  static const dark = WorkMateColorScheme(
     primary: AppConstantColors.purple400,
     primaryVariant: AppConstantColors.purple900,
     onPrimary: AppConstantColors.pureWhite,
@@ -425,7 +425,7 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
   );
 
   @override
-  ThemeExtension<HrManagementColorScheme> copyWith({
+  ThemeExtension<WorkMateColorScheme> copyWith({
     Color? primary,
     Color? primaryVariant,
     Color? onPrimary,
@@ -527,7 +527,7 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
     Color? bottomNavBarBgColor,
     Color? statusBarColor,
   }) {
-    return HrManagementColorScheme(
+    return WorkMateColorScheme(
       primary: primary ?? this.primary,
       primaryVariant: primaryVariant ?? this.primaryVariant,
       onPrimary: onPrimary ?? this.onPrimary,
@@ -626,12 +626,12 @@ class HrManagementColorScheme extends ThemeExtension<HrManagementColorScheme> {
   }
 
   @override
-  ThemeExtension<HrManagementColorScheme> lerp(
-    covariant ThemeExtension<HrManagementColorScheme>? other,
+  ThemeExtension<WorkMateColorScheme> lerp(
+    covariant ThemeExtension<WorkMateColorScheme>? other,
     double t,
   ) {
-    if (other is! HrManagementColorScheme) return this;
-    return HrManagementColorScheme(
+    if (other is! WorkMateColorScheme) return this;
+    return WorkMateColorScheme(
       primary: Color.lerp(primary, other.primary, t)!,
       primaryVariant: Color.lerp(primaryVariant, other.primaryVariant, t)!,
       onPrimary: Color.lerp(onPrimary, other.onPrimary, t)!,

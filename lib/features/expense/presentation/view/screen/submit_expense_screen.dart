@@ -6,7 +6,7 @@ import '../../../../../../core/presentation/design_system/components/app_bar.dar
 import '../../../../../../core/presentation/design_system/components/custom_primary_button.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/snackbar_helper.dart';
 import '../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
-import '../../../../../../core/presentation/design_system/theme/hr_management_theme.dart';
+import '../../../../../../core/presentation/design_system/theme/workmate_theme.dart';
 import '../../../../../core/presentation/util/image_picker_helper.dart';
 import '../../logic/expenses_cubit.dart';
 import '../../logic/expenses_state.dart';
@@ -181,7 +181,7 @@ class SubmitExpenseScreen extends StatelessWidget {
       firstDate: DateTime(now.year - 2),
       lastDate: now,
       builder: (context, child) => Theme(
-        data: HrManagementTheme.light(),
+        data: WorkMateTheme.light(),
         child: child!,
       ),
     );

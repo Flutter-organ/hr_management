@@ -145,7 +145,7 @@
   "password_complexity": "Password must contain uppercase, lowercase, number and special character",
   "passwords_not_match": "Passwords do not match",
 
-  "app_name": "HR Management",
+  "app_name": "WorkMate",
   "register_subtitle": "Register Using Your Credentials",
   "verification_success": "Verification successful!",
   "code_resent": "Verification code has been resent",

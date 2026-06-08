@@ -4,7 +4,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:workmate/core/config/app_config.dart';
 import 'package:toastification/toastification.dart';
 import 'core/di/injection_container.dart';
-import 'core/presentation/design_system/theme/hr_management_theme.dart';
+import 'core/presentation/design_system/theme/workmate_theme.dart';
 import 'core/presentation/routes/config/app_startup_service.dart';
 import 'core/presentation/routes/route_generator.dart';
 
@@ -39,9 +39,9 @@ class MyApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       debugShowCheckedModeBanner: false,
-      title: 'HR Management',
-      theme: HrManagementTheme.light(),
-      darkTheme: HrManagementTheme.dark(),
+      title: 'WorkMate',
+      theme: WorkMateTheme.light(),
+      darkTheme: WorkMateTheme.dark(),
       themeMode: ThemeMode.light,
       routerConfig: router,
     );

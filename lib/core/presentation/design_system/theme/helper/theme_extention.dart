@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../color/hr_management_color_scheme.dart';
-import '../typography/hr_management_text_style.dart';
+import '../color/workmate_color_scheme.dart';
+import '../typography/workmate_text_style.dart';
 
-extension HrManagementThemeExtension on BuildContext {
-  HrManagementColorScheme get colors => Theme.of(this).extension<HrManagementColorScheme>()!;
-  HrManagementTextStyle get textTheme => Theme.of(this).extension<HrManagementTextStyle>()!;
+extension WorkMateThemeExtension on BuildContext {
+  WorkMateColorScheme get colors => Theme.of(this).extension<WorkMateColorScheme>()!;
+  WorkMateTextStyle get textTheme => Theme.of(this).extension<WorkMateTextStyle>()!;
 }
