@@ -57,7 +57,7 @@ flutter:
     - assets/images/
     - assets/translations/
     - assets/svgs/
-    - .env.example
+    - .env
 
   fonts:
     - family: Inter
