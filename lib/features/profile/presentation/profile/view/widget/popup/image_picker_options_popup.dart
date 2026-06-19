@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/presentation/design_system/components/custom_primary_button.dart';
+import 'package:workmate/core/presentation/design_system/components/custom_primary_button.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../../../core/presentation/design_system/theme/helper/popup_helper.dart';
 import '../../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';

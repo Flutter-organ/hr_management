@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hr_management/core/presentation/routes/route_names.dart';
-import 'package:hr_management/features/auth/presentation/on_boarding/logic/on_boarding_cubit.dart';
-import 'package:hr_management/features/home/presentation/view/home_screen.dart';
-import 'package:hr_management/core/di/injection_container.dart';
+import 'package:workmate/core/presentation/routes/route_names.dart';
+import 'package:workmate/features/auth/presentation/on_boarding/logic/on_boarding_cubit.dart';
+import 'package:workmate/features/expense/presentation/view/screen/expenses_screen.dart';
+import 'package:workmate/features/home/presentation/view/home_screen.dart';
+import 'package:workmate/core/di/injection_container.dart';
 import '../../../features/auth/presentation/login/logic/login_cubit.dart';
 import '../../../features/auth/presentation/login/view/screen/login_screen.dart';
 import '../../../features/auth/presentation/on_boarding/view/on_boarding_page.dart';
 import '../../../features/auth/presentation/register/signup/logic/sign_up_cubit.dart';
 import '../../../features/auth/presentation/register/signup/view/screen/sign_up_screen.dart';
+import '../../../features/expense/presentation/logic/expenses_cubit.dart';
+import '../../../features/expense/presentation/view/screen/submit_expense_screen.dart';
 import '../../../features/main_navigation/presentation/screens/main_wrapper_screen.dart';
 import '../../../features/profile/domain/entity/payroll.dart';
 import '../../../features/profile/presentation/office_assets/logic/office_assets_cubit.dart';
@@ -113,6 +116,15 @@ final GoRouter router = GoRouter(
       ),
     ),
 
+    GoRoute(
+      path: RouteNames.submitExpense,
+      name: 'submit_expense',
+      builder: (context, state) => BlocProvider.value(
+        value: state.extra as ExpensesCubit,
+        child: const SubmitExpenseScreen(),
+      ),
+    ),
+
     // ═══════════════════════════════════════════
     // MAIN APP ROUTES
     // ═══════════════════════════════════════════
@@ -158,7 +170,9 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: RouteNames.expenseScreen,
               name: 'expense',
-              builder: (context, state) => const HomeScreen(),
+              builder: (context, state) => BlocProvider(
+                  create: (_) => sl<ExpensesCubit>()..loadExpenses(),
+                  child: const ExpensesScreen()),
             ),
           ],
         ),

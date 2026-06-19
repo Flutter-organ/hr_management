@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/presentation/design_system/theme/helper/theme_extention.dart';
+import 'package:workmate/core/presentation/design_system/theme/helper/theme_extention.dart';
 import 'package:toastification/toastification.dart';
 
 class SnackBarHelper {

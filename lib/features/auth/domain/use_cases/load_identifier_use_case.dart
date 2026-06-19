@@ -1,5 +1,5 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:hr_management/features/auth/domain/repository/auth_repository.dart';
+import 'package:workmate/features/auth/domain/repository/auth_repository.dart';
 import '../../../../core/domain/failure/domain_failure.dart';
 
 class LoadIdentifierUseCase {

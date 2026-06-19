@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:hr_management/core/presentation/design_system/components/card_header.dart';
-import 'package:hr_management/core/presentation/design_system/components/empty_state_card.dart';
+import 'package:workmate/core/presentation/design_system/components/card_header.dart';
+import 'package:workmate/core/presentation/design_system/components/empty_state_card.dart';
 import '../theme/helper/app_assets.dart';
 import '../theme/helper/extention_colors.dart';
 import '../theme/helper/theme_extention.dart';

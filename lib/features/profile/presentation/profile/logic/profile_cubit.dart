@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:hr_management/features/profile/presentation/profile/logic/profile_state.dart';
+import 'package:workmate/features/profile/presentation/profile/logic/profile_state.dart';
 import '../../../../../core/config/app_constant.dart';
 import '../../../../../core/presentation/base_viewmodel/base_cubit.dart';
 import '../../../../../core/presentation/routes/config/app_state_notifier.dart';

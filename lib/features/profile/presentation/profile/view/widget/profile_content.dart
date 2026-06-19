@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:hr_management/features/profile/presentation/profile/view/widget/profile_section/profile_account_section.dart';
-import 'package:hr_management/features/profile/presentation/profile/view/widget/profile_section/profile_contact_section.dart';
-import 'package:hr_management/features/profile/presentation/profile/view/widget/profile_section/profile_settings_section.dart';
+import 'package:workmate/features/profile/presentation/profile/view/widget/profile_section/profile_account_section.dart';
+import 'package:workmate/features/profile/presentation/profile/view/widget/profile_section/profile_contact_section.dart';
+import 'package:workmate/features/profile/presentation/profile/view/widget/profile_section/profile_settings_section.dart';
 
 import '../../../../domain/entity/employee_profile.dart';
 import '../../logic/profile_cubit.dart';

@@ -77,7 +77,6 @@ class _VerifyOtpPopupState extends State<VerifyOtpPopup> {
             cubit.onEmailChanged(widget.identifier);
             cubit.submit();
           },
-          isResendEnabled: !state.isLoading,
           enabled: !state.isLoading,
           primaryButtonText: 'Submit',
           isPrimaryButtonLoading: state.isLoading,

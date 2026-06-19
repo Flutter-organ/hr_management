@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../../../../../../core/presentation/design_system/components/custom_input_field.dart';
 import '../../../../../../../core/presentation/design_system/theme/helper/theme_extention.dart';
-import '../../../../../../../core/presentation/design_system/theme/hr_management_theme.dart';
+import '../../../../../../../core/presentation/design_system/theme/workmate_theme.dart';
 import '../../../../../domain/entity/gender.dart';
 import '../../../../helper/extention.dart';
 import '../../../logic/profile_cubit.dart';
@@ -315,7 +315,7 @@ class CompleteProfileFormContent extends StatelessWidget {
       lastDate: DateTime.now(),
       builder: (context, child) {
         return Theme(
-          data: HrManagementTheme.light(),
+          data: WorkMateTheme.light(),
           child: child!,
         );
       },

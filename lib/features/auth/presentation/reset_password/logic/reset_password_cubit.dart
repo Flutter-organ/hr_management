@@ -1,4 +1,4 @@
-import 'package:hr_management/features/auth/presentation/reset_password/logic/reset_password_state.dart';
+import 'package:workmate/features/auth/presentation/reset_password/logic/reset_password_state.dart';
 import '../../../../../core/presentation/base_viewmodel/base_cubit.dart';
 import '../../../../../core/presentation/routes/config/app_state_notifier.dart';
 import '../../../../../core/presentation/util/validator.dart';

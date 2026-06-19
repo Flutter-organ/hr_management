@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hr_management/features/auth/presentation/register/signup/view/widgets/terms_popup.dart';
+import 'package:workmate/features/auth/presentation/register/signup/view/widgets/terms_popup.dart';
 import '../../../../../../../core/presentation/design_system/components/check_box.dart';
 import '../../../../../../../core/presentation/design_system/theme/color/app_constant_colors.dart';
 import '../../../../../../../core/presentation/design_system/theme/helper/popup_helper.dart';

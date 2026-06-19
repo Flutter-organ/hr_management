@@ -1,6 +1,6 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:hr_management/features/profile/domain/entity/office_asset.dart';
-import 'package:hr_management/features/profile/domain/entity/payroll.dart';
+import 'package:workmate/features/profile/domain/entity/office_asset.dart';
+import 'package:workmate/features/profile/domain/entity/payroll.dart';
 import '../../../../core/domain/failure/domain_failure.dart';
 import '../../domain/entity/employee_profile.dart';
 import '../../domain/entity/gender.dart';

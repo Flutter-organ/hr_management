@@ -112,7 +112,7 @@ class _UploadTaskState extends State<UploadTask> {
   }
 
   void _pickFile(int index) async {
-    final result = await FilePicker.platform.pickFiles(
+    final result = await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf', 'jpg', 'png'],
     );

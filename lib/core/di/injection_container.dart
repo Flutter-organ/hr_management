@@ -1,13 +1,13 @@
 import 'package:get_it/get_it.dart';
-import 'package:hr_management/features/auth/data/data_source/local/onboarding_local_data_source%20.dart';
-import 'package:hr_management/features/auth/data/data_source/local/onboarding_local_data_source_impl.dart';
-import 'package:hr_management/features/auth/data/repository_imp/on_boarding_repository_imp.dart';
-import 'package:hr_management/features/auth/domain/repository/auth_repository.dart';
-import 'package:hr_management/features/auth/domain/repository/on_boarding_repository.dart';
-import 'package:hr_management/features/auth/domain/use_cases/load_identifier_use_case.dart';
-import 'package:hr_management/features/auth/domain/use_cases/login_use_case.dart';
-import 'package:hr_management/features/auth/domain/use_cases/register_use_case.dart';
-import 'package:hr_management/features/auth/presentation/login/logic/login_cubit.dart';
+import 'package:workmate/features/auth/data/data_source/local/onboarding_local_data_source%20.dart';
+import 'package:workmate/features/auth/data/data_source/local/onboarding_local_data_source_impl.dart';
+import 'package:workmate/features/auth/data/repository_imp/on_boarding_repository_imp.dart';
+import 'package:workmate/features/auth/domain/repository/auth_repository.dart';
+import 'package:workmate/features/auth/domain/repository/on_boarding_repository.dart';
+import 'package:workmate/features/auth/domain/use_cases/load_identifier_use_case.dart';
+import 'package:workmate/features/auth/domain/use_cases/login_use_case.dart';
+import 'package:workmate/features/auth/domain/use_cases/register_use_case.dart';
+import 'package:workmate/features/auth/presentation/login/logic/login_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source.dart';
 import '../../features/auth/data/data_source/local/auth_local_data_source_imp.dart';
@@ -27,6 +27,17 @@ import '../../features/auth/presentation/on_boarding/logic/on_boarding_cubit.dar
 import '../../features/auth/presentation/register/signup/logic/sign_up_cubit.dart';
 import '../../features/auth/presentation/register/verify_otp_popup/logic/verify_otp_cubit.dart';
 import '../../features/auth/presentation/reset_password/logic/reset_password_cubit.dart';
+import '../../features/expense/data/datasource/remote/expense_remote_data_source.dart';
+import '../../features/expense/data/datasource/remote/expense_remote_data_source_impl.dart';
+import '../../features/expense/data/repository/expense_repository_impl.dart';
+import '../../features/expense/domain/repository/expense_repository.dart';
+import '../../features/expense/domain/usecase/create_expense_usecase.dart';
+import '../../features/expense/domain/usecase/delete_expense_usecase.dart';
+import '../../features/expense/domain/usecase/get_expense_detail_usecase.dart';
+import '../../features/expense/domain/usecase/get_expenses_usecase.dart';
+import '../../features/expense/domain/usecase/update_expense_usecase.dart';
+import '../../features/expense/domain/usecase/upload_receipt_usecase.dart';
+import '../../features/expense/presentation/logic/expenses_cubit.dart';
 import '../../features/profile/data/datasource/local/profile_local_data_source.dart';
 import '../../features/profile/data/datasource/local/profile_local_data_source_impl.dart';
 import '../../features/profile/data/datasource/remote/profile_remote_data_source.dart';
@@ -56,6 +67,7 @@ Future<void> setupDependencies() async {
   await _initAuth();
   await _initOnboarding();
   await _initProfile();
+  await _initExpenses();
 }
 
 Future<void> _initCore() async {
@@ -237,6 +249,35 @@ Future<void> _initProfile() async {
   sl.registerFactory<OfficeAssetsCubit>(
         () => OfficeAssetsCubit(
       getOfficeAssetsUseCase: sl<GetOfficeAssetsUseCase>(),
+    ),
+  );
+
+}
+
+Future<void> _initExpenses() async {
+  // data
+  sl.registerLazySingleton<ExpensesRemoteDataSource>(
+        () => ExpensesRemoteDataSourceImpl(dioClient: sl<DioClient>()),
+  );
+  sl.registerLazySingleton<ExpensesRepository>(
+        () => ExpensesRepositoryImpl(remoteDataSource: sl<ExpensesRemoteDataSource>()),
+  );
+
+  // domain
+  sl.registerLazySingleton(() => GetExpensesUseCase(sl<ExpensesRepository>()));
+  sl.registerLazySingleton(() => GetExpenseDetailUseCase(sl<ExpensesRepository>()));
+  sl.registerLazySingleton(() => CreateExpenseUseCase(sl<ExpensesRepository>()));
+  sl.registerLazySingleton(() => UpdateExpenseUseCase(sl<ExpensesRepository>()));
+  sl.registerLazySingleton(() => DeleteExpenseUseCase(sl<ExpensesRepository>()));
+  sl.registerLazySingleton(() => UploadReceiptUseCase(sl<ExpensesRepository>()));
+
+  // presentation
+  sl.registerFactory<ExpensesCubit>(
+        () => ExpensesCubit(
+      getExpensesUseCase: sl<GetExpensesUseCase>(),
+      deleteExpenseUseCase: sl<DeleteExpenseUseCase>(),
+      createExpenseUseCase: sl<CreateExpenseUseCase>(),
+      uploadReceiptUseCase: sl<UploadReceiptUseCase>(),
     ),
   );
 

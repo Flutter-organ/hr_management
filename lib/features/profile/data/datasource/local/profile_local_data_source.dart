@@ -10,7 +10,4 @@ abstract class ProfileLocalDataSource {
   Future<bool> isProfileCompleted();
 
   Future<void> setProfileCompleted(bool completed);
-
-  // /// Get dummy office assets (will be replaced with remote data source later)
-  // Future<List<OfficeAsset>> getOfficeAssets();
 }

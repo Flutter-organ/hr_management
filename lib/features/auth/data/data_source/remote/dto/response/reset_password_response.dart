@@ -1,4 +1,4 @@
-import 'package:hr_management/features/auth/data/data_source/remote/dto/user_dto.dart';
+import 'package:workmate/features/auth/data/data_source/remote/dto/user_dto.dart';
 
 import '../../../../../../../core/data/exception/app_exception.dart';
 

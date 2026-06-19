@@ -24,5 +24,9 @@ class AppAssets {
   static const kOnBoargingThree = 'assets/images/on_boarding_three.png';
   static const kOnBoargingFinal = 'assets/images/on_boarding_final.png';
   static const avatarPlaceholder = 'assets/images/avatar_placeholder.png';
+  static const expenseIllustration = 'assets/images/expense_illustration.png';
+  static const emptyExpenseState = 'assets/images/empty_expense.png';
+  static const wallet = 'assets/svgs/card-pos.svg';
+  static const submitExpenseIllustration = 'assets/images/submit_expense_illustration.png';
 
 }

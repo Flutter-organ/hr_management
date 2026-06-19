@@ -11,22 +11,16 @@ class ImagePickerHelper {
 
   static Future<File?> pickImageFromGallery() async {
     try {
-      final result = await FilePicker.platform.pickFiles(
+      final result = await FilePicker.pickFile(
         type: FileType.image,
-        allowMultiple: false,
         compressionQuality: compressionQuality,
       );
 
-      if (result == null || result.files.isEmpty) {
+      if (result == null || result.path == null || result.path!.isEmpty) {
         return null;
       }
 
-      final filePath = result.files.single.path;
-      if (filePath == null || filePath.isEmpty) {
-        return null;
-      }
-
-      final file = File(filePath);
+      final file = File(result.path!);
       if (!file.existsSync()) {
         return null;
       }
@@ -37,11 +31,31 @@ class ImagePickerHelper {
     }
   }
 
+  static Future<File?> pickReceipt() async {
+    try {
+      final result = await FilePicker.pickFile(
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png'],
+        compressionQuality: compressionQuality,
+      );
+
+      if (result == null || result.path == null || result.path!.isEmpty) {
+        return null;
+      }
+
+      final file = File(result.path!);
+      if (!file.existsSync()) return null;
+
+      return file;
+    } catch (e) {
+      return null;
+    }
+  }
+
   static Future<List<File>> pickMultipleImages({int? maxImages}) async {
     try {
-      final result = await FilePicker.platform.pickFiles(
+      final result = await FilePicker.pickFiles(
         type: FileType.image,
-        allowMultiple: true,
         compressionQuality: compressionQuality,
       );
 
@@ -69,23 +83,17 @@ class ImagePickerHelper {
     List<String> allowedExtensions = const ['jpg', 'jpeg', 'png', 'gif', 'webp'],
   }) async {
     try {
-      final result = await FilePicker.platform.pickFiles(
+      final result = await FilePicker.pickFile(
         type: FileType.custom,
         allowedExtensions: allowedExtensions,
-        allowMultiple: false,
         compressionQuality: 50,
       );
 
-      if (result == null || result.files.isEmpty) {
+      if (result == null || result.path == null || result.path!.isEmpty) {
         return null;
       }
 
-      final filePath = result.files.single.path;
-      if (filePath == null || filePath.isEmpty) {
-        return null;
-      }
-
-      return File(filePath);
+      return File(result.path!);
     } catch (e) {
       return null;
     }
@@ -106,6 +114,11 @@ class ImagePickerHelper {
 
   static bool isValidImageExtension(File file) {
     final validExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    return validExtensions.contains(getFileExtension(file));
+  }
+
+  static bool isValidReceiptExtension(File file) {
+    final validExtensions = ['jpg', 'jpeg', 'png', 'pdf'];
     return validExtensions.contains(getFileExtension(file));
   }
 }
