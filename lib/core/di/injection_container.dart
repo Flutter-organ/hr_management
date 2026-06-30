@@ -58,6 +58,7 @@ import '../data/cache/cache_manager.dart';
 import '../data/cache/secure_storage_data_source.dart';
 import '../data/cache/shared_preferences_service.dart';
 import '../data/network/dio_client.dart';
+import '../domain/service/cache_manager.dart';
 import '../presentation/routes/config/app_startup_service.dart';
 
 final sl = GetIt.instance;

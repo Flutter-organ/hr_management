@@ -3,14 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
 class LoggerService {
-  static final LoggerService _instance = LoggerService._internal();
+  LoggerService._();
+  static final LoggerService instance = LoggerService._();
 
-  factory LoggerService() => _instance;
-
-  late final Logger _logger;
-
-  LoggerService._internal() {
-    _logger = Logger(
+  final Logger _logger = Logger(
       printer: PrettyPrinter(
         methodCount: 0,
         errorMethodCount: 5,
@@ -21,7 +17,6 @@ class LoggerService {
       ),
       level: kDebugMode ? Level.debug : Level.off,
     );
-  }
 
   void d(dynamic message) => _logger.d(message);
 
@@ -178,7 +173,6 @@ class LoggerService {
   }
 
   String _sanitizeString(String value) {
-    // If it looks like a JWT or long token, partially hide it
     if (_looksLikeToken(value)) {
       return _partiallyHideToken(value);
     }
@@ -216,4 +210,4 @@ class LoggerService {
   }
 }
 
-final logger = LoggerService();
+final logger = LoggerService.instance;
