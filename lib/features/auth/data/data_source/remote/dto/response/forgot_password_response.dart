@@ -16,17 +16,14 @@ class ForgotPasswordResponse {
     final otpType = json['otp_type'] as String?;
 
     if (identifier == null || identifier.isEmpty) {
-      throw const ServerException(
-        message: 'Invalid response: missing identifier',
-        code: 'PARSE_ERROR',
-        statusCode: 200,
+      throw const SerializationException(
+        message: 'Missing identifier',
+
       );
     }
     if (otpType == null || otpType.isEmpty) {
-      throw const ServerException(
-        message: 'Invalid response: missing otp_type',
-        code: 'PARSE_ERROR',
-        statusCode: 200,
+      throw const SerializationException(
+        message: 'Missing otp_type',
       );
     }
 

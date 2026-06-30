@@ -1,51 +1,26 @@
 import '../../../../core/data/exception/app_exception.dart';
 import '../../../../core/domain/failure/domain_failure.dart';
-import '../../../auth/domain/failures/failure.dart';
 import '../../domain/failure/payroll_failure.dart';
 
-class PayrollFailureMapper {
-  const PayrollFailureMapper._();
+abstract final class PayrollFailureMapper {
 
-  static Failure mapException(Object exception) {
-    if (exception is ServerException) {
-      return _mapServerException(exception);
-    }
+  static Failure? fromException(AppException exception) {
+    return switch (exception) {
+      NotFoundException() ||
+      ServerException()   =>
+          _fromErrorCode(exception),
 
-    if (exception is NetworkException) {
-      return const NetworkFailure();
-    }
-
-    if (exception is ConnectionTimeoutException) {
-      return const TimeoutFailure();
-    }
-
-    if (exception is UnauthorizedException) {
-      return const SessionExpiredFailure();
-    }
-
-    if (exception is AppException) {
-      return UnknownFailure(exception.message);
-    }
-
-    return UnknownFailure(exception.toString());
+      _ => null,
+    };
   }
 
-  static Failure _mapServerException(ServerException exception) {
-    final code = exception.code?.toUpperCase();
+  static Failure? _fromErrorCode(AppException exception) {
+    final code = exception.apiError?.errorCode?.toUpperCase();
     final message = exception.message;
 
-    switch (code) {
-      case 'PAYROLL_NOT_FOUND':
-        return PayrollNotFoundFailure(message);
-      case 'PAYROLL_FETCH_FAILED':
-        return PayrollFetchFailure(message);
-    }
-
-    switch (exception.statusCode) {
-      case 404:
-        return PayrollNotFoundFailure(message);
-      default:
-        return ServerFailure(message);
-    }
+    return switch (code) {
+      'PAYROLL_NOT_FOUND' => PayrollNotFoundFailure(message: message),
+      _                   => null,
+    };
   }
 }

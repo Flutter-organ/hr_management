@@ -1,5 +1,6 @@
-import '../../../../../core/data/network/api_constants.dart';
 import '../../../../../core/data/network/dio_client.dart';
+import '../../../../../core/data/network/dto/response/api_response.dart';
+import '../../constant/auth_api_constant.dart';
 import 'auth_remote_data_source.dart';
 import 'dto/request/change_password_request_dto.dart';
 import 'dto/request/login_request.dart';
@@ -23,12 +24,16 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
     ForgotPasswordRequest request,
   ) async {
     final response = await _dioClient.post(
-      ApiConstants.forgotPassword,
+      AuthApiConstant.forgotPassword,
       data: request.toJson(),
     );
 
-    final data = response.data['data'] as Map<String, dynamic>;
-    return ForgotPasswordResponse.fromJson(data);
+    final apiResponse = ApiResponse.fromJson(
+      response.data,
+          (data) => ForgotPasswordResponse.fromJson(data),
+    );
+
+    return apiResponse.requiredData;
   }
 
   @override
@@ -36,23 +41,31 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
     ResetPasswordRequest request,
   ) async {
     final response = await _dioClient.post(
-      ApiConstants.verifyForgotPasswordOtp,
+      AuthApiConstant.verifyForgotPasswordOtp,
       data: request.toJson(),
     );
 
-    final data = response.data['data'] as Map<String, dynamic>;
-    return ResetPasswordResponse.fromJson(data);
+    final apiResponse = ApiResponse.fromJson(
+      response.data,
+          (data) => ResetPasswordResponse.fromJson(data),
+    );
+
+    return apiResponse.requiredData;
   }
 
   @override
   Future<LoginResponse> login(LoginRequest request) async {
     final response = await _dioClient.post(
-      ApiConstants.login,
+      AuthApiConstant.login,
       data: request.toJson(),
     );
 
-    final data = response.data['data'] as Map<String, dynamic>;
-    return LoginResponse.fromJson(data);
+    final apiResponse = ApiResponse.fromJson(
+      response.data,
+          (data) => LoginResponse.fromJson(data),
+    );
+
+    return apiResponse.requiredData;
   }
 
   @override
@@ -60,10 +73,14 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
     required RegisterDtoRequest registerDtoRequest,
   }) async {
     final response = await _dioClient.post(
-      ApiConstants.register,
+      AuthApiConstant.register,
       data: registerDtoRequest.toJson(),
     );
-    return response.data['success'] as bool? ?? false;
+    final apiResponse = ApiResponse.fromJson(
+      response.data,
+          (data) => ForgotPasswordResponse.fromJson(data),
+    );
+    return apiResponse.success;
   }
 
   @override
@@ -71,10 +88,14 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
     required VerifyOtpRequest verifyOtpDto,
   }) async {
     final response = await _dioClient.post(
-      ApiConstants.verifyOtp,
+      AuthApiConstant.verifyOtp,
       data: verifyOtpDto.toJson(),
     );
-    return OtpVerifyResponse.fromJson(response.data['data']);
+    final apiResponse = ApiResponse.fromJson(
+      response.data,
+          (data) => OtpVerifyResponse.fromJson(data),
+    );
+    return apiResponse.requiredData;
   }
 
   @override
@@ -86,9 +107,13 @@ class AuthRemoteDataSourceImp implements AuthRemoteDataSource {
       newPasswordConfirmation: newPasswordConfirmation,
     );
     final response = await _dioClient.post(
-      ApiConstants.changePassword,
+      AuthApiConstant.changePassword,
       data: request.toJson(),
     );
-    return response.data['success'] as bool? ?? false;
+    final apiResponse = ApiResponse.fromJson(
+      response.data,
+          (data) => ForgotPasswordResponse.fromJson(data),
+    );
+    return apiResponse.success;
   }
 }
